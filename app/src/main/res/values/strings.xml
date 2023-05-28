@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">My Psychologist</string>
+
+    <string name="main">Главная</string>
+    <string name="records">Записи</string>
+    <string name="psychologist">Психолог</string>
+    <string name="feed">Лента</string>
+
+    <string name="exercises">Упражнения</string>
+    <string name="exercises_signature">Прокачай себя</string>
+    <string name="psychoeducation">Психообразование</string>
+    <string name="psychoeducation_signature">Познай психологию</string>
+    <string name="diagnostics">Диагностика</string>
+    <string name="diagnostics_signature">Познай себя</string>
 </resources>
