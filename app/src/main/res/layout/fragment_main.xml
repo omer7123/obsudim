@@ -16,128 +16,25 @@
         android:theme="?attr/actionBarTheme"
         app:title="@string/main" />
 
-    <LinearLayout
+    <include layout="@layout/card_view_group"
+        android:layout_marginTop="20dp"
         android:id="@+id/exercises_card"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
         android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/card_view_group"
         android:layout_marginTop="20dp"
-        android:background="@drawable/main_card"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/exercises"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exercises" />
-
-            <TextView
-                android:id="@+id/exercises_signature"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/exercises_signature" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/neurology"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_neurology" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/education_card"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
         android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/card_view_group"
         android:layout_marginTop="20dp"
-        android:backgroundTint="?attr/colorTertiaryContainer"
-        android:background="@drawable/main_card"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/education"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/psychoeducation" />
-
-            <TextView
-                android:id="@+id/psychoeducation_signature"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/psychoeducation_signature" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/cognition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_cognition" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/diagnostics_card"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/main_card"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/diagnostics"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/diagnostics" />
-
-            <TextView
-                android:id="@+id/diagnostics_signature"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/diagnostics_signature" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/shapes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_play_shapes" />
-    </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

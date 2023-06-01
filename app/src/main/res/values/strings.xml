@@ -12,4 +12,13 @@
     <string name="psychoeducation_signature">Познай психологию</string>
     <string name="diagnostics">Диагностика</string>
     <string name="diagnostics_signature">Познай себя</string>
+
+    <string name="cbt">КПТ</string>
+    <string name="plans">Планы</string>
+    <string name="plans_signature">Подпись тут правда надо на 2 строки</string>
+    <string name="experiments">Поведенч. эксперименты</string>
+    <string name="experiments_signature">Подпись тут правда на 2</string>
+    <string name="ladders">Лестницы страха</string>
+    <string name="ladders_signature">Подпись тут правда  на 2</string>
+    <string name="rebt">РЭПТ</string>
 </resources>
