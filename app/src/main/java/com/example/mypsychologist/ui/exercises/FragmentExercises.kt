@@ -41,7 +41,7 @@ class FragmentExercises : Fragment() {
 
         binding.methodsViewPager.adapter = pagerAdapter
 
-        pagerAdapter.update(listOf(FragmentCBT(), FragmentCBT()))
+        pagerAdapter.update(listOf(FragmentCBT(), FragmentREBT()))
 
         TabLayoutMediator(binding.methodsTabLayout, binding.methodsViewPager) { tab, position ->
             tab.text = tabs[position]

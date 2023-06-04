@@ -21,4 +21,14 @@
     <string name="ladders">Лестницы страха</string>
     <string name="ladders_signature">Подпись тут правда  на 2</string>
     <string name="rebt">РЭПТ</string>
+    <string name="change">Изменить</string>
+    <string name="problem_analysis">Анализ проблемы</string>
+    <string name="problem_analysis_signature">Анализ проблемы</string>
+    <string name="beliefs_check">Проверка убеждений</string>
+    <string name="beliefs_check_signature">Анализ проблемы</string>
+    <string name="beliefs_analysis">Анализ убеждений</string>
+    <string name="beliefs_analysis_signature">Анализ проблемы</string>
+    <string name="dialog">Диалог</string>
+    <string name="dialog_signature">Анализ проблемы</string>
+    <string name="add">Добавить</string>
 </resources>
