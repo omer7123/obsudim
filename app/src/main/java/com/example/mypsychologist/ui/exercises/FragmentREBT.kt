@@ -24,7 +24,14 @@ class FragmentREBT : Fragment() {
         setupCards()
 
         binding.changeButton.setOnClickListener {
+            childFragmentManager.setFragmentResultListener(
+                ProblemsFragment.PROBLEM,
+                viewLifecycleOwner
+            ) { _, bundle ->
+                binding.problem.text = bundle.getString(ProblemsFragment.PROBLEM)
+            }
 
+            ProblemsFragment().show(childFragmentManager, TAG)
         }
 
         return binding.root
@@ -37,5 +44,9 @@ class FragmentREBT : Fragment() {
             setupCard(beliefsAnalysis, R.string.beliefs_analysis, R.string.beliefs_analysis_signature)
             setupCard(dialog, R.string.dialog, R.string.dialog_signature)
         }
+    }
+
+    companion object {
+        const val TAG = "change_problem"
     }
 }
