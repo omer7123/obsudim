@@ -31,4 +31,6 @@
     <string name="dialog">Диалог</string>
     <string name="dialog_signature">Анализ проблемы</string>
     <string name="add">Добавить</string>
+    
+    <string name="thought_diary">Дневник мыслей</string>
 </resources>

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentExercisesBinding
+import com.example.mypsychologist.ui.exercises.cbt.FragmentCBT
 import com.google.android.material.tabs.TabLayoutMediator
 
 class FragmentExercises : Fragment() {

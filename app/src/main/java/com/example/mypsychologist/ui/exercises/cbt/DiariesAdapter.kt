@@ -1,4 +1,4 @@
-package com.example.mypsychologist.ui.exercises
+package com.example.mypsychologist.ui.exercises.cbt
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

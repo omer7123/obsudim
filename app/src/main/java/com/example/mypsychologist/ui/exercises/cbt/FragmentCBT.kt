@@ -1,11 +1,11 @@
-package com.example.mypsychologist.ui.exercises
+package com.example.mypsychologist.ui.exercises.cbt
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentCbtBinding
@@ -53,8 +53,13 @@ class FragmentCBT : Fragment() {
         binding.diariesRw.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = DiariesAdapter(items) {
-
+            adapter = DiariesAdapter(items) { title ->
+                findNavController().navigate(
+                    when (title) {
+                        "Дневник мыслей" -> R.id.fragment_diaries
+                        else -> R.id.fragment_diaries
+                    }
+                )
             }
             setHasFixedSize(true)
         }
