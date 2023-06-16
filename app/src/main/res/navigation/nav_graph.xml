@@ -20,4 +20,9 @@
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries"
         android:label="FragmentDiaries"
         tools:layout="@layout/fragment_diaries"/>
+    <fragment
+        android:id="@+id/fragment_diary"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentDiary"
+        android:label="FragmentDiary"
+        tools:layout="@layout/fragment_diary"/>
 </navigation>
