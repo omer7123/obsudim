@@ -41,4 +41,12 @@
     <string name="alternative_thought">Альтернативная мысль</string>
     <string name="new_mood">Новое настроение</string>
     <string name="level">Уровень</string>
+    <string name="situation_helper">Кратко опишите проблемную ситуацию</string>
+    <string name="mood_helper">Какое настроение вызвала у вас эта ситуация?</string>
+    <string name="auto_thought_helper">О чем вы думали в момент, когда это почувствовали?</string>
+    <string name="proofs_helper">Аргументы в пользу автоматической мысли</string>
+    <string name="refutations_helper">Аргументы против автоматической мысли</string>
+    <string name="alternative_thought_helper">Что вы теперь думаете об этой ситуации?</string>
+    <string name="new_mood_helper">Какое у вас сейчас настроение?</string>
+    <string name="save">Сохранить</string>
 </resources>

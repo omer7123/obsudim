@@ -29,6 +29,10 @@ class FragmentDiaries : Fragment() {
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
 
+        binding.newDiaryFab.setOnClickListener {
+            findNavController().navigate(R.id.fragment_new_diary)
+        }
+
         setupAdapter()
 
         return binding.root
