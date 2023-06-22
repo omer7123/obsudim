@@ -59,6 +59,9 @@ class MainFragment : Fragment() {
             exercisesCard.card.setOnClickListener {
                 findNavController().navigate(R.id.fragment_exercises)
             }
+            diagnosticsCard.card.setOnClickListener {
+                findNavController().navigate(R.id.fragment_tests)
+            }
         }
     }
 

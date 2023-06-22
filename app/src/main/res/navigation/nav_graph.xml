@@ -30,4 +30,9 @@
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentNewDiary"
         android:label="FragmentNewDiary"
         tools:layout="@layout/fragment_new_diary"/>
+    <fragment
+        android:id="@+id/fragment_tests"
+        android:name="com.example.mypsychologist.ui.diagnostics.FragmentTests"
+        android:label="FragmentTests"
+        tools:layout="@layout/fragment_tests"/>
 </navigation>
