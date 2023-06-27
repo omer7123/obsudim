@@ -1,4 +1,4 @@
-package com.example.mypsychologist.ui.exercises
+package com.example.mypsychologist.ui.exercises.rebt
 
 import android.content.Context
 import android.os.Bundle
@@ -111,7 +111,7 @@ class FragmentREBT : Fragment() {
                 ProblemsFragment.PROBLEM,
                 viewLifecycleOwner
             ) { _, bundle ->
-                binding.problem.text = bundle.getString(ProblemsFragment.PROBLEM)
+                viewModel.getProblemProgress(bundle.getInt(ProblemsFragment.PROBLEM))
             }
 
             ProblemsFragment().show(childFragmentManager, TAG)

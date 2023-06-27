@@ -1,8 +1,8 @@
 package com.example.mypsychologist.di
 
 import com.example.mypsychologist.ui.exercises.FragmentExercises
-import com.example.mypsychologist.ui.exercises.FragmentREBT
-import com.example.mypsychologist.ui.exercises.cbt.FragmentCBT
+import com.example.mypsychologist.ui.exercises.rebt.FragmentREBT
+import com.example.mypsychologist.ui.exercises.rebt.ProblemsFragment
 import dagger.Subcomponent
 
 @FragmentScope
@@ -10,7 +10,7 @@ import dagger.Subcomponent
 interface ExercisesComponent {
     fun inject(fragment: FragmentExercises)
     fun inject(fragment: FragmentREBT)
-    fun inject(fragment: FragmentCBT)
+    fun inject(fragment: ProblemsFragment)
 
     @Subcomponent.Factory
     interface Factory {
