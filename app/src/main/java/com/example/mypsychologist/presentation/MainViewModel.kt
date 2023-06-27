@@ -1,4 +1,4 @@
-package com.example.mypsychologist.ui.main
+package com.example.mypsychologist.presentation
 
 import androidx.lifecycle.ViewModel
 

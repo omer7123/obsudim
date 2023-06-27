@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">My Psychologist</string>
 
+    <string name="network_error">Ошибка сети</string>
+
     <string name="main">Главная</string>
     <string name="records">Записи</string>
     <string name="psychologist">Психолог</string>

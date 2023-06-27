@@ -16,6 +16,9 @@ class MainActivity : AppCompatActivity(), NavbarHider {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        getAppComponent().inject(this)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
     }
 

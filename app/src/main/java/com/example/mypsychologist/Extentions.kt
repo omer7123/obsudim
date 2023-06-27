@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
 import com.example.mypsychologist.databinding.CardViewGroupBinding
+import com.example.mypsychologist.di.AppComponent
 
 fun Fragment.setupCard(
     card: CardViewGroupBinding,
@@ -19,3 +20,5 @@ fun Fragment.setupCard(
         backgroundRes?.let { this.card.background = getDrawable(requireContext(), it) }
     }
 }
+
+fun Context.getAppComponent(): AppComponent = (this.applicationContext as App).appComponent

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentMainBinding
+import com.example.mypsychologist.presentation.MainViewModel
 import com.example.mypsychologist.setupCard
 
 class MainFragment : Fragment() {
