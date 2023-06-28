@@ -2,10 +2,10 @@ package com.example.mypsychologist.data.repository
 
 import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.domain.entity.RebtProblemProgressEntity
-import com.example.mypsychologist.domain.repository.ExercisesRepository
+import com.example.mypsychologist.domain.repository.RebtRepository
 import javax.inject.Inject
 
-class ExercisesRepositoryImpl @Inject constructor() : ExercisesRepository {
+class RebtRepositoryImpl @Inject constructor() : RebtRepository {
     override fun getREBTProblemProgress(problemId: Int) =
         RebtProblemProgressEntity("Проблема1", true, false, false, false)
 

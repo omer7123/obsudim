@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.RecordItemBinding
+import com.example.mypsychologist.domain.entity.DiaryRecordEntity
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
-class RecordDelegate(private val onClick: (String) -> Unit) : AdapterDelegate {
+class RecordDelegate(private val onClick: (Int) -> Unit) : AdapterDelegate {
     override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
         RecordItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         onClick
@@ -18,20 +19,20 @@ class RecordDelegate(private val onClick: (String) -> Unit) : AdapterDelegate {
         item: DelegateItem,
         position: Int
     ) {
-        (holder as ViewHolder).bind(item.content() as String)
+        (holder as ViewHolder).bind(item.content() as DiaryRecordEntity)
     }
 
     override fun isOfViewType(item: DelegateItem) = item is RecordDelegateItem
 
     class ViewHolder(
         private val binding: RecordItemBinding,
-        private val onClick: (String) -> Unit
+        private val onClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(text: String) {
-            binding.situation.text = text
+        fun bind(it: DiaryRecordEntity) {
+            binding.situation.text = it.situation
 
-            itemView.setOnClickListener { onClick(text) }
+            itemView.setOnClickListener { onClick(it.id) }
         }
     }
 }

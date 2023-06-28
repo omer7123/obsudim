@@ -1,0 +1,11 @@
+package com.example.mypsychologist.presentation
+
+import com.example.mypsychologist.domain.entity.DiaryRecordEntity
+import com.example.mypsychologist.domain.entity.RebtProblemProgressEntity
+
+sealed interface ThoughtDiariesScreenState {
+    object Init: ThoughtDiariesScreenState
+    object Error: ThoughtDiariesScreenState
+    object Loading: ThoughtDiariesScreenState
+    data class Data(val records: List<DiaryRecordEntity>): ThoughtDiariesScreenState
+}
