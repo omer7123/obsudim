@@ -56,4 +56,5 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
 }

@@ -6,5 +6,5 @@ sealed interface REBTScreenState {
     object Init: REBTScreenState
     object Error: REBTScreenState
     object Loading: REBTScreenState
-    data class Data(val problemProgress: RebtProblemProgressEntity): REBTScreenState
+    class Data(val problemProgress: RebtProblemProgressEntity): REBTScreenState
 }

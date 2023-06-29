@@ -8,9 +8,11 @@
     android:layout_marginTop="20dp"
     app:helperTextEnabled="true"
     app:endIconMode="custom"
-    app:endIconDrawable="@drawable/ic_help">
+    app:endIconDrawable="@drawable/ic_help"
+    app:errorEnabled="true">
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

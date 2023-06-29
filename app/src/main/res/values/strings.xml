@@ -51,4 +51,6 @@
     <string name="alternative_thought_helper">Что вы теперь думаете об этой ситуации?</string>
     <string name="new_mood_helper">Какое у вас сейчас настроение?</string>
     <string name="save">Сохранить</string>
+    <string name="success">Успех!</string>
+    <string name="necessary_to_fill">Необходимо заполнить</string>
 </resources>

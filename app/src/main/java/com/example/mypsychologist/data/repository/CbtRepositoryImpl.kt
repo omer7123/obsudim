@@ -21,11 +21,13 @@ class CbtRepositoryImpl @Inject constructor() : CbtRepository {
         DiaryEntity(
             "Ондатр сломал плотину",
             "гнев 80%",
+            80,
             "ондатр редиска",
             "плотина сломана",
             "ондатр пытается починить плотину",
             "ондатр средней редисости",
-            "гнев 30%"
+            "гнев 30%",
+            30
         )
 
     override fun saveThoughtDiary(it: DiaryEntity): Boolean =
