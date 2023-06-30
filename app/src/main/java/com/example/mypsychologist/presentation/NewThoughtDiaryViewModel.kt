@@ -2,8 +2,8 @@ package com.example.mypsychologist.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.mypsychologist.domain.entity.DiaryEntity
-import com.example.mypsychologist.domain.useCase.GetProblemsUseCase
+import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
+import com.example.mypsychologist.domain.entity.getMapOfMembers
 import com.example.mypsychologist.domain.useCase.SaveThoughtDiaryUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +18,7 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
     val screenState: StateFlow<NewThoughtDiaryScreenState>
         get() = _screenState.asStateFlow()
 
-    private var diary = DiaryEntity()
+    private var diary = ThoughtDiaryEntity()
 
     fun setSituation(it: String) {
         diary = diary.copy(situation = it)

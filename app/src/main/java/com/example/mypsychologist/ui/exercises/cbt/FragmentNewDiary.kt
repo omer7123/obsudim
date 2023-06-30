@@ -16,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentNewDiaryBinding
-import com.example.mypsychologist.domain.entity.DiaryEntity
+import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.NewThoughtDiaryViewModel
@@ -175,13 +175,13 @@ class FragmentNewDiary : Fragment() {
 
     private fun renderValidationError(fieldsWithError: List<String>) {
         val diaryMembersAndFields = mapOf(
-            DiaryEntity::situation.name to binding.includeSituation.inputLayout,
-            DiaryEntity::mood.name to binding.includeMood.inputLayout,
-            DiaryEntity::autoThought.name to binding.includeAutoThought.inputLayout,
-            DiaryEntity::proofs.name to binding.includeProofs.inputLayout,
-            DiaryEntity::refutations.name to binding.includeRefutations.inputLayout,
-            DiaryEntity::alternativeThought.name to binding.includeAlternativeThought.inputLayout,
-            DiaryEntity::newMood.name to binding.includeNewMood.inputLayout
+            ThoughtDiaryEntity::situation.name to binding.includeSituation.inputLayout,
+            ThoughtDiaryEntity::mood.name to binding.includeMood.inputLayout,
+            ThoughtDiaryEntity::autoThought.name to binding.includeAutoThought.inputLayout,
+            ThoughtDiaryEntity::proofs.name to binding.includeProofs.inputLayout,
+            ThoughtDiaryEntity::refutations.name to binding.includeRefutations.inputLayout,
+            ThoughtDiaryEntity::alternativeThought.name to binding.includeAlternativeThought.inputLayout,
+            ThoughtDiaryEntity::newMood.name to binding.includeNewMood.inputLayout
         )
 
         fieldsWithError.forEach {

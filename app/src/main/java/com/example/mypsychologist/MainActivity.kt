@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity(), NavbarHider {
         Toast.makeText(this, getString(message), Toast.LENGTH_LONG).show()
     }
 
-
     override fun setNavbarVisibility(it: Boolean) {
         binding.navigation.isVisible = it
     }

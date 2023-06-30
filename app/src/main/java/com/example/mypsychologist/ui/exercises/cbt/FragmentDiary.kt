@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -15,9 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiaryBinding
-import com.example.mypsychologist.domain.entity.DiaryEntity
+import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.presentation.ThoughtDiariesScreenState
 import com.example.mypsychologist.presentation.ThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.ThoughtDiaryViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -108,7 +106,7 @@ class FragmentDiary : Fragment() {
         }
     }
 
-    private fun setupRecords(diary: DiaryEntity) {
+    private fun setupRecords(diary: ThoughtDiaryEntity) {
         binding.apply {
             includeSituation.cardDescription.text = diary.situation
             includeMood.cardDescription.text = diary.mood
