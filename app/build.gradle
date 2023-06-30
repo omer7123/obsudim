@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -57,4 +58,9 @@ dependencies {
 
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
+
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 }

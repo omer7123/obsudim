@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">My Psychologist</string>
 
+    <string name="hallow">Добро пожаловать!</string>
     <string name="network_error">Ошибка сети</string>
 
     <string name="main">Главная</string>

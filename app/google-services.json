@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "144485672446",
+    "project_id": "my-psychologist-5c7f3",
+    "storage_bucket": "my-psychologist-5c7f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144485672446:android:ead35ce9b2a391f9eaccaf",
+        "android_client_info": {
+          "package_name": "com.example.mypsychologist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144485672446-3dbpog1va0g9ui49j7ii8ol2gh5lcke1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mypsychologist",
+            "certificate_hash": "9d570394810ca36352e1a5f1ad87ec211472b03f"
+          }
+        },
+        {
+          "client_id": "144485672446-gseo4cejdd1vlnnb40frcbbhkhhqcpnr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZBQX_9tYZV_8tqmTA-AM7CXVivd501Hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144485672446-gseo4cejdd1vlnnb40frcbbhkhhqcpnr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
