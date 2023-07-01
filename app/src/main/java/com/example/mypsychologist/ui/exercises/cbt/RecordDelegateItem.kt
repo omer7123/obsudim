@@ -8,12 +8,12 @@ class RecordDelegateItem(
 ) : DelegateItem {
     override fun content(): Any = value
 
-    override fun id(): Int = value.id
+    override fun id(): Int = value.id.hashCode()
 
     override fun compareToOther(other: DelegateItem): Boolean =
         (other as RecordDelegateItem).content() == content()
 
 }
 
-fun List<DiaryRecordEntity>.toDelegateItems() =
-    map { RecordDelegateItem(it) }
+fun HashMap<String, String>.toDelegateItems() =
+    map { RecordDelegateItem(DiaryRecordEntity(it.key, it.value)) }

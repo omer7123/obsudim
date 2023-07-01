@@ -4,6 +4,6 @@ import com.example.mypsychologist.domain.repository.CbtRepository
 import javax.inject.Inject
 
 class GetThoughtDiaryUseCase @Inject constructor(private val repository: CbtRepository) {
-    operator fun invoke(id: Int) =
+    suspend operator fun invoke(id: String) =
         repository.getThoughtDiary(id)
 }

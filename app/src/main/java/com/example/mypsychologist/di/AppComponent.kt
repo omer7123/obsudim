@@ -8,7 +8,7 @@ import javax.inject.Scope
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [])
+@Component(modules = [AppModule::class])
 interface AppComponent {
     fun inject(activity: MainActivity)
 

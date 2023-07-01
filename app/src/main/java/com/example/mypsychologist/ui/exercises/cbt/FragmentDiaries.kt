@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -82,11 +83,15 @@ class  FragmentDiaries : Fragment() {
     private fun render(it: ThoughtDiariesScreenState) {
         when (it) {
             is ThoughtDiariesScreenState.Data -> {
+                binding.progressBar.isVisible = false
                 adapter.submitList(it.records.toDelegateItems())
             }
             is ThoughtDiariesScreenState.Init -> {}
-            is ThoughtDiariesScreenState.Loading -> {}
+            is ThoughtDiariesScreenState.Loading -> {
+                binding.progressBar.isVisible = true
+            }
             is ThoughtDiariesScreenState.Error -> {
+                binding.progressBar.isVisible = false
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.network_error),
@@ -94,5 +99,10 @@ class  FragmentDiaries : Fragment() {
                 ).show()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadDiaries()
     }
 }

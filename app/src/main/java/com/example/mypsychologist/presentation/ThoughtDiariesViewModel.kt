@@ -2,10 +2,12 @@ package com.example.mypsychologist.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.domain.useCase.GetThoughtDiariesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ThoughtDiariesViewModel(private val getThoughtDiariesUseCase: GetThoughtDiariesUseCase) :
@@ -17,8 +19,11 @@ class ThoughtDiariesViewModel(private val getThoughtDiariesUseCase: GetThoughtDi
     val screenState: StateFlow<ThoughtDiariesScreenState>
         get() = _screenState.asStateFlow()
 
-    init {
-        _screenState.value = ThoughtDiariesScreenState.Data(getThoughtDiariesUseCase())
+
+    fun loadDiaries() {
+        viewModelScope.launch {
+            _screenState.value = ThoughtDiariesScreenState.Data(getThoughtDiariesUseCase())
+        }
     }
 
     class Factory @Inject constructor(private val getThoughtDiariesUseCase: GetThoughtDiariesUseCase) :

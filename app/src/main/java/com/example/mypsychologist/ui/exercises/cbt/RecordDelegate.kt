@@ -8,7 +8,7 @@ import com.example.mypsychologist.domain.entity.DiaryRecordEntity
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
-class RecordDelegate(private val onClick: (Int) -> Unit) : AdapterDelegate {
+class RecordDelegate(private val onClick: (String) -> Unit) : AdapterDelegate {
     override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
         RecordItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         onClick
@@ -26,13 +26,14 @@ class RecordDelegate(private val onClick: (Int) -> Unit) : AdapterDelegate {
 
     class ViewHolder(
         private val binding: RecordItemBinding,
-        private val onClick: (Int) -> Unit
+        private val onClick: (String) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(it: DiaryRecordEntity) {
-            binding.situation.text = it.situation
+        fun bind(record: DiaryRecordEntity) {
+            binding.situation.text = record.situation
 
-            itemView.setOnClickListener { onClick(it.id) }
+            itemView.setOnClickListener {
+                onClick(record.id) }
         }
     }
 }

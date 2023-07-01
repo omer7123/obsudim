@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,7 @@ class FragmentDiary : Fragment() {
     private val viewModel: ThoughtDiaryViewModel by viewModels {
         ThoughtDiaryViewModel.provideFactory(
             vmFactory,
-            requireArguments().getInt(ID)
+            requireArguments().getString(ID, "")
         )
     }
 
@@ -65,9 +66,9 @@ class FragmentDiary : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
-        binding.includeAutoThought.cardImage.setOnClickListener {  }
+        binding.includeAutoThought.cardImage.setOnClickListener { }
 
-        binding.includeAlternativeThought.cardImage.setOnClickListener {  }
+        binding.includeAlternativeThought.cardImage.setOnClickListener { }
 
 
         return binding.root
@@ -109,12 +110,14 @@ class FragmentDiary : Fragment() {
     private fun setupRecords(diary: ThoughtDiaryEntity) {
         binding.apply {
             includeSituation.cardDescription.text = diary.situation
-            includeMood.cardDescription.text = diary.mood
+            includeMood.cardDescription.text =
+                getString(R.string.mood_with_level, diary.mood, diary.level.toString())
             includeAutoThought.cardDescription.text = diary.autoThought
             includeProofs.cardDescription.text = diary.proofs
             includeRefutations.cardDescription.text = diary.refutations
             includeAlternativeThought.cardDescription.text = diary.alternativeThought
-            includeNewMood.cardDescription.text = diary.newMood
+            includeNewMood.cardDescription.text =
+                getString(R.string.mood_with_level, diary.newMood, diary.newLevel.toString())
         }
     }
 

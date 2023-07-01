@@ -1,52 +1,65 @@
 package com.example.mypsychologist.data.repository
 
-import android.util.Log
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
-import com.example.mypsychologist.domain.entity.DiaryRecordEntity
 import com.example.mypsychologist.domain.repository.CbtRepository
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.GenericTypeIndicator
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
-class CbtRepositoryImpl @Inject constructor() : CbtRepository {
+class CbtRepositoryImpl @Inject constructor(private val reference: DatabaseReference) :
+    CbtRepository {
 
-    override fun getThoughtDiaries(): List<DiaryRecordEntity> =
-        listOf(
-            DiaryRecordEntity(
-                0,
-                "Триггерная ситуация, которая произошла с клиентом и вызвала нежелательную реакцию"
-            ),
-            DiaryRecordEntity(
-                2,
-                "Триггерная ситуация, которая произошла с клиентом и вызвала нежелательную реакцию"
-            ),
-            DiaryRecordEntity(
-                3,
-                "Триггерная ситуация, которая произошла с клиентом и вызвала нежелательную реакцию"
-            )
-        )
+    override suspend fun getThoughtDiaries(): HashMap<String, String> =
+        suspendCoroutine { continuation ->
 
-    override fun getThoughtDiary(id: Int): ThoughtDiaryEntity =
-        ThoughtDiaryEntity(
-            "Ондатр сломал плотину",
-            "гнев 80%",
-            80,
-            "ондатр редиска",
-            "плотина сломана",
-            "ондатр пытается починить плотину",
-            "ондатр средней редисости",
-            "гнев 30%",
-            30
-        )
+            reference.child(THOUGHT_DIARIES_LIST).get()
+                .addOnSuccessListener {
+                    continuation.resume(
+                        it.getValue(object : GenericTypeIndicator<HashMap<String, String>>() {})
+                            ?: HashMap()
+                    )
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
 
-    override fun saveThoughtDiary(it: ThoughtDiaryEntity): Boolean {
-        Firebase.database("https://my-psychologist-5c7f3-default-rtdb.europe-west1.firebasedatabase.app/")
-            .reference.child(ThoughtDiaryEntity::class.simpleName!!)
-            .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
-            .child(it.situation)
-            .setValue(it)
+        }
 
-        return true
+    override suspend fun getThoughtDiary(id: String): ThoughtDiaryEntity =
+        suspendCoroutine { continuation ->
+
+            reference.child(ThoughtDiaryEntity::class.simpleName!!).child(id).get()
+                .addOnSuccessListener {
+                    continuation.resume(
+                        it.getValue(object : GenericTypeIndicator<ThoughtDiaryEntity>() {})
+                            ?: ThoughtDiaryEntity()
+                    )
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+
+        }
+
+    override fun saveThoughtDiary(it: ThoughtDiaryEntity): Boolean =
+        try {
+            val ref = reference.child(ThoughtDiaryEntity::class.simpleName!!)
+            val key = ref.push().key
+
+            ref.child(key!!).setValue(it)
+
+            reference.child(THOUGHT_DIARIES_LIST).child(key).setValue(it.situation)
+
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
+
+    companion object {
+        private const val THOUGHT_DIARIES_LIST = "thought diaries list"
     }
 }
