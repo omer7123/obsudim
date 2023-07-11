@@ -1,6 +1,6 @@
 package com.example.mypsychologist.domain.entity
 
 data class TestGroupEntity(
-    val title: String,
+    val titleId: Int,
     val iconResource: Int
 )

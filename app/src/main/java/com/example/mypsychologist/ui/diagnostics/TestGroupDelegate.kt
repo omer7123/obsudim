@@ -10,7 +10,7 @@ import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
 class TestGroupDelegate(
-    private val onClick: (String, Boolean) -> Unit
+    private val onClick: (TestGroupEntity, Boolean) -> Unit
 ) : AdapterDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
@@ -30,15 +30,15 @@ class TestGroupDelegate(
 
     class ViewHolder(
         private val binding: TestGroupItemBinding,
-        private val onClick: (String, Boolean) -> Unit
+        private val onClick: (TestGroupEntity, Boolean) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(group: TestGroupEntity) {
-            binding.title.text = group.title
+            binding.title.text = itemView.context.getString(group.titleId)
             binding.leadingIcon.setImageResource(group.iconResource)
 
             binding.arrow.setOnClickListener {
-                onClick(group.title, binding.arrow.isChecked)
+                onClick(group, binding.arrow.isChecked)
             }
         }
     }

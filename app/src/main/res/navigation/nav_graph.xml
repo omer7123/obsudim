@@ -35,4 +35,9 @@
         android:name="com.example.mypsychologist.ui.diagnostics.FragmentTests"
         android:label="FragmentTests"
         tools:layout="@layout/fragment_tests"/>
+    <fragment
+        android:id="@+id/fragment_beck_depression_test"
+        android:name="com.example.mypsychologist.ui.diagnostics.FragmentBeckDepressionTest"
+        android:label="FragmentBeckDepressionTest"
+        tools:layout="@layout/fragment_test"/>
 </navigation>

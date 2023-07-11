@@ -1,11 +1,14 @@
 package com.example.mypsychologist.ui.diagnostics
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,19 +16,17 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestsBinding
 import com.example.mypsychologist.domain.entity.TestCardEntity
 import com.example.mypsychologist.domain.entity.TestGroupEntity
+import com.example.mypsychologist.presentation.TestsViewModel
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class FragmentTests : Fragment() {
 
     private lateinit var binding: FragmentTestsBinding
     private lateinit var mainAdapter: MainAdapter
-
-    private var test: List<DelegateItem> = listOf(
-        TestGroupDelegateItem(0, TestGroupEntity("Депрессия", R.drawable.ic_help)),
-        TestGroupDelegateItem(0, TestGroupEntity("Тревожность", R.drawable.ic_help)),
-        TestGroupDelegateItem(0, TestGroupEntity("Акцентуации", R.drawable.ic_help)),
-    )
+    private val viewModel: TestsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,37 +35,31 @@ class FragmentTests : Fragment() {
     ): View {
         binding = FragmentTestsBinding.inflate(inflater, container, false)
 
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
         setupAdapter()
 
-        mainAdapter.submitList(test)
+        viewModel.screenState
+            .flowWithLifecycle(lifecycle)
+            .onEach { mainAdapter.submitList(it) }
+            .launchIn(lifecycleScope)
 
         return binding.root
     }
 
     private fun setupAdapter() {
-        val onTestGroupClick: (String, Boolean) -> Unit = { title, isChecked ->
+        val onTestGroupClick: (TestGroupEntity, Boolean) -> Unit = { category, isChecked ->
             if (isChecked) {
-                val newList = test.map { it }.toMutableList()
-                val position =
-                    newList.indexOf(newList.find {
-                        (it.content() is TestGroupEntity) && (it.content() as TestGroupEntity).title == title }
-                    )
-                newList.add(
-                    position + 1,
-                    TestDelegateItem(
-                        0,
-                        TestCardEntity("Тест", "Тут будет описание", "А тут пока не будет описания")
-                    )
-                )
-                test = newList
-                mainAdapter.submitList(test)
+                viewModel.setupTestsFor(category)
             } else {
-                test = test.filterIsInstance<TestGroupDelegateItem>()
-                mainAdapter.submitList(test)
+
             }
         }
-        val onTestClick: (String, String) -> Unit = { title, description ->
-
+        val onTestClick: (Int, Int) -> Unit = { titleId, description ->
+            DiagnosticDialogFragment.newInstance(titleId, description)
+                .show(childFragmentManager, DiagnosticDialogFragment.TAG)
         }
 
         mainAdapter = MainAdapter().apply {

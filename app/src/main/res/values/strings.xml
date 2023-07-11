@@ -55,4 +55,13 @@
     <string name="save">Сохранить</string>
     <string name="success">Успех!</string>
     <string name="necessary_to_fill">Необходимо заполнить</string>
+
+    <string name="depression">Депрессия</string>
+
+    <string name="history">История</string>
+    <string name="go">Пройти</string>
+    <string name="depression_beck_test">Шкала Бека для оценки депрессии</string>
+    <string name="depression_beck_test_desc">Данный опросник составлен из 21 группы и четырех утверждений в группе. Внимательно прочтите каждую группу утверждений и выберите утверждение, которое наиболее точно отражает ваше самочувствие, образ мыслей или настроение на этой неделе, включая сегодняшний день.</string>
+    <string name="depression_beck_test_desc_short">Данный опросник составлен из 21 группы и четырех утверждений в группе.</string>
+
 </resources>
