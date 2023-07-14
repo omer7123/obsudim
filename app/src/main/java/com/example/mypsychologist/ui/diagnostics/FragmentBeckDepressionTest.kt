@@ -61,7 +61,8 @@ class FragmentBeckDepressionTest : Fragment() {
                 }.show(childFragmentManager, TAG)
             }
             is BeckDepressionScreenState.Result -> {
-                Toast.makeText(requireContext(), it.score.toString(), Toast.LENGTH_LONG).show()
+                TestResultDialogFragment.newInstance(it.score, getString(it.conclusionId))
+                    .show(childFragmentManager, TestResultDialogFragment.TAG)
             }
         }
     }

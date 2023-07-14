@@ -40,4 +40,9 @@
         android:name="com.example.mypsychologist.ui.diagnostics.FragmentBeckDepressionTest"
         android:label="FragmentBeckDepressionTest"
         tools:layout="@layout/fragment_test"/>
+    <fragment
+        android:id="@+id/fragment_test_history"
+        android:name="com.example.mypsychologist.ui.diagnostics.FragmentTestHistory"
+        android:label="FragmentTestHistory"
+        tools:layout="@layout/fragment_test_history"/>
 </navigation>

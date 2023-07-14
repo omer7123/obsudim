@@ -30,6 +30,8 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_new_diary.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_rebt.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_test.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_test_history.xml" value="0.25" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_test_result_dialog.xml" value="0.203125" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_tests.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/include_edit_text.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/include_seek_bar.xml" value="0.33" />
@@ -38,6 +40,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/record_item.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/test_bottom_sheet.xml" value="0.2" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/test_group_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/test_history_item.xml" value="0.22" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/test_item.xml" value="0.22" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/menu/navigation_items.xml" value="0.203125" />
       </map>
