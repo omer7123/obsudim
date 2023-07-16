@@ -17,11 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiariesBinding
 import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.presentation.ProblemsScreenState
 import com.example.mypsychologist.presentation.ThoughtDiariesScreenState
 import com.example.mypsychologist.presentation.ThoughtDiariesViewModel
 import com.example.mypsychologist.ui.MainAdapter
-import com.example.mypsychologist.ui.exercises.rebt.toDelegateItems
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -71,7 +69,7 @@ class  FragmentDiaries : Fragment() {
             addDelegate(RecordDelegate { id ->
                 findNavController().navigate(
                     R.id.fragment_diary,
-                    bundleOf(FragmentDiary.ID to id)
+                    bundleOf(FragmentThoughtDiary.ID to id)
                 )
             })
 

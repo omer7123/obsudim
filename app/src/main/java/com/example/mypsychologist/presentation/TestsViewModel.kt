@@ -1,32 +1,27 @@
 package com.example.mypsychologist.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.TestCardEntity
 import com.example.mypsychologist.domain.entity.TestGroupEntity
+import com.example.mypsychologist.domain.useCase.GetThoughtDiariesUseCase
+import com.example.mypsychologist.domain.useCase.TestsWithGroupsUseCase
 import com.example.mypsychologist.ui.DelegateItem
-import com.example.mypsychologist.ui.diagnostics.TestDelegateItem
-import com.example.mypsychologist.ui.diagnostics.TestGroupDelegateItem
 import com.example.mypsychologist.ui.diagnostics.toDelegateItem
 import com.example.mypsychologist.ui.diagnostics.toDelegateItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TestsViewModel : ViewModel() {
+class TestsViewModel(
+    testsWithGroupsUseCase: TestsWithGroupsUseCase
+) : ViewModel() {
 
-    private val testsWithCategories = mapOf(
-        TestGroupEntity(R.string.depression, R.drawable.ic_sentiment_very_dissatisfied) to listOf(
-            TestCardEntity(
-                R.string.depression_beck_test,
-                R.string.depression_beck_test_desc_short,
-                R.string.depression_beck_test_desc
-            )
-        )
-    )
+    private val testsWithCategories = testsWithGroupsUseCase()
 
     private val _screenState: MutableStateFlow<List<DelegateItem>> =
         MutableStateFlow(getCategories().toDelegateItem())
@@ -52,6 +47,14 @@ class TestsViewModel : ViewModel() {
                 (testsWithCategories[category] ?: listOf()).toDelegateItems()
             )
             _screenState.emit(newList)
+        }
+    }
+
+    class Factory @Inject constructor(private val testsWithGroupsUseCase: TestsWithGroupsUseCase) :
+        ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            @Suppress("UNCHECKED_CAST")
+            return TestsViewModel(testsWithGroupsUseCase) as T
         }
     }
 }

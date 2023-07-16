@@ -1,5 +1,6 @@
 package com.example.mypsychologist.ui.diagnostics
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,15 +15,25 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestBinding
+import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.BeckDepressionScreenState
 import com.example.mypsychologist.presentation.BeckDepressionTestViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 class FragmentBeckDepressionTest : Fragment() {
 
     private lateinit var binding: FragmentTestBinding
-    private val viewModel: BeckDepressionTestViewModel by viewModels()
+
+    @Inject
+    lateinit var vmFactory: BeckDepressionTestViewModel.Factory
+    private val viewModel: BeckDepressionTestViewModel by viewModels{ vmFactory}
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireContext().getAppComponent().diagnosticComponent().create().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +72,7 @@ class FragmentBeckDepressionTest : Fragment() {
                 }.show(childFragmentManager, TAG)
             }
             is BeckDepressionScreenState.Result -> {
-                TestResultDialogFragment.newInstance(it.score, getString(it.conclusionId))
+                TestResultDialogFragment.newInstance(it.score, getString(it.conclusionId), R.string.depression_beck_test)
                     .show(childFragmentManager, TestResultDialogFragment.TAG)
             }
         }

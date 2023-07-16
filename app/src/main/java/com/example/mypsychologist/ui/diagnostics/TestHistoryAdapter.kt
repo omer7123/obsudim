@@ -3,6 +3,7 @@ package com.example.mypsychologist.ui.diagnostics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.TestHistoryItemBinding
 import com.example.mypsychologist.domain.entity.TestResultEntity
 import com.example.mypsychologist.toDateString
@@ -26,7 +27,7 @@ class TestHistoryAdapter(private val items: List<TestResultEntity>) :
 
         fun bind(item: TestResultEntity) {
             binding.apply {
-                conclusion.text = item.conclusion
+                conclusion.text = itemView.context.getString(item.conclusionId)
                 date.text = Date(item.timestamp).toDateString()
                 score.text = item.score.toString()
             }

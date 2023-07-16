@@ -3,7 +3,7 @@ package com.example.mypsychologist.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.domain.useCase.GetThoughtDiaryUseCase
+import com.example.mypsychologist.domain.useCase.GetTestHistoryUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -12,38 +12,37 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ThoughtDiaryViewModel @AssistedInject constructor(
-    private val getThoughtDiaryUseCase: GetThoughtDiaryUseCase,
-    @Assisted private val id: String
+class TestHistoryViewModel @AssistedInject constructor(
+    @Assisted private val title: String,
+    private val getTestHistoryUseCase: GetTestHistoryUseCase
 ) : ViewModel() {
 
-    private val _screenState: MutableStateFlow<ThoughtDiaryScreenState> =
-        MutableStateFlow(ThoughtDiaryScreenState.Init)
-    val screenState: StateFlow<ThoughtDiaryScreenState>
+    private val _screenState: MutableStateFlow<TestHistoryScreenState> =
+        MutableStateFlow(TestHistoryScreenState.Init)
+    val screenState: StateFlow<TestHistoryScreenState>
         get() = _screenState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            _screenState.value = ThoughtDiaryScreenState.Data(getThoughtDiaryUseCase(id))
+            _screenState.value = TestHistoryScreenState.Data(getTestHistoryUseCase(title))
         }
     }
 
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted id: String
-        ) : ThoughtDiaryViewModel
+            @Assisted title: String
+        ): TestHistoryViewModel
     }
 
     companion object {
         fun provideFactory(
             assistedFactory: Factory,
-            id: String
+            title: String
         ) = object : ViewModelProvider.Factory {
 
             override fun <T : ViewModel> create(modelClass: Class<T>): T =
-                assistedFactory.create(id) as T
+                assistedFactory.create(title) as T
         }
     }
-
 }

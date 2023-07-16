@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class FragmentDiary : Fragment() {
+class FragmentThoughtDiary : Fragment() {
 
     private lateinit var binding: FragmentDiaryBinding
     private var navbarHider: NavbarHider? = null

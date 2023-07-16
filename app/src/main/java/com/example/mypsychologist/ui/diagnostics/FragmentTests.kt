@@ -1,5 +1,6 @@
 package com.example.mypsychologist.ui.diagnostics
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,17 +17,27 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestsBinding
 import com.example.mypsychologist.domain.entity.TestCardEntity
 import com.example.mypsychologist.domain.entity.TestGroupEntity
+import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.TestsViewModel
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 class FragmentTests : Fragment() {
 
     private lateinit var binding: FragmentTestsBinding
     private lateinit var mainAdapter: MainAdapter
-    private val viewModel: TestsViewModel by viewModels()
+
+    @Inject
+    lateinit var vmFactory: TestsViewModel.Factory
+    private val viewModel: TestsViewModel by viewModels { vmFactory }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireContext().getAppComponent().diagnosticComponent().create().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

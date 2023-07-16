@@ -2,7 +2,7 @@ package com.example.mypsychologist.di
 
 import com.example.mypsychologist.ui.exercises.FragmentExercises
 import com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries
-import com.example.mypsychologist.ui.exercises.cbt.FragmentDiary
+import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
 import com.example.mypsychologist.ui.exercises.cbt.FragmentNewDiary
 import com.example.mypsychologist.ui.exercises.rebt.FragmentREBT
 import com.example.mypsychologist.ui.exercises.rebt.ProblemsFragment
@@ -16,7 +16,7 @@ interface ExercisesComponent {
     fun inject(fragment: ProblemsFragment)
 
     fun inject(fragment: FragmentDiaries)
-    fun inject(fragment: FragmentDiary)
+    fun inject(fragment: FragmentThoughtDiary)
     fun inject(fragment: FragmentNewDiary)
 
     @Subcomponent.Factory

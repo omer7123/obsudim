@@ -13,6 +13,7 @@ interface AppComponent {
     fun inject(activity: MainActivity)
 
     fun exercisesComponent(): ExercisesComponent.Factory
+    fun diagnosticComponent(): DiagnosticComponent.Factory
 
     @Component.Factory
     interface Factory {
