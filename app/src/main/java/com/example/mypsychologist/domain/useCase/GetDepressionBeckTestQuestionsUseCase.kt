@@ -113,4 +113,8 @@ class GetDepressionBeckTestQuestionsUseCase @Inject constructor() {
                 )
             )
         )
+
+    companion object {
+        const val TEST_NAME = "beck depression test"
+    }
 }

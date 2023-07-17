@@ -3,6 +3,8 @@ package com.example.mypsychologist.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.mypsychologist.R
+import com.example.mypsychologist.domain.useCase.GetDepressionBeckTestQuestionsUseCase
 import com.example.mypsychologist.domain.useCase.GetTestHistoryUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -13,7 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class TestHistoryViewModel @AssistedInject constructor(
-    @Assisted private val title: String,
+    @Assisted private val titleId: Int,
     private val getTestHistoryUseCase: GetTestHistoryUseCase
 ) : ViewModel() {
 
@@ -22,23 +24,28 @@ class TestHistoryViewModel @AssistedInject constructor(
     val screenState: StateFlow<TestHistoryScreenState>
         get() = _screenState.asStateFlow()
 
+    private val titleResourcesToDataBaseTitles = mapOf(
+        R.string.depression_beck_test to GetDepressionBeckTestQuestionsUseCase.TEST_NAME
+    )
+
     init {
         viewModelScope.launch {
-            _screenState.value = TestHistoryScreenState.Data(getTestHistoryUseCase(title))
+            _screenState.value =
+                TestHistoryScreenState.Data(getTestHistoryUseCase(titleResourcesToDataBaseTitles[titleId]!!))
         }
     }
 
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted title: String
+            @Assisted title: Int
         ): TestHistoryViewModel
     }
 
     companion object {
         fun provideFactory(
             assistedFactory: Factory,
-            title: String
+            title: Int
         ) = object : ViewModelProvider.Factory {
 
             override fun <T : ViewModel> create(modelClass: Class<T>): T =

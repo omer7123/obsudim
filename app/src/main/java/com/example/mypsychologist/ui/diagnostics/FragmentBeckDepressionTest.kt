@@ -28,7 +28,7 @@ class FragmentBeckDepressionTest : Fragment() {
 
     @Inject
     lateinit var vmFactory: BeckDepressionTestViewModel.Factory
-    private val viewModel: BeckDepressionTestViewModel by viewModels{ vmFactory}
+    private val viewModel: BeckDepressionTestViewModel by viewModels{ vmFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

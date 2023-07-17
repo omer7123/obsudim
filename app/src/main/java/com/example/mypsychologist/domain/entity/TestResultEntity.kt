@@ -1,7 +1,7 @@
 package com.example.mypsychologist.domain.entity
 
 data class TestResultEntity(
-    val score: Int,
-    val conclusionId: Int,
-    val timestamp: Long
+    val score: Int = 0,
+    val conclusionId: Int = 0,
+    val timestamp: Long = 0L
 )

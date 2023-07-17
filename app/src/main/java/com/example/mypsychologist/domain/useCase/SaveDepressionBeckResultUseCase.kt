@@ -14,6 +14,7 @@ class SaveDepressionBeckResultUseCase @Inject constructor(
                 result,
                 conclusionId,
                 Calendar.getInstance().timeInMillis
-            )
+            ),
+            GetDepressionBeckTestQuestionsUseCase.TEST_NAME
         )
 }

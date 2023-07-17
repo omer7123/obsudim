@@ -32,7 +32,7 @@ class FragmentTestHistory : Fragment() {
     private val viewModel: TestHistoryViewModel by viewModels {
         TestHistoryViewModel.provideFactory(
             vmFactory,
-            getString(requireArguments().getInt(TEST_TITLE_ID))
+            requireArguments().getInt(TEST_TITLE_ID)
         )
     }
 
