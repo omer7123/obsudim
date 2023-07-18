@@ -18,13 +18,15 @@ import com.example.mypsychologist.databinding.FragmentTestBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.BeckDepressionScreenState
 import com.example.mypsychologist.presentation.BeckDepressionTestViewModel
+import com.example.mypsychologist.showToast
+import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class FragmentBeckDepressionTest : Fragment() {
 
-    private lateinit var binding: FragmentTestBinding
+    private var binding: FragmentTestBinding by autoCleared()
 
     @Inject
     lateinit var vmFactory: BeckDepressionTestViewModel.Factory
@@ -42,13 +44,7 @@ class FragmentBeckDepressionTest : Fragment() {
     ): View {
         binding = FragmentTestBinding.inflate(inflater, container, false)
 
-        binding.apply {
-            includeToolbar.toolbar.setNavigationOnClickListener {
-                findNavController().popBackStack()
-            }
-            title.text = getString(R.string.depression_beck_test)
-            text.text = getString(R.string.depression_beck_test_desc)
-        }
+        setupData()
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
@@ -58,6 +54,16 @@ class FragmentBeckDepressionTest : Fragment() {
         setFragmentResultListeners()
 
         return binding.root
+    }
+
+    private fun setupData() {
+        binding.apply {
+            includeToolbar.toolbar.setNavigationOnClickListener {
+                findNavController().popBackStack()
+            }
+            title.text = getString(R.string.depression_beck_test)
+            text.text = getString(R.string.depression_beck_test_desc)
+        }
     }
 
     private fun render(it: BeckDepressionScreenState) {
@@ -74,6 +80,9 @@ class FragmentBeckDepressionTest : Fragment() {
             is BeckDepressionScreenState.Result -> {
                 TestResultDialogFragment.newInstance(it.score, getString(it.conclusionId), R.string.depression_beck_test)
                     .show(childFragmentManager, TestResultDialogFragment.TAG)
+            }
+            is BeckDepressionScreenState.Error -> {
+                showToast(getString(R.string.network_error))
             }
         }
     }

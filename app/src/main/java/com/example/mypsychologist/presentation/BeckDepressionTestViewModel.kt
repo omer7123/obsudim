@@ -17,6 +17,7 @@ class BeckDepressionTestViewModel(
     private val beckDepressionTestConclusionUseCase: BeckDepressionTestConclusionUseCase,
     private val saveDepressionBeckResultUseCase: SaveDepressionBeckResultUseCase
 ) : ViewModel() {
+
     private val questions = getDepressionBeckTestQuestionsUseCase()
 
     private val answers = MutableList(questions.size) { 0 }
@@ -31,8 +32,7 @@ class BeckDepressionTestViewModel(
             )
         )
     val screenState: StateFlow<BeckDepressionScreenState>
-        get() =
-            _screenState.asStateFlow()
+        get() = _screenState.asStateFlow()
 
     fun saveAnswerAndGoToNext(score: Int) {
         answers[questionNumber] = score
@@ -42,23 +42,25 @@ class BeckDepressionTestViewModel(
 
     private fun nextQuestion() {
         questionNumber += 1
-        viewModelScope.launch {
-            _screenState.emit(
 
-                if (questionNumber < questions.size)
+        viewModelScope.launch {
+
+            _screenState.value =
+                if (questionNumber < questions.size) {
                     BeckDepressionScreenState.Question(questions[questionNumber], questionNumber)
+                }
                 else {
                     val result = answers.sum()
-                    saveAndGetScreenState(result, beckDepressionTestConclusionUseCase(result))
+                    saveResultAndGetScreenState(result, beckDepressionTestConclusionUseCase(result))
                 }
-            )
-
         }
     }
 
-    private fun saveAndGetScreenState(result: Int, conclusionId: Int) = run {
+    private fun saveResultAndGetScreenState(result: Int, conclusionId: Int) = run {
 
-        saveDepressionBeckResultUseCase(result, conclusionId)
+        if (!saveDepressionBeckResultUseCase(result, conclusionId)) {
+            _screenState.value = BeckDepressionScreenState.Error
+        }
 
         BeckDepressionScreenState.Result(
             result,
@@ -85,8 +87,8 @@ class BeckDepressionTestViewModel(
         private val getDepressionBeckTestQuestionsUseCase: GetDepressionBeckTestQuestionsUseCase,
         private val beckDepressionTestResultUseCase: BeckDepressionTestConclusionUseCase,
         private val saveDepressionBeckResultUseCase: SaveDepressionBeckResultUseCase
-    ) :
-        ViewModelProvider.Factory {
+    ) : ViewModelProvider.Factory {
+
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return BeckDepressionTestViewModel(

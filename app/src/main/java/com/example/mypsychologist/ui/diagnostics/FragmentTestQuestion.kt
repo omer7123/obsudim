@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.databinding.TestBottomSheetBinding
 import com.example.mypsychologist.domain.entity.TestQuestionEntity
 import com.example.mypsychologist.parcelable
+import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class FragmentTestQuestion : BottomSheetDialogFragment() {
-    private lateinit var binding: TestBottomSheetBinding
+
+    private var binding: TestBottomSheetBinding by autoCleared()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,6 +24,14 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
     ): View {
         binding = TestBottomSheetBinding.inflate(inflater, container, false)
 
+        setupListeners()
+
+        setupAdapter()
+
+        return binding.root
+    }
+
+    private fun setupListeners() {
         if (!requireArguments().getBoolean(IS_FIRST)) {
 
             binding.backButton.setOnClickListener {
@@ -29,10 +39,6 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
                 dismiss()
             }
         }
-
-        setupAdapter()
-
-        return binding.root
     }
 
     private fun setupAdapter() {

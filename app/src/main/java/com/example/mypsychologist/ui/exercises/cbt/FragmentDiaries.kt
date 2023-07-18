@@ -19,14 +19,16 @@ import com.example.mypsychologist.databinding.FragmentDiariesBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.ThoughtDiariesScreenState
 import com.example.mypsychologist.presentation.ThoughtDiariesViewModel
+import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.MainAdapter
+import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class  FragmentDiaries : Fragment() {
 
-    private lateinit var binding: FragmentDiariesBinding
+    private var binding: FragmentDiariesBinding by autoCleared()
     private lateinit var adapter: MainAdapter
 
     @Inject
@@ -45,14 +47,7 @@ class  FragmentDiaries : Fragment() {
     ): View {
         binding = FragmentDiariesBinding.inflate(inflater, container, false)
 
-        binding.include.toolbar.apply {
-            title = getString(R.string.thought_diary)
-            setNavigationOnClickListener { findNavController().popBackStack() }
-        }
-
-        binding.newDiaryFab.setOnClickListener {
-            findNavController().navigate(R.id.fragment_new_diary)
-        }
+        setupToolbarAndFAB()
 
         setupAdapter()
 
@@ -62,6 +57,17 @@ class  FragmentDiaries : Fragment() {
             .launchIn(lifecycleScope)
 
         return binding.root
+    }
+
+    private fun setupToolbarAndFAB() {
+        binding.include.toolbar.apply {
+            title = getString(R.string.thought_diary)
+            setNavigationOnClickListener { findNavController().popBackStack() }
+        }
+
+        binding.newDiaryFab.setOnClickListener {
+            findNavController().navigate(R.id.fragment_new_diary)
+        }
     }
 
     private fun setupAdapter() {
@@ -90,11 +96,7 @@ class  FragmentDiaries : Fragment() {
             }
             is ThoughtDiariesScreenState.Error -> {
                 binding.progressBar.isVisible = false
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.network_error),
-                    Toast.LENGTH_LONG
-                ).show()
+                showToast(getString(R.string.network_error))
             }
         }
     }

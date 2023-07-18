@@ -10,10 +10,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiagnosticDialogBinding
+import com.example.mypsychologist.ui.autoCleared
 
 class TestResultDialogFragment : DialogFragment() {
 
-    private lateinit var binding: FragmentDiagnosticDialogBinding
+    private var binding: FragmentDiagnosticDialogBinding by autoCleared()
 
     override fun onCreateView(
         inflater: LayoutInflater,

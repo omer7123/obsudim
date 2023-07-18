@@ -12,11 +12,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiagnosticDialogBinding
 import com.example.mypsychologist.presentation.DiagnosticDialogViewModel
+import com.example.mypsychologist.ui.autoCleared
 
 class DiagnosticDialogFragment : DialogFragment() {
 
     private val viewModel: DiagnosticDialogViewModel by viewModels()
-    private lateinit var binding: FragmentDiagnosticDialogBinding
+    private var binding: FragmentDiagnosticDialogBinding by autoCleared()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,29 +26,39 @@ class DiagnosticDialogFragment : DialogFragment() {
     ): View {
         binding = FragmentDiagnosticDialogBinding.inflate(inflater, container, false)
 
-        binding.apply {
-            title.text = getString(requireArguments().getInt(TITLE_ID))
-            text.text = getString(requireArguments().getInt(DESCRIPTION_ID))
-        }
+        setupTitleAndText()
 
         setupListeners()
 
         return binding.root
     }
 
+    private fun setupTitleAndText() {
+        binding.apply {
+            title.text = getString(requireArguments().getInt(TITLE_ID))
+            text.text = getString(requireArguments().getInt(DESCRIPTION_ID))
+        }
+    }
+
     private fun setupListeners() {
         binding.historyButton.setOnClickListener {
-            findNavController().navigate(R.id.fragment_test_history, bundleOf(
-                FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID)
-            ))
+            findNavController().navigate(
+                R.id.fragment_test_history, bundleOf(
+                    FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID)
+                )
+            )
         }
 
         binding.goButton.setOnClickListener {
-            viewModel.getScreenIdFor(
-                requireArguments().getInt(TITLE_ID)
-            )?.let { screenId ->
-                findNavController().navigate(screenId)
-            }
+            navigateToTest()
+        }
+    }
+
+    private fun navigateToTest() {
+        val titleId = requireArguments().getInt(TITLE_ID)
+
+        viewModel.getScreenIdFor(titleId)?.let { screenId ->
+            findNavController().navigate(screenId)
         }
     }
 

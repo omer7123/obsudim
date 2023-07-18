@@ -10,12 +10,12 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentMainBinding
 import com.example.mypsychologist.presentation.MainViewModel
 import com.example.mypsychologist.setupCard
+import com.example.mypsychologist.ui.autoCleared
 
 
 class MainFragment : Fragment() {
 
-    private lateinit var viewModel: MainViewModel
-    private lateinit var binding: FragmentMainBinding
+    private var binding: FragmentMainBinding by autoCleared()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

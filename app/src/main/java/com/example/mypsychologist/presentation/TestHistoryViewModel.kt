@@ -29,9 +29,16 @@ class TestHistoryViewModel @AssistedInject constructor(
     )
 
     init {
+        loadHistory()
+    }
+
+    private fun loadHistory() {
+        _screenState.value = TestHistoryScreenState.Loading
+
         viewModelScope.launch {
-            _screenState.value =
-                TestHistoryScreenState.Data(getTestHistoryUseCase(titleResourcesToDataBaseTitles[titleId]!!))
+            titleResourcesToDataBaseTitles[titleId]?.let { title ->
+                _screenState.value = TestHistoryScreenState.Data(getTestHistoryUseCase(title))
+            }
         }
     }
 

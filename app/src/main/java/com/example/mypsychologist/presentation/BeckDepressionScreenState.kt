@@ -7,4 +7,5 @@ sealed interface BeckDepressionScreenState {
         BeckDepressionScreenState
 
     class Result(val score: Int, val conclusionId: Int) : BeckDepressionScreenState
+    object Error: BeckDepressionScreenState
 }

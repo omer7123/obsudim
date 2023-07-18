@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -21,13 +22,14 @@ import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.TestsViewModel
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
+import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class FragmentTests : Fragment() {
 
-    private lateinit var binding: FragmentTestsBinding
+    private var binding: FragmentTestsBinding by autoCleared()
     private lateinit var mainAdapter: MainAdapter
 
     @Inject
@@ -61,13 +63,15 @@ class FragmentTests : Fragment() {
     }
 
     private fun setupAdapter() {
+
         val onTestGroupClick: (TestGroupEntity, Boolean) -> Unit = { category, isChecked ->
             if (isChecked) {
                 viewModel.setupTestsFor(category)
             } else {
-
+                viewModel.hintTestsFor(category.titleId)
             }
         }
+
         val onTestClick: (Int, Int) -> Unit = { titleId, description ->
             DiagnosticDialogFragment.newInstance(titleId, description)
                 .show(childFragmentManager, DiagnosticDialogFragment.TAG)
@@ -78,14 +82,9 @@ class FragmentTests : Fragment() {
             addDelegate(TestDelegate(onTestClick))
         }
 
-        val dividerItemDecoration =
-            DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
-        dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.test_group_item_divider))
-
         binding.testsRw.apply {
             adapter = mainAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(dividerItemDecoration)
         }
     }
 }

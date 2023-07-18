@@ -23,6 +23,12 @@ class ThoughtDiaryViewModel @AssistedInject constructor(
         get() = _screenState.asStateFlow()
 
     init {
+        loadDiary()
+    }
+
+    private fun loadDiary() {
+        _screenState.value = ThoughtDiaryScreenState.Loading
+
         viewModelScope.launch {
             _screenState.value = ThoughtDiaryScreenState.Data(getThoughtDiaryUseCase(id))
         }

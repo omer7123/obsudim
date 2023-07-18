@@ -20,13 +20,15 @@ import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.NewThoughtDiaryViewModel
+import com.example.mypsychologist.showToast
+import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class FragmentNewDiary : Fragment() {
 
-    private lateinit var binding: FragmentNewDiaryBinding
+    private var binding: FragmentNewDiaryBinding by autoCleared()
     private var navbarHider: NavbarHider? = null
 
     @Inject
@@ -166,7 +168,7 @@ class FragmentNewDiary : Fragment() {
 
     private fun renderRequest(isSuccess: Boolean) {
         if (isSuccess) {
-            Toast.makeText(requireContext(), getString(R.string.success), Toast.LENGTH_LONG).show()
+            showToast( getString(R.string.success))
             findNavController().popBackStack()
         } else {
             Toast.makeText(requireContext(), getString(R.string.network_error), Toast.LENGTH_LONG).show()

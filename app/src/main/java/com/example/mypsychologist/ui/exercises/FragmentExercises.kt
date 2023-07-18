@@ -8,13 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentExercisesBinding
+import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.FragmentCBT
 import com.example.mypsychologist.ui.exercises.rebt.FragmentREBT
 import com.google.android.material.tabs.TabLayoutMediator
 
 class FragmentExercises : Fragment() {
 
-    private lateinit var binding: FragmentExercisesBinding
+    private var binding: FragmentExercisesBinding by autoCleared()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -19,8 +19,9 @@ class ThoughtDiariesViewModel(private val getThoughtDiariesUseCase: GetThoughtDi
     val screenState: StateFlow<ThoughtDiariesScreenState>
         get() = _screenState.asStateFlow()
 
-
     fun loadDiaries() {
+        _screenState.value = ThoughtDiariesScreenState.Loading
+
         viewModelScope.launch {
             _screenState.value = ThoughtDiariesScreenState.Data(getThoughtDiariesUseCase())
         }
@@ -28,6 +29,7 @@ class ThoughtDiariesViewModel(private val getThoughtDiariesUseCase: GetThoughtDi
 
     class Factory @Inject constructor(private val getThoughtDiariesUseCase: GetThoughtDiariesUseCase) :
         ViewModelProvider.Factory {
+
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return ThoughtDiariesViewModel(getThoughtDiariesUseCase) as T

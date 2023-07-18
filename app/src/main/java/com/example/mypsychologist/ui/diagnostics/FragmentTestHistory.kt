@@ -19,13 +19,14 @@ import com.example.mypsychologist.domain.entity.TestResultEntity
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.TestHistoryScreenState
 import com.example.mypsychologist.presentation.TestHistoryViewModel
+import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class FragmentTestHistory : Fragment() {
 
-    private lateinit var binding: FragmentTestHistoryBinding
+    private var binding: FragmentTestHistoryBinding by autoCleared()
 
     @Inject
     lateinit var vmFactory: TestHistoryViewModel.Factory

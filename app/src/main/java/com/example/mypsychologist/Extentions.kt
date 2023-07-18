@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
 import com.example.mypsychologist.databinding.CardViewGroupBinding
@@ -36,4 +37,8 @@ inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
 fun Date.toDateString(): String {
     val format = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
     return format.format(this)
+}
+
+fun Fragment.showToast(message: String) {
+    Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
 }

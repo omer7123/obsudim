@@ -19,13 +19,14 @@ import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.ThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.ThoughtDiaryViewModel
+import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class FragmentThoughtDiary : Fragment() {
 
-    private lateinit var binding: FragmentDiaryBinding
+    private var binding: FragmentDiaryBinding by autoCleared()
     private var navbarHider: NavbarHider? = null
 
     @Inject
@@ -57,19 +58,12 @@ class FragmentThoughtDiary : Fragment() {
 
         setupTitles()
 
-        binding.includeToolbar.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
+        setupListeners()
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
             .onEach { render(it) }
             .launchIn(lifecycleScope)
-
-        binding.includeAutoThought.cardImage.setOnClickListener { }
-
-        binding.includeAlternativeThought.cardImage.setOnClickListener { }
-
 
         return binding.root
     }
@@ -88,6 +82,15 @@ class FragmentThoughtDiary : Fragment() {
             includeAlternativeThought.cardImage.setImageResource(R.drawable.ic_edit)
             includeNewMood.cardTitle.text = getString(R.string.new_mood)
         }
+    }
+
+    private fun setupListeners() {
+        binding.includeToolbar.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.includeAutoThought.cardImage.setOnClickListener { }
+        binding.includeAlternativeThought.cardImage.setOnClickListener { }
     }
 
     private fun render(it: ThoughtDiaryScreenState) {

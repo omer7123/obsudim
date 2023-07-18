@@ -1,6 +1,5 @@
 package com.example.mypsychologist.data.repository
 
-import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.TestResultEntity
 import com.example.mypsychologist.domain.repository.DiagnosticRepository
 import com.google.firebase.database.DatabaseReference

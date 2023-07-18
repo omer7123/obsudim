@@ -11,10 +11,11 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentCbtBinding
 import com.example.mypsychologist.domain.entity.DiaryCard
 import com.example.mypsychologist.setupCard
+import com.example.mypsychologist.ui.autoCleared
 
 class FragmentCBT : Fragment() {
 
-    private lateinit var binding: FragmentCbtBinding
+    private var binding: FragmentCbtBinding by autoCleared()
 
     override fun onCreateView(
         inflater: LayoutInflater,
