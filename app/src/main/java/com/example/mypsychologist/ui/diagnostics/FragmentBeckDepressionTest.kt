@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestBinding
 import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.BeckDepressionScreenState
 import com.example.mypsychologist.presentation.BeckDepressionTestViewModel
 import com.example.mypsychologist.showToast
@@ -78,11 +79,14 @@ class FragmentBeckDepressionTest : Fragment() {
                 }.show(childFragmentManager, TAG)
             }
             is BeckDepressionScreenState.Result -> {
+                if (!isNetworkConnect()) {
+                    showToast(getString(R.string.network_error))
+                }
                 TestResultDialogFragment.newInstance(it.score, getString(it.conclusionId), R.string.depression_beck_test)
                     .show(childFragmentManager, TestResultDialogFragment.TAG)
             }
             is BeckDepressionScreenState.Error -> {
-                showToast(getString(R.string.network_error))
+                showToast(getString(R.string.db_error))
             }
         }
     }

@@ -1,11 +1,15 @@
 package com.example.mypsychologist
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
+import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.mypsychologist.databinding.CardViewGroupBinding
 import com.example.mypsychologist.di.AppComponent
@@ -42,3 +46,6 @@ fun Date.toDateString(): String {
 fun Fragment.showToast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
 }
+
+fun Fragment.isNetworkConnect(): Boolean =
+    (requireActivity() as ConnectionChecker).isConnection()

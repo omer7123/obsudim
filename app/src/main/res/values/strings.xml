@@ -3,6 +3,8 @@
 
     <string name="hallow">Добро пожаловать!</string>
     <string name="network_error">Ошибка сети</string>
+    <string name="connect">Соединение восстановлено</string>
+    <string name="db_error">Ошибка базы данных</string>
 
     <string name="main">Главная</string>
     <string name="records">Записи</string>

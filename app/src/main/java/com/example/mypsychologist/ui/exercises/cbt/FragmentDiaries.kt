@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiariesBinding
 import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.ThoughtDiariesScreenState
 import com.example.mypsychologist.presentation.ThoughtDiariesViewModel
 import com.example.mypsychologist.showToast
@@ -92,7 +93,10 @@ class  FragmentDiaries : Fragment() {
             }
             is ThoughtDiariesScreenState.Init -> {}
             is ThoughtDiariesScreenState.Loading -> {
-                binding.progressBar.isVisible = true
+                if (isNetworkConnect())
+                    binding.progressBar.isVisible = true
+                else
+                    showToast(getString(R.string.network_error))
             }
             is ThoughtDiariesScreenState.Error -> {
                 binding.progressBar.isVisible = false

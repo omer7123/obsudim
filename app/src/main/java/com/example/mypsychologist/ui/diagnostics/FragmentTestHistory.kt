@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.diagnostics
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,10 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestHistoryBinding
 import com.example.mypsychologist.domain.entity.TestResultEntity
 import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.TestHistoryScreenState
 import com.example.mypsychologist.presentation.TestHistoryViewModel
+import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -62,7 +65,11 @@ class FragmentTestHistory : Fragment() {
     private fun render(state: TestHistoryScreenState) {
         when (state) {
             is TestHistoryScreenState.Loading -> {
-                binding.progressBar.isVisible = true
+                if (isNetworkConnect())
+                    binding.progressBar.isVisible = true
+                else {
+                    showToast(getString(R.string.network_error))
+                }
             }
             is TestHistoryScreenState.Data -> {
                 binding.progressBar.isVisible = false
@@ -70,11 +77,7 @@ class FragmentTestHistory : Fragment() {
             }
             is TestHistoryScreenState.Error -> {
                 binding.progressBar.isVisible = false
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.network_error),
-                    Toast.LENGTH_LONG
-                ).show()
+                showToast(getString(R.string.network_error))
             }
             is TestHistoryScreenState.Init -> {}
         }

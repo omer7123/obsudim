@@ -1,5 +1,6 @@
 package com.example.mypsychologist.data.repository
 
+import android.util.Log
 import com.example.mypsychologist.domain.entity.TestResultEntity
 import com.example.mypsychologist.domain.repository.DiagnosticRepository
 import com.google.firebase.database.DatabaseReference

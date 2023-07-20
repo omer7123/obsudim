@@ -13,14 +13,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.NavbarHider
-import com.example.mypsychologist.R
+import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentNewDiaryBinding
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
-import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.NewThoughtDiaryViewModel
-import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -167,12 +164,22 @@ class FragmentNewDiary : Fragment() {
     }
 
     private fun renderRequest(isSuccess: Boolean) {
-        if (isSuccess) {
-            showToast( getString(R.string.success))
-            findNavController().popBackStack()
-        } else {
-            Toast.makeText(requireContext(), getString(R.string.network_error), Toast.LENGTH_LONG).show()
-        }
+        showToast(
+            getString(
+                when {
+                    !isSuccess -> {
+                        R.string.db_error
+                    }
+                    !isNetworkConnect() -> {
+                        R.string.network_error
+                    }
+                    else -> {
+                        findNavController().popBackStack()
+                        R.string.success
+                    }
+                }
+            )
+        )
     }
 
     private fun renderValidationError(fieldsWithError: List<String>) {
