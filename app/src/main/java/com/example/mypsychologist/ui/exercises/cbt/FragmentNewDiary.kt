@@ -19,6 +19,7 @@ import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.presentation.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.NewThoughtDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -164,22 +165,25 @@ class FragmentNewDiary : Fragment() {
     }
 
     private fun renderRequest(isSuccess: Boolean) {
-        showToast(
-            getString(
+
                 when {
                     !isSuccess -> {
-                        R.string.db_error
+                        showToast(getString(R.string.db_error))
                     }
                     !isNetworkConnect() -> {
-                        R.string.network_error
+                        Snackbar.make(
+                            binding.coordinator,
+                            R.string.save_after_connect,
+                            Snackbar.LENGTH_LONG
+                        ).setAction(R.string.go) {
+                            findNavController().popBackStack()
+                        }.show()
                     }
                     else -> {
                         findNavController().popBackStack()
-                        R.string.success
+                        showToast(getString(R.string.success))
                     }
                 }
-            )
-        )
     }
 
     private fun renderValidationError(fieldsWithError: List<String>) {

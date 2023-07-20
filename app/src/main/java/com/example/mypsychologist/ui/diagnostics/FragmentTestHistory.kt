@@ -68,12 +68,16 @@ class FragmentTestHistory : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else {
-                    showToast(getString(R.string.network_error))
+                    binding.includePlaceholder.layout.isVisible = true
                 }
             }
             is TestHistoryScreenState.Data -> {
                 binding.progressBar.isVisible = false
-                setupAdapter(state.results)
+                binding.includePlaceholder.layout.isVisible = false
+                if(state.results.isNotEmpty())
+                    setupAdapter(state.results)
+                else
+                    showPlaceholderForEmptyList()
             }
             is TestHistoryScreenState.Error -> {
                 binding.progressBar.isVisible = false
@@ -89,6 +93,15 @@ class FragmentTestHistory : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = TestHistoryAdapter(list)
+        }
+    }
+
+    private fun showPlaceholderForEmptyList() {
+        binding.includePlaceholder.apply {
+            image.setImageResource(R.drawable.ic_import_contacts)
+            title.text = getString(R.string.nothing)
+            text.text = getString(R.string.no_tests)
+            layout.isVisible = true
         }
     }
 

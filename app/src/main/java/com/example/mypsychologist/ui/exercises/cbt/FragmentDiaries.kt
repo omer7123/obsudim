@@ -89,19 +89,34 @@ class  FragmentDiaries : Fragment() {
         when (it) {
             is ThoughtDiariesScreenState.Data -> {
                 binding.progressBar.isVisible = false
-                adapter.submitList(it.records.toDelegateItems())
+                binding.includePlaceholder.layout.isVisible = false
+
+                if(it.records.isNotEmpty())
+                    adapter.submitList(it.records.toDelegateItems())
+                else {
+                    showPlaceholderForEmptyList()
+                }
             }
             is ThoughtDiariesScreenState.Init -> {}
             is ThoughtDiariesScreenState.Loading -> {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    binding.includePlaceholder.layout.isVisible = true
             }
             is ThoughtDiariesScreenState.Error -> {
                 binding.progressBar.isVisible = false
                 showToast(getString(R.string.network_error))
             }
+        }
+    }
+
+    private fun showPlaceholderForEmptyList() {
+        binding.includePlaceholder.apply {
+            image.setImageResource(R.drawable.ic_import_contacts)
+            title.text = getString(R.string.nothing)
+            text.text = getString(R.string.no_diaries)
+            layout.isVisible = true
         }
     }
 
