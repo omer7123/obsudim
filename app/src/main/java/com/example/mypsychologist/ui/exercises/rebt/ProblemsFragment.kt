@@ -19,6 +19,7 @@ import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.ProblemsScreenState
 import com.example.mypsychologist.presentation.ProblemsViewModel
 import com.example.mypsychologist.ui.MainAdapter
+import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -26,7 +27,7 @@ import javax.inject.Inject
 
 class ProblemsFragment : BottomSheetDialogFragment() {
 
-    private lateinit var binding: ChangeProblemBottomSheetBinding
+    private var binding: ChangeProblemBottomSheetBinding by autoCleared()
     private lateinit var mainAdapter: MainAdapter
 
     @Inject

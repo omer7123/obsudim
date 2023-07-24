@@ -95,6 +95,7 @@ class FragmentNewDiary : Fragment() {
         }
 
         setupTextListeners()
+        setupHelpListeners()
 
         binding.saveButton.setOnClickListener { viewModel.tryToSaveDiary() }
     }
@@ -152,6 +153,37 @@ class FragmentNewDiary : Fragment() {
         }
     }
 
+    private fun setupHelpListeners() {
+        binding.apply {
+            includeSituation.inputLayout.setEndIconOnClickListener {
+                showHint(R.string.situation)
+            }
+            includeMood.inputLayout.setEndIconOnClickListener {
+                showHint(R.string.mood)
+            }
+            includeAutoThought.inputLayout.setEndIconOnClickListener {
+                showHint(R.string.auto_thought)
+            }
+            includeProofs.inputLayout.setEndIconOnClickListener {
+                showHint(R.string.proofs)
+            }
+            includeRefutations.inputLayout.setEndIconOnClickListener {
+                showHint(R.string.refutations)
+            }
+            includeAlternativeThought.inputLayout.setEndIconOnClickListener {
+                showHint(R.string.alternative_thought)
+            }
+            includeNewMood.inputLayout.setEndIconOnClickListener {
+                showHint(R.string.new_mood)
+            }
+        }
+    }
+
+    private fun showHint(titleId: Int) {
+        FragmentHint.newInstance(titleId, viewModel.getHintIdFor(titleId)!!)
+            .show(childFragmentManager, "tag")
+    }
+
     private fun render(it: NewThoughtDiaryScreenState) {
         when (it) {
             is NewThoughtDiaryScreenState.RequestResult -> {
@@ -166,24 +198,24 @@ class FragmentNewDiary : Fragment() {
 
     private fun renderRequest(isSuccess: Boolean) {
 
-                when {
-                    !isSuccess -> {
-                        showToast(getString(R.string.db_error))
-                    }
-                    !isNetworkConnect() -> {
-                        Snackbar.make(
-                            binding.coordinator,
-                            R.string.save_after_connect,
-                            Snackbar.LENGTH_LONG
-                        ).setAction(R.string.go) {
-                            findNavController().popBackStack()
-                        }.show()
-                    }
-                    else -> {
-                        findNavController().popBackStack()
-                        showToast(getString(R.string.success))
-                    }
-                }
+        when {
+            !isSuccess -> {
+                showToast(getString(R.string.db_error))
+            }
+            !isNetworkConnect() -> {
+                Snackbar.make(
+                    binding.coordinator,
+                    R.string.save_after_connect,
+                    Snackbar.LENGTH_LONG
+                ).setAction(R.string.go) {
+                    findNavController().popBackStack()
+                }.show()
+            }
+            else -> {
+                findNavController().popBackStack()
+                showToast(getString(R.string.success))
+            }
+        }
     }
 
     private fun renderValidationError(fieldsWithError: List<String>) {

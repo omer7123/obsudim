@@ -2,6 +2,7 @@ package com.example.mypsychologist.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.getMapOfMembers
 import com.example.mypsychologist.domain.useCase.SaveThoughtDiaryUseCase
@@ -79,6 +80,19 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
 
         return !containErrors
     }
+
+    private val titlesWithHints = mapOf(
+        R.string.situation to R.string.situation_help,
+        R.string.mood to R.string.mood_help,
+        R.string.auto_thought to R.string.auto_thought_help,
+        R.string.proofs to R.string.proofs_help,
+        R.string.refutations to R.string.refutations_help,
+        R.string.alternative_thought to R.string.alternative_thought_help,
+        R.string.new_mood to R.string.new_mood_help
+    )
+
+    fun getHintIdFor(titleId: Int) =
+        titlesWithHints[titleId]
 
     class Factory @Inject constructor(private val saveThoughtDiaryUseCase: SaveThoughtDiaryUseCase) :
         ViewModelProvider.Factory {
