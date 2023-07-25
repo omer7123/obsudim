@@ -12,14 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.NavbarHider
-import com.example.mypsychologist.R
+import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentDiaryBinding
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
-import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.ThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.ThoughtDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.exercises.FragmentEditField
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -89,8 +88,41 @@ class FragmentThoughtDiary : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.includeAutoThought.cardImage.setOnClickListener { }
-        binding.includeAlternativeThought.cardImage.setOnClickListener { }
+        binding.includeAutoThought.cardImage.setOnClickListener {
+            childFragmentManager.setFragmentResultListener(
+                EDIT_AUTO_THOUGHT,
+                viewLifecycleOwner
+            ) { _, bundle ->
+
+                bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
+                    viewModel.editAutoThought(newText)
+                    binding.includeAutoThought.cardDescription.text = newText
+                }
+            }
+
+            FragmentEditField.newInstance(
+                R.string.auto_thought,
+                binding.includeAutoThought.cardDescription.text.toString()
+            ).show(childFragmentManager, EDIT_AUTO_THOUGHT)
+        }
+
+        binding.includeAlternativeThought.cardImage.setOnClickListener {
+            childFragmentManager.setFragmentResultListener(
+                EDIT_ALTERNATIVE_THOUGHT,
+                viewLifecycleOwner
+            ) { _, bundle ->
+
+                bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
+                    viewModel.editAlternativeThought(newText)
+                    binding.includeAlternativeThought.cardDescription.text = newText
+                }
+            }
+
+            FragmentEditField.newInstance(
+                R.string.alternative_thought,
+                binding.includeAlternativeThought.cardDescription.text.toString()
+            ).show(childFragmentManager, EDIT_ALTERNATIVE_THOUGHT)
+        }
     }
 
     private fun render(it: ThoughtDiaryScreenState) {
@@ -99,13 +131,19 @@ class FragmentThoughtDiary : Fragment() {
                 setupRecords(it.diary)
             }
             is ThoughtDiaryScreenState.Init -> {}
-            is ThoughtDiaryScreenState.Loading -> {}
+            is ThoughtDiaryScreenState.Loading -> {
+                if (!isNetworkConnect()) {
+                    showToast(getString(R.string.network_error))
+                }
+            }
             is ThoughtDiaryScreenState.Error -> {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.network_error),
-                    Toast.LENGTH_LONG
-                ).show()
+                showToast(getString(R.string.db_error))
+            }
+            is ThoughtDiaryScreenState.EditingSuccess -> {
+                if (isNetworkConnect())
+                    showToast(getString(R.string.success))
+                else
+                    showToast(getString(R.string.network_error))
             }
         }
     }
@@ -132,5 +170,7 @@ class FragmentThoughtDiary : Fragment() {
 
     companion object {
         const val ID = "situation"
+        private const val EDIT_AUTO_THOUGHT = "auto_thought"
+        private const val EDIT_ALTERNATIVE_THOUGHT = "alternative_thought"
     }
 }

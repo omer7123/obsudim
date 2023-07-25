@@ -58,8 +58,32 @@ class CbtRepositoryImpl @Inject constructor(private val reference: DatabaseRefer
             false
         }
 
+    override fun editAutoThought(diaryId: String, newText: String): Boolean =
+        try {
+            reference.child(ThoughtDiaryEntity::class.simpleName!!)
+                .child(diaryId)
+                .updateChildren(mapOf(AUTO_THOUGHT to newText))
+
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
+    override fun editAlternativeThought(diaryId: String, newText: String): Boolean =
+        try {
+            reference.child(ThoughtDiaryEntity::class.simpleName!!)
+                .child(diaryId)
+                .updateChildren(mapOf(ALTERNATIVE_THOUGHT to newText))
+
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
 
     companion object {
         private const val THOUGHT_DIARIES_LIST = "thought diaries list"
+        private const val AUTO_THOUGHT = "autoThought"
+        private const val ALTERNATIVE_THOUGHT = "alternativeThought"
     }
 }

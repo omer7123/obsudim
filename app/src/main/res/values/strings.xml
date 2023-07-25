@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">My Psychologist</string>
 
+    <string name="in_design">Раздел в разработке</string>
+
     <string name="hallow">Добро пожаловать!</string>
     <string name="network_error">Ошибка сети</string>
     <string name="connect">Соединение восстановлено</string>
@@ -57,6 +59,7 @@
     <string name="alternative_thought_helper">Что вы теперь думаете об этой ситуации?</string>
     <string name="new_mood_helper">Какое у вас сейчас настроение?</string>
     <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
     <string name="success">Успех!</string>
     <string name="necessary_to_fill">Необходимо заполнить</string>
     <string name="situation_help">Опишите любые текущие события или собственные мысли. Это может быть ситуация, в которой вы оказались, триггер из внешнего мира, стимул или, возможно, воспоминания или мысли о прошлом опыте, которые вызвали у вас сильные эмоциональные переживания.</string>

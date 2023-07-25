@@ -3,6 +3,8 @@ package com.example.mypsychologist.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.mypsychologist.domain.useCase.EditAlternativeThoughtUseCase
+import com.example.mypsychologist.domain.useCase.EditAutoThoughtUseCase
 import com.example.mypsychologist.domain.useCase.GetThoughtDiaryUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -14,6 +16,8 @@ import kotlinx.coroutines.launch
 
 class ThoughtDiaryViewModel @AssistedInject constructor(
     private val getThoughtDiaryUseCase: GetThoughtDiaryUseCase,
+    private val editAutoThoughtUseCase: EditAutoThoughtUseCase,
+    private val editAlternativeThoughtUseCase: EditAlternativeThoughtUseCase,
     @Assisted private val id: String
 ) : ViewModel() {
 
@@ -34,11 +38,31 @@ class ThoughtDiaryViewModel @AssistedInject constructor(
         }
     }
 
+    fun editAutoThought(newText: String) {
+        viewModelScope.launch {
+            _screenState.value =
+                if (editAutoThoughtUseCase(id, newText))
+                    ThoughtDiaryScreenState.EditingSuccess
+                else
+                    ThoughtDiaryScreenState.Error
+        }
+    }
+
+    fun editAlternativeThought(newText: String) {
+        viewModelScope.launch {
+            _screenState.value =
+                if (editAlternativeThoughtUseCase(id, newText))
+                    ThoughtDiaryScreenState.EditingSuccess
+                else
+                    ThoughtDiaryScreenState.Error
+        }
+    }
+
     @AssistedFactory
     interface Factory {
         fun create(
             @Assisted id: String
-        ) : ThoughtDiaryViewModel
+        ): ThoughtDiaryViewModel
     }
 
     companion object {

@@ -53,7 +53,7 @@ class FragmentREBT : Fragment() {
     }
 
     private fun setupCards() {
-        binding.apply {
+  /*      binding.apply {
             setupCard(
                 problemAnalysis,
                 R.string.problem_analysis,
@@ -66,7 +66,7 @@ class FragmentREBT : Fragment() {
                 R.string.beliefs_analysis_signature
             )
             setupCard(dialog, R.string.dialog, R.string.dialog_signature)
-        }
+        } */
     }
 
     private fun render(it: REBTScreenState) {
@@ -87,7 +87,7 @@ class FragmentREBT : Fragment() {
     }
 
     private fun setupData(it: REBTScreenState.Data) {
-        it.problemProgress.apply {
+    /*    it.problemProgress.apply {
             binding.problem.text = problem
 
             if (problemAnalysisCompleted)
@@ -102,11 +102,11 @@ class FragmentREBT : Fragment() {
             if (dialogCompleted)
                 binding.dialog.card.background =
                     getDrawable(requireContext(), R.drawable.primary_card)
-        }
+        } */
     }
 
     private fun setupListeners() {
-        binding.changeButton.setOnClickListener {
+     /*   binding.changeButton.setOnClickListener {
             childFragmentManager.setFragmentResultListener(
                 ProblemsFragment.PROBLEM,
                 viewLifecycleOwner
@@ -115,7 +115,7 @@ class FragmentREBT : Fragment() {
             }
 
             ProblemsFragment().show(childFragmentManager, TAG)
-        }
+        } */
     }
 
     companion object {

@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
             createSignInIntent()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+
     }
 
     private fun createSignInIntent() {
@@ -60,6 +61,8 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     }
 
     private fun registerNetworkCallback() {
+        var firstFlag = true
+
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val networkRequest = NetworkRequest.Builder()
@@ -68,13 +71,17 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         cm.registerNetworkCallback(networkRequest, object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 isConnection = true
-                Toast.makeText(
-                    this@MainActivity,
-                    getString(R.string.connect),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+
+                if (!firstFlag)
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.connect),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                firstFlag = false
             }
+
 
             override fun onLost(network: Network) {
                 isConnection = false
@@ -85,8 +92,9 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                     this@MainActivity,
                     getString(R.string.network_error),
                     Toast.LENGTH_LONG
-                )
-                    .show()
+                ).show()
+
+                firstFlag = false
             }
         })
     }
