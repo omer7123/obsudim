@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.PhoneBuilder().build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
+       //     AuthUI.IdpConfig.GoogleBuilder().build()
         )
 
         val signInIntent = AuthUI.getInstance()

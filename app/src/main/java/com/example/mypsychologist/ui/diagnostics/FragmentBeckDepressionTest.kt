@@ -32,7 +32,7 @@ class FragmentBeckDepressionTest : Fragment() {
 
     @Inject
     lateinit var vmFactory: BeckDepressionTestViewModel.Factory
-    private val viewModel: BeckDepressionTestViewModel by viewModels{ vmFactory }
+    private val viewModel: BeckDepressionTestViewModel by viewModels { vmFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -71,13 +71,11 @@ class FragmentBeckDepressionTest : Fragment() {
     private fun render(state: BeckDepressionScreenState) {
         when (state) {
             is BeckDepressionScreenState.Question -> {
-                FragmentTestQuestion().apply {
-                    arguments = bundleOf(
-                        FragmentTestQuestion.ANSWER_VARIANTS to state.answerVariants,
-                        FragmentTestQuestion.IS_FIRST to (state.number == 0)
-                    )
-                    isCancelable = false
-                }.show(childFragmentManager, TAG)
+                FragmentTestQuestion.newInstance(
+                    state.answerVariants,
+                    state.number + 1,
+                    state.count
+                ).show(childFragmentManager, TAG)
             }
             is BeckDepressionScreenState.Result -> {
                 if (!isNetworkConnect()) {
@@ -88,8 +86,7 @@ class FragmentBeckDepressionTest : Fragment() {
                     ).setAction(R.string.show_result) {
                         showResult(state)
                     }.show()
-                }
-                else {
+                } else {
                     showResult(state)
                 }
             }
@@ -100,7 +97,11 @@ class FragmentBeckDepressionTest : Fragment() {
     }
 
     private fun showResult(it: BeckDepressionScreenState.Result) {
-        TestResultDialogFragment.newInstance(it.score, getString(it.conclusionId), R.string.depression_beck_test)
+        TestResultDialogFragment.newInstance(
+            it.score,
+            getString(it.conclusionId),
+            R.string.depression_beck_test
+        )
             .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
 

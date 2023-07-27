@@ -76,6 +76,8 @@
 
     <string name="no_diaries">Вы еще не заполняли дневник в нашем приложении. Самое время начать!</string>
 
+    <string name="test_progress">%1$s/%2$s</string>
+
     <string name="depression">Депрессия</string>
 
     <string name="no_tests">Вы еще не проходили тесты в нашем приложении. Самое время начать!</string>

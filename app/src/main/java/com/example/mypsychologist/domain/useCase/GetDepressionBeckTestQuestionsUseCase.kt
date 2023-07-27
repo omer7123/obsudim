@@ -109,7 +109,7 @@ class GetDepressionBeckTestQuestionsUseCase @Inject constructor() {
                     TestAnswerVariantEntity(R.string.good_appetite, 0),
                     TestAnswerVariantEntity(R.string.not_good_appetite, 1),
                     TestAnswerVariantEntity(R.string.appetite_worse, 2),
-                    TestAnswerVariantEntity(R.string.not_good_appetite, 3)
+                    TestAnswerVariantEntity(R.string.no_appetite, 3)
                 )
             )
         )

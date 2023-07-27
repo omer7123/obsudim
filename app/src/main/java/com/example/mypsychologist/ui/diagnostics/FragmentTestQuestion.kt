@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.TestBottomSheetBinding
 import com.example.mypsychologist.domain.entity.TestQuestionEntity
 import com.example.mypsychologist.parcelable
@@ -24,6 +25,12 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
     ): View {
         binding = TestBottomSheetBinding.inflate(inflater, container, false)
 
+        binding.progress.text = getString(
+            R.string.test_progress,
+            requireArguments().getInt(NUMBER).toString(),
+            requireArguments().getInt(COUNT).toString()
+        )
+
         setupListeners()
 
         setupAdapter()
@@ -32,7 +39,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
     }
 
     private fun setupListeners() {
-        if (!requireArguments().getBoolean(IS_FIRST)) {
+        if (requireArguments().getInt(NUMBER) > 1) {
 
             binding.backButton.setOnClickListener {
                 setFragmentResult(GO_BACK, bundleOf())
@@ -61,7 +68,18 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
         const val GO_BACK = "go back"
         const val ANSWER = "answer"
         const val SCORE = "score"
-        const val ANSWER_VARIANTS = "answer variants"
-        const val IS_FIRST = "is first"
+        private const val ANSWER_VARIANTS = "answer variants"
+        private const val NUMBER = "number"
+        private const val COUNT = "count"
+
+        fun newInstance(question: TestQuestionEntity, number: Int, count: Int) =
+            FragmentTestQuestion().apply {
+                arguments = bundleOf(
+                    ANSWER_VARIANTS to question,
+                    NUMBER to number,
+                    COUNT to count
+                )
+                isCancelable = false
+            }
     }
 }

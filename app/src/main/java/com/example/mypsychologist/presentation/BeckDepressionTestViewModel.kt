@@ -28,7 +28,8 @@ class BeckDepressionTestViewModel(
         MutableStateFlow(
             BeckDepressionScreenState.Question(
                 questions[questionNumber],
-                questionNumber
+                questionNumber,
+                questions.size
             )
         )
     val screenState: StateFlow<BeckDepressionScreenState>
@@ -47,9 +48,12 @@ class BeckDepressionTestViewModel(
 
             _screenState.value =
                 if (questionNumber < questions.size) {
-                    BeckDepressionScreenState.Question(questions[questionNumber], questionNumber)
-                }
-                else {
+                    BeckDepressionScreenState.Question(
+                        questions[questionNumber],
+                        questionNumber,
+                        questions.size
+                    )
+                } else {
                     val result = answers.sum()
                     saveResultAndGetScreenState(result, beckDepressionTestConclusionUseCase(result))
                 }
@@ -73,12 +77,12 @@ class BeckDepressionTestViewModel(
             questionNumber -= 1
 
             viewModelScope.launch {
-                _screenState.emit(
+                _screenState.value =
                     BeckDepressionScreenState.Question(
                         questions[questionNumber],
-                        questionNumber
+                        questionNumber,
+                        questions.size
                     )
-                )
             }
         }
     }

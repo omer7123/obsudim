@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestHistoryBinding
@@ -53,6 +54,9 @@ class FragmentTestHistory : Fragment() {
         binding = FragmentTestHistoryBinding.inflate(inflater, container, false)
 
         binding.title.text = getString(requireArguments().getInt(TEST_TITLE_ID))
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
