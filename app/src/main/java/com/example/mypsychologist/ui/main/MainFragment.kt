@@ -58,6 +58,9 @@ class MainFragment : Fragment() {
 
     private fun setupListeners() {
         binding.apply {
+            profileIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_profile)
+            }
             exercisesCard.card.setOnClickListener {
                 findNavController().navigate(R.id.fragment_exercises)
             }

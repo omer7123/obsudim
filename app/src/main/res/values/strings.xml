@@ -160,4 +160,17 @@
     <string name="show_result">Показать результат</string>
     <string name="save_after_connect">Если не закрывать приложение, данные сохранятся после подключения к сети</string>
 
+    <string name="profile">Профиль</string>
+    <string name="edit_data">Редактировать данные</string>
+    <string name="for_psychologist">Для психолога</string>
+    <string name="rules">Конфиденциальность и правила</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="exit">Выйти</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="confirmation">Подтверждение</string>
+    <string name="confirm_exit">Вы действительно хотите выйти из аккаунта?</string>
+    <string name="confirm_delete">Вы действительно хотите безвозвратно удалить аккаунт?</string>
+
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

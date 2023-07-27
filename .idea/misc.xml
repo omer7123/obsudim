@@ -12,6 +12,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/primary_card.xml" value="0.1265" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/selected_problem_back.xml" value="0.1265" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/terrary_card.xml" value="0.1265" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/tertiary_card.xml" value="0.1265" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/test_group_item_divider.xml" value="0.1265" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/activity_firebase.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -21,8 +22,11 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/change_problem_bottom_sheet.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/diary_item.xml" value="0.203125" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/edit_field_bottom_sheet.xml" value="0.2" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragmen_profile.xml" value="0.22" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_cbt.xml" value="0.22" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_confirmation_dialog.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_depression_bek_test.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_diagnostic_dialog.xml" value="0.16540084388185655" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_dialog.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_diaries.xml" value="0.2558714462299135" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_diary.xml" value="0.25" />
