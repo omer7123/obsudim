@@ -8,11 +8,11 @@ import javax.inject.Inject
 class SaveDepressionBeckResultUseCase @Inject constructor(
     private val repository: DiagnosticRepository
 ) {
-    operator fun invoke(result: Int, conclusionId: Int) =
+    operator fun invoke(result: Int, conclusion: String) =
         repository.saveBeckDepression(
             TestResultEntity(
                 result,
-                conclusionId,
+                conclusion,
                 Calendar.getInstance().timeInMillis
             ),
             GetDepressionBeckTestQuestionsUseCase.TEST_NAME

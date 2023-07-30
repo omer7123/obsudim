@@ -27,7 +27,7 @@ class TestHistoryAdapter(private val items: List<TestResultEntity>) :
 
         fun bind(item: TestResultEntity) {
             binding.apply {
-                conclusion.text = itemView.context.getString(item.conclusionId)
+                conclusion.text = item.conclusion
                 date.text = Date(item.timestamp).toDateString()
                 score.text = item.score.toString()
             }

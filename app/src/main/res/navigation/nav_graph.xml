@@ -50,4 +50,9 @@
         android:name="com.example.mypsychologist.ui.main.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/fragment_feedback"
+        android:name="com.example.mypsychologist.ui.main.FeedbackFragment"
+        android:label="FeedbackFragment"
+        tools:layout="@layout/fragment_feedback"/>
 </navigation>

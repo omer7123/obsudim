@@ -55,21 +55,18 @@ class BeckDepressionTestViewModel(
                     )
                 } else {
                     val result = answers.sum()
-                    saveResultAndGetScreenState(result, beckDepressionTestConclusionUseCase(result))
+                    BeckDepressionScreenState.Result(
+                        result,
+                        beckDepressionTestConclusionUseCase(result)
+                    )
                 }
         }
     }
 
-    private fun saveResultAndGetScreenState(result: Int, conclusionId: Int) = run {
-
-        if (!saveDepressionBeckResultUseCase(result, conclusionId)) {
+    fun saveResult(result: Int, conclusion: String) = run {
+        if (!saveDepressionBeckResultUseCase(result, conclusion)) {
             _screenState.value = BeckDepressionScreenState.Error
         }
-
-        BeckDepressionScreenState.Result(
-            result,
-            conclusionId
-        )
     }
 
     fun lastQuestion() {

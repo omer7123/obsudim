@@ -16,6 +16,6 @@ class AppModule {
             .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
 
     companion object {
-        private const val URL = "https://my-psychologist-5c7f3-default-rtdb.europe-west1.firebasedatabase.app/"
+        const val URL = "https://my-psychologist-5c7f3-default-rtdb.europe-west1.firebasedatabase.app/"
     }
 }

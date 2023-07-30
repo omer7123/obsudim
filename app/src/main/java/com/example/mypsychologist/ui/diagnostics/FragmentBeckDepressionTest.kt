@@ -78,6 +78,8 @@ class FragmentBeckDepressionTest : Fragment() {
                 ).show(childFragmentManager, TAG)
             }
             is BeckDepressionScreenState.Result -> {
+                viewModel.saveResult(state.score, getString(state.conclusionId))
+
                 if (!isNetworkConnect()) {
                     Snackbar.make(
                         binding.coordinator,

@@ -14,6 +14,7 @@ interface AppComponent {
 
     fun exercisesComponent(): ExercisesComponent.Factory
     fun diagnosticComponent(): DiagnosticComponent.Factory
+    fun profileComponent(): ProfileComponent.Factory
 
     @Component.Factory
     interface Factory {
