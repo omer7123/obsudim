@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class  FragmentDiaries : Fragment() {
+class FragmentDiaries : Fragment() {
 
     private var binding: FragmentDiariesBinding by autoCleared()
     private lateinit var adapter: MainAdapter
@@ -73,12 +73,14 @@ class  FragmentDiaries : Fragment() {
 
     private fun setupAdapter() {
         adapter = MainAdapter().apply {
-            addDelegate(RecordDelegate { id ->
-                findNavController().navigate(
-                    R.id.fragment_diary,
-                    bundleOf(FragmentThoughtDiary.ID to id)
-                )
-            })
+            addDelegate(
+                RecordDelegate { id ->
+                    findNavController().navigate(
+                        R.id.fragment_diary,
+                        bundleOf(FragmentThoughtDiary.ID to id)
+                    )
+                }
+            )
 
             binding.recordsRw.adapter = this
             binding.recordsRw.layoutManager = LinearLayoutManager(requireContext())
@@ -91,7 +93,7 @@ class  FragmentDiaries : Fragment() {
                 binding.progressBar.isVisible = false
                 binding.includePlaceholder.layout.isVisible = false
 
-                if(it.records.isNotEmpty())
+                if (it.records.isNotEmpty())
                     adapter.submitList(it.records.toDelegateItems())
                 else {
                     showPlaceholderForEmptyList()

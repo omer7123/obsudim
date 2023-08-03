@@ -9,6 +9,7 @@ import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
 class RecordDelegate(private val onClick: (String) -> Unit) : AdapterDelegate {
+
     override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
         RecordItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         onClick

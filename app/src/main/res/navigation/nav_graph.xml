@@ -55,4 +55,9 @@
         android:name="com.example.mypsychologist.ui.main.FeedbackFragment"
         android:label="FeedbackFragment"
         tools:layout="@layout/fragment_feedback"/>
+    <fragment
+        android:id="@+id/fragment_psychologist_questionnaire"
+        android:name="com.example.mypsychologist.ui.main.PsychologistQuestionnaireFragment"
+        android:label="PsychologistQuestionnaireFragment"
+        tools:layout="@layout/fragment_psychologist_questionnaire"/>
 </navigation>

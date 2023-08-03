@@ -4,7 +4,7 @@
     <string name="in_design">Раздел в разработке</string>
 
     <string name="hallow">Добро пожаловать!</string>
-    <string name="network_error">Ошибка сети</string>
+    <string name="network_error">Ошибка сети. При восстановлении соединения запрос выполнится автоматически, если не закрывать приложение</string>
     <string name="connect">Соединение восстановлено</string>
     <string name="db_error">Ошибка базы данных</string>
     <string name="after_connection">При восстановлении соединения данные загрузятся автоматически</string>
@@ -177,4 +177,12 @@
 
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+
+    <string name="psychologist_questionnaire">Анкета психолога</string>
+    <string name="professional_development">Повышение квалификации</string>
+    <string name="specialization">Специализация</string>
+    <string name="documents">Документы</string>
+    <string name="about_me">О себе</string>
+    <string name="education">Образование</string>
+    <string name="sns">ФИО</string>
 </resources>

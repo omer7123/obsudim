@@ -57,7 +57,7 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-    implementation 'androidx.fragment:fragment-ktx:1.6.0'
+    implementation 'androidx.fragment:fragment-ktx:1.6.1'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
 
     implementation platform('com.google.firebase:firebase-bom:32.1.1')
@@ -66,4 +66,5 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 
     implementation "com.google.firebase:firebase-database-ktx"
+    implementation "com.google.firebase:firebase-storage-ktx"
 }

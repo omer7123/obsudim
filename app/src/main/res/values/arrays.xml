@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="specializations">
+        <item>Депрессия</item>
+        <item>Тревожность</item>
+        <item>Суицид</item>
+        <item>Утрата</item>
+        <item>Гнев</item>
+    </array>
+</resources>

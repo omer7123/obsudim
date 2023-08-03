@@ -74,9 +74,8 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
             }
         }
 
-        if (containErrors) {
+        if (containErrors)
             _screenState.value = NewThoughtDiaryScreenState.ValidationError(membersWithError)
-        }
 
         return !containErrors
     }

@@ -89,9 +89,9 @@ class FragmentThoughtDiary : Fragment() {
         }
 
         binding.includeAutoThought.cardImage.setOnClickListener {
+
             childFragmentManager.setFragmentResultListener(
-                EDIT_AUTO_THOUGHT,
-                viewLifecycleOwner
+                EDIT_AUTO_THOUGHT, viewLifecycleOwner
             ) { _, bundle ->
 
                 bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
@@ -108,8 +108,7 @@ class FragmentThoughtDiary : Fragment() {
 
         binding.includeAlternativeThought.cardImage.setOnClickListener {
             childFragmentManager.setFragmentResultListener(
-                EDIT_ALTERNATIVE_THOUGHT,
-                viewLifecycleOwner
+                EDIT_ALTERNATIVE_THOUGHT, viewLifecycleOwner
             ) { _, bundle ->
 
                 bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->

@@ -65,6 +65,10 @@ class ProfileFragment : Fragment() {
                 findNavController().popBackStack()
             }
 
+            forPsychologist.setOnClickListener {
+                findNavController().navigate(R.id.fragment_psychologist_questionnaire)
+            }
+
             feedback.setOnClickListener {
                 findNavController().navigate(R.id.fragment_feedback)
             }
