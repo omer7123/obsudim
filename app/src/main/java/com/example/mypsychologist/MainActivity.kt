@@ -3,13 +3,15 @@ package com.example.mypsychologist
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
-import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.mypsychologist.databinding.ActivityMainBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -30,9 +32,11 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         getAppComponent().inject(this)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
 
@@ -41,15 +45,14 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         if (auth.currentUser == null)
             createSignInIntent()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        setupNavigationListener()
 
     }
 
     private fun createSignInIntent() {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.PhoneBuilder().build(),
-       //     AuthUI.IdpConfig.GoogleBuilder().build()
+            AuthUI.IdpConfig.PhoneBuilder().build()
         )
 
         val signInIntent = AuthUI.getInstance()
@@ -106,6 +109,35 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
             R.string.network_error
         }
         Toast.makeText(this, getString(message), Toast.LENGTH_LONG).show()
+    }
+
+    private fun setupNavigationListener() {
+        binding.navigation.setOnItemSelectedListener { item ->
+            val navController =
+                (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+
+            Log.d("aaa", item.itemId.toString())
+            when (item.itemId) {
+                R.id.main_item -> {
+                    navController.navigate(R.id.main_fragment)
+                    true
+                }
+                R.id.records_item -> {
+                    true
+                }
+                R.id.psychologist_item -> {
+                    Log.d("aaa", "*")
+                    navController.navigate(R.id.fragment_psychologists)
+                    true
+                }
+                R.id.feed_item -> {
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     override fun setNavbarVisibility(it: Boolean) {

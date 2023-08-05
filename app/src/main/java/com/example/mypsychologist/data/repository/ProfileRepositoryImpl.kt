@@ -37,11 +37,11 @@ class ProfileRepositoryImpl @Inject constructor(private val reference: DatabaseR
     override fun savePsychologist(info: PsychologistInfo): Boolean =
         try {
             val ref = Firebase.database(AppModule.URL).reference
-            val key = ref.child(PSYCHOLOGISTS).push().key!!
+            val key = ref.child(PsychologistInfo::class.simpleName!!).push().key!!
 
-            ref.child(PSYCHOLOGISTS).child(key).setValue(info)
+            ref.child(PsychologistInfo::class.simpleName!!).child(key).setValue(info)
 
-            ref.child(PSYCHOLOGIST_CARD).child(key)
+            ref.child(PsychologistCard::class.simpleName!!).child(key)
                 .setValue(PsychologistCard(info.name, info.specialization.joinToString(), 0))
 
             reference.child(OWN_PSYCHOLOGIST_ID).setValue(key)
@@ -56,8 +56,6 @@ class ProfileRepositoryImpl @Inject constructor(private val reference: DatabaseR
 
     companion object {
         private const val FEEDBACK = "feedback"
-        private const val PSYCHOLOGISTS = "psychologists"
-        private const val PSYCHOLOGIST_CARD = "psychologist_card"
         private const val OWN_PSYCHOLOGIST_ID = "own_psychologist_id"
     }
 }
