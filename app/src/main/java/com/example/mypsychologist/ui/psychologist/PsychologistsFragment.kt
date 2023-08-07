@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -67,6 +68,7 @@ class PsychologistsFragment : Fragment() {
                     showToast(getString(R.string.network_error))
             }
             is PsychologistsScreenState.Data -> {
+                binding.progressBar.isVisible = false
                 setupAdapter(state.items.toList())
             }
             is PsychologistsScreenState.Error -> {
@@ -79,8 +81,10 @@ class PsychologistsFragment : Fragment() {
     private fun setupAdapter(list: List<Pair<String, PsychologistCard>>) {
         binding.psychologistsRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = PsychologistCardsAdapter(list) {
-
+            adapter = PsychologistCardsAdapter(list) { id ->
+                findNavController().navigate(R.id.fragment_psychologist, bundleOf(
+                    PsychologistFragment.ID to id
+                ))
             }
             setHasFixedSize(true)
         }

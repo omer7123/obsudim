@@ -1,7 +1,9 @@
 package com.example.mypsychologist.domain.repository
 
 import com.example.mypsychologist.domain.entity.PsychologistCard
+import com.example.mypsychologist.domain.entity.PsychologistData
 
 interface PsychologistRepository {
-    suspend fun getPsychologist(): HashMap<String, PsychologistCard>
+    suspend fun getPsychologists(): HashMap<String, PsychologistCard>
+    suspend fun getPsychologist(id: String): PsychologistData
 }

@@ -3,14 +3,14 @@ package com.example.mypsychologist.ui.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mypsychologist.databinding.TextItemBinding
+import com.example.mypsychologist.databinding.DeletableTextItemBinding
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
 class DeletableStringsDelegate(private val onDeleteClick: (String) -> Unit) : AdapterDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
-        TextItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+        DeletableTextItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         onDeleteClick
     )
 
@@ -24,7 +24,7 @@ class DeletableStringsDelegate(private val onDeleteClick: (String) -> Unit) : Ad
 
     override fun isOfViewType(item: DelegateItem) = item is StringDelegateItem
 
-    class ViewHolder(private val binding: TextItemBinding, private val onDeleteClick: (String) -> Unit) :
+    class ViewHolder(private val binding: DeletableTextItemBinding, private val onDeleteClick: (String) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
             fun bind(text: String) {

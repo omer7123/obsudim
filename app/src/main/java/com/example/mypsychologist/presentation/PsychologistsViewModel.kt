@@ -19,6 +19,7 @@ class PsychologistsViewModel(private val getPsychologistsUseCase: GetPsychologis
         get() = _screenState.asStateFlow()
 
     init {
+        _screenState.value = PsychologistsScreenState.Loading
         viewModelScope.launch {
             _screenState.value = PsychologistsScreenState.Data(getPsychologistsUseCase())
         }

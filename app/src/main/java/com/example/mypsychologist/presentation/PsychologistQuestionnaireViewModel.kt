@@ -37,6 +37,14 @@ class PsychologistQuestionnaireViewModel(private val savePsychologistUseCase: Sa
         _info = info.copy(about = it)
     }
 
+    fun setCity(it: String) {
+        _info = info.copy(city = it)
+    }
+
+    fun setFormat(it: String) {
+        _info = info.copy(formats = it)
+    }
+
     fun addSpecialization(spec: String) {
         viewModelScope.launch {
             val newList = info.specialization.map { it }.toMutableList()

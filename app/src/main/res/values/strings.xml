@@ -185,6 +185,8 @@
     <string name="about_me">О себе</string>
     <string name="education">Образование</string>
     <string name="sns">ФИО</string>
+    <string name="city">Город</string>
+    <string name="format">Формат работы (очно, дистанционно)</string>
 
     <string name="psychologists">Психологи</string>
 </resources>

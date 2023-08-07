@@ -122,6 +122,14 @@ class PsychologistQuestionnaireFragment : Fragment() {
                 viewModel.setAbout(it.toString())
                 educationLayout.error = null
             }
+            cityField.addTextChangedListener {
+                viewModel.setCity(it.toString())
+                cityLayout.error = null
+            }
+            formatField.addTextChangedListener {
+                viewModel.setFormat(it.toString())
+                formatLayout.error = null
+            }
 
             addCourseButton.setOnClickListener {
 
@@ -163,7 +171,9 @@ class PsychologistQuestionnaireFragment : Fragment() {
                 val fieldAndViews = mapOf(
                     PsychologistInfo::name.name to binding.nameLayout,
                     PsychologistInfo::education.name to binding.educationLayout,
-                    PsychologistInfo::about.name to binding.aboutLayout
+                    PsychologistInfo::about.name to binding.aboutLayout,
+                    PsychologistInfo::city.name to binding.cityLayout,
+                    PsychologistInfo::formats.name to binding.formatLayout
                 )
 
                 state.fields.forEach {

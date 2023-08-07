@@ -67,6 +67,40 @@
                 android:hint="@string/about_me" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/city_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@id/end"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/about_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/city_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/city" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/format_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@id/end"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/city_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/format_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/format" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/specialization"
             style="@style/TextAppearance.Material3.TitleMedium"
@@ -75,7 +109,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/specialization"
             app:layout_constraintStart_toStartOf="@id/start"
-            app:layout_constraintTop_toBottomOf="@id/about_layout" />
+            app:layout_constraintTop_toBottomOf="@id/format_layout" />
 
 
         <com.google.android.material.chip.ChipGroup
