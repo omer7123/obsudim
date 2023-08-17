@@ -2,23 +2,32 @@ package com.example.mypsychologist.data.repository
 
 import android.net.Uri
 import com.example.mypsychologist.di.AppModule
+import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.PsychologistCard
 import com.example.mypsychologist.domain.entity.PsychologistInfo
 import com.example.mypsychologist.domain.repository.ProfileRepository
+import com.example.mypsychologist.getTypedValue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class ProfileRepositoryImpl @Inject constructor(private val reference: DatabaseReference) :
+class ProfileRepositoryImpl @Inject constructor(
+    private val reference: DatabaseReference,
+    private val auth: FirebaseAuth
+) :
     ProfileRepository {
 
     override suspend fun deleteAccount(): Boolean =
         suspendCoroutine { continuation ->
-            FirebaseAuth.getInstance().currentUser!!.delete().addOnCompleteListener { task ->
+            auth.currentUser!!.delete().addOnCompleteListener { task ->
                 continuation.resume(task.isSuccessful)
             }
         }
@@ -54,8 +63,151 @@ class ProfileRepositoryImpl @Inject constructor(private val reference: DatabaseR
     override fun savePsychologist(docs: List<Uri>): Boolean =
         true
 
+    override suspend fun getClientInfo(): ClientInfoEntity =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            ClientInfoEntity(
+                getUserName(),
+                getBirthday(),
+                getGender(),
+                getDiagnosis(),
+                getRequest(),
+                auth.currentUser!!.email ?: "",
+                auth.currentUser!!.phoneNumber ?: ""
+            )
+        }
+
+    private suspend fun getUserName(): String =
+        suspendCoroutine { continuation ->
+            reference.child(NAME).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(snapshot.value.toString())
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
+    private suspend fun getBirthday(): Long =
+        suspendCoroutine { continuation ->
+            reference.child(BIRTHDAY).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(snapshot.getTypedValue<Long>() ?: 0)
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
+    private suspend fun getGender(): String =
+        suspendCoroutine { continuation ->
+            reference.child(GENDER).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(snapshot.value.toString())
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
+    private suspend fun getDiagnosis(): String =
+        suspendCoroutine { continuation ->
+            reference.child(DIAGNOSIS).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(snapshot.value.toString())
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
+    private suspend fun getRequest(): List<String> =
+        suspendCoroutine { continuation ->
+            reference.child(REQUEST).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(snapshot.getTypedValue<List<String>>() ?: listOf())
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
+    override fun changeName(it: String): Boolean =
+        try {
+            reference.child(NAME).setValue(it)
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
+
+    override fun changeBirthday(it: Long): Boolean =
+        try {
+            reference.child(BIRTHDAY).setValue(it)
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
+    override fun changeGender(it: String): Boolean =
+        try {
+            reference.child(GENDER).setValue(it)
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
+    override fun changeDiagnosis(it: String): Boolean =
+        try {
+            reference.child(DIAGNOSIS).setValue(it)
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
+    override fun changeRequest(it: List<String>): Boolean =
+        try {
+            reference.child(REQUEST).removeValue()
+            reference.child(REQUEST).setValue(it)
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
+    override suspend fun changeMail(it: String): Boolean =
+        suspendCoroutine { continuation ->
+            auth.currentUser!!.updateEmail(it).addOnCompleteListener { task ->
+                if (task.isSuccessful)
+                    continuation.resume(true)
+                else
+                    continuation.resume(false)
+            }.addOnFailureListener {
+                continuation.resume(false)
+            }
+        }
+
+    override suspend fun changePhone(it: String): Boolean =
+        true
+
+
+    override suspend fun changePassword(it: String): Boolean =
+        suspendCoroutine { continuation ->
+            auth.currentUser!!.updatePassword(it).addOnCompleteListener { task ->
+                if (task.isSuccessful)
+                    continuation.resume(true)
+                else
+                    continuation.resume(false)
+            }.addOnFailureListener {
+                continuation.resume(false)
+            }
+        }
+
     companion object {
         private const val FEEDBACK = "feedback"
         private const val OWN_PSYCHOLOGIST_ID = "own_psychologist_id"
+        private const val NAME = "name"
+        private const val BIRTHDAY = "birthday"
+        private const val GENDER = "gender"
+        private const val DIAGNOSIS = "diagnosis"
+        private const val REQUEST = "request"
     }
 }

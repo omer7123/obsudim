@@ -102,6 +102,75 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/birthday"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/birthday"
+            app:layout_constraintEnd_toStartOf="@+id/edit_birthday_button"
+            app:layout_constraintStart_toEndOf="@+id/gender_rg"
+            app:layout_constraintTop_toTopOf="@+id/gender" />
+
+        <ImageView
+            android:id="@+id/edit_birthday_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/birthday"
+            app:layout_constraintEnd_toStartOf="@+id/end"
+            app:layout_constraintTop_toTopOf="@+id/birthday"
+            app:srcCompat="@drawable/ic_edit" />
+
+        <TextView
+            android:id="@+id/birthday_field"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/birthday"
+            app:layout_constraintTop_toBottomOf="@+id/birthday"
+            tools:text="TextView" />
+
+        <TextView
+            android:id="@+id/gender"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/gender"
+            app:layout_constraintStart_toStartOf="@+id/start"
+            app:layout_constraintTop_toBottomOf="@+id/format_layout" />
+
+        <RadioGroup
+            android:id="@+id/gender_rg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/gender"
+            app:layout_constraintTop_toBottomOf="@id/gender">
+
+            <RadioButton
+                android:id="@+id/man"
+                android:checked="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/man" />
+
+            <RadioButton
+                android:id="@+id/woman"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/woman" />
+
+            <RadioButton
+                android:id="@+id/other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/other" />
+        </RadioGroup>
+
+        <TextView
             android:id="@+id/specialization"
             style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="wrap_content"
@@ -109,7 +178,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/specialization"
             app:layout_constraintStart_toStartOf="@id/start"
-            app:layout_constraintTop_toBottomOf="@id/format_layout" />
+            app:layout_constraintTop_toBottomOf="@id/gender_rg" />
 
 
         <com.google.android.material.chip.ChipGroup

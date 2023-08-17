@@ -45,6 +45,14 @@ class PsychologistQuestionnaireViewModel(private val savePsychologistUseCase: Sa
         _info = info.copy(formats = it)
     }
 
+    fun setGender(it: String) {
+        _info = info.copy(gender = it)
+    }
+
+    fun setBirthday(it: Long) {
+        _info = info.copy(birthday = it)
+    }
+
     fun addSpecialization(spec: String) {
         viewModelScope.launch {
             val newList = info.specialization.map { it }.toMutableList()

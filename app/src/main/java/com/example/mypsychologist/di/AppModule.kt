@@ -10,10 +10,13 @@ import dagger.Provides
 @Module
 class AppModule {
     @Provides
-    fun provideFirebaseUserReference(): DatabaseReference =
+    fun provideFirebaseUserReference(auth: FirebaseAuth): DatabaseReference =
         Firebase.database(URL)
             .reference
-            .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+            .child(auth.currentUser?.uid.toString())
+    @Provides
+    fun provideFirebaseAuth(): FirebaseAuth =
+        FirebaseAuth.getInstance()
 
     companion object {
         const val URL = "https://my-psychologist-5c7f3-default-rtdb.europe-west1.firebasedatabase.app/"

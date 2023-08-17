@@ -1,11 +1,14 @@
 package com.example.mypsychologist.ui.main
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
+import android.widget.RadioButton
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -14,21 +17,19 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mypsychologist.R
+import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentPsychologistQuestionnaireBinding
 import com.example.mypsychologist.domain.entity.PsychologistData
 import com.example.mypsychologist.domain.entity.PsychologistInfo
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.PsychologistFormScreenState
 import com.example.mypsychologist.presentation.PsychologistQuestionnaireViewModel
-import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.FragmentEditField
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.*
 import javax.inject.Inject
 
 class PsychologistQuestionnaireFragment : Fragment() {
@@ -131,6 +132,31 @@ class PsychologistQuestionnaireFragment : Fragment() {
                 formatLayout.error = null
             }
 
+            genderRg.setOnCheckedChangeListener { _, id ->
+                viewModel.setGender(requireActivity().findViewById<RadioButton>(id).text.toString())
+            }
+
+            editBirthdayButton.setOnClickListener {
+                val calendar = Calendar.getInstance()
+
+                DatePickerDialog(
+                    requireContext(),
+                    R.style.Theme_MyPsychologist,
+                    { _, year, month, day ->
+
+                        calendar.set(Calendar.YEAR, year)
+                        calendar.set(Calendar.MONTH, month)
+                        calendar.set(Calendar.DAY_OF_MONTH, day)
+
+                        birthdayField.text = Date(calendar.timeInMillis).toDateString()
+                        viewModel.setBirthday(calendar.timeInMillis)
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
+
             addCourseButton.setOnClickListener {
 
                 childFragmentManager.setFragmentResultListener(
@@ -140,7 +166,7 @@ class PsychologistQuestionnaireFragment : Fragment() {
                     adapter.submitList(viewModel.info.courses.toDelegateItems())
                 }
 
-                FragmentEditField.newInstance(R.string.professional_development, "")
+                FragmentEditField.newInstance(getString(R.string.professional_development), "")
                     .show(childFragmentManager, ADD_COURSE)
             }
 
@@ -163,8 +189,7 @@ class PsychologistQuestionnaireFragment : Fragment() {
                 if (state.success) {
                     showToast(getString(R.string.success))
                     findNavController().popBackStack()
-                }
-                else
+                } else
                     showToast(getString(R.string.db_error))
             }
             is PsychologistFormScreenState.ValidationError -> {

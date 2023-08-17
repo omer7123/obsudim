@@ -5,6 +5,7 @@ import com.example.mypsychologist.domain.entity.PsychologistCard
 import com.example.mypsychologist.domain.entity.PsychologistData
 import com.example.mypsychologist.domain.entity.PsychologistInfo
 import com.example.mypsychologist.domain.repository.PsychologistRepository
+import com.example.mypsychologist.getTypedValue
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -22,8 +23,7 @@ class PsychologistRepositoryImpl @Inject constructor() : PsychologistRepository 
                 .child(PsychologistCard::class.simpleName!!).get()
                 .addOnSuccessListener { snapshot ->
                     continuation.resume(
-                        snapshot.getValue(object :
-                            GenericTypeIndicator<HashMap<String, PsychologistCard>>() {})
+                        snapshot.getTypedValue<HashMap<String, PsychologistCard>>()
                             ?: HashMap()
                     )
                 }
@@ -41,10 +41,10 @@ class PsychologistRepositoryImpl @Inject constructor() : PsychologistRepository 
                 .addOnSuccessListener { snapshot ->
                     continuation.resume(
                         PsychologistData(
-                            info = snapshot.getValue(object :
-                                GenericTypeIndicator<PsychologistInfo>() {}
-                            ) ?: PsychologistInfo(),
-                            documents = listOf())
+                            info = snapshot.getTypedValue<PsychologistInfo>()
+                                ?: PsychologistInfo(),
+                            documents = listOf()
+                        )
                     )
                 }
                 .addOnFailureListener {

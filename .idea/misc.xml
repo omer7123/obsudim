@@ -9,6 +9,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/green_ellipse.xml" value="0.1265" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/ic_check.xml" value="0.1265" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/ic_chevron_left.xml" value="0.1265" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/ic_edit.xml" value="0.1265" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/main_card.xml" value="0.1265" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/outlined_card_background.xml" value="0.1265" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/drawable/primary_card.xml" value="0.1265" />
@@ -22,6 +23,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/card_view_group.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/change_probleb_bottom_sheet.xml" value="0.203125" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/change_problem_bottom_sheet.xml" value="0.25" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/chips_bottom_sheet.xml" value="0.1675213675213675" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/deletable_text_item.xml" value="0.1675213675213675" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/diary_item.xml" value="0.203125" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/edit_field_bottom_sheet.xml" value="0.2" />
@@ -35,12 +37,13 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_dialog.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_diaries.xml" value="0.2558714462299135" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_diary.xml" value="0.25" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_edit.xml" value="0.21" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_exercises.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_feedback.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_main.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_new_diary.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_psychologist.xml" value="0.2" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_psychologist_questionnaire.xml" value="0.25" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_psychologist.xml" value="0.33" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_psychologist_questionnaire.xml" value="0.22" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_psychologists.xml" value="0.19658119658119658" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_rebt.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyPsychologist/app/src/main/res/layout/fragment_test.xml" value="0.20416666666666666" />

@@ -12,19 +12,17 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mypsychologist.R
+import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentPsychologistBinding
 import com.example.mypsychologist.domain.entity.PsychologistInfo
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.PsychologistScreenState
 import com.example.mypsychologist.presentation.PsychologistViewModel
-import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.StringAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.*
 import javax.inject.Inject
 
 class PsychologistFragment : Fragment() {
@@ -89,7 +87,12 @@ class PsychologistFragment : Fragment() {
 
     private fun setupFields(info: PsychologistInfo) {
         binding.apply {
-            name.text = info.name
+            name.text = info.name 
+            genderAndAge.text = getString(
+                R.string.gender_and_age,
+                info.gender,
+                (Date().time - info.birthday).toYears().toString()
+            )
             city.text = info.city
             education.text = info.education
             format.text = info.formats

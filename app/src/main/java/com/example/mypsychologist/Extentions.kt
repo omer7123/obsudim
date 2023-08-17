@@ -13,6 +13,9 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.mypsychologist.databinding.CardViewGroupBinding
 import com.example.mypsychologist.di.AppComponent
+import com.example.mypsychologist.domain.entity.PsychologistCard
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.GenericTypeIndicator
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,3 +52,11 @@ fun Fragment.showToast(message: String) {
 
 fun Fragment.isNetworkConnect(): Boolean =
     (requireActivity() as ConnectionChecker).isConnection()
+
+fun Long.toYears(): Long =
+    this / MILLIS_IN_YEAR
+
+const val MILLIS_IN_YEAR = 31536000000
+
+fun <T> DataSnapshot.getTypedValue() = getValue(object :
+    GenericTypeIndicator<T>() {})

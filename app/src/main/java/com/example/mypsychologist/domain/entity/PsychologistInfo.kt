@@ -5,6 +5,8 @@ data class PsychologistInfo(
     val education: String = "",
     val about: String = "",
     val city: String = "",
+    val gender: String = "Мужской",
+    val birthday: Long = 0,
     val formats: String = "",
     val specialization: List<String> = listOf(),
     val courses: List<String> = listOf()

@@ -3,7 +3,6 @@ package com.example.mypsychologist.ui.diagnostics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.TestHistoryItemBinding
 import com.example.mypsychologist.domain.entity.TestResultEntity
 import com.example.mypsychologist.toDateString

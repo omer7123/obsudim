@@ -22,7 +22,7 @@ class FragmentEditField : BottomSheetDialogFragment() {
     ): View {
         binding = EditFieldBottomSheetBinding.inflate(inflater, container, false)
 
-        binding.inputLayout.hint = getString(requireArguments().getInt(FIELD_ID))
+        binding.inputLayout.hint = requireArguments().getString(FIELD_ID)
         binding.field.setText(requireArguments().getString(CURRENT_TEXT))
 
         setupListeners()
@@ -51,12 +51,13 @@ class FragmentEditField : BottomSheetDialogFragment() {
         private const val FIELD_ID = "field_id"
         const val NEW_TEXT = "new_text"
 
-        fun newInstance(fieldId: Int, currentText: String) =
+        fun newInstance(field: String, currentText: String) =
             FragmentEditField().apply {
                 arguments = bundleOf(
-                    FIELD_ID to fieldId,
+                    FIELD_ID to field,
                     CURRENT_TEXT to currentText
                 )
             }
+
     }
 }

@@ -101,7 +101,7 @@ class FragmentThoughtDiary : Fragment() {
             }
 
             FragmentEditField.newInstance(
-                R.string.auto_thought,
+                binding.includeAutoThought.cardTitle.text.toString(),
                 binding.includeAutoThought.cardDescription.text.toString()
             ).show(childFragmentManager, EDIT_AUTO_THOUGHT)
         }
@@ -118,7 +118,7 @@ class FragmentThoughtDiary : Fragment() {
             }
 
             FragmentEditField.newInstance(
-                R.string.alternative_thought,
+                binding.includeAlternativeThought.cardTitle.text.toString(),
                 binding.includeAlternativeThought.cardDescription.text.toString()
             ).show(childFragmentManager, EDIT_ALTERNATIVE_THOUGHT)
         }

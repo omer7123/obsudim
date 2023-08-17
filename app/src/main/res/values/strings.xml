@@ -187,6 +187,21 @@
     <string name="sns">ФИО</string>
     <string name="city">Город</string>
     <string name="format">Формат работы (очно, дистанционно)</string>
+    <string name="gender">Пол</string>
+    <string name="man">Мужской</string>
+    <string name="woman">Женский</string>
+    <string name="other">Другое</string>
+    <string name="birthday">Дата рождения</string>
+
+    <string name="gender_and_age">%1$s, %2$s</string>
 
     <string name="psychologists">Психологи</string>
+
+    <string name="request">Запрос</string>
+    
+    <string name="name">Имя</string>
+    <string name="diagnosis">Диагноз</string>
+    <string name="mail">Почта</string>
+    <string name="phone">Телефон</string>
+    <string name="password">Пароль</string>
 </resources>

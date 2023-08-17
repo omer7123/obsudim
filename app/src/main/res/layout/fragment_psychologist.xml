@@ -23,13 +23,24 @@
         app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
         tools:text="TextView" />
 
+    <TextView
+        android:id="@+id/gender_and_age"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintStart_toStartOf="@+id/start"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        tools:text="TextView" />
+
     <ImageView
         android:id="@+id/city_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintTop_toBottomOf="@id/gender_and_age"
         app:srcCompat="@drawable/ic_apartment" />
 
     <TextView
