@@ -58,5 +58,5 @@ fun Long.toYears(): Long =
 
 const val MILLIS_IN_YEAR = 31536000000
 
-fun <T> DataSnapshot.getTypedValue() = getValue(object :
+inline fun <reified T> DataSnapshot.getTypedValue() = getValue(object :
     GenericTypeIndicator<T>() {})

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentPsychologistBinding
+import com.example.mypsychologist.databinding.FragmentRequestToPsychologistBinding
 import com.example.mypsychologist.domain.entity.PsychologistInfo
 import com.example.mypsychologist.presentation.PsychologistScreenState
 import com.example.mypsychologist.presentation.PsychologistViewModel
@@ -62,6 +64,12 @@ class PsychologistFragment : Fragment() {
             .flowWithLifecycle(lifecycle)
             .onEach { render(it) }
             .launchIn(lifecycleScope)
+
+        binding.floatingActionButton.setOnClickListener {
+            findNavController().navigate(R.id.fragment_request_to_psychologist, bundleOf(
+                RequestToPsychologistFragment.PSYCHOLOGIST_ID to requireArguments().getString(ID)!!
+            ))
+        }
 
         return binding.root
     }

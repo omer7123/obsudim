@@ -72,4 +72,8 @@
         android:id="@+id/fragment_edit"
         android:name="com.example.mypsychologist.ui.main.EditFragment"
         android:label="EditFragment" />
+    <fragment
+        android:id="@+id/fragment_request_to_psychologist"
+        android:name="com.example.mypsychologist.ui.psychologist.RequestToPsychologistFragment"
+        android:label="RequestToPsychologistFragment" />
 </navigation>

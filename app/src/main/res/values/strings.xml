@@ -204,4 +204,7 @@
     <string name="mail">Почта</string>
     <string name="phone">Телефон</string>
     <string name="password">Пароль</string>
+    
+    <string name="describe_request">Опишите свой запрос</string>
+    <string name="request_to_psychologist_disclaimer">Вы можете связаться с психологом с помощью этой формы. Прежде чем описать здесь проблему, проверьте данные в профиле - они будут доступны психологу. Не нужно дублировать их в данной форме. Помимо информации, психологу будут доступны результаты тестов и выполненные упражнения.</string>
 </resources>

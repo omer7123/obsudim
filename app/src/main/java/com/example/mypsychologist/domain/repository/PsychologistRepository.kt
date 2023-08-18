@@ -6,4 +6,5 @@ import com.example.mypsychologist.domain.entity.PsychologistData
 interface PsychologistRepository {
     suspend fun getPsychologists(): HashMap<String, PsychologistCard>
     suspend fun getPsychologist(id: String): PsychologistData
+    fun sendRequestTo(psychologistId: String, text: String): Boolean
 }
