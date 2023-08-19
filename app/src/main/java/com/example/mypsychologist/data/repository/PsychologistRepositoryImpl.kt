@@ -55,8 +55,8 @@ class PsychologistRepositoryImpl @Inject constructor(private val auth: FirebaseA
     override fun sendRequestTo(psychologistId: String, text: String): Boolean =
         try {
             Firebase.database(AppModule.URL).reference
-                .child(psychologistId)
                 .child(REQUESTS)
+                .child(psychologistId)
                 .child(auth.currentUser!!.uid)
                 .setValue(text)
 

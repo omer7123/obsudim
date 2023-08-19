@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -71,6 +72,13 @@ class ProfileFragment : Fragment() {
 
             forPsychologist.setOnClickListener {
                 findNavController().navigate(R.id.fragment_psychologist_questionnaire)
+            }
+
+            rules.setOnClickListener {
+                findNavController().navigate(R.id.fragment_long_text, bundleOf(
+                    LongTextFragment.TITLE to rules.text.toString(),
+                    LongTextFragment.TEXT_ID to R.string.rules_text
+                ))
             }
 
             feedback.setOnClickListener {

@@ -76,4 +76,8 @@
         android:id="@+id/fragment_request_to_psychologist"
         android:name="com.example.mypsychologist.ui.psychologist.RequestToPsychologistFragment"
         android:label="RequestToPsychologistFragment" />
+    <fragment
+        android:id="@+id/fragment_long_text"
+        android:name="com.example.mypsychologist.ui.main.LongTextFragment"
+        android:label="LongTextFragment" />
 </navigation>

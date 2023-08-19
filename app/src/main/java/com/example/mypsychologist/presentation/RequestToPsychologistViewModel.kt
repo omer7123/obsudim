@@ -26,8 +26,8 @@ class RequestToPsychologistViewModel(
             viewModelScope.launch {
                 _screenState.value = FeedbackScreenState.Response(
                     sendRequestToPsychologistUseCase(
-                        text,
-                        psychologistId
+                        psychologistId,
+                        text
                     )
                 )
             }

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.RadioButton
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -109,6 +110,16 @@ class PsychologistQuestionnaireFragment : Fragment() {
         binding.apply {
             includeToolbar.toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
+            }
+
+            acceptButton.setOnClickListener {
+                acceptanceTooltip.isVisible = false
+            }
+            toTextButton.setOnClickListener {
+                findNavController().navigate(R.id.fragment_long_text, bundleOf(
+                    LongTextFragment.TITLE to getString(R.string.approval),
+                    LongTextFragment.TEXT_ID to R.string.approval_text
+                ))
             }
 
             nameField.addTextChangedListener {
