@@ -18,4 +18,5 @@ interface ProfileRepository {
     suspend fun changeMail(it: String): Boolean
     suspend fun changePhone(it: String): Boolean
     suspend fun changePassword(it: String): Boolean
+    suspend fun checkIfPsychologist(): Boolean
 }

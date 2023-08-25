@@ -26,6 +26,12 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <include layout="@layout/card_view_group"
+        android:layout_marginTop="20dp"
+        android:id="@+id/cabinet_card"
+        android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <include layout="@layout/card_view_group"
         android:layout_marginTop="20dp"

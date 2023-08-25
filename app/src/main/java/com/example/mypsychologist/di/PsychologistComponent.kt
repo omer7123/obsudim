@@ -1,5 +1,7 @@
 package com.example.mypsychologist.di
 
+import com.example.mypsychologist.ui.main.MainFragment
+import com.example.mypsychologist.ui.psychologist.PsychologistCabinetFragment
 import com.example.mypsychologist.ui.psychologist.PsychologistFragment
 import com.example.mypsychologist.ui.psychologist.PsychologistsFragment
 import com.example.mypsychologist.ui.psychologist.RequestToPsychologistFragment
@@ -12,6 +14,7 @@ interface PsychologistComponent {
     fun inject(fragment: PsychologistsFragment)
     fun inject(fragment: PsychologistFragment)
     fun inject(fragment: RequestToPsychologistFragment)
+    fun inject(fragment: PsychologistCabinetFragment)
 
     @Subcomponent.Factory
     interface Factory {

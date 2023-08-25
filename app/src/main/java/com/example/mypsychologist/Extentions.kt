@@ -16,6 +16,9 @@ import com.example.mypsychologist.di.AppComponent
 import com.example.mypsychologist.domain.entity.PsychologistCard
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.GenericTypeIndicator
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -60,3 +63,7 @@ const val MILLIS_IN_YEAR = 31536000000
 
 inline fun <reified T> DataSnapshot.getTypedValue() = getValue(object :
     GenericTypeIndicator<T>() {})
+
+suspend fun <A, B, C> Map<A, B>.pmap(transform: suspend (Map.Entry<A, B>) -> C): List<C> = coroutineScope {
+    map { async { transform(it) } }.awaitAll()
+}

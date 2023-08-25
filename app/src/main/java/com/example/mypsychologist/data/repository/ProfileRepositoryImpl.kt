@@ -201,10 +201,24 @@ class ProfileRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun checkIfPsychologist(): Boolean =
+        suspendCoroutine { continuation ->
+            reference.child(OWN_PSYCHOLOGIST_ID).get()
+                .addOnSuccessListener { snapshot ->
+                    if (snapshot.toString().isNotEmpty())
+                        continuation.resume(true)
+                    else
+                        continuation.resume(false)
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
     companion object {
         private const val FEEDBACK = "feedback"
-        private const val OWN_PSYCHOLOGIST_ID = "own_psychologist_id"
-        private const val NAME = "name"
+        const val OWN_PSYCHOLOGIST_ID = "own_psychologist_id"
+        const val NAME = "name"
         private const val BIRTHDAY = "birthday"
         private const val GENDER = "gender"
         private const val DIAGNOSIS = "diagnosis"

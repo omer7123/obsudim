@@ -199,7 +199,9 @@ class PsychologistQuestionnaireFragment : Fragment() {
                 binding.progressBar.isVisible = false
                 if (state.success) {
                     showToast(getString(R.string.success))
+                    writeInPreferences()
                     findNavController().popBackStack()
+
                 } else
                     showToast(getString(R.string.db_error))
             }
@@ -217,6 +219,14 @@ class PsychologistQuestionnaireFragment : Fragment() {
                 }
             }
             is PsychologistFormScreenState.Init -> Unit
+        }
+    }
+
+    private fun writeInPreferences() {
+        with(requireActivity().getPreferences(Context.MODE_PRIVATE).edit()) {
+            putBoolean(getString(R.string.psychologist_is_checked), true)
+            putBoolean(getString(R.string.is_psychologist), true)
+            apply()
         }
     }
 
