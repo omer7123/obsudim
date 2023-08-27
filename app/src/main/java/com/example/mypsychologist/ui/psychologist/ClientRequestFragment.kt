@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +18,7 @@ import com.example.mypsychologist.domain.entity.ClientRequestEntity
 import com.example.mypsychologist.presentation.AnswerScreenState
 import com.example.mypsychologist.presentation.ClientRequestViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.main.ClientInfoFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -94,12 +96,24 @@ class ClientRequestFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.acceptButton.setOnClickListener {
-            viewModel.sendAnswer(true, request.clientId)
+        binding.apply {
+
+            literLayout.setOnClickListener { goToClient() }
+            name.setOnClickListener { goToClient() }
+
+            acceptButton.setOnClickListener {
+                viewModel.sendAnswer(true, request.clientId)
+            }
+            rejectionButton.setOnClickListener {
+                viewModel.sendAnswer(false, request.clientId)
+            }
         }
-        binding.rejectionButton.setOnClickListener {
-            viewModel.sendAnswer(false, request.clientId)
-        }
+    }
+
+    private fun goToClient() {
+        findNavController().navigate(R.id.fragment_client_info, bundleOf(
+            ClientInfoFragment.ID to request.clientId
+        ))
     }
 
     companion object {

@@ -3,7 +3,6 @@ package com.example.mypsychologist.ui.main
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentEditBinding
-import com.example.mypsychologist.domain.entity.ClientInfoEntity
+import com.example.mypsychologist.domain.entity.ClientDataEntity
 import com.example.mypsychologist.presentation.EditScreenState
 import com.example.mypsychologist.presentation.EditViewModel
 import com.example.mypsychologist.ui.autoCleared
@@ -83,7 +82,7 @@ class EditFragment : Fragment() {
         }
     }
 
-    private fun setupData(info: ClientInfoEntity) {
+    private fun setupData(info: ClientDataEntity) {
         binding.apply {
             nameCard.cardDescription.text = info.name
             birthdayCard.cardDescription.text = Date(info.birthday).toDateString()

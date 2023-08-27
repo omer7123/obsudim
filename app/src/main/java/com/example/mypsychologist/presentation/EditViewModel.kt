@@ -18,7 +18,7 @@ class EditViewModel(
     private val changePasswordUseCase: ChangePasswordUseCase,
     private val changePhoneUseCase: ChangePhoneUseCase,
     private val changeRequestUseCase: ChangeRequestUseCase,
-    private val getClientInfoUseCase: GetClientInfoUseCase
+    private val getClientDataUseCase: GetClientDataUseCase
 ) : ViewModel() {
 
     private val _screenState: MutableStateFlow<EditScreenState> =
@@ -29,7 +29,7 @@ class EditViewModel(
     init {
         viewModelScope.launch {
             _screenState.value = EditScreenState.Loading
-            _screenState.value = EditScreenState.CurrentData(getClientInfoUseCase())
+            _screenState.value = EditScreenState.CurrentData(getClientDataUseCase())
         }
     }
 
@@ -89,14 +89,14 @@ class EditViewModel(
         private val changePasswordUseCase: ChangePasswordUseCase,
         private val changePhoneUseCase: ChangePhoneUseCase,
         private val changeRequestUseCase: ChangeRequestUseCase,
-        private val getClientInfoUseCase: GetClientInfoUseCase
+        private val getClientDataUseCase: GetClientDataUseCase
     ) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return EditViewModel(
                 changeBirthdayUseCase, changeDiagnosisUseCase, changeGenderUseCase, changeNameUseCase,
-                changePasswordUseCase, changePhoneUseCase, changeRequestUseCase, getClientInfoUseCase
+                changePasswordUseCase, changePhoneUseCase, changeRequestUseCase, getClientDataUseCase
             ) as T
         }
     }

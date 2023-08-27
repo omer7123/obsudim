@@ -1,5 +1,6 @@
 package com.example.mypsychologist.domain.repository
 
+import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.ClientRequestEntity
 import com.example.mypsychologist.domain.entity.PsychologistCard
 import com.example.mypsychologist.domain.entity.PsychologistData

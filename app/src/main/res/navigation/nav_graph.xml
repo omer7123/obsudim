@@ -88,4 +88,8 @@
         android:id="@+id/fragment_client_request"
         android:name="com.example.mypsychologist.ui.psychologist.ClientRequestFragment"
         android:label="ClientRequestFragment" />
+    <fragment
+        android:id="@+id/fragment_client_info"
+        android:name="com.example.mypsychologist.ui.main.ClientInfoFragment"
+        android:label="ClientInfoFragment" />
 </navigation>

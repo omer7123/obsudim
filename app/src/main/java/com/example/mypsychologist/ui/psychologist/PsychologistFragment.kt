@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentPsychologistBinding
-import com.example.mypsychologist.databinding.FragmentRequestToPsychologistBinding
 import com.example.mypsychologist.domain.entity.PsychologistInfo
 import com.example.mypsychologist.presentation.PsychologistScreenState
 import com.example.mypsychologist.presentation.PsychologistViewModel

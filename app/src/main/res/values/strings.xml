@@ -232,4 +232,9 @@
     <string name="notes">Заметки</string>
 
     <string name="rejection">Отказать</string>
+
+    <string name="client">Клиент</string>
+    <string name="age_pattern">Возраст: %1$s</string>
+    <string name="gender_pattern">Пол: %1$s</string>
+    <string name="diagnosis_pattern">Диагноз: %1$s</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.mypsychologist.data.repository
 
 import android.net.Uri
 import com.example.mypsychologist.di.AppModule
+import com.example.mypsychologist.domain.entity.ClientDataEntity
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.PsychologistCard
 import com.example.mypsychologist.domain.entity.PsychologistInfo
@@ -63,20 +64,20 @@ class ProfileRepositoryImpl @Inject constructor(
     override fun savePsychologist(docs: List<Uri>): Boolean =
         true
 
-    override suspend fun getClientInfo(): ClientInfoEntity =
+    override suspend fun getClientData(): ClientDataEntity =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            ClientInfoEntity(
-                getUserName(),
-                getBirthday(),
-                getGender(),
-                getDiagnosis(),
-                getRequest(),
+            ClientDataEntity(
+                getUserName(reference),
+                getBirthday(reference),
+                getGender(reference),
+                getDiagnosis(reference),
+                getRequest(reference),
                 auth.currentUser!!.email ?: "",
                 auth.currentUser!!.phoneNumber ?: ""
             )
         }
 
-    private suspend fun getUserName(): String =
+    private suspend fun getUserName(reference: DatabaseReference): String =
         suspendCoroutine { continuation ->
             reference.child(NAME).get()
                 .addOnSuccessListener { snapshot ->
@@ -87,7 +88,7 @@ class ProfileRepositoryImpl @Inject constructor(
                 }
         }
 
-    private suspend fun getBirthday(): Long =
+    private suspend fun getBirthday(reference: DatabaseReference): Long =
         suspendCoroutine { continuation ->
             reference.child(BIRTHDAY).get()
                 .addOnSuccessListener { snapshot ->
@@ -98,7 +99,7 @@ class ProfileRepositoryImpl @Inject constructor(
                 }
         }
 
-    private suspend fun getGender(): String =
+    private suspend fun getGender(reference: DatabaseReference): String =
         suspendCoroutine { continuation ->
             reference.child(GENDER).get()
                 .addOnSuccessListener { snapshot ->
@@ -109,7 +110,7 @@ class ProfileRepositoryImpl @Inject constructor(
                 }
         }
 
-    private suspend fun getDiagnosis(): String =
+    private suspend fun getDiagnosis(reference: DatabaseReference): String =
         suspendCoroutine { continuation ->
             reference.child(DIAGNOSIS).get()
                 .addOnSuccessListener { snapshot ->
@@ -120,7 +121,7 @@ class ProfileRepositoryImpl @Inject constructor(
                 }
         }
 
-    private suspend fun getRequest(): List<String> =
+    private suspend fun getRequest(reference: DatabaseReference): List<String> =
         suspendCoroutine { continuation ->
             reference.child(REQUEST).get()
                 .addOnSuccessListener { snapshot ->
@@ -213,6 +214,20 @@ class ProfileRepositoryImpl @Inject constructor(
                 .addOnFailureListener {
                     continuation.resumeWithException(it)
                 }
+        }
+
+    override suspend fun getClientInfo(clientId: String): ClientInfoEntity =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+
+            val client = Firebase.database(AppModule.URL).reference.child(clientId)
+
+            ClientInfoEntity(
+                getUserName(client),
+                getBirthday(client),
+                getGender(client),
+                getDiagnosis(client),
+                getRequest(client)
+            )
         }
 
     companion object {

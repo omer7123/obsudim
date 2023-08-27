@@ -1,10 +1,7 @@
 package com.example.mypsychologist.data.repository
 
 import com.example.mypsychologist.di.AppModule
-import com.example.mypsychologist.domain.entity.ClientRequestEntity
-import com.example.mypsychologist.domain.entity.PsychologistCard
-import com.example.mypsychologist.domain.entity.PsychologistData
-import com.example.mypsychologist.domain.entity.PsychologistInfo
+import com.example.mypsychologist.domain.entity.*
 import com.example.mypsychologist.domain.repository.PsychologistRepository
 import com.example.mypsychologist.getTypedValue
 import com.example.mypsychologist.pmap
@@ -135,6 +132,7 @@ class PsychologistRepositoryImpl @Inject constructor(
         } catch (t: Throwable) {
             false
         }
+
 
     companion object {
         private const val REQUESTS = "requests"

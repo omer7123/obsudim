@@ -1,6 +1,7 @@
 package com.example.mypsychologist.domain.repository
 
 import android.net.Uri
+import com.example.mypsychologist.domain.entity.ClientDataEntity
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.PsychologistInfo
 
@@ -9,7 +10,7 @@ interface ProfileRepository {
     fun sendFeedback(text: String): Boolean
     fun savePsychologist(info: PsychologistInfo): Boolean
     fun savePsychologist(docs: List<Uri>): Boolean
-    suspend fun getClientInfo(): ClientInfoEntity
+    suspend fun getClientData(): ClientDataEntity
     fun changeName(it: String): Boolean
     fun changeBirthday(it: Long): Boolean
     fun changeGender(it: String): Boolean
@@ -19,4 +20,5 @@ interface ProfileRepository {
     suspend fun changePhone(it: String): Boolean
     suspend fun changePassword(it: String): Boolean
     suspend fun checkIfPsychologist(): Boolean
+    suspend fun getClientInfo(clientId: String): ClientInfoEntity
 }
