@@ -83,7 +83,9 @@ class PsychologistRepositoryImpl @Inject constructor(
             Firebase.database(AppModule.URL).reference
                 .child(REQUESTS).child(psychologistId).get()
                 .addOnSuccessListener { snapshot ->
-                    continuation.resume(snapshot.getTypedValue<HashMap<String, String>>() ?: HashMap())
+                    continuation.resume(
+                        snapshot.getTypedValue<HashMap<String, String>>() ?: HashMap()
+                    )
                 }
                 .addOnFailureListener {
                     continuation.resumeWithException(it)
@@ -96,7 +98,7 @@ class PsychologistRepositoryImpl @Inject constructor(
                 .addOnSuccessListener { snapshot ->
                     continuation.resume(snapshot.value.toString())
                 }
-                .addOnFailureListener{
+                .addOnFailureListener {
                     continuation.resumeWithException(it)
                 }
         }
@@ -111,9 +113,32 @@ class PsychologistRepositoryImpl @Inject constructor(
                 .addOnFailureListener {
                     continuation.resumeWithException(it)
                 }
-    }
+        }
+
+    override suspend fun sendAnswerToRequest(accept: Boolean, clientId: String): Boolean =
+        try {
+            val ref = Firebase.database(AppModule.URL).reference
+            val psychologistId = getOwnPsychologistId()
+
+            if (accept) {
+                val key = ref.child(psychologistId).child(CLIENTS).push().key!!
+                ref.child(psychologistId).child(CLIENTS).child(key).setValue(clientId)
+                ref.child(clientId).child(PSYCHOLOGIST).setValue(psychologistId)
+            }
+
+            ref.child(REQUESTS)
+                .child(psychologistId)
+                .child(auth.currentUser!!.uid)
+                .removeValue()
+
+            true
+        } catch (t: Throwable) {
+            false
+        }
 
     companion object {
         private const val REQUESTS = "requests"
+        private const val PSYCHOLOGIST = "psychologist"
+        private const val CLIENTS = "clients"
     }
 }

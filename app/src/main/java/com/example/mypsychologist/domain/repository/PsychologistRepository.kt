@@ -9,4 +9,5 @@ interface PsychologistRepository {
     suspend fun getPsychologist(id: String): PsychologistData
     fun sendRequestTo(psychologistId: String, text: String): Boolean
     suspend fun getClientsRequests(): List<ClientRequestEntity>
+    suspend fun sendAnswerToRequest(accept: Boolean, clientId: String): Boolean
 }
