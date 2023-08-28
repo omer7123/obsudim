@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +18,7 @@ import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.presentation.ClientInfoScreenState
 import com.example.mypsychologist.presentation.ClientInfoViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.psychologist.FragmentClientTests
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -110,7 +112,9 @@ class ClientInfoFragment : Fragment() {
 
     private fun setupListeners() {
         binding.testsLayout.setOnClickListener {
-
+            findNavController().navigate(R.id.fragment_client_tests, bundleOf(
+                FragmentClientTests.CLIENT_ID to requireArguments().getString(ID)
+            ))
         }
         binding.exercisesLayout.setOnClickListener {
 

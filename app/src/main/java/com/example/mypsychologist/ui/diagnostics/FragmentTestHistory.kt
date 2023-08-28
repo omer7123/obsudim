@@ -2,12 +2,9 @@ package com.example.mypsychologist.ui.diagnostics
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,7 +34,8 @@ class FragmentTestHistory : Fragment() {
     private val viewModel: TestHistoryViewModel by viewModels {
         TestHistoryViewModel.provideFactory(
             vmFactory,
-            requireArguments().getInt(TEST_TITLE_ID)
+            requireArguments().getInt(TEST_TITLE_ID),
+            requireArguments().getString(CLIENT_ID)!!
         )
     }
 
@@ -111,5 +109,6 @@ class FragmentTestHistory : Fragment() {
 
     companion object {
         const val TEST_TITLE_ID = "test title id"
+        const val CLIENT_ID = "client id"
     }
 }

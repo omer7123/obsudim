@@ -92,4 +92,8 @@
         android:id="@+id/fragment_client_info"
         android:name="com.example.mypsychologist.ui.main.ClientInfoFragment"
         android:label="ClientInfoFragment" />
+    <fragment
+        android:id="@+id/fragment_client_tests"
+        android:name="com.example.mypsychologist.ui.psychologist.FragmentClientTests"
+        android:label="FragmentClientTests" />
 </navigation>

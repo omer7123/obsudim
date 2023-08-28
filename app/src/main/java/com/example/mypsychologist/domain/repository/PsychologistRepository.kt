@@ -1,9 +1,6 @@
 package com.example.mypsychologist.domain.repository
 
-import com.example.mypsychologist.domain.entity.ClientInfoEntity
-import com.example.mypsychologist.domain.entity.ClientRequestEntity
-import com.example.mypsychologist.domain.entity.PsychologistCard
-import com.example.mypsychologist.domain.entity.PsychologistData
+import com.example.mypsychologist.domain.entity.*
 
 interface PsychologistRepository {
     suspend fun getPsychologists(): HashMap<String, PsychologistCard>
@@ -11,4 +8,5 @@ interface PsychologistRepository {
     fun sendRequestTo(psychologistId: String, text: String): Boolean
     suspend fun getClientsRequests(): List<ClientRequestEntity>
     suspend fun sendAnswerToRequest(accept: Boolean, clientId: String): Boolean
+
 }

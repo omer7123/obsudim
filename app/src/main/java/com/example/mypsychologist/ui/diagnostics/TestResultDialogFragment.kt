@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiagnosticDialogBinding
+import com.example.mypsychologist.presentation.TestHistoryViewModel
 import com.example.mypsychologist.ui.autoCleared
 
 class TestResultDialogFragment : DialogFragment() {
@@ -42,7 +43,10 @@ class TestResultDialogFragment : DialogFragment() {
         binding.historyButton.setOnClickListener {
             findNavController().navigate(
                 R.id.fragment_test_history,
-                bundleOf(FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID))
+                bundleOf(
+                    FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID),
+                    FragmentTestHistory.CLIENT_ID to TestHistoryViewModel.OWN
+                )
             )
         }
     }

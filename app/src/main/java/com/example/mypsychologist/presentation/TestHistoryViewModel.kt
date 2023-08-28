@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
+import com.example.mypsychologist.domain.useCase.GetClientTestHistoryUseCase
 import com.example.mypsychologist.domain.useCase.GetDepressionBeckTestQuestionsUseCase
 import com.example.mypsychologist.domain.useCase.GetTestHistoryUseCase
 import dagger.assisted.Assisted
@@ -16,7 +17,9 @@ import kotlinx.coroutines.launch
 
 class TestHistoryViewModel @AssistedInject constructor(
     @Assisted private val titleId: Int,
-    private val getTestHistoryUseCase: GetTestHistoryUseCase
+    @Assisted private val clientId: String,
+    private val getTestHistoryUseCase: GetTestHistoryUseCase,
+    private val getClientTestHistoryUseCase: GetClientTestHistoryUseCase
 ) : ViewModel() {
 
     private val _screenState: MutableStateFlow<TestHistoryScreenState> =
@@ -37,7 +40,10 @@ class TestHistoryViewModel @AssistedInject constructor(
 
         viewModelScope.launch {
             titleResourcesToDataBaseTitles[titleId]?.let { title ->
-                _screenState.value = TestHistoryScreenState.Data(getTestHistoryUseCase(title))
+                _screenState.value = if (clientId == OWN)
+                     TestHistoryScreenState.Data(getTestHistoryUseCase(title))
+                else
+                    TestHistoryScreenState.Data(getClientTestHistoryUseCase(clientId, title))
             }
         }
     }
@@ -45,18 +51,21 @@ class TestHistoryViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted title: Int
+            @Assisted title: Int,
+            @Assisted clientId: String
         ): TestHistoryViewModel
     }
 
     companion object {
         fun provideFactory(
             assistedFactory: Factory,
-            title: Int
+            title: Int, clientId: String
         ) = object : ViewModelProvider.Factory {
 
             override fun <T : ViewModel> create(modelClass: Class<T>): T =
-                assistedFactory.create(title) as T
+                assistedFactory.create(title, clientId) as T
         }
+
+        const val OWN = "own"
     }
 }

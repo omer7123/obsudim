@@ -1,35 +1,33 @@
-package com.example.mypsychologist.ui.diagnostics
+package com.example.mypsychologist.ui.psychologist
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestsBinding
-import com.example.mypsychologist.domain.entity.TestCardEntity
 import com.example.mypsychologist.domain.entity.TestGroupEntity
 import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.presentation.TestHistoryViewModel
 import com.example.mypsychologist.presentation.TestsViewModel
-import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.diagnostics.DiagnosticDialogFragment
+import com.example.mypsychologist.ui.diagnostics.FragmentTestHistory
+import com.example.mypsychologist.ui.diagnostics.TestDelegate
+import com.example.mypsychologist.ui.diagnostics.TestGroupDelegate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class FragmentTests : Fragment() {
-
+class FragmentClientTests : Fragment() {
     private var binding: FragmentTestsBinding by autoCleared()
     private lateinit var mainAdapter: MainAdapter
 
@@ -73,9 +71,13 @@ class FragmentTests : Fragment() {
             }
         }
 
-        val onTestClick: (Int, Int) -> Unit = { titleId, description ->
-            DiagnosticDialogFragment.newInstance(titleId, description, TestHistoryViewModel.OWN)
-                .show(childFragmentManager, DiagnosticDialogFragment.TAG)
+        val onTestClick: (Int, Int) -> Unit = { titleId, _ ->
+            findNavController().navigate(
+                R.id.fragment_test_history, bundleOf(
+                    FragmentTestHistory.TEST_TITLE_ID to titleId,
+                    FragmentTestHistory.CLIENT_ID to requireArguments().getString(CLIENT_ID)
+                )
+            )
         }
 
         mainAdapter = MainAdapter().apply {
@@ -87,5 +89,9 @@ class FragmentTests : Fragment() {
             adapter = mainAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+    }
+
+    companion object {
+        const val CLIENT_ID = "client id"
     }
 }

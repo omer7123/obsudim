@@ -44,7 +44,8 @@ class DiagnosticDialogFragment : DialogFragment() {
         binding.historyButton.setOnClickListener {
             findNavController().navigate(
                 R.id.fragment_test_history, bundleOf(
-                    FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID)
+                    FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID),
+                    FragmentTestHistory.CLIENT_ID to requireArguments().getString(CLIENT_ID)
                 )
             )
         }
@@ -68,13 +69,18 @@ class DiagnosticDialogFragment : DialogFragment() {
         }
 
     companion object {
-        fun newInstance(titleId: Int, descriptionId: Int) =
+        fun newInstance(titleId: Int, descriptionId: Int, clientId: String) =
             DiagnosticDialogFragment().apply {
-                arguments = bundleOf(TITLE_ID to titleId, DESCRIPTION_ID to descriptionId)
+                arguments = bundleOf(
+                    TITLE_ID to titleId,
+                    DESCRIPTION_ID to descriptionId,
+                    CLIENT_ID to clientId
+                )
             }
 
         const val TAG = "test_dialog"
         private const val TITLE_ID = "title"
+        private const val CLIENT_ID = "client id"
         private const val DESCRIPTION_ID = "description"
     }
 }
