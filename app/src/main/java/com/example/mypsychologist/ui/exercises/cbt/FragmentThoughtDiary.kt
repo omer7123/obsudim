@@ -19,6 +19,7 @@ import com.example.mypsychologist.presentation.ThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.ThoughtDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.FragmentEditField
+import com.example.mypsychologist.ui.psychologist.ExercisesFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -33,7 +34,8 @@ class FragmentThoughtDiary : Fragment() {
     private val viewModel: ThoughtDiaryViewModel by viewModels {
         ThoughtDiaryViewModel.provideFactory(
             vmFactory,
-            requireArguments().getString(ID, "")
+            requireArguments().getString(ID, ""),
+            requireArguments().getString(ExercisesFragment.CLIENT_ID, "")
         )
     }
 
@@ -168,7 +170,7 @@ class FragmentThoughtDiary : Fragment() {
     }
 
     companion object {
-        const val ID = "situation"
+        const val ID = "id"
         private const val EDIT_AUTO_THOUGHT = "auto_thought"
         private const val EDIT_ALTERNATIVE_THOUGHT = "alternative_thought"
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.domain.useCase.EditAlternativeThoughtUseCase
 import com.example.mypsychologist.domain.useCase.EditAutoThoughtUseCase
+import com.example.mypsychologist.domain.useCase.GetClientThoughtDiaryUseCase
 import com.example.mypsychologist.domain.useCase.GetThoughtDiaryUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -16,9 +17,11 @@ import kotlinx.coroutines.launch
 
 class ThoughtDiaryViewModel @AssistedInject constructor(
     private val getThoughtDiaryUseCase: GetThoughtDiaryUseCase,
+    private val getClientThoughtDiaryUseCase: GetClientThoughtDiaryUseCase,
     private val editAutoThoughtUseCase: EditAutoThoughtUseCase,
     private val editAlternativeThoughtUseCase: EditAlternativeThoughtUseCase,
-    @Assisted private val id: String
+    @Assisted("id") private val id: String,
+    @Assisted("clientId") private val clientId: String
 ) : ViewModel() {
 
     private val _screenState: MutableStateFlow<ThoughtDiaryScreenState> =
@@ -34,7 +37,10 @@ class ThoughtDiaryViewModel @AssistedInject constructor(
         _screenState.value = ThoughtDiaryScreenState.Loading
 
         viewModelScope.launch {
-            _screenState.value = ThoughtDiaryScreenState.Data(getThoughtDiaryUseCase(id))
+            _screenState.value = if (clientId == OWN)
+                ThoughtDiaryScreenState.Data(getThoughtDiaryUseCase(id))
+            else
+                ThoughtDiaryScreenState.Data(getClientThoughtDiaryUseCase(clientId, id))
         }
     }
 
@@ -61,19 +67,23 @@ class ThoughtDiaryViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted id: String
+            @Assisted("id") id: String,
+            @Assisted("clientId") clientId: String
         ): ThoughtDiaryViewModel
     }
 
     companion object {
         fun provideFactory(
             assistedFactory: Factory,
-            id: String
+            id: String,
+            clientId: String
         ) = object : ViewModelProvider.Factory {
 
             override fun <T : ViewModel> create(modelClass: Class<T>): T =
-                assistedFactory.create(id) as T
+                assistedFactory.create(id, clientId) as T
         }
+
+        const val OWN = "own"
     }
 
 }

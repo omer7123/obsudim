@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,8 @@ import com.example.mypsychologist.presentation.ThoughtDiariesViewModel
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.exercises.FragmentExercises
+import com.example.mypsychologist.ui.psychologist.ExercisesFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -32,12 +35,21 @@ class FragmentDiaries : Fragment() {
     private var binding: FragmentDiariesBinding by autoCleared()
     private lateinit var adapter: MainAdapter
 
+    private lateinit var clientId: String
+
     @Inject
     lateinit var vmFactory: ThoughtDiariesViewModel.Factory
-    private val viewModel: ThoughtDiariesViewModel by viewModels { vmFactory }
+    private val viewModel: ThoughtDiariesViewModel by viewModels {
+        ThoughtDiariesViewModel.provideFactory(
+            vmFactory,
+            clientId
+        )
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        clientId = arguments?.getString(ExercisesFragment.CLIENT_ID, ThoughtDiariesViewModel.OWN)
+            ?: ThoughtDiariesViewModel.OWN
         requireContext().getAppComponent().exercisesComponent().create().inject(this)
     }
 
@@ -66,9 +78,12 @@ class FragmentDiaries : Fragment() {
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
 
-        binding.newDiaryFab.setOnClickListener {
-            findNavController().navigate(R.id.fragment_new_diary)
-        }
+        if (clientId != ThoughtDiariesViewModel.OWN)
+            binding.newDiaryFab.isVisible = false
+        else
+            binding.newDiaryFab.setOnClickListener {
+                findNavController().navigate(R.id.fragment_new_diary)
+            }
     }
 
     private fun setupAdapter() {
@@ -77,7 +92,10 @@ class FragmentDiaries : Fragment() {
                 RecordDelegate { id ->
                     findNavController().navigate(
                         R.id.fragment_diary,
-                        bundleOf(FragmentThoughtDiary.ID to id)
+                        bundleOf(
+                            FragmentThoughtDiary.ID to id,
+                            ExercisesFragment.CLIENT_ID to clientId
+                        )
                     )
                 }
             )

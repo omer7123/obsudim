@@ -18,6 +18,8 @@ import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.presentation.ClientInfoScreenState
 import com.example.mypsychologist.presentation.ClientInfoViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.exercises.FragmentExercises
+import com.example.mypsychologist.ui.psychologist.ExercisesFragment
 import com.example.mypsychologist.ui.psychologist.FragmentClientTests
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.launchIn
@@ -117,7 +119,9 @@ class ClientInfoFragment : Fragment() {
             ))
         }
         binding.exercisesLayout.setOnClickListener {
-
+            findNavController().navigate(R.id.fragment_exercises_list, bundleOf(
+                ExercisesFragment.CLIENT_ID to requireArguments().getString(ID)
+            ))
         }
     }
 

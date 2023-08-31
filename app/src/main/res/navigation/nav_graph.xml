@@ -96,4 +96,8 @@
         android:id="@+id/fragment_client_tests"
         android:name="com.example.mypsychologist.ui.psychologist.FragmentClientTests"
         android:label="FragmentClientTests" />
+    <fragment
+        android:id="@+id/fragment_exercises_list"
+        android:name="com.example.mypsychologist.ui.psychologist.ExercisesFragment"
+        android:label="ExercisesFragment" />
 </navigation>

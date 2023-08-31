@@ -5,8 +5,10 @@ import com.example.mypsychologist.domain.entity.DiaryRecordEntity
 
 interface CbtRepository {
     suspend fun getThoughtDiaries(): HashMap<String, String>
+    suspend fun getThoughtDiariesFor(clientId: String): HashMap<String, String>
     suspend fun getThoughtDiary(id: String): ThoughtDiaryEntity
     fun saveThoughtDiary(it: ThoughtDiaryEntity): Boolean
     fun editAutoThought(diaryId: String, newText: String): Boolean
     fun editAlternativeThought(diaryId: String, newText: String): Boolean
+    suspend fun getThoughtDiaryFor(clientId: String, id: String): ThoughtDiaryEntity
 }
