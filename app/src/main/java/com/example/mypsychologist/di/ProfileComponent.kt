@@ -13,6 +13,8 @@ interface ProfileComponent {
     fun inject(fragment: PsychologistQuestionnaireFragment)
     fun inject(fragment: EditFragment)
     fun inject(fragment: ClientInfoFragment)
+    fun inject(clientsFragment: ClientsFragment)
+    fun inject(tasksFragment: ClientTasksFragment)
 
     @Subcomponent.Factory
     interface Factory {

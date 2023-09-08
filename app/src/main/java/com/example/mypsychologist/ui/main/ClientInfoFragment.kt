@@ -102,6 +102,8 @@ class ClientInfoFragment : Fragment() {
     }
 
     private fun setupChips(list: List<String>) {
+        binding.specializationsGroup.removeAllViews()
+
         list.forEach { specialization ->
             binding.specializationsGroup.addView(
                 Chip(requireContext()).apply {
@@ -121,6 +123,11 @@ class ClientInfoFragment : Fragment() {
         binding.exercisesLayout.setOnClickListener {
             findNavController().navigate(R.id.fragment_exercises_list, bundleOf(
                 ExercisesFragment.CLIENT_ID to requireArguments().getString(ID)
+            ))
+        }
+        binding.tasksLayout.setOnClickListener {
+            findNavController().navigate(R.id.fragment_client_tasks, bundleOf(
+                ClientTasksFragment.ID to requireArguments().getString(ID)
             ))
         }
     }

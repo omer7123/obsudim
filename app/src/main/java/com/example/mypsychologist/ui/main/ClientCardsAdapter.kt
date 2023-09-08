@@ -1,16 +1,15 @@
-package com.example.mypsychologist.ui.psychologist
+package com.example.mypsychologist.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.PsychologistItemBinding
-import com.example.mypsychologist.domain.entity.PsychologistCard
+import com.example.mypsychologist.domain.entity.ClientCardEntity
 
-class PsychologistCardsAdapter(
-    private val items: List<Pair<String, PsychologistCard>>,
+class ClientCardsAdapter(
+    private val items: List<ClientCardEntity>,
     private val onClick: (String) -> Unit
-) :
-    RecyclerView.Adapter<PsychologistCardsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ClientCardsAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(
@@ -19,7 +18,7 @@ class PsychologistCardsAdapter(
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position].first, items[position].second)
+        holder.bind(items[position])
     }
 
     override fun getItemCount() = items.size
@@ -29,14 +28,15 @@ class PsychologistCardsAdapter(
         private val onClick: (String) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(id: String, card: PsychologistCard) {
+        fun bind(client: ClientCardEntity) {
             binding.apply {
-                liter.text = card.name[0].toString().uppercase()
-                name.text = card.name
-                specialization.text = card.specialization
+                liter.text = client.name[0].toString().uppercase()
+                name.text = client.name
+                specialization.text = client.request
             }
+
             itemView.setOnClickListener {
-                onClick(id)
+                onClick(client.id)
             }
         }
     }

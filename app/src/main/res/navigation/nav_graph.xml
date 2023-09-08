@@ -100,4 +100,12 @@
         android:id="@+id/fragment_exercises_list"
         android:name="com.example.mypsychologist.ui.psychologist.ExercisesFragment"
         android:label="ExercisesFragment" />
+    <fragment
+        android:id="@+id/fragment_clients"
+        android:name="com.example.mypsychologist.ui.main.ClientsFragment"
+        android:label="ClientsFragment" />
+    <fragment
+        android:id="@+id/fragment_client_tasks"
+        android:name="com.example.mypsychologist.ui.main.ClientTasksFragment"
+        android:label="ClientTasksFragment" />
 </navigation>

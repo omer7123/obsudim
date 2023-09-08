@@ -52,6 +52,7 @@ class PsychologistCabinetFragment : Fragment() {
         }
 
         setupCards()
+        setupListeners()
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
@@ -72,6 +73,14 @@ class PsychologistCabinetFragment : Fragment() {
                 R.drawable.ic_calendar_month
             )
             setupCard(notesCard, R.string.notes, R.string.notes, R.drawable.ic_description)
+        }
+    }
+
+    private fun setupListeners() {
+        binding.apply {
+            clientsCard.card.setOnClickListener {
+                findNavController().navigate(R.id.fragment_clients)
+            }
         }
     }
 

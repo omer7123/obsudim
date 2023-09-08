@@ -8,5 +8,7 @@ interface PsychologistRepository {
     fun sendRequestTo(psychologistId: String, text: String): Boolean
     suspend fun getClientsRequests(): List<ClientRequestEntity>
     suspend fun sendAnswerToRequest(accept: Boolean, clientId: String): Boolean
-
+    suspend fun getTasks(psychologistId: String): HashMap<String, TaskEntity>
+    fun markTaskAsCompleted(taskId: String, psychologistId: String): Boolean
+    fun markTaskAsNotCompleted(taskId: String, psychologistId: String): Boolean
 }

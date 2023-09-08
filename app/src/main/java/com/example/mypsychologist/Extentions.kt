@@ -1,19 +1,14 @@
 package com.example.mypsychologist
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
-import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.mypsychologist.databinding.CardViewGroupBinding
 import com.example.mypsychologist.di.AppComponent
-import com.example.mypsychologist.domain.entity.PsychologistCard
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.GenericTypeIndicator
 import kotlinx.coroutines.async
@@ -67,3 +62,4 @@ inline fun <reified T> DataSnapshot.getTypedValue() = getValue(object :
 suspend fun <A, B, C> Map<A, B>.pmap(transform: suspend (Map.Entry<A, B>) -> C): List<C> = coroutineScope {
     map { async { transform(it) } }.awaitAll()
 }
+

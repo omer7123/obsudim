@@ -1,9 +1,7 @@
 package com.example.mypsychologist.domain.repository
 
 import android.net.Uri
-import com.example.mypsychologist.domain.entity.ClientDataEntity
-import com.example.mypsychologist.domain.entity.ClientInfoEntity
-import com.example.mypsychologist.domain.entity.PsychologistInfo
+import com.example.mypsychologist.domain.entity.*
 
 interface ProfileRepository {
     suspend fun deleteAccount(): Boolean
@@ -20,5 +18,9 @@ interface ProfileRepository {
     suspend fun changePhone(it: String): Boolean
     suspend fun changePassword(it: String): Boolean
     suspend fun checkIfPsychologist(): Boolean
+    suspend fun getClients(): List<ClientCardEntity>
     suspend fun getClientInfo(clientId: String): ClientInfoEntity
+    suspend fun getClientTasks(clientId: String): HashMap<String, TaskEntity>
+    suspend fun newTask(task: String, clientId: String): String
+    suspend fun deleteTask(taskId: String, clientId: String)
 }

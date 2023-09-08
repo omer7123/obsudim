@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -133,10 +132,44 @@ class PsychologistRepositoryImpl @Inject constructor(
             false
         }
 
+    override suspend fun getTasks(psychologistId: String): HashMap<String, TaskEntity> =
+        suspendCoroutine { continuation ->
+            reference.child(TASKS).child(psychologistId).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(
+                        snapshot.getTypedValue<HashMap<String, TaskEntity>>() ?: hashMapOf()
+                    )
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
+    override fun markTaskAsCompleted(taskId: String, psychologistId: String) =
+        try {
+            reference.child(TASKS).child(psychologistId).child(taskId)
+                .child(TaskEntity::completed.name).setValue(true)
+
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
+    override fun markTaskAsNotCompleted(taskId: String, psychologistId: String) =
+        try {
+            reference.child(TASKS).child(psychologistId).child(taskId)
+                .child(TaskEntity::completed.name).setValue(false)
+
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
 
     companion object {
         private const val REQUESTS = "requests"
         private const val PSYCHOLOGIST = "psychologist"
-        private const val CLIENTS = "clients"
+        const val CLIENTS = "clients"
+        const val TASKS = "tasks"
     }
 }
