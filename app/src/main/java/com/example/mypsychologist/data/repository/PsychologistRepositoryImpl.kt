@@ -9,6 +9,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -33,6 +36,60 @@ class PsychologistRepositoryImpl @Inject constructor(
                 .addOnFailureListener {
                     continuation.resumeWithException(it)
                 }
+        }
+
+    override suspend fun getOwnPsychologists(): HashMap<String, PsychologistWithTaskCount> =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            HashMap(
+                getOwnPsychologistIds().pmap { id ->
+
+                    val psychologistWithTaskCount =
+                        PsychologistWithTaskCount(
+                            getPsychologistCardBy(id),
+                            getPsychologistTaskCount(id)
+                        )
+
+                    Pair(id, psychologistWithTaskCount)
+                }.associateBy(
+                    { it.first }, { it.second }
+                )
+            )
+        }
+
+    private suspend fun getOwnPsychologistIds(): List<String> =
+        suspendCoroutine { continuation ->
+
+            reference.child(PSYCHOLOGIST).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(
+                        snapshot.getTypedValue<HashMap<String, String>>()?.values?.toList()
+                            ?: listOf()
+                    )
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
+    private suspend fun getPsychologistCardBy(id: String): PsychologistCard =
+        suspendCoroutine { continuation ->
+
+            Firebase.database(AppModule.URL).reference
+                .child(PsychologistCard::class.simpleName!!).child(id).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(
+                        snapshot.getTypedValue<PsychologistCard>()
+                            ?: PsychologistCard()
+                    )
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
+    private suspend fun getPsychologistTaskCount(psychologistId: String): Int =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            getTasks(psychologistId).size
         }
 
     override suspend fun getPsychologist(id: String): PsychologistData =
@@ -117,9 +174,12 @@ class PsychologistRepositoryImpl @Inject constructor(
             val psychologistId = getOwnPsychologistId()
 
             if (accept) {
-                val key = ref.child(psychologistId).child(CLIENTS).push().key!!
-                ref.child(psychologistId).child(CLIENTS).child(key).setValue(clientId)
-                ref.child(clientId).child(PSYCHOLOGIST).setValue(psychologistId)
+                val childKey = ref.child(psychologistId).child(CLIENTS).push().key!!
+                ref.child(psychologistId).child(CLIENTS).child(childKey).setValue(clientId)
+
+                val psychologistKey = ref.child(clientId).child(PSYCHOLOGIST).push().key!!
+                ref.child(clientId).child(PSYCHOLOGIST).child(psychologistKey)
+                    .setValue(psychologistId)
             }
 
             ref.child(REQUESTS)

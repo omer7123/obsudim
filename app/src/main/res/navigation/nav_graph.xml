@@ -108,4 +108,8 @@
         android:id="@+id/fragment_client_tasks"
         android:name="com.example.mypsychologist.ui.main.ClientTasksFragment"
         android:label="ClientTasksFragment" />
+    <fragment
+        android:id="@+id/fragment_psychologists_with_tasks"
+        android:name="com.example.mypsychologist.ui.psychologist.PsychologistsWithTasksFragment"
+        android:label="PsychologistsWithTasksFragment" />
 </navigation>

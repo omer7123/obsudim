@@ -13,6 +13,7 @@ interface PsychologistComponent {
     fun inject(fragment: RequestToPsychologistFragment)
     fun inject(fragment: PsychologistCabinetFragment)
     fun inject(fragment: ClientRequestFragment)
+    fun inject(fragment: PsychologistsWithTasksFragment)
 
     @Subcomponent.Factory
     interface Factory {

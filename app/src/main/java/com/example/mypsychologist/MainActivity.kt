@@ -116,7 +116,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
             val navController =
                 (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
 
-            Log.d("aaa", item.itemId.toString())
             when (item.itemId) {
                 R.id.main_item -> {
                     navController.navigate(R.id.main_fragment)
@@ -126,8 +125,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                     true
                 }
                 R.id.psychologist_item -> {
-                    Log.d("aaa", "*")
-                    navController.navigate(R.id.fragment_psychologists)
+                    navController.navigate(R.id.fragment_psychologists_with_tasks)
                     true
                 }
                 R.id.feed_item -> {

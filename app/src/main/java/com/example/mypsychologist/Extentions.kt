@@ -63,3 +63,7 @@ suspend fun <A, B, C> Map<A, B>.pmap(transform: suspend (Map.Entry<A, B>) -> C):
     map { async { transform(it) } }.awaitAll()
 }
 
+suspend fun <A, B> List<A>.pmap(transform: suspend (A) -> B): List<B> = coroutineScope {
+    map { async { transform(it) } }.awaitAll()
+}
+

@@ -61,6 +61,7 @@ class ClientTasksViewModel @AssistedInject constructor(
             try {
                 viewModelScope.launch(Dispatchers.IO) {
 
+                    Log.d("aaa", taskId)
                     deleteTaskUseCase(taskId, clientId)
 
                     _screenState.value = TasksScreenState.Data(

@@ -12,11 +12,10 @@ class PsychologistCardsAdapter(
 ) :
     RecyclerView.Adapter<PsychologistCardsAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(
-            PsychologistItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-            onClick
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        PsychologistItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+        onClick
+    )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items[position].first, items[position].second)

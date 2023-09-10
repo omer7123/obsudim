@@ -240,4 +240,17 @@
     <string name="diagnosis_pattern">Диагноз: %1$s</string>
 
     <string name="add_task">Добавить задание</string>
+    
+    <string name="nobody">Никого нет</string>
+    <string name="no_psychologist_in_app">Вы еще не связались с психологом через наше приложение :(</string>
+    <string name="find_specialist">Подобрать специалиста</string>
+    <string name="my_psychologists">Мои психологи</string>
+
+    <plurals name="task">
+        <item quantity="one">%1$d задание</item>
+        <item quantity="few">%1$d задания</item>
+        <item quantity="many">%1$d заданий</item>
+        <item quantity="other">%1$d заданий</item>
+    </plurals>
+
 </resources>
