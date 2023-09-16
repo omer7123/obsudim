@@ -12,16 +12,19 @@ data class ThoughtDiaryEntity(
     val newMood: String = "",
     val newLevel: Int = 0
 )
-    fun ThoughtDiaryEntity.getMapOfMembers() =
-        mapOf(
-            ::situation.name to situation,
-            ::mood.name to mood,
-            ::level.name to level.toString(),
-            ::autoThought.name to autoThought,
-            ::proofs.name to proofs,
-            ::refutations.name to refutations,
-            ::alternativeThought.name to alternativeThought,
-            ::newMood.name to newMood,
-            ::newLevel.name to newLevel.toString()
-        )
+
+fun ThoughtDiaryEntity.getMapOfMembers() =
+    mapOf(
+        ::situation.name to situation,
+        ::mood.name to mood,
+        ::level.name to level.toString(),
+        ::autoThought.name to autoThought,
+        ::proofs.name to proofs,
+        ::refutations.name to refutations,
+        ::alternativeThought.name to alternativeThought,
+        ::newMood.name to newMood,
+        ::newLevel.name to newLevel.toString()
+    )
+
+
 

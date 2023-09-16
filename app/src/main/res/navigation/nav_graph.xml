@@ -24,12 +24,12 @@
         android:id="@+id/fragment_diary"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary"
         android:label="FragmentDiary"
-        tools:layout="@layout/fragment_diary"/>
+        tools:layout="@layout/fragment_thought_diary"/>
     <fragment
         android:id="@+id/fragment_new_diary"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentNewDiary"
         android:label="FragmentNewDiary"
-        tools:layout="@layout/fragment_new_diary"/>
+        tools:layout="@layout/fragment_new_thought_diary"/>
     <fragment
         android:id="@+id/fragment_tests"
         android:name="com.example.mypsychologist.ui.diagnostics.FragmentTests"

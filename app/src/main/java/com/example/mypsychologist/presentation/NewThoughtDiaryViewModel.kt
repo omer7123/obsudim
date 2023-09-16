@@ -2,13 +2,19 @@ package com.example.mypsychologist.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
+import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
 import com.example.mypsychologist.domain.entity.getMapOfMembers
 import com.example.mypsychologist.domain.useCase.SaveThoughtDiaryUseCase
+import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.exercises.cbt.IntDelegateItem
+import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegateItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtDiaryUseCase) :
@@ -21,77 +27,142 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
 
     private var diary = ThoughtDiaryEntity()
 
-    fun setSituation(it: String) {
+    private fun setSituation(it: String) {
         diary = diary.copy(situation = it)
     }
 
-    fun setMood(it: String) {
+    private fun setMood(it: String) {
         diary = diary.copy(mood = it)
     }
 
-    fun setLevel(it: Int) {
-        diary = diary.copy(level = it)
+    fun setLevel(titleId: Int, it: Int) {
+        when (titleId) {
+            R.string.level ->
+                diary = diary.copy(level = it)
+            R.string.new_level ->
+                diary = diary.copy(newLevel = it)
+        }
     }
 
-    fun setAutoThought(it: String) {
+    private fun setAutoThought(it: String) {
         diary = diary.copy(autoThought = it)
     }
 
-    fun setProofs(it: String) {
+    private fun setProofs(it: String) {
         diary = diary.copy(proofs = it)
     }
 
-    fun setRefutations(it: String) {
+    private fun setRefutations(it: String) {
         diary = diary.copy(refutations = it)
     }
 
-    fun setAlternativeThought(it: String) {
+    private fun setAlternativeThought(it: String) {
         diary = diary.copy(alternativeThought = it)
     }
 
-    fun setNewMood(it: String) {
+    private fun setNewMood(it: String) {
         diary = diary.copy(newMood = it)
-    }
-
-    fun setNewLevel(it: Int) {
-        diary = diary.copy(newLevel = it)
     }
 
     fun tryToSaveDiary() {
         if (fieldsAreCorrect()) {
-            _screenState.value = NewThoughtDiaryScreenState.RequestResult(saveThoughtDiaryUseCase(diary))
+            _screenState.value =
+                NewThoughtDiaryScreenState.RequestResult(saveThoughtDiaryUseCase(diary))
         }
     }
 
     private fun fieldsAreCorrect(): Boolean {
         var containErrors = false
-        val membersWithError = mutableListOf<String>()
 
         diary.getMapOfMembers().forEach { (member, value) ->
+
             if (value.isEmpty()) {
                 containErrors = true
-                membersWithError.add(member)
+
+                markAsNotCorrect(member)
             }
         }
 
         if (containErrors)
-            _screenState.value = NewThoughtDiaryScreenState.ValidationError(membersWithError)
+            _screenState.value = NewThoughtDiaryScreenState.ValidationError(items)
 
         return !containErrors
     }
 
-    private val titlesWithHints = mapOf(
-        R.string.situation to R.string.situation_help,
-        R.string.mood to R.string.mood_help,
-        R.string.auto_thought to R.string.auto_thought_help,
-        R.string.proofs to R.string.proofs_help,
-        R.string.refutations to R.string.refutations_help,
-        R.string.alternative_thought to R.string.alternative_thought_help,
-        R.string.new_mood to R.string.new_mood_help
-    )
+    private fun markAsNotCorrect(member: String) {
+        viewModelScope.launch {
+            items = items.map { item ->
+                if (item is ThoughtDiaryDelegateItem &&
+                    item.content().titleId == diary.mapOfTitles()[member]
+                )
+                    ThoughtDiaryDelegateItem(item.content().copy(isNotCorrect = true))
+                else
+                    item
+            }
+        }
+    }
 
-    fun getHintIdFor(titleId: Int) =
-        titlesWithHints[titleId]
+    var items = listOf<DelegateItem>(
+        ThoughtDiaryDelegateItem(
+            ThoughtDiaryItemEntity(
+                R.string.situation,
+                R.string.situation_helper,
+                R.string.situation_help,
+                ::setSituation
+            )
+        ),
+        ThoughtDiaryDelegateItem(
+            ThoughtDiaryItemEntity(
+                R.string.mood,
+                R.string.mood_helper,
+                R.string.mood_help,
+                ::setMood
+            )
+        ),
+        IntDelegateItem(R.string.level),
+        ThoughtDiaryDelegateItem(
+            ThoughtDiaryItemEntity(
+                R.string.auto_thought,
+                R.string.auto_thought_helper,
+                R.string.auto_thought_help,
+                ::setAutoThought
+            )
+        ),
+        ThoughtDiaryDelegateItem(
+            ThoughtDiaryItemEntity(
+                R.string.proofs,
+                R.string.proofs_helper,
+                R.string.proofs_help,
+                ::setProofs
+            )
+        ),
+        ThoughtDiaryDelegateItem(
+            ThoughtDiaryItemEntity(
+                R.string.refutations,
+                R.string.refutations_helper,
+                R.string.refutations_help,
+                ::setRefutations
+            )
+        ),
+        ThoughtDiaryDelegateItem(
+            ThoughtDiaryItemEntity(
+                R.string.alternative_thought,
+                R.string.alternative_thought_helper,
+                R.string.alternative_thought_help,
+                ::setAlternativeThought
+            )
+        ),
+        ThoughtDiaryDelegateItem(
+            ThoughtDiaryItemEntity(
+                R.string.new_mood,
+                R.string.new_mood_helper,
+                R.string.new_mood_help,
+                ::setNewMood
+            )
+        ),
+        IntDelegateItem(R.string.new_level)
+    )
+        private set
 
     class Factory @Inject constructor(private val saveThoughtDiaryUseCase: SaveThoughtDiaryUseCase) :
         ViewModelProvider.Factory {
@@ -100,4 +171,17 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
             return NewThoughtDiaryViewModel(saveThoughtDiaryUseCase) as T
         }
     }
+
+    private fun ThoughtDiaryEntity.mapOfTitles() =
+        mapOf(
+            ::situation.name to R.string.situation,
+            ::mood.name to R.string.mood,
+            ::level.name to R.string.level.toString(),
+            ::autoThought.name to R.string.auto_thought,
+            ::proofs.name to R.string.proofs,
+            ::refutations.name to R.string.refutations,
+            ::alternativeThought.name to R.string.alternative_thought,
+            ::newMood.name to R.string.new_mood,
+            ::newLevel.name to R.string.new_level.toString()
+        )
 }

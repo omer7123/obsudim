@@ -174,23 +174,34 @@ class PsychologistRepositoryImpl @Inject constructor(
             val psychologistId = getOwnPsychologistId()
 
             if (accept) {
-                val childKey = ref.child(psychologistId).child(CLIENTS).push().key!!
-                ref.child(psychologistId).child(CLIENTS).child(childKey).setValue(clientId)
-
-                val psychologistKey = ref.child(clientId).child(PSYCHOLOGIST).push().key!!
-                ref.child(clientId).child(PSYCHOLOGIST).child(psychologistKey)
-                    .setValue(psychologistId)
+                saveClientOfPsychologist(ref, psychologistId, clientId)
+                savePsychologistOfClient(ref, psychologistId, clientId)
             }
 
-            ref.child(REQUESTS)
-                .child(psychologistId)
-                .child(auth.currentUser!!.uid)
-                .removeValue()
+            removeRequest(ref, psychologistId, clientId)
 
             true
         } catch (t: Throwable) {
             false
         }
+
+    private fun saveClientOfPsychologist(ref: DatabaseReference, psychologistId: String, clientId: String) {
+        val childKey = ref.child(psychologistId).child(CLIENTS).push().key!!
+        ref.child(psychologistId).child(CLIENTS).child(childKey).setValue(clientId)
+    }
+
+    private fun savePsychologistOfClient(ref: DatabaseReference, psychologistId: String, clientId: String) {
+        val psychologistKey = ref.child(clientId).child(PSYCHOLOGIST).push().key!!
+        ref.child(clientId).child(PSYCHOLOGIST).child(psychologistKey)
+            .setValue(psychologistId)
+    }
+
+    private fun removeRequest(ref: DatabaseReference, psychologistId: String, clientId: String) {
+        ref.child(REQUESTS)
+            .child(psychologistId)
+            .child(clientId)
+            .removeValue()
+    }
 
     override suspend fun getTasks(psychologistId: String): HashMap<String, TaskEntity> =
         suspendCoroutine { continuation ->

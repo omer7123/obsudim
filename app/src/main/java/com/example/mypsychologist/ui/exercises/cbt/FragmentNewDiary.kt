@@ -5,19 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
-import com.example.mypsychologist.databinding.FragmentNewDiaryBinding
-import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
+import com.example.mypsychologist.databinding.FragmentNewThoughtDiaryBinding
 import com.example.mypsychologist.presentation.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.NewThoughtDiaryViewModel
+import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -26,12 +25,14 @@ import javax.inject.Inject
 
 class FragmentNewDiary : Fragment() {
 
-    private var binding: FragmentNewDiaryBinding by autoCleared()
+    private var binding: FragmentNewThoughtDiaryBinding by autoCleared()
     private var navbarHider: NavbarHider? = null
 
     @Inject
     lateinit var vmFactory: NewThoughtDiaryViewModel.Factory
     private val viewModel: NewThoughtDiaryViewModel by viewModels { vmFactory }
+
+    private lateinit var mainAdapter: MainAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,12 +49,12 @@ class FragmentNewDiary : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNewDiaryBinding.inflate(inflater, container, false)
+        binding = FragmentNewThoughtDiaryBinding.inflate(inflater, container, false)
 
         binding.includeToolbar.toolbar.title = getString(R.string.thought_diary)
 
-        setupHints()
-        setupHelpers()
+        setupAdapter(viewModel.items)
+
         setupListeners()
 
         viewModel.screenState
@@ -64,28 +65,22 @@ class FragmentNewDiary : Fragment() {
         return binding.root
     }
 
-    private fun setupHints() {
-        binding.apply {
-            includeSituation.inputLayout.hint = getString(R.string.situation)
-            includeMood.inputLayout.hint = getString(R.string.mood)
-            includeAutoThought.inputLayout.hint = getString(R.string.auto_thought)
-            includeProofs.inputLayout.hint = getString(R.string.proofs)
-            includeRefutations.inputLayout.hint = getString(R.string.refutations)
-            includeAlternativeThought.inputLayout.hint = getString(R.string.alternative_thought)
-            includeNewMood.inputLayout.hint = getString(R.string.new_mood)
-        }
-    }
+    private fun setupAdapter(items: List<DelegateItem>) {
+        mainAdapter = MainAdapter().apply {
+            addDelegate(
+                ThoughtDiaryDelegate(::showHint)
+            )
+            addDelegate(
+                SeekBarDelegate(viewModel::setLevel)
+            )
 
-    private fun setupHelpers() {
-        binding.apply {
-            includeSituation.inputLayout.helperText = getString(R.string.situation_helper)
-            includeMood.inputLayout.helperText = getString(R.string.mood_helper)
-            includeAutoThought.inputLayout.helperText = getString(R.string.auto_thought_helper)
-            includeProofs.inputLayout.helperText = getString(R.string.proofs_helper)
-            includeRefutations.inputLayout.helperText = getString(R.string.refutations_helper)
-            includeAlternativeThought.inputLayout.helperText =
-                getString(R.string.alternative_thought_helper)
-            includeNewMood.inputLayout.helperText = getString(R.string.new_mood_helper)
+            submitList(items)
+        }
+
+        binding.itemsRw.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+
+            adapter = mainAdapter
         }
     }
 
@@ -94,93 +89,11 @@ class FragmentNewDiary : Fragment() {
             findNavController().popBackStack()
         }
 
-        setupTextListeners()
-        setupHelpListeners()
-
         binding.saveButton.setOnClickListener { viewModel.tryToSaveDiary() }
     }
 
-    private fun setupTextListeners() {
-        binding.apply {
-            includeSituation.field.addTextChangedListener {
-                viewModel.setSituation(it.toString())
-                includeSituation.inputLayout.error = null
-            }
-            includeMood.field.addTextChangedListener {
-                viewModel.setMood(it.toString())
-                includeMood.inputLayout.error = null
-            }
-
-            includeLevel.seekBar.setOnSeekBarChangeListener(object :
-                SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                    viewModel.setLevel(p1)
-                }
-
-                override fun onStartTrackingTouch(p0: SeekBar?) {}
-                override fun onStopTrackingTouch(p0: SeekBar?) {}
-            })
-            includeAutoThought.field.addTextChangedListener {
-                viewModel.setAutoThought(it.toString())
-                includeAutoThought.inputLayout.error = null
-            }
-            includeProofs.field.addTextChangedListener {
-                viewModel.setProofs(it.toString())
-                includeProofs.inputLayout.error = null
-            }
-            includeRefutations.field.addTextChangedListener {
-                viewModel.setRefutations(it.toString())
-                includeRefutations.inputLayout.error = null
-            }
-            includeAlternativeThought.field.addTextChangedListener {
-                viewModel.setAlternativeThought(it.toString())
-                includeAlternativeThought.inputLayout.error = null
-            }
-            includeNewMood.field.addTextChangedListener {
-                viewModel.setNewMood(it.toString())
-                includeNewMood.inputLayout.error = null
-            }
-
-            includeNewLevel.seekBar.setOnSeekBarChangeListener(object :
-                SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                    viewModel.setNewLevel(p1)
-                }
-
-                override fun onStartTrackingTouch(p0: SeekBar?) {}
-                override fun onStopTrackingTouch(p0: SeekBar?) {}
-            })
-        }
-    }
-
-    private fun setupHelpListeners() {
-        binding.apply {
-            includeSituation.inputLayout.setEndIconOnClickListener {
-                showHint(R.string.situation)
-            }
-            includeMood.inputLayout.setEndIconOnClickListener {
-                showHint(R.string.mood)
-            }
-            includeAutoThought.inputLayout.setEndIconOnClickListener {
-                showHint(R.string.auto_thought)
-            }
-            includeProofs.inputLayout.setEndIconOnClickListener {
-                showHint(R.string.proofs)
-            }
-            includeRefutations.inputLayout.setEndIconOnClickListener {
-                showHint(R.string.refutations)
-            }
-            includeAlternativeThought.inputLayout.setEndIconOnClickListener {
-                showHint(R.string.alternative_thought)
-            }
-            includeNewMood.inputLayout.setEndIconOnClickListener {
-                showHint(R.string.new_mood)
-            }
-        }
-    }
-
-    private fun showHint(titleId: Int) {
-        FragmentHint.newInstance(titleId, viewModel.getHintIdFor(titleId)!!)
+    private fun showHint(titleId: Int, hintId: Int) {
+        FragmentHint.newInstance(titleId, hintId)
             .show(childFragmentManager, "tag")
     }
 
@@ -190,7 +103,7 @@ class FragmentNewDiary : Fragment() {
                 renderRequest(it.success)
             }
             is NewThoughtDiaryScreenState.ValidationError -> {
-                renderValidationError(it.fields)
+                mainAdapter.submitList(it.listWithErrors)
             }
             is NewThoughtDiaryScreenState.Init -> {}
         }
@@ -215,22 +128,6 @@ class FragmentNewDiary : Fragment() {
                 findNavController().popBackStack()
                 showToast(getString(R.string.success))
             }
-        }
-    }
-
-    private fun renderValidationError(fieldsWithError: List<String>) {
-        val diaryMembersAndFields = mapOf(
-            ThoughtDiaryEntity::situation.name to binding.includeSituation.inputLayout,
-            ThoughtDiaryEntity::mood.name to binding.includeMood.inputLayout,
-            ThoughtDiaryEntity::autoThought.name to binding.includeAutoThought.inputLayout,
-            ThoughtDiaryEntity::proofs.name to binding.includeProofs.inputLayout,
-            ThoughtDiaryEntity::refutations.name to binding.includeRefutations.inputLayout,
-            ThoughtDiaryEntity::alternativeThought.name to binding.includeAlternativeThought.inputLayout,
-            ThoughtDiaryEntity::newMood.name to binding.includeNewMood.inputLayout
-        )
-
-        fieldsWithError.forEach {
-            diaryMembersAndFields[it]?.error = getString(R.string.necessary_to_fill)
         }
     }
 

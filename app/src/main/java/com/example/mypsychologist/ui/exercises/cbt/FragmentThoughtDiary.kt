@@ -13,7 +13,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
-import com.example.mypsychologist.databinding.FragmentDiaryBinding
+import com.example.mypsychologist.databinding.FragmentThoughtDiaryBinding
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.presentation.ThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.ThoughtDiaryViewModel
@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 class FragmentThoughtDiary : Fragment() {
 
-    private var binding: FragmentDiaryBinding by autoCleared()
+    private var binding: FragmentThoughtDiaryBinding by autoCleared()
     private var navbarHider: NavbarHider? = null
 
     @Inject
@@ -55,7 +55,7 @@ class FragmentThoughtDiary : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDiaryBinding.inflate(inflater, container, false)
+        binding = FragmentThoughtDiaryBinding.inflate(inflater, container, false)
 
         setupTitles()
 
