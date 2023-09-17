@@ -3,7 +3,7 @@ package com.example.mypsychologist.ui.psychologist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mypsychologist.databinding.PsychologistItemBinding
+import com.example.mypsychologist.databinding.ClientRequestItemBinding
 import com.example.mypsychologist.domain.entity.ClientRequestEntity
 
 class ClientRequestsAdapter(
@@ -12,7 +12,7 @@ class ClientRequestsAdapter(
 ) : RecyclerView.Adapter<ClientRequestsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        PsychologistItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+        ClientRequestItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         onClick
     )
 
@@ -23,7 +23,7 @@ class ClientRequestsAdapter(
     override fun getItemCount() = items.size
 
     class ViewHolder(
-        private val binding: PsychologistItemBinding,
+        private val binding: ClientRequestItemBinding,
         private val onClick: (String) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 

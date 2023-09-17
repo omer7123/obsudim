@@ -246,6 +246,7 @@
     <string name="no_psychologist_in_app">Вы еще не связались с психологом через наше приложение :(</string>
     <string name="find_specialist">Подобрать специалиста</string>
     <string name="my_psychologists">Мои психологи</string>
+    <string name="show_all">Показать всех</string>
 
     <plurals name="task">
         <item quantity="one">%1$d задание</item>

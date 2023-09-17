@@ -59,6 +59,10 @@ class PsychologistsWithTasksFragment : Fragment() {
             findNavController().navigate(R.id.fragment_psychologists)
         }
 
+        binding.toAllButton.setOnClickListener {
+            findNavController().navigate(R.id.fragment_psychologists)
+        }
+
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
             .onEach { render(it) }
