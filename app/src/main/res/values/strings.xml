@@ -255,4 +255,7 @@
         <item quantity="other">%1$d заданий</item>
     </plurals>
 
+    <string name="feed_of_proud">Лента гордости</string>
+    <string name="message">Сообщение</string>
+
 </resources>

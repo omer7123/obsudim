@@ -129,6 +129,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                     true
                 }
                 R.id.feed_item -> {
+                    navController.navigate(R.id.fragment_feed)
                     true
                 }
                 else -> {

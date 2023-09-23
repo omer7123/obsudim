@@ -16,6 +16,7 @@ interface AppComponent {
     fun diagnosticComponent(): DiagnosticComponent.Factory
     fun profileComponent(): ProfileComponent.Factory
     fun psychologistComponent(): PsychologistComponent.Factory
+    fun feedComponent(): FeedComponent.Factory
 
     @Component.Factory
     interface Factory {
