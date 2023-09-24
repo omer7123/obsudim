@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentMainBinding
 import com.example.mypsychologist.getAppComponent
@@ -35,10 +36,16 @@ class MainFragment : Fragment() {
         requireContext().getAppComponent().profileComponent().create().inject(this)
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        if (activity is NavbarHider) {
+            (activity as NavbarHider).setActualItem(R.id.main_item)
+        }
+
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
         setupCards()

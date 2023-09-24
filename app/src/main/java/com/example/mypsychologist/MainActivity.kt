@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
             createSignInIntent()
 
         setupNavigationListener()
-
     }
 
     private fun createSignInIntent() {
@@ -143,6 +142,11 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         binding.navigation.isVisible = it
     }
 
+    override fun setActualItem(id: Int) {
+        if(binding.navigation.selectedItemId != id)
+            binding.navigation.selectedItemId = id
+    }
+
     override fun isConnection() =
         isConnection
 
@@ -150,6 +154,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
 interface NavbarHider {
     fun setNavbarVisibility(it: Boolean)
+    fun setActualItem(id: Int)
 }
 
 interface ConnectionChecker {
