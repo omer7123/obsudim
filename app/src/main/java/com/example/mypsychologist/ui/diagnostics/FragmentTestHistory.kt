@@ -17,8 +17,8 @@ import com.example.mypsychologist.databinding.FragmentTestHistoryBinding
 import com.example.mypsychologist.domain.entity.TestResultEntity
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.TestHistoryScreenState
-import com.example.mypsychologist.presentation.TestHistoryViewModel
+import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenState
+import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn

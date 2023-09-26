@@ -15,10 +15,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentClientInfoBinding
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
-import com.example.mypsychologist.presentation.ClientInfoScreenState
-import com.example.mypsychologist.presentation.ClientInfoViewModel
+import com.example.mypsychologist.presentation.main.ClientInfoScreenState
+import com.example.mypsychologist.presentation.main.ClientInfoViewModel
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.FragmentExercises
 import com.example.mypsychologist.ui.psychologist.ExercisesFragment
 import com.example.mypsychologist.ui.psychologist.FragmentClientTests
 import com.google.android.material.chip.Chip

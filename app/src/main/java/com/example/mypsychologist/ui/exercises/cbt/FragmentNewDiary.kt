@@ -13,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentNewThoughtDiaryBinding
-import com.example.mypsychologist.presentation.NewThoughtDiaryScreenState
-import com.example.mypsychologist.presentation.NewThoughtDiaryViewModel
+import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
+import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryViewModel
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared

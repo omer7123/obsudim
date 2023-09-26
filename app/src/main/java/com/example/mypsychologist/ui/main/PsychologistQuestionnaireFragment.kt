@@ -3,11 +3,9 @@ package com.example.mypsychologist.ui.main
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import android.widget.RadioButton
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -20,10 +18,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentPsychologistQuestionnaireBinding
-import com.example.mypsychologist.domain.entity.PsychologistData
 import com.example.mypsychologist.domain.entity.PsychologistInfo
-import com.example.mypsychologist.presentation.PsychologistFormScreenState
-import com.example.mypsychologist.presentation.PsychologistQuestionnaireViewModel
+import com.example.mypsychologist.presentation.main.PsychologistFormScreenState
+import com.example.mypsychologist.presentation.main.PsychologistQuestionnaireViewModel
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.FragmentEditField

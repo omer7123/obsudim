@@ -14,10 +14,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.ChangeProblemBottomSheetBinding
-import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.presentation.ProblemsScreenState
-import com.example.mypsychologist.presentation.ProblemsViewModel
+import com.example.mypsychologist.presentation.exercises.ProblemsScreenState
+import com.example.mypsychologist.presentation.exercises.ProblemsViewModel
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

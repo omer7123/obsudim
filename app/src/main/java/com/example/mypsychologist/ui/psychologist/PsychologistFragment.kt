@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentPsychologistBinding
 import com.example.mypsychologist.domain.entity.PsychologistInfo
-import com.example.mypsychologist.presentation.PsychologistScreenState
-import com.example.mypsychologist.presentation.PsychologistViewModel
+import com.example.mypsychologist.presentation.psychologist.PsychologistScreenState
+import com.example.mypsychologist.presentation.psychologist.PsychologistViewModel
 import com.example.mypsychologist.ui.StringAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.chip.Chip

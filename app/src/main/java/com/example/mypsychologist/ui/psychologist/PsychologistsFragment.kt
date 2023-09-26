@@ -18,8 +18,8 @@ import com.example.mypsychologist.databinding.FragmentPsychologistsBinding
 import com.example.mypsychologist.domain.entity.PsychologistCard
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.PsychologistsScreenState
-import com.example.mypsychologist.presentation.PsychologistsViewModel
+import com.example.mypsychologist.presentation.psychologist.PsychologistsScreenState
+import com.example.mypsychologist.presentation.psychologist.PsychologistsViewModel
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn

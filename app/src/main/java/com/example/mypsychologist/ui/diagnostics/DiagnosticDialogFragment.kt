@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiagnosticDialogBinding
-import com.example.mypsychologist.presentation.DiagnosticDialogViewModel
+import com.example.mypsychologist.presentation.diagnostics.DiagnosticDialogViewModel
 import com.example.mypsychologist.ui.autoCleared
 
 class DiagnosticDialogFragment : DialogFragment() {

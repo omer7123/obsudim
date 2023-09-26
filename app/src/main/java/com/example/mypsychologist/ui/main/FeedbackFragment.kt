@@ -15,8 +15,8 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentFeedbackBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.FeedbackScreenState
-import com.example.mypsychologist.presentation.FeedbackViewModel
+import com.example.mypsychologist.presentation.main.FeedbackScreenState
+import com.example.mypsychologist.presentation.main.FeedbackViewModel
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn

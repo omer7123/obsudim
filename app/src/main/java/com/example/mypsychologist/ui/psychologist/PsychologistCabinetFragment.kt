@@ -13,11 +13,9 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
-import com.example.mypsychologist.databinding.FragmentClientRequestBinding
 import com.example.mypsychologist.databinding.FragmentPsychologistCabinetBinding
-import com.example.mypsychologist.presentation.PsychologistCabinetScreenState
-import com.example.mypsychologist.presentation.PsychologistCabinetViewModel
-import com.example.mypsychologist.presentation.PsychologistsScreenState
+import com.example.mypsychologist.presentation.main.PsychologistCabinetScreenState
+import com.example.mypsychologist.presentation.main.PsychologistCabinetViewModel
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

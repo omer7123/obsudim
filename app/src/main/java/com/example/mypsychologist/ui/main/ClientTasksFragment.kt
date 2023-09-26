@@ -16,8 +16,8 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentClientTasksBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.ClientTasksViewModel
-import com.example.mypsychologist.presentation.TasksScreenState
+import com.example.mypsychologist.presentation.main.ClientTasksViewModel
+import com.example.mypsychologist.presentation.psychologist.TasksScreenState
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared

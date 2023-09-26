@@ -15,8 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentClientRequestBinding
 import com.example.mypsychologist.domain.entity.ClientRequestEntity
-import com.example.mypsychologist.presentation.AnswerScreenState
-import com.example.mypsychologist.presentation.ClientRequestViewModel
+import com.example.mypsychologist.presentation.psychologist.AnswerScreenState
+import com.example.mypsychologist.presentation.main.ClientRequestViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.main.ClientInfoFragment
 import kotlinx.coroutines.flow.launchIn

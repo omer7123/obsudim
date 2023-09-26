@@ -2,11 +2,9 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,12 +17,11 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiariesBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.ThoughtDiariesScreenState
-import com.example.mypsychologist.presentation.ThoughtDiariesViewModel
+import com.example.mypsychologist.presentation.exercises.ThoughtDiariesScreenState
+import com.example.mypsychologist.presentation.exercises.ThoughtDiariesViewModel
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.FragmentExercises
 import com.example.mypsychologist.ui.psychologist.ExercisesFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

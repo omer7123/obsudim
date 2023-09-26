@@ -15,7 +15,7 @@ import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentMainBinding
 import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.presentation.MainViewModel
+import com.example.mypsychologist.presentation.main.MainViewModel
 import com.example.mypsychologist.setupCard
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn

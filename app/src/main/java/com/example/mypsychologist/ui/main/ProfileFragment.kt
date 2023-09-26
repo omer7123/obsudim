@@ -16,11 +16,9 @@ import com.example.mypsychologist.MainActivity
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentProfileBinding
 import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.presentation.ProfileViewModel
+import com.example.mypsychologist.presentation.main.ProfileViewModel
 import com.example.mypsychologist.ui.ConfirmationDialogFragment
 import com.example.mypsychologist.ui.autoCleared
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

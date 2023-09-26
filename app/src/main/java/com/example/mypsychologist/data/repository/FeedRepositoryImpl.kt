@@ -35,6 +35,7 @@ class FeedRepositoryImpl @Inject constructor(
 
     private suspend fun getFeedItems(): HashMap<String, FeedItemEntity> =
         suspendCoroutine { continuation ->
+
             Firebase.database(AppModule.URL).reference
                 .child(FeedItemEntity::class.simpleName!!).get()
                 .addOnSuccessListener { snapshot ->
@@ -49,6 +50,7 @@ class FeedRepositoryImpl @Inject constructor(
 
     private suspend fun iLiked(itemId: String): Boolean =
         suspendCoroutine { continuation ->
+
             Firebase.database(AppModule.URL).reference
                 .child(FEED_ITEM_LIKERS)
                 .child(itemId).get()
@@ -64,46 +66,75 @@ class FeedRepositoryImpl @Inject constructor(
         }
 
     override suspend fun like(itemId: String): Boolean =
-        try {
-            val ref = Firebase.database(AppModule.URL).reference
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            try {
+                val ref = Firebase.database(AppModule.URL).reference
 
-            ref.child(FEED_ITEM_LIKERS).child(itemId)
-                .child(auth.currentUser?.uid!!)
+                saveOwnLikeIn(ref.child(FEED_ITEM_LIKERS).child(itemId))
+
+                likeScoreUp(itemId, ref)
+
+                true
+            } catch (t: Throwable) {
+                false
+            }
+        }
+
+    private suspend fun saveOwnLikeIn(item: DatabaseReference) {
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            item.child(auth.currentUser?.uid!!)
                 .setValue(auth.currentUser?.uid!!)
+        }
+    }
+
+    private suspend fun likeScoreUp(itemId: String, reference: DatabaseReference) {
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
 
             val newLikeScore = getLikeScore(itemId) + 1
-            ref.child(FeedItemEntity::class.simpleName!!)
+
+            reference.child(FeedItemEntity::class.simpleName!!)
                 .child(itemId).child(FeedItemEntity::likeScore.name)
                 .setValue(newLikeScore)
-
-            true
-        } catch (t: Throwable) {
-            false
         }
+    }
 
     override suspend fun removeLike(itemId: String): Boolean =
         try {
             val ref = Firebase.database(AppModule.URL).reference
 
-            ref.child(FEED_ITEM_LIKERS)
-                .child(itemId).child(auth.currentUser?.uid!!)
-                .removeValue()
+            removeOwnLikeFrom(ref.child(FEED_ITEM_LIKERS).child(itemId))
 
-            val newLikeScore = getLikeScore(itemId) - 1
-            ref.child(FeedItemEntity::class.simpleName!!)
-                .child(itemId).child(FeedItemEntity::likeScore.name)
-                .setValue(newLikeScore)
+            likeScoreDown(itemId, ref)
 
             true
         } catch (t: Throwable) {
             false
         }
 
+    private suspend fun removeOwnLikeFrom(item: DatabaseReference) {
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            item.child(auth.currentUser?.uid!!)
+                .removeValue()
+        }
+    }
+
+    private suspend fun likeScoreDown(itemId: String, reference: DatabaseReference) {
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+
+            val newLikeScore = getLikeScore(itemId) - 1
+
+            reference.child(FeedItemEntity::class.simpleName!!)
+                .child(itemId).child(FeedItemEntity::likeScore.name)
+                .setValue(newLikeScore)
+        }
+    }
+
     private suspend fun getLikeScore(itemId: String): Int =
         suspendCoroutine { continuation ->
+
             Firebase.database(AppModule.URL).reference
-                .child(FeedItemEntity::class.simpleName!!)
-                .child(itemId).child(FeedItemEntity::likeScore.name).get()
+                .child(FeedItemEntity::class.simpleName!!).child(itemId)
+                .child(FeedItemEntity::likeScore.name).get()
                 .addOnSuccessListener { snapshot ->
                     continuation.resume(snapshot.value.toString().toInt())
                 }
@@ -114,17 +145,19 @@ class FeedRepositoryImpl @Inject constructor(
 
     override suspend fun send(message: String): FeedItemUI =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+
             val ref = Firebase.database(AppModule.URL).reference
                 .child(FeedItemEntity::class.simpleName!!)
             val key = ref.push().key!!
 
-            val newItem = FeedItemEntity(
-                auth.currentUser?.uid!!,
-                getOwnName(),
-                Date().time,
-                message,
-                0
-            )
+            val newItem =
+                FeedItemEntity(
+                    auth.currentUser?.uid!!,
+                    getOwnName(),
+                    Date().time,
+                    message,
+                    0
+                )
 
             ref.child(key).setValue(newItem)
 
@@ -133,6 +166,7 @@ class FeedRepositoryImpl @Inject constructor(
 
     private suspend fun getOwnName(): String =
         suspendCoroutine { continuation ->
+
             reference.child(ProfileRepositoryImpl.NAME).get()
                 .addOnSuccessListener { snapshot ->
                     continuation.resume(

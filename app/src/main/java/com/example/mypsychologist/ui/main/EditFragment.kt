@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentEditBinding
 import com.example.mypsychologist.domain.entity.ClientDataEntity
-import com.example.mypsychologist.presentation.EditScreenState
-import com.example.mypsychologist.presentation.EditViewModel
+import com.example.mypsychologist.presentation.main.EditScreenState
+import com.example.mypsychologist.presentation.main.EditViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.FragmentEditField
 import com.google.android.material.chip.Chip

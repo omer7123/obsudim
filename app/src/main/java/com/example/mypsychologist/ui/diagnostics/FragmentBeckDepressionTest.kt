@@ -2,12 +2,9 @@ package com.example.mypsychologist.ui.diagnostics
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -17,8 +14,8 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.BeckDepressionScreenState
-import com.example.mypsychologist.presentation.BeckDepressionTestViewModel
+import com.example.mypsychologist.presentation.diagnostics.BeckDepressionScreenState
+import com.example.mypsychologist.presentation.diagnostics.BeckDepressionTestViewModel
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.snackbar.Snackbar
