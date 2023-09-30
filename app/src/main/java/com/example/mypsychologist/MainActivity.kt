@@ -6,17 +6,18 @@ import android.net.Network
 import android.net.NetworkRequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.example.mypsychologist.databinding.ActivityMainBinding
+import com.example.mypsychologist.ui.psychologist.TasksWorker
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import com.kirich1409.androidnotificationdsl.channels.createNotificationChannels
 
 class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
@@ -35,6 +36,8 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
         getAppComponent().inject(this)
 
+        startNotificationWorkManager()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -46,6 +49,16 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
             createSignInIntent()
 
         setupNavigationListener()
+    }
+
+    private fun startNotificationWorkManager() {
+        createNotificationChannels(this) {
+            channel(TASK_CHANNEL_ID, TASK_CHANNEL_NAME)
+        }
+
+        val taskWorkRequest = OneTimeWorkRequest.Builder(TasksWorker::class.java).build()
+
+        WorkManager.getInstance(this).enqueue(taskWorkRequest)
     }
 
     private fun createSignInIntent() {
@@ -150,6 +163,10 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     override fun isConnection() =
         isConnection
 
+    companion object {
+        const val TASK_CHANNEL_ID = "CHANNEL TASK"
+        private const val TASK_CHANNEL_NAME = "CHANNEL TASK"
+    }
 }
 
 interface NavbarHider {

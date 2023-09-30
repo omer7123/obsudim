@@ -35,6 +35,8 @@ class TaskDelegate(private val check: (String, String, Boolean) -> Unit) : Adapt
         fun bind(item: Pair<String, TaskEntity>) {
             binding.text.text = item.second.text
 
+            if (item.second.completed)
+                binding.checkBox.isChecked = true
 
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 check(item.first, item.second.psychologistId, isChecked)
