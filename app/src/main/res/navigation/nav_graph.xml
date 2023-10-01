@@ -116,4 +116,8 @@
         android:id="@+id/fragment_feed"
         android:name="com.example.mypsychologist.ui.feed.FeedFragment"
         android:label="FeedFragment" />
+    <fragment
+        android:id="@+id/fragment_education"
+        android:name="com.example.mypsychologist.ui.education.EducationFragment"
+        android:label="EducationFragment" />
 </navigation>

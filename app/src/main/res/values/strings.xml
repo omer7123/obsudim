@@ -258,4 +258,8 @@
     <string name="feed_of_proud">Лента гордости</string>
     <string name="message">Сообщение</string>
 
+    <string name="psychology_base">Основы психологии</string>
+    <string name="cbt_base">Основы КПТ</string>
+    <string name="rebt_base">Основы РЭПТ</string>
+
 </resources>
