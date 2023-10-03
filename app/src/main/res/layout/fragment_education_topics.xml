@@ -2,17 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
         android:id="@+id/include_toolbar"
         layout="@layout/include_simple_toolbar" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/education_vp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/topics_rw"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp" />
-
+        tools:listitem="@layout/card_view_group"/>
 
 </LinearLayout>

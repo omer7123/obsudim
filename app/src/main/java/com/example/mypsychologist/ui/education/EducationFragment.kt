@@ -7,21 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentEducationBinding
+import com.example.mypsychologist.domain.useCase.GetEducationMaterialUseCase
 import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.presentation.education.EducationViewModel
-import com.example.mypsychologist.showToast
-import com.example.mypsychologist.ui.MainAdapter
+import com.example.mypsychologist.serializable
+import com.example.mypsychologist.ui.PagerAdapter
 import com.example.mypsychologist.ui.autoCleared
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class EducationFragment : Fragment() {
@@ -32,10 +26,9 @@ class EducationFragment : Fragment() {
     lateinit var vmFactory: EducationViewModel.Factory
     private val viewModel: EducationViewModel by viewModels { vmFactory }
 
-    private lateinit var mainAdapter: MainAdapter
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         requireContext().getAppComponent().educationComponent().create().inject(this)
     }
 
@@ -46,49 +39,45 @@ class EducationFragment : Fragment() {
     ): View {
         binding = FragmentEducationBinding.inflate(inflater, container, false)
 
-        binding.includeToolbar.toolbar.apply{
-            title = getString(R.string.psychoeducation)
+        binding.includeToolbar.toolbar.apply {
+            title = getString(requireArguments().getInt(TITLE_ID))
+
             setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
         }
 
-        setupAdapter()
-
-        viewModel.screenState
-            .flowWithLifecycle(lifecycle)
-            .onEach { render(it) }
-            .launchIn(lifecycleScope)
+        setupViewPager()
 
         return binding.root
     }
 
-    private fun setupAdapter() {
-        mainAdapter = MainAdapter().apply {
-            addDelegate(TopicsDelegate{
+    private fun setupViewPager() {
+        val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
+        binding.educationVp.adapter = pagerAdapter
 
-            })
-        }
-        binding.topicsRw.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = mainAdapter
-            setHasFixedSize(true)
+        pagerAdapter.update(
+            generateFragmentList(
+                viewModel.getMaterial(
+                    requireArguments().serializable(TOPIC_TAG)!!
+                )
+            )
+        )
+        binding.educationVp.setCurrentItem(requireArguments().getInt(CURRENT), false)
+    }
+
+    private fun generateFragmentList(items: List<String>): List<Fragment> {
+        val topicTag: GetEducationMaterialUseCase.Topic =
+            requireArguments().serializable(TOPIC_TAG)!!
+
+        return items.mapIndexed { index, text ->
+            EducationItemFragment.newInstance(index, items.size, text, topicTag)
         }
     }
 
-    private fun render(state: ListScreenState) {
-        when(state) {
-            is ListScreenState.Loading -> {
-                if(!isNetworkConnect())
-                    showToast(getString(R.string.network_error))
-            }
-            is ListScreenState.Data -> {
-                mainAdapter.submitList(state.items)
-            }
-            is ListScreenState.Error -> {
-                showToast(getString(R.string.db_error))
-            }
-            is ListScreenState.Init -> Unit
-        }
+    companion object {
+        const val TITLE_ID = "title id"
+        const val TOPIC_TAG = "tag"
+        const val CURRENT = "current"
     }
 }

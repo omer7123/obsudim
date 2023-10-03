@@ -1,4 +1,4 @@
-package com.example.mypsychologist.ui.exercises
+package com.example.mypsychologist.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

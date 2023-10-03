@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.CardViewGroupBinding
 import com.example.mypsychologist.domain.entity.EducationTopicEntity
+import com.example.mypsychologist.domain.useCase.GetEducationMaterialUseCase
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
-class TopicsDelegate(private val onClick: (Int) -> Unit) : AdapterDelegate {
+class TopicsDelegate(private val onClick: (EducationTopicEntity) -> Unit) : AdapterDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup) =
         ViewHolder(
@@ -29,7 +30,7 @@ class TopicsDelegate(private val onClick: (Int) -> Unit) : AdapterDelegate {
 
     class ViewHolder(
         private val binding: CardViewGroupBinding,
-        private val onClick: (Int) -> Unit
+        private val onClick: (EducationTopicEntity) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: EducationTopicEntity) {
@@ -42,10 +43,10 @@ class TopicsDelegate(private val onClick: (Int) -> Unit) : AdapterDelegate {
             )
 
             if (item.currentCard == item.cardCount)
-                binding.card.setBackgroundResource(R.drawable.main_card)
+                binding.card.setBackgroundResource(R.drawable.primary_card)
 
             itemView.setOnClickListener {
-                onClick(item.titleId)
+                onClick(item)
             }
         }
     }

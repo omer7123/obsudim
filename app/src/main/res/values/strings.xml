@@ -262,4 +262,5 @@
     <string name="cbt_base">Основы КПТ</string>
     <string name="rebt_base">Основы РЭПТ</string>
 
+    <string name="end">Завершить</string>
 </resources>

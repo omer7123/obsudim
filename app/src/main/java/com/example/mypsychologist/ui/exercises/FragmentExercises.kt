@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentExercisesBinding
+import com.example.mypsychologist.ui.PagerAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.FragmentCBT
 import com.example.mypsychologist.ui.exercises.rebt.FragmentREBT

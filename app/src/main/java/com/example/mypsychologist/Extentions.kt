@@ -14,6 +14,7 @@ import com.google.firebase.database.GenericTypeIndicator
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,6 +38,11 @@ fun Context.getAppComponent(): AppComponent = (this.applicationContext as App).a
 inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
     SDK_INT >= 33 -> getParcelable(key, T::class.java)
     else -> @Suppress("DEPRECATION") getParcelable(key) as? T
+}
+
+inline fun <reified T : Serializable> Bundle.serializable(key: String): T? = when {
+    SDK_INT >= 33 -> getSerializable(key, T::class.java)
+    else -> @Suppress("DEPRECATION") getSerializable(key) as? T
 }
 
 fun Date.toDateString(): String {

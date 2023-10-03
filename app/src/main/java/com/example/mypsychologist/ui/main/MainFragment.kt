@@ -130,7 +130,7 @@ class MainFragment : Fragment() {
                 findNavController().navigate(R.id.fragment_exercises)
             }
             educationCard.card.setOnClickListener {
-                findNavController().navigate(R.id.fragment_education)
+                findNavController().navigate(R.id.fragment_education_topics)
             }
             diagnosticsCard.card.setOnClickListener {
                 findNavController().navigate(R.id.fragment_tests)
