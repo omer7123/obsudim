@@ -1,3 +1,266 @@
 <resources>
     <string name="app_name">My Psychologist</string>
+
+    <string name="in_design">Раздел в разработке</string>
+
+    <string name="hallow">Добро пожаловать!</string>
+    <string name="network_error">Ошибка сети. При восстановлении соединения запрос выполнится автоматически, если не закрывать приложение</string>
+    <string name="connect">Соединение восстановлено</string>
+    <string name="db_error">Ошибка базы данных</string>
+    <string name="after_connection">При восстановлении соединения данные загрузятся автоматически</string>
+    <string name="nothing">Ничего нет :(</string>
+
+    <string name="main">Главная</string>
+    <string name="records">Записи</string>
+    <string name="psychologist">Психолог</string>
+    <string name="feed">Лента</string>
+
+    <string name="exercises">Упражнения</string>
+    <string name="exercises_signature">Прокачай себя</string>
+    <string name="psychoeducation">Психообразование</string>
+    <string name="psychoeducation_signature">Познай психологию</string>
+    <string name="diagnostics">Диагностика</string>
+    <string name="diagnostics_signature">Познай себя</string>
+
+    <string name="cbt">КПТ</string>
+    <string name="plans">Планы</string>
+    <string name="plans_signature">Подпись тут правда надо на 2 строки</string>
+    <string name="experiments">Поведенч. эксперименты</string>
+    <string name="experiments_signature">Подпись тут правда на 2</string>
+    <string name="ladders">Лестницы страха</string>
+    <string name="ladders_signature">Подпись тут правда  на 2</string>
+    <string name="rebt">РЭПТ</string>
+    <string name="change">Изменить</string>
+    <string name="problem_analysis">Анализ проблемы</string>
+    <string name="problem_analysis_signature">Анализ проблемы</string>
+    <string name="beliefs_check">Проверка убеждений</string>
+    <string name="beliefs_check_signature">Анализ проблемы</string>
+    <string name="beliefs_analysis">Анализ убеждений</string>
+    <string name="beliefs_analysis_signature">Анализ проблемы</string>
+    <string name="dialog">Диалог</string>
+    <string name="dialog_signature">Анализ проблемы</string>
+    <string name="add">Добавить</string>
+
+    <string name="thought_diary">Дневник мыслей</string>
+    <string name="situation">Ситуация</string>
+    <string name="mood">Настроение</string>
+    <string name="auto_thought">Автоматическая мысль</string>
+    <string name="proofs">Доказательства</string>
+    <string name="refutations">Опровержения</string>
+    <string name="alternative_thought">Альтернативная мысль</string>
+    <string name="new_mood">Новое настроение</string>
+    <string name="level">Уровень</string>
+    <string name="new_level">Новый уровень</string>
+    <string name="mood_with_level">%1$s %2$s%%</string>
+    <string name="situation_helper">Кратко опишите проблемную ситуацию</string>
+    <string name="mood_helper">Какое настроение вызвала у вас эта ситуация?</string>
+    <string name="auto_thought_helper">О чем вы думали в момент, когда это почувствовали?</string>
+    <string name="proofs_helper">Аргументы в пользу автоматической мысли</string>
+    <string name="refutations_helper">Аргументы против автоматической мысли</string>
+    <string name="alternative_thought_helper">Что вы теперь думаете об этой ситуации?</string>
+    <string name="new_mood_helper">Какое у вас сейчас настроение?</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="success">Успех!</string>
+    <string name="necessary_to_fill">Необходимо заполнить</string>
+    <string name="situation_help">Опишите любые текущие события или собственные мысли. Это может быть ситуация, в которой вы оказались, триггер из внешнего мира, стимул или, возможно, воспоминания или мысли о прошлом опыте, которые вызвали у вас сильные эмоциональные переживания.</string>
+    <string name="mood_help"> Опишите свои чувства и эмоции в тот момент, когда с вами произошла стрессовая ситуация. Постарайтесь не просто перечислить, а описать свои чувства и эмоции подробно и детально.
+С помощью слайдера, вы можете оценить уровень вашего настроения. Это показатель того, как сильно влияли на вас в тот момент эмоции. Будьте честны с собой, нет правильных и неправильных эмоций.</string>
+    <string name="auto_thought_help">Опишите как можно подробно основные мысли, которые пришли вам в голову в момент стрессовой ситуации. Это могут быть оскорбительные насмешки, угрызения совести, жизненные убеждения, установки и т.д.</string>
+    <string name="proofs_help">Опишите преимущества вашего убеждения. Перечислите все достоинства, которые приходят вам в голову. Важно, описывайте достоинства вашего убеждения.
+Например: вы работаете над зависимостью от любви. Перечислите достоинства зависимости вашей самооценки и способности к счастью от того, чтобы быть любимым. Не перечисляйте достоинства того, чтобы быть любимым. С положительной стороны, вы будете чувствовать себя счастливым и достойным, если вас любят.</string>
+    <string name="refutations_help">пишите недостатки вашего убеждения. Перечислите все недостатки, которые приходят вам в голову. Важно, описывайте недостатки вашего убеждения.
+Например: вы работаете над зависимостью от любви. С негативной стороны, любой отказ может оказаться крайне разрушительным, а ваше требование любви может отталкивать людей.</string>
+    <string name="alternative_thought_help">Здесь вам нужно сформулировать альтернативную мысль, которую можно противопоставить автоматической мысли. Для этого, вы уже провели работу с достоинствами и недостатками вашей автоматической мысли. Также, вы можете воспользоваться различными техниками, которые вы изучили в разделе психообразование.</string>
+    <string name="new_mood_help">Опишите свои чувства и эмоции на данный момент. Постарайтесь не просто перечислить, а описать свои чувства и эмоции подробно и детально.
+С помощью слайдера, вы можете оценить новый уровень вашего настроения. Это показатель того, как изменилось влияние эмоций после формулирования альтернативной мысли. Будьте честны с собой, нет правильных и неправильных эмоций.</string>
+
+    <string name="no_diaries">Вы еще не заполняли дневник в нашем приложении. Самое время начать!</string>
+
+    <string name="test_progress">%1$s/%2$s</string>
+
+    <string name="depression">Депрессия</string>
+
+    <string name="no_tests">Вы еще не проходили тесты в нашем приложении. Самое время начать!</string>
+    <string name="history">История</string>
+    <string name="go">Пройти</string>
+    <string name="depression_beck_test">Шкала Бека для оценки депрессии</string>
+    <string name="depression_beck_test_desc">Данный опросник составлен из 21 группы и четырех утверждений в группе. Внимательно прочтите каждую группу утверждений и выберите утверждение, которое наиболее точно отражает ваше самочувствие, образ мыслей или настроение на этой неделе, включая сегодняшний день.</string>
+    <string name="depression_beck_test_desc_short">Данный опросник составлен из 21 группы и четырех утверждений в группе.</string>
+    <!--Первый вопрос-->
+    <string name="not_sad">Мне не грустно</string>
+    <string name="sad">Мне грустно или тоскливо</string>
+    <string name="always_sad">Мне все время тоскливо или грустно и я ничего не могу с собой поделать</string>
+    <string name="strong_sad">Мне так грустно или печально, что я не могу этого вынести</string>
+    <!--Второй вопрос-->
+    <string name="future_good">Я смотрю в будущее без особого разочарования</string>
+    <string name="future_not_good">Я испытываю разочарование в будущем</string>
+    <string name="future_bad">Я чувствую, что мне нечего ждать впереди</string>
+    <string name="future_terrible">Я чувствую, что будущее безнадежно и поворота к лучшему быть не может</string>
+    <!--3 вопрос-->
+    <string name="not_looser">Я не чувствую себя неудачником</string>
+    <string name="confuse_more_often">Я чувствую, что неудачи случались у меня чаще, чем у других людей</string>
+    <string name="only_confuses">Когда оглядываюсь на свою жизнь, я вижу лишь цепь неудач</string>
+    <string name="looser">Я чувствую, что потерпел неудачу как личность (родители)</string>
+    <!--4 вопрос-->
+    <string name="have_interest">У меня не потерян интерес к другим людям</string>
+    <string name="less_interest">Я меньше, чем бывало, интересуюсь другими людьми</string>
+    <string name="almost_not_interest">У меня потерян почти весь интерес к другим людям и почти нет никаких чувств к ним</string>
+    <string name="not_interest">У меня потерян всякий интерес к другим людям и они меня совершенно не заботят</string>
+    <!--5 вопрос-->
+    <string name="decision_easy">Я принимаю решения примерно так же легко, как всегда</string>
+    <string name="decision_latter">Я пытаюсь отсрочить принятые решения</string>
+    <string name="decision_hard">Принятие решений представляет для меня огромную трудность</string>
+    <string name="no_decisions">Я больше совсем не могу принимать решения</string>
+    <!--6 вопрос-->
+    <string name="look_normal">Я не чувствую, что выгляжу сколько-нибудь хуже, чем обычно</string>
+    <string name="look_not_good">Меня беспокоит то, что я выгляжу непривлекательно</string>
+    <string name="look_bad">Я чувствую, что в моем внешнем виде происходят постоянные изменения, делающие меня непривлекательным</string>
+    <string name="look_horrible">Я чувствую, что выгляжу гадко и отталкивающе</string>
+    <!--7 вопрос-->
+    <string name="no_dissatisfaction">Я не испытываю никакой особенной неудовлетворенности</string>
+    <string name="no_joy">Ничто не радует меня так, как раньше</string>
+    <string name="no_satisfaction">Ничто больше не дает мне удовлетворения</string>
+    <string name="total_dissatisfaction">Меня не удовлетворяет всё</string>
+    <!--8 вопрос-->
+    <string name="no_fault">Я не чувствую никакой особенной вины</string>
+    <string name="some_fault">Большую часть времени я чувствую себя скверным и ничтожным</string>
+    <string name="fault">У меня довольно сильное чувство вины</string>
+    <string name="total_fault">Я чувствую себя очень скверным и никчемным</string>
+    <!--9 вопрос-->
+    <string name="good_working">Я могу работать примерно так же хорошо, как и раньше</string>
+    <string name="working_harder">Мне нужно делать дополнительные усилия, чтобы что-то сделать</string>
+    <string name="working_hard">Я с трудом заставляю себя делать что-либо</string>
+    <string name="no_working">Я не могу выполнять никакую работу</string>
+    <!--10 вопрос-->
+    <string name="no_disappoint">Я не испытываю разочарования в себе</string>
+    <string name="disappoint">Я разочарован в себе</string>
+    <string name="disgust">У меня отвращение к себе</string>
+    <string name="hate_myself">Я ненавижу себя</string>
+    <!--11 вопрос-->
+    <string name="no_self_harm">У меня нет никаких мыслей о самоповреждении</string>
+    <string name="better_die">Я чувствую, что мне было бы лучше умереть</string>
+    <string name="plan_die">У меня есть определенные планы совершения самоубийства</string>
+    <string name="firstly_die">Я покончу с собой при первой возможности</string>
+    <!--12 вопрос-->
+    <string name="no_fatigue">Я устаю ничуть не больше, чем обычно</string>
+    <string name="fatigue_faster">Я устаю быстрее, чем раньше</string>
+    <string name="fatigue">Я устаю от любого занятия</string>
+    <string name="total_fatigue">Я устал чем бы то ни было заниматься</string>
+    <!--13 вопрос-->
+    <string name="good_appetite">Мой аппетит не хуже, чем обычно</string>
+    <string name="not_good_appetite">Мой аппетит не так хорош, как бывало</string>
+    <string name="appetite_worse">Мой аппетит теперь гораздо хуже</string>
+    <string name="no_appetite">У меня совсем нет аппетита</string>
+
+    <string name="no_depression">Удовлетворительное эмоциональное состояние</string>
+    <string name="light_depression">Легкая депрессия</string>
+    <string name="middle_depression">Умеренная депрессия</string>
+    <string name="heave_depression">Тяжелая депрессия</string>
+
+    <string name="show_result">Показать результат</string>
+    <string name="save_after_connect">Если не закрывать приложение, данные сохранятся после подключения к сети</string>
+
+    <string name="profile">Профиль</string>
+    <string name="edit_data">Редактировать данные</string>
+    <string name="for_psychologist">Для психолога</string>
+    <string name="rules">Правила</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="exit">Выйти</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="confirmation">Подтверждение</string>
+    <string name="confirm_exit">Вы действительно хотите выйти из аккаунта?</string>
+    <string name="confirm_delete">Вы действительно хотите безвозвратно удалить аккаунт?</string>
+
+    <string name="feedback_text">Если вы обнаружили ошибку в приложении или у вас есть предложения для создателей, пожалуйста заполните и отправьте эту форму. При необходимости укажите контакты для связи.</string>
+    <string name="offer">Предложение</string>
+    <string name="send">Отправить</string>
+
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <string name="psychologist_questionnaire">Анкета психолога</string>
+    <string name="professional_development">Повышение квалификации</string>
+    <string name="specialization">Специализация</string>
+    <string name="documents">Документы</string>
+    <string name="about_me">О себе</string>
+    <string name="education">Образование</string>
+    <string name="sns">ФИО</string>
+    <string name="city">Город</string>
+    <string name="format">Формат работы (очно, дистанционно)</string>
+    <string name="gender">Пол</string>
+    <string name="man">Мужской</string>
+    <string name="woman">Женский</string>
+    <string name="other">Другое</string>
+    <string name="birthday">Дата рождения</string>
+
+    <string name="gender_and_age">%1$s, %2$s</string>
+
+    <string name="psychologists">Психологи</string>
+
+    <string name="request">Запрос</string>
+    
+    <string name="name">Имя</string>
+    <string name="diagnosis">Диагноз</string>
+    <string name="mail">Почта</string>
+    <string name="phone">Телефон</string>
+    <string name="password">Пароль</string>
+    
+    <string name="describe_request">Опишите свой запрос</string>
+    <string name="request_to_psychologist_disclaimer">Вы можете связаться с психологом с помощью этой формы. Прежде чем описать здесь проблему, проверьте данные в профиле - они будут доступны психологу. Не нужно дублировать их в данной форме. Помимо информации, психологу будут доступны результаты тестов и выполненные упражнения.</string>
+
+    <string name="rules_text">Здравствуйте, это команда приложения психологической помощи и самодиагностики «Мой психолог»! Рады, что вы выбрали наше приложения для работы над собой.
+Данное приложение создано для людей, которые готовы столкнуться со своими страхами и побороть их. В этом вам могут помочь психологи, которые пользуются данным приложением. Перед преступлением к консультациям психологи проходят отбор, который устраивает наша команда. Это нужно для лучшей работы сервиса и удобства наших клиентов.
+Со своей стороны обещаем конфиденциальность и неразглашение вашей информации.</string>
+
+    <string name="attention">Внимание</string>
+    <string name="consent_acceptance">Заполнение анкеты позволяет использовать приложение в роли психолога. Продолжая, вы даете согласие на обработку персональных данных</string>
+    <string name="accept">Принять</string>
+    <string name="text_approval">Текст согласия</string>
+    <string name="approval">Согласие</string>
+    <string name="approval_text">Согласие...</string>
+
+    <string name="requests">Заявки</string>
+    <string name="watch_all">Посмотреть все</string>
+    <string name="psychologist_cabinet">Кабинет психолога</string>
+
+    <string name="psychologist_is_checked">PSYCHOLOGIST IS CHECKED</string>
+    <string name="is_psychologist">IS PSYCHOLOGIST</string>
+    
+    <string name="chat">Чат</string>
+    <string name="clients">Клиенты</string>
+    <string name="schedule">Расписание</string>
+    <string name="notes">Заметки</string>
+    <string name="tasks">Задания</string>
+
+    <string name="rejection">Отказать</string>
+
+    <string name="client">Клиент</string>
+    <string name="age_pattern">Возраст: %1$s</string>
+    <string name="gender_pattern">Пол: %1$s</string>
+    <string name="diagnosis_pattern">Диагноз: %1$s</string>
+
+    <string name="add_task">Добавить задание</string>
+    
+    <string name="nobody">Никого нет</string>
+    <string name="no_psychologist_in_app">Вы еще не связались с психологом через наше приложение :(</string>
+    <string name="find_specialist">Подобрать специалиста</string>
+    <string name="my_psychologists">Мои психологи</string>
+    <string name="show_all">Показать всех</string>
+
+    <plurals name="task">
+        <item quantity="one">%1$d задание</item>
+        <item quantity="few">%1$d задания</item>
+        <item quantity="many">%1$d заданий</item>
+        <item quantity="other">%1$d заданий</item>
+    </plurals>
+
+    <string name="feed_of_proud">Лента гордости</string>
+    <string name="message">Сообщение</string>
+
+    <string name="psychology_base">Основы психологии</string>
+    <string name="cbt_base">Основы КПТ</string>
+    <string name="rebt_base">Основы РЭПТ</string>
+
+    <string name="end">Завершить</string>
 </resources>

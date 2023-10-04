@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/include_simple_toolbar" />
+
+    <include
+        android:id="@+id/include_situation"
+        layout="@layout/card_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp" />
+
+    <include
+        android:id="@+id/include_mood"
+        layout="@layout/card_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp" />
+
+    <include
+        android:id="@+id/include_auto_thought"
+        layout="@layout/card_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp" />
+
+    <include
+        android:id="@+id/include_proofs"
+        layout="@layout/card_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp" />
+
+    <include
+        android:id="@+id/include_refutations"
+        layout="@layout/card_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp" />
+
+    <include
+        android:id="@+id/include_alternative_thought"
+        layout="@layout/card_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp" />
+
+    <include
+        android:id="@+id/include_new_mood"
+        layout="@layout/card_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="20dp" />
+</LinearLayout>
+    </ScrollView>
+
+    <!--    <TextView
+            android:id="@+id/level_title"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/level" />
+
+        <SeekBar
+            android:id="@+id/level_seek_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="16dp"/> -->

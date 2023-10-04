@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/text_view"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_card"
+        android:padding="20dp"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/progress"
+        style="@style/TextAppearance.Material3.LabelMedium"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1/10" />
+
+    <ImageView
+        android:id="@+id/swipe_icon"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_swipe" />
+
+    <Button
+        android:id="@+id/exit_button"
+        android:visibility="gone"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end" />
+
+
+</LinearLayout>

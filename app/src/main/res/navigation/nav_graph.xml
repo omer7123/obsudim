@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.example.mypsychologist.ui.main.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/fragment_exercises"
+        android:name="com.example.mypsychologist.ui.exercises.FragmentExercises"
+        android:label="FragmentExercises"
+        tools:layout="@layout/fragment_exercises"/>
+    <fragment
+        android:id="@+id/fragment_diaries"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries"
+        android:label="FragmentDiaries"
+        tools:layout="@layout/fragment_diaries"/>
+    <fragment
+        android:id="@+id/fragment_diary"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary"
+        android:label="FragmentDiary"
+        tools:layout="@layout/fragment_thought_diary"/>
+    <fragment
+        android:id="@+id/fragment_new_diary"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentNewDiary"
+        android:label="FragmentNewDiary"
+        tools:layout="@layout/fragment_new_thought_diary"/>
+    <fragment
+        android:id="@+id/fragment_tests"
+        android:name="com.example.mypsychologist.ui.diagnostics.FragmentTests"
+        android:label="FragmentTests"
+        tools:layout="@layout/fragment_tests"/>
+    <fragment
+        android:id="@+id/fragment_beck_depression_test"
+        android:name="com.example.mypsychologist.ui.diagnostics.FragmentBeckDepressionTest"
+        android:label="FragmentBeckDepressionTest"
+        tools:layout="@layout/fragment_test"/>
+    <fragment
+        android:id="@+id/fragment_test_history"
+        android:name="com.example.mypsychologist.ui.diagnostics.FragmentTestHistory"
+        android:label="FragmentTestHistory"
+        tools:layout="@layout/fragment_test_history"/>
+    <fragment
+        android:id="@+id/fragment_profile"
+        android:name="com.example.mypsychologist.ui.main.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/fragment_feedback"
+        android:name="com.example.mypsychologist.ui.main.FeedbackFragment"
+        android:label="FeedbackFragment"
+        tools:layout="@layout/fragment_feedback"/>
+    <fragment
+        android:id="@+id/fragment_psychologist_questionnaire"
+        android:name="com.example.mypsychologist.ui.main.PsychologistQuestionnaireFragment"
+        android:label="PsychologistQuestionnaireFragment"
+        tools:layout="@layout/fragment_psychologist_questionnaire"/>
+    <fragment
+        android:id="@+id/fragment_psychologists"
+        android:name="com.example.mypsychologist.ui.psychologist.PsychologistsFragment"
+        android:label="PsychologistsFragment" />
+    <fragment
+        android:id="@+id/fragment_psychologist"
+        android:name="com.example.mypsychologist.ui.psychologist.PsychologistFragment"
+        android:label="PsychologistFragment" />
+    <fragment
+        android:id="@+id/fragment_edit"
+        android:name="com.example.mypsychologist.ui.main.EditFragment"
+        android:label="EditFragment" />
+    <fragment
+        android:id="@+id/fragment_request_to_psychologist"
+        android:name="com.example.mypsychologist.ui.psychologist.RequestToPsychologistFragment"
+        android:label="RequestToPsychologistFragment" />
+    <fragment
+        android:id="@+id/fragment_long_text"
+        android:name="com.example.mypsychologist.ui.main.LongTextFragment"
+        android:label="LongTextFragment" />
+    <fragment
+        android:id="@+id/fragment_psychologist_cabinet"
+        android:name="com.example.mypsychologist.ui.psychologist.PsychologistCabinetFragment"
+        android:label="PsychologistCabinetFragment" />
+    <fragment
+        android:id="@+id/fragment_client_request"
+        android:name="com.example.mypsychologist.ui.psychologist.ClientRequestFragment"
+        android:label="ClientRequestFragment" />
+    <fragment
+        android:id="@+id/fragment_client_info"
+        android:name="com.example.mypsychologist.ui.main.ClientInfoFragment"
+        android:label="ClientInfoFragment" />
+    <fragment
+        android:id="@+id/fragment_client_tests"
+        android:name="com.example.mypsychologist.ui.psychologist.FragmentClientTests"
+        android:label="FragmentClientTests" />
+    <fragment
+        android:id="@+id/fragment_exercises_list"
+        android:name="com.example.mypsychologist.ui.psychologist.ExercisesFragment"
+        android:label="ExercisesFragment" />
+    <fragment
+        android:id="@+id/fragment_clients"
+        android:name="com.example.mypsychologist.ui.main.ClientsFragment"
+        android:label="ClientsFragment" />
+    <fragment
+        android:id="@+id/fragment_client_tasks"
+        android:name="com.example.mypsychologist.ui.main.ClientTasksFragment"
+        android:label="ClientTasksFragment" />
+    <fragment
+        android:id="@+id/fragment_psychologists_with_tasks"
+        android:name="com.example.mypsychologist.ui.psychologist.PsychologistsWithTasksFragment"
+        android:label="PsychologistsWithTasksFragment" />
+    <fragment
+        android:id="@+id/fragment_feed"
+        android:name="com.example.mypsychologist.ui.feed.FeedFragment"
+        android:label="FeedFragment" />
+    <fragment
+        android:id="@+id/fragment_education_topics"
+        android:name="com.example.mypsychologist.ui.education.EducationTopicsFragment"
+        android:label="EducationFragment" />
+    <fragment
+        android:id="@+id/fragment_education"
+        android:name="com.example.mypsychologist.ui.education.EducationFragment"
+        android:label="EducationFragment" />
+</navigation>
