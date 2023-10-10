@@ -37,23 +37,21 @@ class EducationRepositoryImpl @Inject constructor(private val reference: Databas
         reference.child(EDUCATION).child(topic).setValue(progress)
     }
 
-    override fun getBase(): List<String> =
-        listOf(
-"1", "2", "3"
-        )
+    override fun getBase(): Int =
+        R.array.base
 
-    override fun getCBTBase(): List<String> =
-        listOf(
-"4", "5", "6"
-        )
+    override fun getCBTBase(): Int =
+        R.array.cbt_base
 
     private val topics = listOf(
-        EducationTopicEntity(R.string.psychology_base, getBase().size, GetEducationMaterialUseCase.Topic.BASE),
-        EducationTopicEntity(R.string.cbt_base, getCBTBase().size, GetEducationMaterialUseCase.Topic.CBT_BASE),
+        EducationTopicEntity(R.string.psychology_base, BASE_COUNT, GetEducationMaterialUseCase.Topic.BASE),
+        EducationTopicEntity(R.string.cbt_base, CBT_COUNT, GetEducationMaterialUseCase.Topic.CBT_BASE),
       //  EducationTopicEntity(R.string.rebt_base, 0, REBT_BASE)
     )
 
     companion object {
         const val EDUCATION = "education"
+        private const val BASE_COUNT = 3
+        private const val CBT_COUNT = 16
     }
 }

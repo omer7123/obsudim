@@ -6,6 +6,6 @@ interface EducationRepository {
     suspend fun getProgress(topic: String): Int
     suspend fun getTopics(): List<EducationTopicEntity>
     suspend fun saveProgress(topic: String, progress: Int)
-    fun getBase(): List<String>
-    fun getCBTBase(): List<String>
+    fun getBase(): Int
+    fun getCBTBase(): Int
 }

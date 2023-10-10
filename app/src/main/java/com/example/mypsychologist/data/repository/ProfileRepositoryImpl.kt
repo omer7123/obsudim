@@ -1,6 +1,7 @@
 package com.example.mypsychologist.data.repository
 
 import android.net.Uri
+import android.util.Log
 import com.example.mypsychologist.di.AppModule
 import com.example.mypsychologist.domain.entity.*
 import com.example.mypsychologist.domain.repository.ProfileRepository

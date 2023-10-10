@@ -58,15 +58,17 @@ class EducationFragment : Fragment() {
 
         pagerAdapter.update(
             generateFragmentList(
-                viewModel.getMaterial(
-                    requireArguments().serializable(TOPIC_TAG)!!
+                resources.getStringArray(
+                    viewModel.getMaterial(
+                        requireArguments().serializable(TOPIC_TAG)!!
+                    )
                 )
             )
         )
         binding.educationVp.setCurrentItem(requireArguments().getInt(CURRENT), false)
     }
 
-    private fun generateFragmentList(items: List<String>): List<Fragment> {
+    private fun generateFragmentList(items: Array<String>): List<Fragment> {
         val topicTag: GetEducationMaterialUseCase.Topic =
             requireArguments().serializable(TOPIC_TAG)!!
 

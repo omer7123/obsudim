@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.main
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,11 +58,12 @@ class MainFragment : Fragment() {
     private fun checkIfPsychologist() {
         val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
 
-        if (pref.getBoolean(getString(R.string.psychologist_is_checked), false)) {
-            if (pref.getBoolean(getString(R.string.is_psychologist), false))
-                setupCabinetCard() else {
-            }
+       if (pref.getBoolean(getString(R.string.psychologist_is_checked), false)) {
+            if (pref.getBoolean(getString(R.string.is_psychologist), false)) {
+                setupCabinetCard()
+            } else { }
         } else {
+
             viewModel.checkIfPsychologist()
 
             viewModel.isPsychologist

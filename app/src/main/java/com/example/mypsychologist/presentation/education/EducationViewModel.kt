@@ -13,7 +13,7 @@ class EducationViewModel(
     private val saveProgressUseCase: SaveProgressUseCase
 ) : ViewModel() {
 
-    fun getMaterial(topic: GetEducationMaterialUseCase.Topic): List<String> =
+    fun getMaterial(topic: GetEducationMaterialUseCase.Topic): Int =
         getEducationMaterialUseCase(topic)
 
     fun saveProgress(item: Int, topicTag: String) {
