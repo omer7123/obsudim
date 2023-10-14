@@ -9,6 +9,13 @@
         android:id="@+id/include_toolbar"
         layout="@layout/include_simple_toolbar" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/topics_rw"
         android:layout_marginHorizontal="16dp"

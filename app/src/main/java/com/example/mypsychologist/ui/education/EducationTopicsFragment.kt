@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -86,11 +87,15 @@ class EducationTopicsFragment : Fragment() {
             is ListScreenState.Loading -> {
                 if(!isNetworkConnect())
                     showToast(getString(R.string.network_error))
+                else
+                    binding.progressBar.isVisible = true
             }
             is ListScreenState.Data -> {
+                binding.progressBar.isVisible = false
                 mainAdapter.submitList(state.items)
             }
             is ListScreenState.Error -> {
+                binding.progressBar.isVisible = false
                 showToast(getString(R.string.db_error))
             }
             is ListScreenState.Init -> Unit
