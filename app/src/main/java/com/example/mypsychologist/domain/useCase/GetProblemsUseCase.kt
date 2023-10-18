@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GetProblemsUseCase @Inject constructor(private val repository: RebtRepository) {
 
-    operator fun invoke() =
+    suspend operator fun invoke() =
         repository.getREBTProblems()
 }

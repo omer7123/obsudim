@@ -2,13 +2,16 @@ package com.example.mypsychologist.presentation.exercises
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.domain.useCase.GetProblemsUseCase
 import com.example.mypsychologist.ui.exercises.rebt.ProblemDelegateItem
 import com.example.mypsychologist.ui.exercises.rebt.ProblemsDelegate
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ProblemsViewModel(getProblemsUseCase: GetProblemsUseCase) : ViewModel() {
@@ -19,7 +22,9 @@ class ProblemsViewModel(getProblemsUseCase: GetProblemsUseCase) : ViewModel() {
         get() = _screenState.asStateFlow()
 
     init {
-        _screenState.value = ProblemsScreenState.Data(getProblemsUseCase())
+        viewModelScope.launch(Dispatchers.IO) {
+            _screenState.value = ProblemsScreenState.Data(getProblemsUseCase())
+        }
     }
 
     fun add(problem: String, id: String) {

@@ -22,7 +22,7 @@ class AddProblemViewModel(private val saveProblemUseCase: SaveProblemUseCase) : 
     val moods = mutableListOf<String>()
 
     fun tryToSave(problem: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             _screenState.value =
                 if (problem.isNotEmpty() && moods.isNotEmpty()) {
                     try {
