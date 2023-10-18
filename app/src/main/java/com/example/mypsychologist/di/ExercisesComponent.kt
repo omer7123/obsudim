@@ -5,6 +5,7 @@ import com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries
 import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
 import com.example.mypsychologist.ui.exercises.cbt.FragmentNewDiary
 import com.example.mypsychologist.ui.exercises.rebt.FragmentREBT
+import com.example.mypsychologist.ui.exercises.rebt.NewProblemFragment
 import com.example.mypsychologist.ui.exercises.rebt.ProblemsFragment
 import dagger.Subcomponent
 
@@ -14,6 +15,7 @@ interface ExercisesComponent {
     fun inject(fragment: FragmentExercises)
     fun inject(fragment: FragmentREBT)
     fun inject(fragment: ProblemsFragment)
+    fun inject(fragment: NewProblemFragment)
 
     fun inject(fragment: FragmentDiaries)
     fun inject(fragment: FragmentThoughtDiary)

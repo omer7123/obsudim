@@ -7,5 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface RebtRepository {
     fun getREBTProblemProgress(problemId: Int): RebtProblemProgressEntity
     fun getCurrentREBTProblemProgress(): RebtProblemProgressEntity
-    fun getREBTProblems(): List<ProblemEntity>
+    fun getREBTProblems(): HashMap<String,ProblemEntity>
+    suspend fun saveProblem(problemEntity: ProblemEntity): String
 }

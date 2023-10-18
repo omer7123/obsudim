@@ -264,4 +264,7 @@
     <string name="rebt_base">Основы РЭПТ</string>
 
     <string name="end">Завершить</string>
+
+    <string name="problem">Проблема</string>
+    <string name="necessary_to_choice">Необходимо выбрать</string>
 </resources>

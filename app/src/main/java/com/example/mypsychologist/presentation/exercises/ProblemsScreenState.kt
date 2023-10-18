@@ -6,5 +6,5 @@ sealed interface ProblemsScreenState {
     object Init: ProblemsScreenState
     object Error: ProblemsScreenState
     object Loading: ProblemsScreenState
-    class Data(val problems: List<ProblemEntity>): ProblemsScreenState
+    class Data(val problems: HashMap<String, ProblemEntity>): ProblemsScreenState
 }

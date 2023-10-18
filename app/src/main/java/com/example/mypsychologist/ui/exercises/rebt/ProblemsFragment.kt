@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.rebt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.example.mypsychologist.databinding.ChangeProblemBottomSheetBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.exercises.ProblemsScreenState
 import com.example.mypsychologist.presentation.exercises.ProblemsViewModel
+import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -53,9 +55,14 @@ class ProblemsFragment : BottomSheetDialogFragment() {
             .launchIn(lifecycleScope)
 
 
-
         binding.addButton.setOnClickListener {
+            childFragmentManager.setFragmentResultListener(
+                NewProblemFragment.NEW_PROBLEM, viewLifecycleOwner
+            ) { _, bundle ->
+                viewModel.add(bundle.getString(NewProblemFragment.TITLE)!!, bundle.getString(NewProblemFragment.ID)!!)
+            }
 
+            NewProblemFragment().show(childFragmentManager, TAG)
         }
 
         return binding.root
@@ -82,16 +89,13 @@ class ProblemsFragment : BottomSheetDialogFragment() {
             is ProblemsScreenState.Init -> {}
             is ProblemsScreenState.Loading -> {}
             is ProblemsScreenState.Error -> {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.network_error),
-                    Toast.LENGTH_LONG
-                ).show()
+                showToast(getString(R.string.network_error))
             }
         }
     }
 
     companion object {
+        private const val TAG = "new problem"
         const val PROBLEM = "problem"
     }
 }

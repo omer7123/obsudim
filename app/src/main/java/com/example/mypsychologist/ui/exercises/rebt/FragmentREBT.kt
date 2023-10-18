@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -15,6 +16,7 @@ import com.example.mypsychologist.databinding.FragmentRebtBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.presentation.exercises.REBTScreenState
 import com.example.mypsychologist.presentation.exercises.REBTViewModel
+import com.example.mypsychologist.setupCard
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -51,7 +53,7 @@ class FragmentREBT : Fragment() {
     }
 
     private fun setupCards() {
-  /*      binding.apply {
+        binding.apply {
             setupCard(
                 problemAnalysis,
                 R.string.problem_analysis,
@@ -64,7 +66,7 @@ class FragmentREBT : Fragment() {
                 R.string.beliefs_analysis_signature
             )
             setupCard(dialog, R.string.dialog, R.string.dialog_signature)
-        } */
+        }
     }
 
     private fun render(it: REBTScreenState) {
@@ -85,7 +87,7 @@ class FragmentREBT : Fragment() {
     }
 
     private fun setupData(it: REBTScreenState.Data) {
-    /*    it.problemProgress.apply {
+        it.problemProgress.apply {
             binding.problem.text = problem
 
             if (problemAnalysisCompleted)
@@ -100,11 +102,11 @@ class FragmentREBT : Fragment() {
             if (dialogCompleted)
                 binding.dialog.card.background =
                     getDrawable(requireContext(), R.drawable.primary_card)
-        } */
+        }
     }
 
     private fun setupListeners() {
-     /*   binding.changeButton.setOnClickListener {
+        binding.changeButton.setOnClickListener {
             childFragmentManager.setFragmentResultListener(
                 ProblemsFragment.PROBLEM,
                 viewLifecycleOwner
@@ -113,7 +115,7 @@ class FragmentREBT : Fragment() {
             }
 
             ProblemsFragment().show(childFragmentManager, TAG)
-        } */
+        }
     }
 
     companion object {
