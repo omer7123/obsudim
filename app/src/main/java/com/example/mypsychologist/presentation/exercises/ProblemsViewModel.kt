@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.domain.entity.ProblemEntity
+import com.example.mypsychologist.domain.useCase.ChangeCurrentProblem
 import com.example.mypsychologist.domain.useCase.GetProblemsUseCase
 import com.example.mypsychologist.ui.exercises.rebt.ProblemDelegateItem
 import com.example.mypsychologist.ui.exercises.rebt.ProblemsDelegate
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProblemsViewModel(getProblemsUseCase: GetProblemsUseCase) : ViewModel() {
+class ProblemsViewModel(getProblemsUseCase: GetProblemsUseCase, private val changeCurrentProblem: ChangeCurrentProblem) : ViewModel() {
 
     private val _screenState: MutableStateFlow<ProblemsScreenState> =
         MutableStateFlow(ProblemsScreenState.Init)
@@ -27,17 +28,23 @@ class ProblemsViewModel(getProblemsUseCase: GetProblemsUseCase) : ViewModel() {
         }
     }
 
+    fun markAsCurrent(problemId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            changeCurrentProblem(problemId)
+        }
+    }
+
     fun add(problem: String, id: String) {
         val newMap = HashMap((screenState.value as ProblemsScreenState.Data).problems)
         newMap[id] = ProblemEntity(problem)
         _screenState.value = ProblemsScreenState.Data(newMap)
     }
 
-    class Factory @Inject constructor(private val getProblemsUseCase: GetProblemsUseCase) :
+    class Factory @Inject constructor(private val getProblemsUseCase: GetProblemsUseCase, private val changeCurrentProblem: ChangeCurrentProblem) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return ProblemsViewModel(getProblemsUseCase) as T
+            return ProblemsViewModel(getProblemsUseCase, changeCurrentProblem) as T
         }
     }
 }

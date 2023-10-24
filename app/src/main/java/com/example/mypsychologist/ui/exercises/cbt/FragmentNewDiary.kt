@@ -97,13 +97,13 @@ class FragmentNewDiary : Fragment() {
             .show(childFragmentManager, "tag")
     }
 
-    private fun render(it: NewThoughtDiaryScreenState) {
-        when (it) {
+    private fun render(state: NewThoughtDiaryScreenState) {
+        when (state) {
             is NewThoughtDiaryScreenState.RequestResult -> {
-                renderRequest(it.success)
+                renderRequest(state.success)
             }
             is NewThoughtDiaryScreenState.ValidationError -> {
-                mainAdapter.submitList(it.listWithErrors)
+                mainAdapter.submitList(state.listWithErrors)
             }
             is NewThoughtDiaryScreenState.Init -> {}
         }

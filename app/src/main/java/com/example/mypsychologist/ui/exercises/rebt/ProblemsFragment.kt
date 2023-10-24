@@ -72,8 +72,9 @@ class ProblemsFragment : BottomSheetDialogFragment() {
         binding.problemsRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
             mainAdapter = MainAdapter().apply {
-                addDelegate(ProblemsDelegate{
-                    setFragmentResult(PROBLEM, bundleOf(PROBLEM to it))
+                addDelegate(ProblemsDelegate {problemId ->
+                    viewModel.markAsCurrent(problemId)
+                    setFragmentResult(PROBLEM, bundleOf(PROBLEM to problemId))
                     dismiss()
                 })
             }

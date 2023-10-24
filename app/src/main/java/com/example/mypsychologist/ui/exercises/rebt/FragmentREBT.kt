@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -14,9 +15,11 @@ import androidx.lifecycle.lifecycleScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentRebtBinding
 import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.REBTScreenState
 import com.example.mypsychologist.presentation.exercises.REBTViewModel
 import com.example.mypsychologist.setupCard
+import com.example.mypsychologist.showToast
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -26,7 +29,7 @@ class FragmentREBT : Fragment() {
 
     @Inject
     lateinit var vmFactory: REBTViewModel.Factory
-    private val viewModel: REBTViewModel by viewModels{ vmFactory }
+    private val viewModel: REBTViewModel by viewModels { vmFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -72,17 +75,35 @@ class FragmentREBT : Fragment() {
     private fun render(it: REBTScreenState) {
         when (it) {
             is REBTScreenState.Data -> {
+                binding.networkPlaceholder.layout.isVisible = false
+                binding.placeholder.isVisible = false
+                binding.content.isVisible = true
                 setupData(it)
             }
-            is REBTScreenState.Init -> {}
-            is REBTScreenState.Loading -> {}
-            is REBTScreenState.Error -> {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.network_error),
-                    Toast.LENGTH_LONG
-                ).show()
+
+            is REBTScreenState.Loading -> {
+                if (!isNetworkConnect()) {
+                    binding.networkPlaceholder.layout.isVisible = true
+                    binding.placeholder.isVisible = false
+                    binding.content.isVisible = false
+                }
             }
+
+            is REBTScreenState.Empty -> {
+                binding.networkPlaceholder.layout.isVisible = false
+                binding.placeholder.isVisible = true
+                binding.content.isVisible = false
+
+            }
+
+            is REBTScreenState.Error -> {
+                binding.networkPlaceholder.layout.isVisible = false
+                binding.placeholder.isVisible = false
+                binding.content.isVisible = false
+                showToast(getString(R.string.db_error))
+            }
+
+            is REBTScreenState.Init -> Unit
         }
     }
 
@@ -90,32 +111,43 @@ class FragmentREBT : Fragment() {
         it.problemProgress.apply {
             binding.problem.text = problem
 
+            val primaryCard = getDrawable(requireContext(), R.drawable.primary_card)
+
             if (problemAnalysisCompleted)
                 binding.problemAnalysis.card.background =
-                    getDrawable(requireContext(), R.drawable.primary_card)
+                    primaryCard
             if (beliefsCheckCompleted)
                 binding.beliefsCheck.card.background =
-                    getDrawable(requireContext(), R.drawable.primary_card)
+                    primaryCard
             if (beliefsAnalysisCompleted)
                 binding.beliefsAnalysis.card.background =
-                    getDrawable(requireContext(), R.drawable.primary_card)
+                    primaryCard
             if (dialogCompleted)
                 binding.dialog.card.background =
-                    getDrawable(requireContext(), R.drawable.primary_card)
+                    primaryCard
         }
     }
 
+
     private fun setupListeners() {
         binding.changeButton.setOnClickListener {
-            childFragmentManager.setFragmentResultListener(
-                ProblemsFragment.PROBLEM,
-                viewLifecycleOwner
-            ) { _, bundle ->
-                viewModel.getProblemProgress(bundle.getInt(ProblemsFragment.PROBLEM))
-            }
-
-            ProblemsFragment().show(childFragmentManager, TAG)
+            setupChangeProblemFragment()
         }
+        binding.beginButton.setOnClickListener {
+            setupChangeProblemFragment()
+        }
+
+    }
+
+    private fun setupChangeProblemFragment() {
+        childFragmentManager.setFragmentResultListener(
+            ProblemsFragment.PROBLEM,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            viewModel.getProblemProgress(bundle.getString(ProblemsFragment.PROBLEM)!!)
+        }
+
+        ProblemsFragment().show(childFragmentManager, TAG)
     }
 
     companion object {

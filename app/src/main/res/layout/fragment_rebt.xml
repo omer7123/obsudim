@@ -1,57 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:paddingEnd="16dp">
 
- <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:gravity="center">
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
 
-         <TextView
-             android:id="@+id/problem"
-             style="@style/TextAppearance.Material3.TitleLarge"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_weight="2"
-             tools:text="Выбранная проблема" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
-         <Button
-             android:id="@+id/change_button"
-             style="@style/Widget.Material3.Button.TextButton"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:text="@string/change" />
-     </LinearLayout>
+            <TextView
+                android:id="@+id/problem"
+                style="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                tools:text="Выбранная проблема" />
 
-     <include layout="@layout/card_view_group"
-         android:id="@+id/problem_analysis"
-         android:layout_marginTop="20dp"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/change_button"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/change" />
+        </LinearLayout>
 
-     <include layout="@layout/card_view_group"
-         android:id="@+id/beliefs_check"
-         android:layout_marginTop="20dp"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content" />
+        <include
+            android:id="@+id/problem_analysis"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
 
-     <include layout="@layout/card_view_group"
-         android:id="@+id/beliefs_analysis"
-         android:layout_marginTop="20dp"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content" />
+        <include
+            android:id="@+id/beliefs_check"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
 
-     <include layout="@layout/card_view_group"
-         android:id="@+id/dialog"
-         android:layout_marginTop="20dp"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content" />
+        <include
+            android:id="@+id/beliefs_analysis"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
 
+        <include
+            android:id="@+id/dialog"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+
+    <include layout="@layout/include_network_placeholder"
+        android:id="@+id/network_placeholder" />
+
+    <LinearLayout
+        android:id="@+id/placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_psychology_alt" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextAppearance.Material3.TitleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/nothing" />
+
+        <TextView
+            android:id="@+id/text"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/no_problems" />
+
+        <Button
+            android:id="@+id/begin_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/begin" />
+
+    </LinearLayout>
 </LinearLayout>

@@ -263,8 +263,24 @@
     <string name="cbt_base">Основы КПТ</string>
     <string name="rebt_base">Основы РЭПТ</string>
 
+    <string name="begin">Начать</string>
     <string name="end">Завершить</string>
 
     <string name="problem">Проблема</string>
     <string name="necessary_to_choice">Необходимо выбрать</string>
+    <string name="refute">Опровергнуть</string>
+    <string name="no_problems">Вы еще не записывали проблемы в нашем приложении</string>
+
+    <string name="dogmatic_requirement">Догматическое требование</string>
+    <string name="dogmatic_requirement_hint">Закон, для которого не существует отклонений</string>
+    <string name="dramatization">Драматизация</string>
+    <string name="dramatization_hint">Вы чувствуете, что это худшее на свете?</string>
+    <string name="LFT">Низкий порог фрустрации</string>
+    <string name="LFT_hint">Эта ситуация для вас невыносима?</string>
+    <string name="humiliating_remarks">Унизительные замечания</string>
+    <string name="humiliating_remarks_hint">Вы осуждаете себя или окружающих в связи с ситуацией?</string>
+    <string name="flexible_preference">Гибкое предпочтение</string>
+    <string name="perspective">Перспектива</string>
+    <string name="HFT">Высокий порог фрустрации</string>
+    <string name="unconditional_acceptance">Безусловное принятие</string>
 </resources>
