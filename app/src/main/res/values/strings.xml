@@ -280,7 +280,11 @@
     <string name="humiliating_remarks">Унизительные замечания</string>
     <string name="humiliating_remarks_hint">Вы осуждаете себя или окружающих в связи с ситуацией?</string>
     <string name="flexible_preference">Гибкое предпочтение</string>
+    <string name="flexible_preference_hint">Нет причин, почему так должно быть всегда</string>
     <string name="perspective">Перспектива</string>
+    <string name="perspective_hint">Есть вещи похуже</string>
     <string name="HFT">Высокий порог фрустрации</string>
+    <string name="HFT_hint">Будет непросто, но я справлюсь</string>
     <string name="unconditional_acceptance">Безусловное принятие</string>
+    <string name="unconditional_acceptance_hint">Я(мы) достойный человек</string>
 </resources>

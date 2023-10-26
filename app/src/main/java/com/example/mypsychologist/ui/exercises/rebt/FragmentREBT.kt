@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentRebtBinding
 import com.example.mypsychologist.getAppComponent
@@ -130,6 +131,9 @@ class FragmentREBT : Fragment() {
 
 
     private fun setupListeners() {
+        binding.problemAnalysis.card.setOnClickListener {
+            findNavController().navigate(R.id.fragment_rebt_harmful_thought)
+        }
         binding.changeButton.setOnClickListener {
             setupChangeProblemFragment()
         }

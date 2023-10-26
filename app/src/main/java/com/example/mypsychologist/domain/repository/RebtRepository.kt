@@ -10,5 +10,5 @@ interface RebtRepository {
     suspend fun getREBTProblems(): HashMap<String,ProblemEntity>
     suspend fun saveProblem(problemEntity: ProblemEntity): String
     suspend fun saveCurrentProblem(id: String): Boolean
-    suspend fun saveAnalysis(problemId: String, rebtAnalysisEntity: ProblemAnalysisEntity): Boolean
+    suspend fun saveAnalysis(rebtAnalysisEntity: ProblemAnalysisEntity): Boolean
 }

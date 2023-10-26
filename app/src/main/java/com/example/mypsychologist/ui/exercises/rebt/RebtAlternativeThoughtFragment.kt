@@ -13,22 +13,22 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
-import com.example.mypsychologist.databinding.FragmentHarmfulThoughtsBinding
+import com.example.mypsychologist.databinding.FragmentRebtAlternativeThoughtBinding
 import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.ProblemAnalysisViewModel
+import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
-import com.example.mypsychologist.ui.exercises.cbt.SeekBarDelegate
 import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class RebtHarmfulThoughtFragment : Fragment() {
-
-    private var binding: FragmentHarmfulThoughtsBinding by autoCleared()
+class RebtAlternativeThoughtFragment : Fragment() {
+    private var binding: FragmentRebtAlternativeThoughtBinding by autoCleared()
 
     @Inject
     lateinit var vmFactory: ProblemAnalysisViewModel.Factory
@@ -46,7 +46,7 @@ class RebtHarmfulThoughtFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHarmfulThoughtsBinding.inflate(inflater, container, false)
+        binding = FragmentRebtAlternativeThoughtBinding.inflate(inflater, container, false)
 
         binding.toolbar.toolbar.apply {
             title = getString(R.string.problem_analysis)
@@ -62,9 +62,8 @@ class RebtHarmfulThoughtFragment : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
-        binding.refuteButton.setOnClickListener {
-            if (viewModel.requirementIsCorrect())
-                findNavController().navigate(R.id.fragment_rebt_alternative_thought)
+        binding.saveButton.setOnClickListener {
+            viewModel.tryToSaveDiary()
         }
 
         return binding.root
@@ -76,7 +75,7 @@ class RebtHarmfulThoughtFragment : Fragment() {
                 ThoughtDiaryDelegate(::showHint)
             )
 
-            submitList(viewModel.harmfulThought)
+            submitList(viewModel.alternativeThought)
         }
 
         binding.thoughtRw.apply {
@@ -92,8 +91,28 @@ class RebtHarmfulThoughtFragment : Fragment() {
     }
 
     private fun render(state: NewThoughtDiaryScreenState) {
-        if (state is NewThoughtDiaryScreenState.ValidationError) {
-            mainAdapter.submitList(state.listWithErrors)
+        when (state) {
+            is NewThoughtDiaryScreenState.ValidationError -> {
+                mainAdapter.submitList(state.listWithErrors)
+            }
+
+            is NewThoughtDiaryScreenState.RequestResult -> {
+                showToast(
+                    getString(
+                        if (isNetworkConnect())
+                            if (state.success) {
+                                findNavController().navigate(R.id.fragment_exercises)
+                                R.string.success
+                            }
+                            else
+                                R.string.db_error
+                        else
+                            R.string.network_error
+                    )
+                )
+            }
+
+            is NewThoughtDiaryScreenState.Init -> Unit
         }
     }
 }

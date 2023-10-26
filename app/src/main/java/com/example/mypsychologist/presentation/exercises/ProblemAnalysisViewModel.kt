@@ -25,45 +25,44 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
 
     private var analysis = ProblemAnalysisEntity()
 
-    fun setRequirement(it: String) {
+    private fun setRequirement(it: String) {
         analysis = analysis.copy(dogmaticRequirement = it)
     }
 
-    fun setDramatization(it: String) {
+    private fun setDramatization(it: String) {
         analysis = analysis.copy(dramatization = it)
     }
 
-    fun setLFT(it: String) {
+    private fun setLFT(it: String) {
         analysis = analysis.copy(LFT = it)
     }
 
-    fun setRemarks(it: String) {
+    private fun setRemarks(it: String) {
         analysis = analysis.copy(humiliatingRemarks = it)
     }
 
-    fun setPreference(it: String) {
+    private fun setPreference(it: String) {
         analysis = analysis.copy(flexiblePreference = it)
     }
 
-    fun setPerspective(it: String) {
+    private fun setPerspective(it: String) {
         analysis = analysis.copy(perspective = it)
     }
 
-    fun setHFT(it: String) {
+    private fun setHFT(it: String) {
         analysis = analysis.copy(HFT = it)
     }
 
-    fun setAcceptance(it: String) {
+    private fun setAcceptance(it: String) {
         analysis = analysis.copy(unconditionalAcceptance = it)
     }
 
-    fun tryToSaveDiary(problemId: String) {
+    fun tryToSaveDiary() {
         viewModelScope.launch {
             if (preferenceIsCorrect()) {
                 _screenState.value =
                     NewThoughtDiaryScreenState.RequestResult(
                         saveProblemAnalysisUseCase(
-                            problemId,
                             analysis
                         )
                     )
@@ -77,7 +76,7 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
         else {
             _screenState.value = NewThoughtDiaryScreenState.ValidationError(
                 _harmfulThought.map {
-                    if (it.content().titleId == R.string.dogmatic_requirement)
+                    if (it.content().titleId == R.string.flexible_preference)
                         ThoughtDiaryDelegateItem(it.content().copy(isNotCorrect = true))
                     else
                         it
@@ -86,12 +85,14 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
         }
 
     fun requirementIsCorrect(): Boolean =
-        if (analysis.dogmaticRequirement.isNotEmpty())
+        if (analysis.dogmaticRequirement.isNotEmpty()) {
+            _screenState.value = NewThoughtDiaryScreenState.Init
             true
+        }
         else {
             _screenState.value = NewThoughtDiaryScreenState.ValidationError(
                 _harmfulThought.map {
-                    if (it.content().titleId == R.string.flexible_preference)
+                    if (it.content().titleId == R.string.dogmatic_requirement)
                         ThoughtDiaryDelegateItem(it.content().copy(isNotCorrect = true))
                     else
                         it
@@ -141,7 +142,7 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
         ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.flexible_preference,
-                0,
+                R.string.flexible_preference_hint,
                 0,
                 ::setPreference
             )
@@ -149,7 +150,7 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
         ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.perspective,
-                0,
+                R.string.perspective_hint,
                 0,
                 ::setPerspective
             )
@@ -157,7 +158,7 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
         ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.HFT,
-                0,
+                R.string.HFT_hint,
                 0,
                 ::setHFT
             )
@@ -165,7 +166,7 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
         ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.unconditional_acceptance,
-                0,
+                R.string.unconditional_acceptance_hint,
                 0,
                 ::setAcceptance
             )

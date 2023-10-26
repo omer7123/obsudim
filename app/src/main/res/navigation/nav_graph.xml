@@ -124,4 +124,12 @@
         android:id="@+id/fragment_education"
         android:name="com.example.mypsychologist.ui.education.EducationFragment"
         android:label="EducationFragment" />
+    <fragment
+        android:id="@+id/fragment_rebt_harmful_thought"
+        android:name="com.example.mypsychologist.ui.exercises.rebt.RebtHarmfulThoughtFragment"
+        android:label="RebtHarmfulThoughtFragment" />
+    <fragment
+        android:id="@+id/fragment_rebt_alternative_thought"
+        android:name="com.example.mypsychologist.ui.exercises.rebt.RebtAlternativeThoughtFragment"
+        android:label="RebtAlternativeThoughtFragment" />
 </navigation>

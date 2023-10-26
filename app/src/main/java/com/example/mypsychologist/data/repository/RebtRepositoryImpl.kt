@@ -82,16 +82,16 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
 
 
     override suspend fun saveAnalysis(
-        problemId: String,
         rebtAnalysisEntity: ProblemAnalysisEntity
     ): Boolean =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            val problemId = getCurrentProblemId()!!
             try {
                 reference.child(ProblemAnalysisEntity::class.simpleName!!).child(problemId)
                     .setValue(rebtAnalysisEntity)
 
                 reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
-                    .child(RebtProblemProgressEntity::problemAnalysisCompleted.name)
+                    .child(RebtProblemProgressEntity::problemAnalysisCompleted.name).setValue(true)
 
                 true
             } catch (t: Throwable) {
