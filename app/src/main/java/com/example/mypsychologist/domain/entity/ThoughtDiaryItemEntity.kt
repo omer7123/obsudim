@@ -7,3 +7,4 @@ data class ThoughtDiaryItemEntity(
     val saveFunction: (String) -> Unit,
     val isNotCorrect: Boolean = false
 )
+

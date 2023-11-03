@@ -34,7 +34,7 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
     }
 
     private fun setLFT(it: String) {
-        analysis = analysis.copy(LFT = it)
+        analysis = analysis.copy(lft = it)
     }
 
     private fun setRemarks(it: String) {
@@ -50,7 +50,7 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
     }
 
     private fun setHFT(it: String) {
-        analysis = analysis.copy(HFT = it)
+        analysis = analysis.copy(hft = it)
     }
 
     private fun setAcceptance(it: String) {

@@ -1,5 +1,7 @@
 package com.example.mypsychologist.data.repository
 
+import android.util.Log
+import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
 import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
 import com.example.mypsychologist.domain.entity.RebtProblemProgressEntity
@@ -92,6 +94,38 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
 
                 reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
                     .child(RebtProblemProgressEntity::problemAnalysisCompleted.name).setValue(true)
+
+                true
+            } catch (t: Throwable) {
+                false
+            }
+        }
+
+    override suspend fun getProblemAnalysis(): ProblemAnalysisEntity =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            loadProblemAnalysis(getCurrentProblemId()!!)
+        }
+
+    private suspend fun loadProblemAnalysis(problemId: String): ProblemAnalysisEntity =
+        suspendCoroutine { continuation ->
+            reference.child(ProblemAnalysisEntity::class.simpleName!!).child(problemId).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(snapshot.getTypedValue() ?: ProblemAnalysisEntity())
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
+    override suspend fun saveBeliefVerification(it: BeliefVerificationEntity, type: String): Boolean =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            try {
+                val problemId = getCurrentProblemId()!!
+                reference.child(BeliefVerificationEntity::class.simpleName!!).child(problemId)
+                    .child(type).setValue(it)
+
+                reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
+                    .child(RebtProblemProgressEntity::beliefsCheckCompleted.name).setValue(true)
 
                 true
             } catch (t: Throwable) {

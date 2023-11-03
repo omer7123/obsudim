@@ -134,6 +134,9 @@ class FragmentREBT : Fragment() {
         binding.problemAnalysis.card.setOnClickListener {
             findNavController().navigate(R.id.fragment_rebt_harmful_thought)
         }
+        binding.beliefsCheck.card.setOnClickListener {
+            findNavController().navigate(R.id.fragment_beliefs_verification)
+        }
         binding.changeButton.setOnClickListener {
             setupChangeProblemFragment()
         }

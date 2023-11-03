@@ -287,4 +287,11 @@
     <string name="HFT_hint">Будет непросто, но я справлюсь</string>
     <string name="unconditional_acceptance">Безусловное принятие</string>
     <string name="unconditional_acceptance_hint">Я(мы) достойный человек</string>
+
+    <string name="truthfulness">Истинность</string>
+    <string name="truthfulness_hint">Правдиво ли убеждение?</string>
+    <string name="consistency">Логичность</string>
+    <string name="consistency_hint">Логично ли убеждение?</string>
+    <string name="benefit">Польза</string>
+    <string name="benefit_hint">Помогает ли это убеждение?</string>
 </resources>
