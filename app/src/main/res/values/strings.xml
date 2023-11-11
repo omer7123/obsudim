@@ -294,4 +294,15 @@
     <string name="consistency_hint">Логично ли убеждение?</string>
     <string name="benefit">Польза</string>
     <string name="benefit_hint">Помогает ли это убеждение?</string>
+
+    <string name="fillings_and_actions">Чувства и действия</string>
+    <string name="fillings_and_actions_hint">Как я чувствую, думаю и действую, придерживаясь этого убеждения?</string>
+    <string name="motivation">Побуждение</string>
+    <string name="motivation_hint">Что это убеждение побуждает меня делать?</string>
+    <string name="interferences">Помехи</string>
+    <string name="interferences_hint">Что это убеждение мешает мне делать?</string>
+    <string name="dependent">Невинные жертвы</string>
+    <string name="dependent_hint">На кого еще влияет это убеждение?</string>
+    <string name="results">Результаты</string>
+    <string name="results_hint">Какие результаты я получаю с этим убеждением и нравятся ли мне они?</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.mypsychologist.domain.repository
 
+import com.example.mypsychologist.domain.entity.BeliefAnalysisEntity
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
 import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
@@ -14,4 +15,5 @@ interface RebtRepository {
     suspend fun saveAnalysis(rebtAnalysisEntity: ProblemAnalysisEntity): Boolean
     suspend fun getProblemAnalysis(): ProblemAnalysisEntity
     suspend fun saveBeliefVerification(it: BeliefVerificationEntity, type: String): Boolean
+    suspend fun saveBeliefAnalysis(it: BeliefAnalysisEntity, type: String): Boolean
 }

@@ -114,9 +114,9 @@ class BeliefVerificationViewModel(
 
     private fun BeliefVerificationEntity.mapOfTitles() =
         mapOf(
-            ::truthfulness.name to R.string.situation,
-            ::consistency.name to R.string.mood,
-            ::benefit.name to R.string.level
+            ::truthfulness.name to R.string.truthfulness,
+            ::consistency.name to R.string.consistency,
+            ::benefit.name to R.string.benefit
         )
 
     class Factory @Inject constructor(

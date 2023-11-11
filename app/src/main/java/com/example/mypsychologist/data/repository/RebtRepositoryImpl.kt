@@ -1,6 +1,7 @@
 package com.example.mypsychologist.data.repository
 
 import android.util.Log
+import com.example.mypsychologist.domain.entity.BeliefAnalysisEntity
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
 import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
@@ -125,7 +126,23 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
                     .child(type).setValue(it)
 
                 reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
-                    .child(RebtProblemProgressEntity::beliefsCheckCompleted.name).setValue(true)
+                    .child(RebtProblemProgressEntity::beliefsCheckCompleted.name).setValue(true)    // косяк
+
+                true
+            } catch (t: Throwable) {
+                false
+            }
+        }
+
+    override suspend fun saveBeliefAnalysis(it: BeliefAnalysisEntity, type: String): Boolean =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            try {
+                val problemId = getCurrentProblemId()!!
+                reference.child(BeliefAnalysisEntity::class.simpleName!!).child(problemId)
+                    .child(type).setValue(it)
+
+                reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
+                    .child(RebtProblemProgressEntity::beliefsAnalysisCompleted.name).setValue(true) // косяк
 
                 true
             } catch (t: Throwable) {

@@ -4,7 +4,9 @@ import com.example.mypsychologist.ui.exercises.FragmentExercises
 import com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries
 import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
 import com.example.mypsychologist.ui.exercises.cbt.FragmentNewDiary
+import com.example.mypsychologist.ui.exercises.rebt.BeliefAnalysisFragment
 import com.example.mypsychologist.ui.exercises.rebt.BeliefVerificationFragment
+import com.example.mypsychologist.ui.exercises.rebt.BeliefsAnalysisFragment
 import com.example.mypsychologist.ui.exercises.rebt.BeliefsVerificationFragment
 import com.example.mypsychologist.ui.exercises.rebt.FragmentREBT
 import com.example.mypsychologist.ui.exercises.rebt.NewProblemFragment
@@ -24,6 +26,8 @@ interface ExercisesComponent {
     fun inject(rebtAlternativeThoughtFragment: RebtAlternativeThoughtFragment)
     fun inject(beliefVerificationFragment: BeliefVerificationFragment)
     fun inject(beliefsVerificationFragment: BeliefsVerificationFragment)
+    fun inject(beliefsAnalysisFragment: BeliefsAnalysisFragment)
+    fun inject(beliefAnalysisFragment: BeliefAnalysisFragment)
 
 
     fun inject(fragment: FragmentDiaries)

@@ -9,6 +9,8 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
 import com.example.mypsychologist.databinding.CardViewGroupBinding
 import com.example.mypsychologist.di.AppComponent
+import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
+import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.GenericTypeIndicator
 import kotlinx.coroutines.async
@@ -73,3 +75,21 @@ suspend fun <A, B> List<A>.pmap(transform: suspend (A) -> B): List<B> = coroutin
     map { async { transform(it) } }.awaitAll()
 }
 
+fun Fragment.renderRebtBeliefType(it: String) =
+    getString(
+        when (it) {
+            ProblemAnalysisEntity::dogmaticRequirement.name -> R.string.dogmatic_requirement
+            ProblemAnalysisEntity::dramatization.name -> R.string.dramatization
+            ProblemAnalysisEntity::lft.name -> R.string.LFT
+            ProblemAnalysisEntity::humiliatingRemarks.name -> R.string.humiliating_remarks
+            ProblemAnalysisEntity::flexiblePreference.name -> R.string.flexible_preference
+            ProblemAnalysisEntity::perspective.name -> R.string.perspective
+            ProblemAnalysisEntity::hft.name -> R.string.HFT
+            else -> R.string.unconditional_acceptance
+        }
+    )
+
+fun Fragment.showHint(titleId: Int, hintId: Int) {
+    FragmentHint.newInstance(titleId, hintId)
+        .show(childFragmentManager, "tag")
+}

@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.rebt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +12,12 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentBeliefVerificationBinding
-import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.exercises.BeliefVerificationViewModel
+import com.example.mypsychologist.presentation.exercises.BeliefAnalysisViewModel
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
 import com.example.mypsychologist.renderRebtBeliefType
 import com.example.mypsychologist.showHint
@@ -26,21 +25,19 @@ import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
-import com.example.mypsychologist.ui.exercises.cbt.SeekBarDelegate
 import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegate
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class BeliefVerificationFragment : Fragment() {
+class BeliefAnalysisFragment : Fragment() {
 
     private var binding: FragmentBeliefVerificationBinding by autoCleared()
 
     @Inject
-    lateinit var vmFactory: BeliefVerificationViewModel.Factory
-    private val viewModel: BeliefVerificationViewModel by viewModels { vmFactory }
+    lateinit var vmFactory: BeliefAnalysisViewModel.Factory
+    private val viewModel: BeliefAnalysisViewModel by viewModels { vmFactory }
 
     private lateinit var mainAdapter: MainAdapter
 
@@ -56,6 +53,7 @@ class BeliefVerificationFragment : Fragment() {
     ): View {
         binding = FragmentBeliefVerificationBinding.inflate(inflater, container, false)
 
+
         setupFields()
         setupAdapter(viewModel.items)
 
@@ -65,7 +63,11 @@ class BeliefVerificationFragment : Fragment() {
             .launchIn(lifecycleScope)
 
         binding.saveButton.setOnClickListener {
-            viewModel.tryToSaveBeliefVerification(requireArguments().getString(TYPE)!!)
+            viewModel.tryToSaveBeliefAnalysis(
+                requireArguments().getString(
+                    TYPE
+                )!!
+            )
         }
 
         return binding.root
@@ -90,7 +92,6 @@ class BeliefVerificationFragment : Fragment() {
             adapter = mainAdapter
         }
     }
-
 
     private fun render(state: NewThoughtDiaryScreenState) {
         when (state) {
@@ -140,7 +141,7 @@ class BeliefVerificationFragment : Fragment() {
         private const val BELIEF = "belief"
 
         fun newInstance(type: String, belief: String) =
-            BeliefVerificationFragment().apply {
+            BeliefAnalysisFragment().apply {
                 arguments = bundleOf(TYPE to type, BELIEF to belief)
             }
     }

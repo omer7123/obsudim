@@ -136,4 +136,8 @@
         android:id="@+id/fragment_beliefs_verification"
         android:name="com.example.mypsychologist.ui.exercises.rebt.BeliefsVerificationFragment"
         android:label="BeliefsVerificationFragment" />
+    <fragment
+        android:id="@+id/fragment_beliefs_analysis"
+        android:name="com.example.mypsychologist.ui.exercises.rebt.BeliefsAnalysisFragment"
+        android:label="BeliefsAnalysisFragment" />
 </navigation>

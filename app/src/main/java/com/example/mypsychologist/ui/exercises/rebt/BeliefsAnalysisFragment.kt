@@ -17,21 +17,17 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentBeliefsVerificationBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.exercises.BeliefVerificationViewModel
 import com.example.mypsychologist.presentation.exercises.BeliefsScreenState
 import com.example.mypsychologist.presentation.exercises.BeliefsVerificationViewModel
-import com.example.mypsychologist.presentation.exercises.NewProblemScreenState
-import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.PagerAdapter
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.cbt.FragmentCBT
-import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class BeliefsVerificationFragment : Fragment() {
+class BeliefsAnalysisFragment : Fragment() {
+
     private var binding: FragmentBeliefsVerificationBinding by autoCleared()
 
     @Inject
@@ -51,7 +47,7 @@ class BeliefsVerificationFragment : Fragment() {
         binding = FragmentBeliefsVerificationBinding.inflate(inflater, container, false)
 
         binding.toolbar.toolbar.apply {
-            title = getString(R.string.beliefs_check)
+            title = getString(R.string.beliefs_analysis)
             setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
@@ -90,11 +86,10 @@ class BeliefsVerificationFragment : Fragment() {
 
     private fun setupViewPager(fragments: List<Fragment>) {
         val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
-
         binding.beliefsViewPager.isUserInputEnabled = false
 
         childFragmentManager.setFragmentResultListener(
-            BeliefVerificationFragment.FINISH,
+            BeliefAnalysisFragment.FINISH,
             viewLifecycleOwner
         ) { _, _ ->
             currentItem++
@@ -111,6 +106,6 @@ class BeliefsVerificationFragment : Fragment() {
 
     private fun generateFragmentList(beliefs: Map<String, String>) =
         beliefs.map { (type, belief) ->
-            BeliefVerificationFragment.newInstance(type, belief)
+            BeliefAnalysisFragment.newInstance(type, belief)
         }.asReversed()
 }

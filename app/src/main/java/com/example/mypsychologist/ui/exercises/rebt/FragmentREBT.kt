@@ -137,13 +137,15 @@ class FragmentREBT : Fragment() {
         binding.beliefsCheck.card.setOnClickListener {
             findNavController().navigate(R.id.fragment_beliefs_verification)
         }
+        binding.beliefsAnalysis.card.setOnClickListener {
+            findNavController().navigate(R.id.fragment_beliefs_analysis)
+        }
         binding.changeButton.setOnClickListener {
             setupChangeProblemFragment()
         }
         binding.beginButton.setOnClickListener {
             setupChangeProblemFragment()
         }
-
     }
 
     private fun setupChangeProblemFragment() {
