@@ -140,4 +140,8 @@
         android:id="@+id/fragment_beliefs_analysis"
         android:name="com.example.mypsychologist.ui.exercises.rebt.BeliefsAnalysisFragment"
         android:label="BeliefsAnalysisFragment" />
+    <fragment
+        android:id="@+id/autoDialogFragment"
+        android:name="com.example.mypsychologist.ui.exercises.rebt.AutoDialogFragment"
+        android:label="AutoDialogFragment" />
 </navigation>

@@ -140,6 +140,9 @@ class FragmentREBT : Fragment() {
         binding.beliefsAnalysis.card.setOnClickListener {
             findNavController().navigate(R.id.fragment_beliefs_analysis)
         }
+        binding.dialog.card.setOnClickListener {
+            findNavController().navigate(R.id.autoDialogFragment)
+        }
         binding.changeButton.setOnClickListener {
             setupChangeProblemFragment()
         }

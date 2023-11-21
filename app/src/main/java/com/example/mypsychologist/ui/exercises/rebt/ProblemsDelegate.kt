@@ -1,6 +1,5 @@
 package com.example.mypsychologist.ui.exercises.rebt
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -15,8 +14,7 @@ class ProblemsDelegate(private val onClick: (String) -> Unit) : AdapterDelegate 
 
     override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
         ProblemItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-        onClick,
-        parent.resources
+        onClick
     )
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: DelegateItem, position: Int) {
@@ -27,8 +25,7 @@ class ProblemsDelegate(private val onClick: (String) -> Unit) : AdapterDelegate 
 
     class ViewHolder(
         private val binding: ProblemItemBinding,
-        private val onClick: (String) -> Unit,
-        private val resources: Resources
+        private val onClick: (String) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -38,7 +35,7 @@ class ProblemsDelegate(private val onClick: (String) -> Unit) : AdapterDelegate 
                 binding.background.setBackgroundResource(R.drawable.selected_problem_back)
             if (problem.second.completed) {
                 binding.check.isVisible = true
-                binding.problem.setTextColor(resources.getColor(R.color.md_theme_light_primary))
+                binding.problem.setTextColor(itemView.context.resources.getColor(R.color.md_theme_light_primary))
             }
             itemView.setOnClickListener {
                 onClick(problem.first)

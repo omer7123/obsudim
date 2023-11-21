@@ -1,6 +1,7 @@
 package com.example.mypsychologist.data.repository
 
 import android.util.Log
+import com.example.mypsychologist.domain.entity.AutoDialogMessageEntity
 import com.example.mypsychologist.domain.entity.BeliefAnalysisEntity
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
 import com.example.mypsychologist.domain.entity.ProblemEntity
@@ -77,7 +78,8 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
     override suspend fun saveCurrentProblem(id: String): Boolean =
         try {
             reference.child(CURRENT_REBT_PROBLEM).setValue(id)
-            reference.child(ProblemEntity::class.simpleName!!).child(id).child(ProblemEntity::actual.name).setValue(true)
+            reference.child(ProblemEntity::class.simpleName!!).child(id)
+                .child(ProblemEntity::actual.name).setValue(true)
             true
         } catch (t: Throwable) {
             false
@@ -118,7 +120,10 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
                 }
         }
 
-    override suspend fun saveBeliefVerification(it: BeliefVerificationEntity, type: String): Boolean =
+    override suspend fun saveBeliefVerification(
+        it: BeliefVerificationEntity,
+        type: String
+    ): Boolean =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
             try {
                 val problemId = getCurrentProblemId()!!
@@ -126,7 +131,8 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
                     .child(type).setValue(it)
 
                 reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
-                    .child(RebtProblemProgressEntity::beliefsCheckCompleted.name).setValue(true)    // косяк
+                    .child(RebtProblemProgressEntity::beliefsCheckCompleted.name)
+                    .setValue(true)    // косяк
 
                 true
             } catch (t: Throwable) {
@@ -142,12 +148,52 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
                     .child(type).setValue(it)
 
                 reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
-                    .child(RebtProblemProgressEntity::beliefsAnalysisCompleted.name).setValue(true) // косяк
+                    .child(RebtProblemProgressEntity::beliefsAnalysisCompleted.name)
+                    .setValue(true) // косяк
 
                 true
             } catch (t: Throwable) {
                 false
             }
+        }
+
+    override suspend fun saveDialogMessage(it: AutoDialogMessageEntity): String =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            val problemId = getCurrentProblemId()!!
+
+            val ref = reference.child(AutoDialogMessageEntity::class.simpleName!!).child(problemId)
+            val key = ref.push().key!!
+
+            ref.child(key).setValue(it)
+
+            reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
+                .child(RebtProblemProgressEntity::dialogCompleted.name)
+                .setValue(true)
+
+            key
+        }
+
+    override suspend fun getAutoDialog(): HashMap<String, AutoDialogMessageEntity> =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            loadAutoDialog(getCurrentProblemId()!!)
+        }
+
+    private suspend fun loadAutoDialog(problemId: String): HashMap<String, AutoDialogMessageEntity> =
+        suspendCoroutine { continuation ->
+            reference.child(AutoDialogMessageEntity::class.simpleName!!).child(problemId).get()
+                .addOnSuccessListener { snapshot ->
+                    val result = LinkedHashMap<String, AutoDialogMessageEntity>()
+                    snapshot.children.forEach {
+                        result[it.key.toString()] = AutoDialogMessageEntity(
+                            (it.value as HashMap<String, Any>)[AutoDialogMessageEntity::rational.name] as Boolean,
+                            (it.value as HashMap<String, Any>)[AutoDialogMessageEntity::message.name] as String
+                        )
+                    }
+                    continuation.resume(result)
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
         }
 
     companion object {

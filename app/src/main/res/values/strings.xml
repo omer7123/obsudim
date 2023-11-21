@@ -305,4 +305,7 @@
     <string name="dependent_hint">На кого еще влияет это убеждение?</string>
     <string name="results">Результаты</string>
     <string name="results_hint">Какие результаты я получаю с этим убеждением и нравятся ли мне они?</string>
+
+    <string name="rational">Рациональное</string>
+    <string name="irrational">Иррациональное</string>
 </resources>
