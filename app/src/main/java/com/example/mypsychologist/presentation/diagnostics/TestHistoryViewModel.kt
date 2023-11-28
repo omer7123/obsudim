@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
+import com.example.mypsychologist.domain.useCase.GetCMQTestUseCase
 import com.example.mypsychologist.domain.useCase.GetClientTestHistoryUseCase
 import com.example.mypsychologist.domain.useCase.GetDepressionBeckTestQuestionsUseCase
 import com.example.mypsychologist.domain.useCase.GetTestHistoryUseCase
@@ -28,7 +29,8 @@ class TestHistoryViewModel @AssistedInject constructor(
         get() = _screenState.asStateFlow()
 
     private val titleResourcesToDataBaseTitles = mapOf(
-        R.string.depression_beck_test to GetDepressionBeckTestQuestionsUseCase.TEST_NAME
+        R.string.depression_beck_test to GetDepressionBeckTestQuestionsUseCase.TEST_NAME,
+        R.string.cmq to GetCMQTestUseCase.TEST_NAME
     )
 
     init {

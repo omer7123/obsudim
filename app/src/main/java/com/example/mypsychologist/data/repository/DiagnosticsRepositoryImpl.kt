@@ -1,6 +1,5 @@
 package com.example.mypsychologist.data.repository
 
-import android.util.Log
 import com.example.mypsychologist.di.AppModule
 import com.example.mypsychologist.domain.entity.TestResultEntity
 import com.example.mypsychologist.domain.repository.DiagnosticRepository
@@ -16,7 +15,7 @@ import kotlin.coroutines.suspendCoroutine
 class DiagnosticsRepositoryImpl @Inject constructor(private val reference: DatabaseReference) :
     DiagnosticRepository {
 
-    override fun saveBeckDepression(result: TestResultEntity, testTitle: String): Boolean =
+    override fun saveTestResult(result: TestResultEntity, testTitle: String): Boolean =
         try {
             val ref = reference.child(DIAGNOSTIC_HISTORY).child(testTitle)
             val key = ref.push().key

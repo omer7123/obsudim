@@ -3,36 +3,36 @@ package com.example.mypsychologist.presentation.diagnostics
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.domain.useCase.BeckDepressionTestConclusionUseCase
-import com.example.mypsychologist.domain.useCase.GetDepressionBeckTestQuestionsUseCase
-import com.example.mypsychologist.domain.useCase.SaveDepressionBeckResultUseCase
+import com.example.mypsychologist.domain.useCase.CMQConclusionUseCase
+import com.example.mypsychologist.domain.useCase.GetCMQTestUseCase
+import com.example.mypsychologist.domain.useCase.SaveCMQResultUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class BeckDepressionTestViewModel(
-    getDepressionBeckTestQuestionsUseCase: GetDepressionBeckTestQuestionsUseCase,
-    private val beckDepressionTestConclusionUseCase: BeckDepressionTestConclusionUseCase,
-    private val saveDepressionBeckResultUseCase: SaveDepressionBeckResultUseCase
+class CMQTestViewModel(
+    getSMQTestUseCase: GetCMQTestUseCase,
+    private val CMQConclusionUseCase: CMQConclusionUseCase,
+    private val saveCMQResultUseCase: SaveCMQResultUseCase
 ) : ViewModel() {
 
-    private val questions = getDepressionBeckTestQuestionsUseCase()
+    private val questions = getSMQTestUseCase()
 
     private val answers = MutableList(questions.size) { 0 }
 
     private var questionNumber = 0
 
-    private val _screenState: MutableStateFlow<BeckDepressionScreenState> =
+    private val _screenState: MutableStateFlow<CMQScreenState> =
         MutableStateFlow(
-            BeckDepressionScreenState.Question(
+            CMQScreenState.Question(
                 questions[questionNumber],
                 questionNumber,
                 questions.size
             )
         )
-    val screenState: StateFlow<BeckDepressionScreenState>
+    val screenState: StateFlow<CMQScreenState>
         get() = _screenState.asStateFlow()
 
     fun saveAnswerAndGoToNext(score: Int) {
@@ -48,24 +48,16 @@ class BeckDepressionTestViewModel(
 
             _screenState.value =
                 if (questionNumber < questions.size) {
-                    BeckDepressionScreenState.Question(
+                    CMQScreenState.Question(
                         questions[questionNumber],
                         questionNumber,
                         questions.size
                     )
                 } else {
-                    val result = answers.sum()
-                    BeckDepressionScreenState.Result(
-                        result,
-                        beckDepressionTestConclusionUseCase(result)
+                    CMQScreenState.Result(
+                        CMQConclusionUseCase(answers)
                     )
                 }
-        }
-    }
-
-    fun saveResult(result: Int, conclusion: String) = run {
-        if (!saveDepressionBeckResultUseCase(result, conclusion)) {
-            _screenState.value = BeckDepressionScreenState.Error
         }
     }
 
@@ -75,7 +67,7 @@ class BeckDepressionTestViewModel(
 
             viewModelScope.launch {
                 _screenState.value =
-                    BeckDepressionScreenState.Question(
+                    CMQScreenState.Question(
                         questions[questionNumber],
                         questionNumber,
                         questions.size
@@ -84,18 +76,22 @@ class BeckDepressionTestViewModel(
         }
     }
 
+    fun saveResult(result: Int, conclusion: String) = run {
+        if (!saveCMQResultUseCase(result, conclusion)) {
+            _screenState.value = CMQScreenState.Error
+        }
+    }
+
     class Factory @Inject constructor(
-        private val getDepressionBeckTestQuestionsUseCase: GetDepressionBeckTestQuestionsUseCase,
-        private val beckDepressionTestResultUseCase: BeckDepressionTestConclusionUseCase,
-        private val saveDepressionBeckResultUseCase: SaveDepressionBeckResultUseCase
+        private val getSMQTestUseCase: GetCMQTestUseCase,
+        private val CMQConclusionUseCase: CMQConclusionUseCase,
+        private val saveCMQResultUseCase: SaveCMQResultUseCase
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return BeckDepressionTestViewModel(
-                getDepressionBeckTestQuestionsUseCase,
-                beckDepressionTestResultUseCase,
-                saveDepressionBeckResultUseCase
+            return CMQTestViewModel(
+                getSMQTestUseCase, CMQConclusionUseCase, saveCMQResultUseCase
             ) as T
         }
     }

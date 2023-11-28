@@ -59,7 +59,7 @@ class NewProblemFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupChips() {
-        resources.getStringArray(R.array.specializations).forEach { title ->
+        resources.getStringArray(R.array.harmful_emotions).forEach { title ->
 
             val chip = layoutInflater.inflate(
                 R.layout.filter_chip,

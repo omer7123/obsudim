@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
@@ -18,11 +19,15 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
 
     private var binding: TestBottomSheetBinding by autoCleared()
 
+    private lateinit var question: TestQuestionEntity
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        question = requireArguments().parcelable(ANSWER_VARIANTS)!!
+
         binding = TestBottomSheetBinding.inflate(inflater, container, false)
 
         binding.progress.text = getString(
@@ -30,6 +35,13 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
             requireArguments().getInt(NUMBER).toString(),
             requireArguments().getInt(COUNT).toString()
         )
+
+        if (question.question != 0) {
+            binding.question.apply {
+                text = getString(question.question)
+                isVisible = true
+            }
+        }
 
         setupListeners()
 
@@ -54,7 +66,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
             layoutManager = LinearLayoutManager(requireContext())
 
             adapter = AnswersAdapter(
-                requireArguments().parcelable<TestQuestionEntity>(ANSWER_VARIANTS)!!.variants
+                question.variants
             ) { score ->
                 setFragmentResult(ANSWER, bundleOf(SCORE to score))
                 dismiss()

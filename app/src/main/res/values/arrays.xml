@@ -8,6 +8,17 @@
         <item>Гнев</item>
     </array>
 
+    <array name="harmful_emotions">
+        <item>Депрессия</item>
+        <item>Тревога</item>
+        <item>Нездоровая ревность</item>
+        <item>Нездоровая зависть</item>
+        <item>Гнев</item>
+        <item>Вина</item>
+        <item>Боль</item>
+        <item>Стыд</item>
+    </array>
+
     <array name="exercises">
         <item>Дневник мыслей</item>
     </array>

@@ -14,6 +14,13 @@ class TestsWithGroupsUseCase @Inject constructor() {
                     R.string.depression_beck_test_desc_short,
                     R.string.depression_beck_test_desc
                 )
+            ),
+            TestGroupEntity(R.string.anxiety, R.drawable.ic_anxiety) to listOf(
+                TestCardEntity(
+                    R.string.cmq,
+                    R.string.cmq_desc_short,
+                    R.string.cmq_desc
+                )
             )
         )
 }

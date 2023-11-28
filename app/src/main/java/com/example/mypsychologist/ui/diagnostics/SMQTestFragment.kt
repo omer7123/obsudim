@@ -15,7 +15,8 @@ import com.example.mypsychologist.databinding.FragmentTestBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.diagnostics.BeckDepressionScreenState
-import com.example.mypsychologist.presentation.diagnostics.BeckDepressionTestViewModel
+import com.example.mypsychologist.presentation.diagnostics.CMQScreenState
+import com.example.mypsychologist.presentation.diagnostics.CMQTestViewModel
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.snackbar.Snackbar
@@ -23,13 +24,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class FragmentBeckDepressionTest : Fragment() {
-
+class SMQTestFragment : Fragment() {
     private var binding: FragmentTestBinding by autoCleared()
 
     @Inject
-    lateinit var vmFactory: BeckDepressionTestViewModel.Factory
-    private val viewModel: BeckDepressionTestViewModel by viewModels { vmFactory }
+    lateinit var vmFactory: CMQTestViewModel.Factory
+    private val viewModel: CMQTestViewModel by viewModels { vmFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -60,22 +60,22 @@ class FragmentBeckDepressionTest : Fragment() {
             includeToolbar.toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
-            title.text = getString(R.string.depression_beck_test)
-            text.text = getString(R.string.depression_beck_test_desc)
+            title.text = getString(R.string.cmq)
+            text.text = getString(R.string.cmq_desc)
         }
     }
 
-    private fun render(state: BeckDepressionScreenState) {
+    private fun render(state: CMQScreenState) {
         when (state) {
-            is BeckDepressionScreenState.Question -> {
+            is CMQScreenState.Question -> {
                 FragmentTestQuestion.newInstance(
                     state.answerVariants,
                     state.number + 1,
                     state.count
                 ).show(childFragmentManager, TAG)
             }
-            is BeckDepressionScreenState.Result -> {
-                viewModel.saveResult(state.score, getString(state.conclusionId))
+            is CMQScreenState.Result -> {
+                viewModel.saveResult(state.result.score, getString(state.result.conclusion))
 
                 if (!isNetworkConnect()) {
                     Snackbar.make(
@@ -89,17 +89,17 @@ class FragmentBeckDepressionTest : Fragment() {
                     showResult(state)
                 }
             }
-            is BeckDepressionScreenState.Error -> {
+            is CMQScreenState.Error -> {
                 showToast(getString(R.string.db_error))
             }
         }
     }
 
-    private fun showResult(it: BeckDepressionScreenState.Result) {
+    private fun showResult(it: CMQScreenState.Result) {
         TestResultDialogFragment.newInstance(
-            it.score,
-            getString(it.conclusionId),
-            R.string.depression_beck_test
+            it.result.score,
+            getString(it.result.conclusion),
+            R.string.cmq
         )
             .show(childFragmentManager, TestResultDialogFragment.TAG)
     }

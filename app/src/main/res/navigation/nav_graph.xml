@@ -144,4 +144,8 @@
         android:id="@+id/autoDialogFragment"
         android:name="com.example.mypsychologist.ui.exercises.rebt.AutoDialogFragment"
         android:label="AutoDialogFragment" />
+    <fragment
+        android:id="@+id/SMQ_test_fragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.SMQTestFragment"
+        android:label="SMQTestFragment" />
 </navigation>

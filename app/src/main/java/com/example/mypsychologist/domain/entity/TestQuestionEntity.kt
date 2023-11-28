@@ -5,5 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class TestQuestionEntity(
-    val variants: List<TestAnswerVariantEntity>
+    val variants: List<TestAnswerVariantEntity>,
+    val question: Int = 0
 ) : Parcelable

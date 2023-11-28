@@ -2,12 +2,10 @@ package com.example.mypsychologist.domain.useCase
 
 import com.example.mypsychologist.domain.entity.TestResultEntity
 import com.example.mypsychologist.domain.repository.DiagnosticRepository
-import java.util.*
+import java.util.Calendar
 import javax.inject.Inject
 
-class SaveDepressionBeckResultUseCase @Inject constructor(
-    private val repository: DiagnosticRepository
-) {
+class SaveCMQResultUseCase @Inject constructor(private val repository: DiagnosticRepository) {
     operator fun invoke(result: Int, conclusion: String) =
         repository.saveTestResult(
             TestResultEntity(
@@ -15,6 +13,6 @@ class SaveDepressionBeckResultUseCase @Inject constructor(
                 conclusion,
                 Calendar.getInstance().timeInMillis
             ),
-            GetDepressionBeckTestQuestionsUseCase.TEST_NAME
+            GetCMQTestUseCase.TEST_NAME
         )
 }

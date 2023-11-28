@@ -83,7 +83,7 @@ class FragmentTestHistory : Fragment() {
             }
             is TestHistoryScreenState.Error -> {
                 binding.progressBar.isVisible = false
-                showToast(getString(R.string.network_error))
+                showToast(getString(R.string.db_error))
             }
             is TestHistoryScreenState.Init -> {}
         }
