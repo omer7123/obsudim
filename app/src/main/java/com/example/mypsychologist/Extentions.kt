@@ -25,7 +25,7 @@ fun Fragment.setupCard(
     titleRes: Int,
     descriptionRes: Int,
     imageRes: Int? = null,
-    backgroundRes: Int? = null,
+    backgroundRes: Int? = null
 ) {
     card.apply {
         cardTitle.text = getString(titleRes)

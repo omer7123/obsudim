@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.rebt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +45,6 @@ class FragmentREBT : Fragment() {
     ): View {
         binding = FragmentRebtBinding.inflate(inflater, container, false)
 
-        setupCards()
-
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
             .onEach { render(it) }
@@ -61,15 +60,27 @@ class FragmentREBT : Fragment() {
             setupCard(
                 problemAnalysis,
                 R.string.problem_analysis,
-                R.string.problem_analysis_signature
+                R.string.problem_analysis_signature,
+                backgroundRes = R.drawable.main_card
             )
-            setupCard(beliefsCheck, R.string.beliefs_check, R.string.beliefs_check_signature)
+            setupCard(
+                beliefsCheck,
+                R.string.beliefs_check,
+                R.string.beliefs_check_signature,
+                backgroundRes = R.drawable.main_card
+            )
             setupCard(
                 beliefsAnalysis,
                 R.string.beliefs_analysis,
-                R.string.beliefs_analysis_signature
+                R.string.beliefs_analysis_signature,
+                backgroundRes = R.drawable.main_card
             )
-            setupCard(dialog, R.string.dialog, R.string.dialog_signature)
+            setupCard(
+                dialog,
+                R.string.dialog,
+                R.string.dialog_signature,
+                backgroundRes = R.drawable.main_card
+            )
         }
     }
 
@@ -109,20 +120,36 @@ class FragmentREBT : Fragment() {
     }
 
     private fun setupData(it: REBTScreenState.Data) {
+        setupCards()
         it.problemProgress.apply {
             binding.problem.text = problem
 
             val primaryCard = getDrawable(requireContext(), R.drawable.primary_card)
 
-            if (problemAnalysisCompleted)
+            if (problemAnalysisCompleted) {
                 binding.problemAnalysis.card.background =
                     primaryCard
-            if (beliefsCheckCompleted)
+
+                binding.beliefsCheck.card.setOnClickListener {
+                    findNavController().navigate(R.id.fragment_beliefs_verification)
+                }
+            }
+            if (beliefsCheckCompleted) {
                 binding.beliefsCheck.card.background =
                     primaryCard
-            if (beliefsAnalysisCompleted)
+
+                binding.beliefsAnalysis.card.setOnClickListener {
+                    findNavController().navigate(R.id.fragment_beliefs_analysis)
+                }
+            }
+            if (beliefsAnalysisCompleted) {
                 binding.beliefsAnalysis.card.background =
                     primaryCard
+
+                binding.dialog.card.setOnClickListener {
+                    findNavController().navigate(R.id.autoDialogFragment)
+                }
+            }
             if (dialogCompleted)
                 binding.dialog.card.background =
                     primaryCard
@@ -134,15 +161,7 @@ class FragmentREBT : Fragment() {
         binding.problemAnalysis.card.setOnClickListener {
             findNavController().navigate(R.id.fragment_rebt_harmful_thought)
         }
-        binding.beliefsCheck.card.setOnClickListener {
-            findNavController().navigate(R.id.fragment_beliefs_verification)
-        }
-        binding.beliefsAnalysis.card.setOnClickListener {
-            findNavController().navigate(R.id.fragment_beliefs_analysis)
-        }
-        binding.dialog.card.setOnClickListener {
-            findNavController().navigate(R.id.autoDialogFragment)
-        }
+
         binding.changeButton.setOnClickListener {
             setupChangeProblemFragment()
         }

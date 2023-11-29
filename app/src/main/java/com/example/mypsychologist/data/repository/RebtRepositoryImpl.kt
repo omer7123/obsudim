@@ -12,6 +12,7 @@ import com.example.mypsychologist.getTypedValue
 import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -52,6 +53,15 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
         }
 
     override suspend fun getREBTProblems(): HashMap<String, ProblemEntity> =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            val currentProblem = getCurrentProblemId()
+            HashMap(
+                loadProblems().map {
+                    Pair(it.key, it.value.copy(actual = it.key == currentProblem))
+                }.toMap()
+            )
+        }
+    private suspend fun loadProblems(): HashMap<String, ProblemEntity> =
         suspendCoroutine { continuation ->
             reference.child(ProblemEntity::class.simpleName!!).get()
                 .addOnSuccessListener { snapshot ->
@@ -78,8 +88,6 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
     override suspend fun saveCurrentProblem(id: String): Boolean =
         try {
             reference.child(CURRENT_REBT_PROBLEM).setValue(id)
-            reference.child(ProblemEntity::class.simpleName!!).child(id)
-                .child(ProblemEntity::actual.name).setValue(true)
             true
         } catch (t: Throwable) {
             false
