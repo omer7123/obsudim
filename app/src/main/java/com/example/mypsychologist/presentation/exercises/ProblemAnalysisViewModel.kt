@@ -6,6 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
+import com.example.mypsychologist.domain.entity.getMapOfFilledMembers
+import com.example.mypsychologist.domain.useCase.GetProblemAnalysisEntityUseCase
+import com.example.mypsychologist.domain.useCase.GetProblemAnalysisUseCase
 import com.example.mypsychologist.domain.useCase.SaveProblemAnalysisUseCase
 import com.example.mypsychologist.domain.useCase.SaveThoughtDiaryUseCase
 import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegateItem
@@ -15,13 +18,46 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProblemAnalysisUseCase) :
+class ProblemAnalysisViewModel(
+    private val saveProblemAnalysisUseCase: SaveProblemAnalysisUseCase,
+    private val getProblemAnalysisUseCase: GetProblemAnalysisEntityUseCase
+) :
     ViewModel() {
 
-    private val _screenState: MutableStateFlow<NewThoughtDiaryScreenState> =
-        MutableStateFlow(NewThoughtDiaryScreenState.Init)
-    val screenState: StateFlow<NewThoughtDiaryScreenState>
+    private val _screenState: MutableStateFlow<ThoughtAnalysisScreenState> =
+        MutableStateFlow(ThoughtAnalysisScreenState.Init)
+    val screenState: StateFlow<ThoughtAnalysisScreenState>
         get() = _screenState.asStateFlow()
+
+    init {
+        _screenState.value = ThoughtAnalysisScreenState.Loading
+        viewModelScope.launch {
+            getSavedAnalysis()
+        }
+    }
+
+    private suspend fun getSavedAnalysis() {
+        analysis = getProblemAnalysisUseCase()
+
+        analysis.getMapOfFilledMembers().forEach { (key, value) ->
+
+            _harmfulThought = harmfulThought.map {
+                if (it.content().fieldName == key) ThoughtDiaryDelegateItem(
+                    it.content().copy(text = value)
+                ) else it
+            }.toMutableList()
+
+            _alternativeThought = alternativeThought.map {
+                if (it.content().fieldName == key) ThoughtDiaryDelegateItem(
+                    it.content().copy(text = value)
+                ) else it
+            }.toMutableList()
+        }
+
+        _screenState.value = ThoughtAnalysisScreenState.Data(
+            Pair(harmfulThought, alternativeThought)
+        )
+    }
 
     private var analysis = ProblemAnalysisEntity()
 
@@ -58,10 +94,12 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
     }
 
     fun tryToSaveDiary() {
+        _screenState.value = ThoughtAnalysisScreenState.Loading
+        
         viewModelScope.launch {
             if (preferenceIsCorrect()) {
                 _screenState.value =
-                    NewThoughtDiaryScreenState.RequestResult(
+                    ThoughtAnalysisScreenState.RequestResult(
                         saveProblemAnalysisUseCase(
                             analysis
                         )
@@ -74,7 +112,7 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
         if (analysis.flexiblePreference.isNotEmpty())
             true
         else {
-            _screenState.value = NewThoughtDiaryScreenState.ValidationError(
+            _screenState.value = ThoughtAnalysisScreenState.ValidationError(
                 _harmfulThought.map {
                     if (it.content().titleId == R.string.flexible_preference)
                         ThoughtDiaryDelegateItem(it.content().copy(isNotCorrect = true))
@@ -86,11 +124,10 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
 
     fun requirementIsCorrect(): Boolean =
         if (analysis.dogmaticRequirement.isNotEmpty()) {
-            _screenState.value = NewThoughtDiaryScreenState.Init
+            _screenState.value = ThoughtAnalysisScreenState.Init
             true
-        }
-        else {
-            _screenState.value = NewThoughtDiaryScreenState.ValidationError(
+        } else {
+            _screenState.value = ThoughtAnalysisScreenState.ValidationError(
                 _harmfulThought.map {
                     if (it.content().titleId == R.string.dogmatic_requirement)
                         ThoughtDiaryDelegateItem(it.content().copy(isNotCorrect = true))
@@ -100,13 +137,14 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
             false
         }
 
-    private val _harmfulThought = mutableListOf(
+    private var _harmfulThought = mutableListOf(
         ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.dogmatic_requirement,
                 R.string.dogmatic_requirement_hint,
                 0,
-                ::setRequirement
+                ::setRequirement,
+                ProblemAnalysisEntity::dogmaticRequirement.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -114,7 +152,8 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
                 R.string.dramatization,
                 R.string.dramatization_hint,
                 0,
-                ::setDramatization
+                ::setDramatization,
+                ProblemAnalysisEntity::dramatization.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -122,7 +161,8 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
                 R.string.LFT,
                 R.string.LFT_hint,
                 0,
-                ::setLFT
+                ::setLFT,
+                ProblemAnalysisEntity::lft.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -130,7 +170,8 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
                 R.string.humiliating_remarks,
                 R.string.humiliating_remarks_hint,
                 0,
-                ::setRemarks
+                ::setRemarks,
+                ProblemAnalysisEntity::humiliatingRemarks.name
             )
         )
     )
@@ -138,13 +179,14 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
     val harmfulThought: List<ThoughtDiaryDelegateItem>
         get() = _harmfulThought
 
-    private val _alternativeThought = listOf(
+    private var _alternativeThought = listOf(
         ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.flexible_preference,
                 R.string.flexible_preference_hint,
                 0,
-                ::setPreference
+                ::setPreference,
+                ProblemAnalysisEntity::flexiblePreference.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -152,7 +194,8 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
                 R.string.perspective,
                 R.string.perspective_hint,
                 0,
-                ::setPerspective
+                ::setPerspective,
+                ProblemAnalysisEntity::perspective.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -160,7 +203,8 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
                 R.string.HFT,
                 R.string.HFT_hint,
                 0,
-                ::setHFT
+                ::setHFT,
+                ProblemAnalysisEntity::hft.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -168,7 +212,8 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
                 R.string.unconditional_acceptance,
                 R.string.unconditional_acceptance_hint,
                 0,
-                ::setAcceptance
+                ::setAcceptance,
+                ProblemAnalysisEntity::unconditionalAcceptance.name
             )
         )
     )
@@ -176,11 +221,17 @@ class ProblemAnalysisViewModel(private val saveProblemAnalysisUseCase: SaveProbl
     val alternativeThought: List<ThoughtDiaryDelegateItem>
         get() = _alternativeThought
 
-    class Factory @Inject constructor(private val saveProblemAnalysisUseCase: SaveProblemAnalysisUseCase) :
+    class Factory @Inject constructor(
+        private val saveProblemAnalysisUseCase: SaveProblemAnalysisUseCase,
+        private val getProblemAnalysisUseCase: GetProblemAnalysisEntityUseCase
+    ) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return ProblemAnalysisViewModel(saveProblemAnalysisUseCase) as T
+            return ProblemAnalysisViewModel(
+                saveProblemAnalysisUseCase,
+                getProblemAnalysisUseCase
+            ) as T
         }
     }
 }

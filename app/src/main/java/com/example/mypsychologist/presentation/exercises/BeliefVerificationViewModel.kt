@@ -7,35 +7,64 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
+import com.example.mypsychologist.domain.entity.getMapOfFilledMembers
 import com.example.mypsychologist.domain.entity.getMapOfMembers
 import com.example.mypsychologist.domain.useCase.ChangeCurrentProblem
+import com.example.mypsychologist.domain.useCase.GetBeliefVerificationUseCase
 import com.example.mypsychologist.domain.useCase.GetProblemAnalysisUseCase
 import com.example.mypsychologist.domain.useCase.GetProblemsUseCase
 import com.example.mypsychologist.domain.useCase.SaveBeliefVerificationUseCase
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegateItem
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class BeliefVerificationViewModel(
-    private val saveBeliefVerificationUseCase: SaveBeliefVerificationUseCase
+class BeliefVerificationViewModel @AssistedInject constructor(
+    private val saveBeliefVerificationUseCase: SaveBeliefVerificationUseCase,
+    private val getBeliefVerificationUseCase: GetBeliefVerificationUseCase,
+    @Assisted("type") private val type: String,
 ) : ViewModel() {
 
-    private val _screenState: MutableStateFlow<NewThoughtDiaryScreenState> =
-        MutableStateFlow(NewThoughtDiaryScreenState.Init)
-    val screenState: StateFlow<NewThoughtDiaryScreenState>
+    private val _screenState: MutableStateFlow<BeliefVerificationScreenState> =
+        MutableStateFlow(BeliefVerificationScreenState.Init)
+    val screenState: StateFlow<BeliefVerificationScreenState>
         get() = _screenState.asStateFlow()
 
     private var beliefsVerification = BeliefVerificationEntity()
+
+    init {
+        _screenState.value = BeliefVerificationScreenState.Loading
+        viewModelScope.launch {
+            getSavedVerification()
+        }
+    }
+
+    private suspend fun getSavedVerification() {
+        beliefsVerification = getBeliefVerificationUseCase(type)
+
+        beliefsVerification.getMapOfMembers().forEach { (key, value) ->
+
+            _items = items.map {
+                if (it.content().fieldName == key) ThoughtDiaryDelegateItem(
+                    it.content().copy(text = value)
+                ) else it
+            }.toMutableList()
+        }
+
+        _screenState.value = BeliefVerificationScreenState.Data(items)
+    }
 
     fun tryToSaveBeliefVerification(type: String) {
         viewModelScope.launch {
             if (fieldsAreCorrect())
                 _screenState.value =
-                    NewThoughtDiaryScreenState.RequestResult(
+                    BeliefVerificationScreenState.RequestResult(
                         saveBeliefVerificationUseCase(
                             beliefsVerification,
                             type
@@ -56,7 +85,7 @@ class BeliefVerificationViewModel(
             }
 
             if (containErrors)
-                _screenState.value = NewThoughtDiaryScreenState.ValidationError(items)
+                _screenState.value = BeliefVerificationScreenState.ValidationError(items)
         }
 
         return !containErrors
@@ -64,7 +93,7 @@ class BeliefVerificationViewModel(
 
     private fun markAsNotCorrect(member: String) {
         viewModelScope.launch {
-            items = items.map { item ->
+            _items = items.map { item ->
                 if (item.content().titleId == beliefsVerification.mapOfTitles()[member])
                     ThoughtDiaryDelegateItem(item.content().copy(isNotCorrect = true))
                 else
@@ -85,13 +114,14 @@ class BeliefVerificationViewModel(
         beliefsVerification = beliefsVerification.copy(benefit = it)
     }
 
-    var items = listOf(
+    private var _items = listOf(
         ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.truthfulness,
                 R.string.truthfulness_hint,
                 0,
-                ::setTruthfulnessFor
+                ::setTruthfulnessFor,
+                BeliefVerificationEntity::truthfulness.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -99,7 +129,8 @@ class BeliefVerificationViewModel(
                 R.string.consistency,
                 R.string.consistency_hint,
                 0,
-                ::setConsistencyFor
+                ::setConsistencyFor,
+                BeliefVerificationEntity::consistency.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -107,10 +138,14 @@ class BeliefVerificationViewModel(
                 R.string.benefit,
                 R.string.benefit_hint,
                 0,
-                ::setBenefitFor
+                ::setBenefitFor,
+                BeliefVerificationEntity::benefit.name
             )
         ),
     )
+
+    val items
+        get() = _items
 
     private fun BeliefVerificationEntity.mapOfTitles() =
         mapOf(
@@ -119,15 +154,21 @@ class BeliefVerificationViewModel(
             ::benefit.name to R.string.benefit
         )
 
-    class Factory @Inject constructor(
-        private val saveBeliefVerificationUseCase: SaveBeliefVerificationUseCase
-    ) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return BeliefVerificationViewModel(
-                saveBeliefVerificationUseCase
-            ) as T
+    @AssistedFactory
+    interface Factory {
+        fun create(
+            @Assisted("type") type: String
+        ): BeliefVerificationViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: Factory,
+            type: String
+        ) = object : ViewModelProvider.Factory {
+
+            override fun <T : ViewModel> create(modelClass: Class<T>): T =
+                assistedFactory.create(type) as T
         }
     }
 }

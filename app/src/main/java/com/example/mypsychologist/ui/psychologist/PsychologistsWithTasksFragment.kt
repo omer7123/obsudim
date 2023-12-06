@@ -82,8 +82,10 @@ class PsychologistsWithTasksFragment : Fragment() {
 
                 binding.progressBar.isVisible = false
 
-                if (state.items.isEmpty())
+                if (state.items.isEmpty()) {
                     binding.placeholder.isVisible = true
+                    binding.toAllButton.isVisible = false
+                }
                 else {
                     binding.placeholder.isVisible = false
                     setupAdapter(state.items)

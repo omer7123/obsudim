@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -18,6 +19,7 @@ import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.ProblemAnalysisViewModel
+import com.example.mypsychologist.presentation.exercises.ThoughtAnalysisScreenState
 import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
@@ -90,13 +92,25 @@ class RebtAlternativeThoughtFragment : Fragment() {
             .show(childFragmentManager, "tag")
     }
 
-    private fun render(state: NewThoughtDiaryScreenState) {
+    private fun render(state: ThoughtAnalysisScreenState) {
         when (state) {
-            is NewThoughtDiaryScreenState.ValidationError -> {
+            is ThoughtAnalysisScreenState.Loading -> {
+                if (isNetworkConnect())
+                    binding.progressBar.isVisible = true
+                else
+                    showToast(getString(R.string.network_error))
+            }
+
+            is ThoughtAnalysisScreenState.Data -> {
+                binding.progressBar.isVisible = false
+                mainAdapter.submitList(state.saved.second)
+            }
+            is ThoughtAnalysisScreenState.ValidationError -> {
                 mainAdapter.submitList(state.listWithErrors)
             }
 
-            is NewThoughtDiaryScreenState.RequestResult -> {
+            is ThoughtAnalysisScreenState.RequestResult -> {
+                binding.progressBar.isVisible = false
                 showToast(
                     getString(
                         if (isNetworkConnect())
@@ -112,7 +126,7 @@ class RebtAlternativeThoughtFragment : Fragment() {
                 )
             }
 
-            is NewThoughtDiaryScreenState.Init -> Unit
+            is ThoughtAnalysisScreenState.Init -> Unit
         }
     }
 }

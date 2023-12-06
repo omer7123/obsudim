@@ -16,7 +16,9 @@ interface RebtRepository {
     suspend fun saveAnalysis(rebtAnalysisEntity: ProblemAnalysisEntity): Boolean
     suspend fun getProblemAnalysis(): ProblemAnalysisEntity
     suspend fun saveBeliefVerification(it: BeliefVerificationEntity, type: String): Boolean
+    suspend fun getBeliefVerification(type: String): BeliefVerificationEntity
     suspend fun saveBeliefAnalysis(it: BeliefAnalysisEntity, type: String): Boolean
+    suspend fun getBeliefAnalysis(type: String): BeliefAnalysisEntity
     suspend fun saveDialogMessage(it: AutoDialogMessageEntity): String
     suspend fun getAutoDialog(): HashMap<String, AutoDialogMessageEntity>
 }

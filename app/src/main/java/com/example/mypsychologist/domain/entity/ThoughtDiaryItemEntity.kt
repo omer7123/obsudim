@@ -5,6 +5,8 @@ data class ThoughtDiaryItemEntity(
     val hintId: Int,
     val helperId: Int,
     val saveFunction: (String) -> Unit,
-    val isNotCorrect: Boolean = false
+    val fieldName: String = "",
+    val isNotCorrect: Boolean = false,
+    val text: String = ""
 )
 

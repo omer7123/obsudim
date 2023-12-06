@@ -49,6 +49,8 @@ class ThoughtDiaryDelegate(
                     inputLayout.error = null
                 }
 
+                field.setText(item.text)
+
                 inputLayout.setEndIconOnClickListener {
                     onHelpClick(item.titleId, item.helperId)
                 }

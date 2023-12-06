@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -15,8 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentHarmfulThoughtsBinding
 import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.ProblemAnalysisViewModel
+import com.example.mypsychologist.presentation.exercises.ThoughtAnalysisScreenState
+import com.example.mypsychologist.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
@@ -91,9 +95,26 @@ class RebtHarmfulThoughtFragment : Fragment() {
             .show(childFragmentManager, "tag")
     }
 
-    private fun render(state: NewThoughtDiaryScreenState) {
-        if (state is NewThoughtDiaryScreenState.ValidationError) {
-            mainAdapter.submitList(state.listWithErrors)
+    private fun render(state: ThoughtAnalysisScreenState) {
+        when (state) {
+            is ThoughtAnalysisScreenState.Loading -> {
+                if (isNetworkConnect())
+                    binding.progressBar.isVisible = true
+                else
+                    showToast(getString(R.string.network_error))
+            }
+
+            is ThoughtAnalysisScreenState.Data -> {
+                binding.progressBar.isVisible = false
+                mainAdapter.submitList(state.saved.first)
+            }
+
+            is ThoughtAnalysisScreenState.ValidationError -> {
+                mainAdapter.submitList(state.listWithErrors)
+            }
+
+            is ThoughtAnalysisScreenState.Init -> Unit
+            is ThoughtAnalysisScreenState.RequestResult -> Unit
         }
     }
 }

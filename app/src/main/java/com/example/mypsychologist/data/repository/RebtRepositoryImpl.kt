@@ -61,6 +61,7 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
                 }.toMap()
             )
         }
+
     private suspend fun loadProblems(): HashMap<String, ProblemEntity> =
         suspendCoroutine { continuation ->
             reference.child(ProblemEntity::class.simpleName!!).get()
@@ -148,6 +149,26 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
             }
         }
 
+    override suspend fun getBeliefVerification(type: String): BeliefVerificationEntity =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            loadBeliefVerification(getCurrentProblemId()!!, type)
+        }
+
+    private suspend fun loadBeliefVerification(
+        problemId: String,
+        type: String
+    ): BeliefVerificationEntity =
+        suspendCoroutine { continuation ->
+            reference.child(BeliefVerificationEntity::class.simpleName!!).child(problemId)
+                .child(type).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(snapshot.getTypedValue() ?: BeliefVerificationEntity())
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
+
     override suspend fun saveBeliefAnalysis(it: BeliefAnalysisEntity, type: String): Boolean =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
             try {
@@ -163,6 +184,26 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
             } catch (t: Throwable) {
                 false
             }
+        }
+
+    override suspend fun getBeliefAnalysis(type: String): BeliefAnalysisEntity =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            loadBeliefAnalysis(getCurrentProblemId()!!, type)
+        }
+
+    private suspend fun loadBeliefAnalysis(
+        problemId: String,
+        type: String
+    ): BeliefAnalysisEntity =
+        suspendCoroutine { continuation ->
+            reference.child(BeliefAnalysisEntity::class.simpleName!!).child(problemId)
+                .child(type).get()
+                .addOnSuccessListener { snapshot ->
+                    continuation.resume(snapshot.getTypedValue() ?: BeliefAnalysisEntity())
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
         }
 
     override suspend fun saveDialogMessage(it: AutoDialogMessageEntity): String =

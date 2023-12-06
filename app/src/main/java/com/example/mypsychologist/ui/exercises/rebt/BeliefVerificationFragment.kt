@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -18,8 +19,10 @@ import com.example.mypsychologist.databinding.FragmentBeliefVerificationBinding
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.presentation.exercises.BeliefVerificationScreenState
 import com.example.mypsychologist.presentation.exercises.BeliefVerificationViewModel
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
+import com.example.mypsychologist.presentation.exercises.ThoughtAnalysisScreenState
 import com.example.mypsychologist.renderRebtBeliefType
 import com.example.mypsychologist.showHint
 import com.example.mypsychologist.showToast
@@ -27,6 +30,7 @@ import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
+import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
 import com.example.mypsychologist.ui.exercises.cbt.SeekBarDelegate
 import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegate
 import com.google.android.material.snackbar.Snackbar
@@ -40,7 +44,13 @@ class BeliefVerificationFragment : Fragment() {
 
     @Inject
     lateinit var vmFactory: BeliefVerificationViewModel.Factory
-    private val viewModel: BeliefVerificationViewModel by viewModels { vmFactory }
+    private val viewModel: BeliefVerificationViewModel by viewModels {
+        BeliefVerificationViewModel.provideFactory(
+            vmFactory, requireArguments().getString(
+                TYPE, ""
+            )
+        )
+    }
 
     private lateinit var mainAdapter: MainAdapter
 
@@ -92,17 +102,29 @@ class BeliefVerificationFragment : Fragment() {
     }
 
 
-    private fun render(state: NewThoughtDiaryScreenState) {
+    private fun render(state: BeliefVerificationScreenState) {
         when (state) {
-            is NewThoughtDiaryScreenState.RequestResult -> {
+            is BeliefVerificationScreenState.Loading -> {
+                if (isNetworkConnect())
+                    binding.progressBar.isVisible = true
+                else
+                    showToast(getString(R.string.network_error))
+            }
+
+            is BeliefVerificationScreenState.Data -> {
+                binding.progressBar.isVisible = false
+                mainAdapter.submitList(state.saved)
+            }
+            is BeliefVerificationScreenState.RequestResult -> {
+                binding.progressBar.isVisible = false
                 renderRequest(state.success)
             }
 
-            is NewThoughtDiaryScreenState.ValidationError -> {
+            is BeliefVerificationScreenState.ValidationError -> {
                 mainAdapter.submitList(state.listWithErrors)
             }
 
-            is NewThoughtDiaryScreenState.Init -> Unit
+            is BeliefVerificationScreenState.Init -> Unit
         }
     }
 
