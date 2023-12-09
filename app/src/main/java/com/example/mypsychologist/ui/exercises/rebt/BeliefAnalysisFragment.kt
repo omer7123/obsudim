@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -18,6 +19,7 @@ import com.example.mypsychologist.databinding.FragmentBeliefVerificationBinding
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.BeliefAnalysisViewModel
+import com.example.mypsychologist.presentation.exercises.BeliefVerificationScreenState
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
 import com.example.mypsychologist.renderRebtBeliefType
 import com.example.mypsychologist.showHint
@@ -37,7 +39,13 @@ class BeliefAnalysisFragment : Fragment() {
 
     @Inject
     lateinit var vmFactory: BeliefAnalysisViewModel.Factory
-    private val viewModel: BeliefAnalysisViewModel by viewModels { vmFactory }
+    private val viewModel: BeliefAnalysisViewModel by viewModels {
+        BeliefAnalysisViewModel.provideFactory(
+            vmFactory, requireArguments().getString(
+                TYPE, ""
+            )
+        )
+    }
 
     private lateinit var mainAdapter: MainAdapter
 
@@ -93,17 +101,26 @@ class BeliefAnalysisFragment : Fragment() {
         }
     }
 
-    private fun render(state: NewThoughtDiaryScreenState) {
+    private fun render(state: BeliefVerificationScreenState) {
         when (state) {
-            is NewThoughtDiaryScreenState.RequestResult -> {
+            is BeliefVerificationScreenState.Loading -> {
+                if (isNetworkConnect())
+                    binding.progressBar.isVisible = true
+                else
+                    showToast(getString(R.string.network_error))
+            }
+            is BeliefVerificationScreenState.Data -> {
+                binding.progressBar.isVisible = false
+                mainAdapter.submitList(state.saved)
+            }
+            is BeliefVerificationScreenState.RequestResult -> {
+                binding.progressBar.isVisible = false
                 renderRequest(state.success)
             }
-
-            is NewThoughtDiaryScreenState.ValidationError -> {
+            is BeliefVerificationScreenState.ValidationError -> {
                 mainAdapter.submitList(state.listWithErrors)
             }
-
-            is NewThoughtDiaryScreenState.Init -> Unit
+            is BeliefVerificationScreenState.Init -> Unit
         }
     }
 

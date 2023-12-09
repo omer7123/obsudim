@@ -8,29 +8,61 @@ import com.example.mypsychologist.domain.entity.BeliefAnalysisEntity
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
 import com.example.mypsychologist.domain.entity.getMapOfMembers
+import com.example.mypsychologist.domain.useCase.GetBeliefAnalysisUseCase
 import com.example.mypsychologist.domain.useCase.SaveBeliefAnalysisUseCase
 import com.example.mypsychologist.domain.useCase.SaveBeliefVerificationUseCase
 import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegateItem
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class BeliefAnalysisViewModel(private val saveBeliefAnalysisUseCase: SaveBeliefAnalysisUseCase) : ViewModel() {
+class BeliefAnalysisViewModel @AssistedInject constructor(
+    private val saveBeliefAnalysisUseCase: SaveBeliefAnalysisUseCase,
+    private val getBeliefAnalysisUseCase: GetBeliefAnalysisUseCase,
+    @Assisted("type") private val type: String,
+) : ViewModel() {
 
-    private val _screenState: MutableStateFlow<NewThoughtDiaryScreenState> =
-        MutableStateFlow(NewThoughtDiaryScreenState.Init)
-    val screenState: StateFlow<NewThoughtDiaryScreenState>
+    private val _screenState: MutableStateFlow<BeliefVerificationScreenState> =
+        MutableStateFlow(BeliefVerificationScreenState.Init)
+    val screenState: StateFlow<BeliefVerificationScreenState>
         get() = _screenState.asStateFlow()
 
     private var beliefAnalysisEntity = BeliefAnalysisEntity()
+
+    init {
+        _screenState.value = BeliefVerificationScreenState.Loading
+        viewModelScope.launch {
+            getSavedAnalysis()
+        }
+    }
+
+    private suspend fun getSavedAnalysis() {
+        beliefAnalysisEntity = getBeliefAnalysisUseCase(type)
+
+        beliefAnalysisEntity.getMapOfMembers().forEach { (key, value) ->
+
+            _items = items.map {
+                if (it.content().fieldName == key)
+                    ThoughtDiaryDelegateItem(
+                        it.content().copy(text = value)
+                    )
+                else it
+            }.toMutableList()
+        }
+
+        _screenState.value = BeliefVerificationScreenState.Data(items)
+    }
 
     fun tryToSaveBeliefAnalysis(type: String) {
         viewModelScope.launch {
             if (fieldsAreCorrect())
                 _screenState.value =
-                    NewThoughtDiaryScreenState.RequestResult(
+                    BeliefVerificationScreenState.RequestResult(
                         saveBeliefAnalysisUseCase(
                             beliefAnalysisEntity,
                             type
@@ -51,7 +83,7 @@ class BeliefAnalysisViewModel(private val saveBeliefAnalysisUseCase: SaveBeliefA
             }
 
             if (containErrors)
-                _screenState.value = NewThoughtDiaryScreenState.ValidationError(items)
+                _screenState.value = BeliefVerificationScreenState.ValidationError(items)
         }
 
         return !containErrors
@@ -59,7 +91,7 @@ class BeliefAnalysisViewModel(private val saveBeliefAnalysisUseCase: SaveBeliefA
 
     private fun markAsNotCorrect(member: String) {
         viewModelScope.launch {
-            items = items.map { item ->
+            _items = items.map { item ->
                 if (item.content().titleId == beliefAnalysisEntity.mapOfTitles()[member])
                     ThoughtDiaryDelegateItem(item.content().copy(isNotCorrect = true))
                 else
@@ -68,13 +100,14 @@ class BeliefAnalysisViewModel(private val saveBeliefAnalysisUseCase: SaveBeliefA
         }
     }
 
-    var items = listOf(
+    private var _items = listOf(
         ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.fillings_and_actions,
                 R.string.fillings_and_actions_hint,
                 0,
-                ::setFillingsAndActions
+                ::setFillingsAndActions,
+                BeliefAnalysisEntity::feelingsAndActions.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -82,7 +115,8 @@ class BeliefAnalysisViewModel(private val saveBeliefAnalysisUseCase: SaveBeliefA
                 R.string.motivation,
                 R.string.motivation_hint,
                 0,
-                ::setMotivations
+                ::setMotivations,
+                BeliefAnalysisEntity::motivation.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -90,7 +124,8 @@ class BeliefAnalysisViewModel(private val saveBeliefAnalysisUseCase: SaveBeliefA
                 R.string.interferences,
                 R.string.interferences_hint,
                 0,
-                ::setInterferences
+                ::setInterferences,
+                BeliefAnalysisEntity::interferences.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -98,7 +133,8 @@ class BeliefAnalysisViewModel(private val saveBeliefAnalysisUseCase: SaveBeliefA
                 R.string.dependent,
                 R.string.dependent_hint,
                 0,
-                ::setDependent
+                ::setDependent,
+                BeliefAnalysisEntity::dependent.name
             )
         ),
         ThoughtDiaryDelegateItem(
@@ -106,10 +142,14 @@ class BeliefAnalysisViewModel(private val saveBeliefAnalysisUseCase: SaveBeliefA
                 R.string.results,
                 R.string.results_hint,
                 0,
-                ::setResults
+                ::setResults,
+                BeliefAnalysisEntity::results.name
             )
         )
     )
+
+    val items
+        get() = _items
 
     private fun setFillingsAndActions(it: String) {
         beliefAnalysisEntity = beliefAnalysisEntity.copy(feelingsAndActions = it)
@@ -140,13 +180,21 @@ class BeliefAnalysisViewModel(private val saveBeliefAnalysisUseCase: SaveBeliefA
             ::results.name to R.string.results
         )
 
-    class Factory @Inject constructor(
-        private val saveBeliefAnalysisUseCase: SaveBeliefAnalysisUseCase
-    ) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return BeliefAnalysisViewModel(saveBeliefAnalysisUseCase) as T
+    @AssistedFactory
+    interface Factory {
+        fun create(
+            @Assisted("type") type: String
+        ): BeliefAnalysisViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: Factory,
+            type: String
+        ) = object : ViewModelProvider.Factory {
+
+            override fun <T : ViewModel> create(modelClass: Class<T>): T =
+                assistedFactory.create(type) as T
         }
     }
 }
