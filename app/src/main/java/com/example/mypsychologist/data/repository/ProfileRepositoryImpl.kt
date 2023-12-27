@@ -274,6 +274,7 @@ class ProfileRepositoryImpl @Inject constructor(
         clientId: String
     ): HashMap<String, TaskEntity> =
         suspendCoroutine { continuation ->
+
             Firebase.database(AppModule.URL).reference.child(clientId)
                 .child(PsychologistRepositoryImpl.TASKS).child(psychologistId).get()
                 .addOnSuccessListener { snapshot ->

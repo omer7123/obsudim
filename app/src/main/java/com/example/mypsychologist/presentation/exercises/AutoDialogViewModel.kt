@@ -41,18 +41,19 @@ class AutoDialogViewModel(
         }
     }
 
+    fun currentIsRational() =
+        if (dialog.isNotEmpty())
+            !dialog.last().content().second.rational
+        else
+            true
+
     fun save(message: String) {
         _screenState.value = ListScreenState.Loading
 
         viewModelScope.launch {
             _screenState.value = try {
-                val isRational =
-                    if (dialog.isNotEmpty())
-                        !dialog.last().content().second.rational
-                    else
-                        false
 
-                val messageEntity = AutoDialogMessageEntity(isRational, message)
+                val messageEntity = AutoDialogMessageEntity(currentIsRational(), message)
 
                 val id = saveAutoDialogMessageUseCase(messageEntity)
                 val newList = dialog.map { it }.toMutableList()

@@ -65,9 +65,11 @@ class AutoDialogFragment : Fragment() {
             .launchIn(lifecycleScope)
 
         binding.sendButton.setOnClickListener {
-            if (binding.message.text.isNotEmpty())
+            if (binding.message.text.isNotEmpty()) {
                 viewModel.save(binding.message.text.toString())
-
+                binding.message.setText("")
+                showMessageType()
+            }
         }
 
         return binding.root
@@ -93,15 +95,29 @@ class AutoDialogFragment : Fragment() {
                 else
                     showToast(getString(R.string.network_error))
             }
+
             is ListScreenState.Data -> {
                 binding.progressBar.isVisible = false
                 mainAdapter.submitList(state.items)
+                showMessageType()
             }
+
             is ListScreenState.Error -> {
                 binding.progressBar.isVisible = false
                 showToast(getString(R.string.db_error))
             }
+
             is ListScreenState.Init -> Unit
         }
+    }
+
+    private fun showMessageType() {
+        binding.messageType.text =
+            getString(
+                if (viewModel.currentIsRational())
+                    R.string.rational
+                else
+                    R.string.irrational
+            )
     }
 }
