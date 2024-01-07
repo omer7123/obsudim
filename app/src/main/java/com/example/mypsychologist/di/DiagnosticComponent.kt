@@ -1,5 +1,6 @@
 package com.example.mypsychologist.di
 
+import com.example.mypsychologist.ui.diagnostics.DASSTestFragment
 import com.example.mypsychologist.ui.diagnostics.FragmentBeckDepressionTest
 import com.example.mypsychologist.ui.diagnostics.FragmentTestHistory
 import com.example.mypsychologist.ui.diagnostics.FragmentTests
@@ -15,6 +16,7 @@ interface DiagnosticComponent {
     fun inject(fragment: FragmentTestHistory)
     fun inject(fragment: FragmentClientTests)
     fun inject(fragment: SMQTestFragment)
+    fun inject(fragment: DASSTestFragment)
 
     @Subcomponent.Factory
     interface Factory {

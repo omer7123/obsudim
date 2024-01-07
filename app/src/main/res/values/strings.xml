@@ -82,6 +82,7 @@
 
     <string name="depression">Депрессия</string>
     <string name="anxiety">Тревожность</string>
+    <string name="universal">Универсальные</string>
 
     <string name="no_tests">Вы еще не проходили тесты в нашем приложении. Самое время начать!</string>
     <string name="history">История</string>
@@ -376,4 +377,30 @@
 
     <string name="normal">Умеренно выражено и не мешает жить</string>
     <string name="cognitive_errors">Есть когнитивные ошибки</string>
+    
+    <string name="dass21">DASS-21</string>
+    <string name="dass21_desc">Шкала депрессии, тревоги и стресса</string>
+    <string name="dass21_desc_short">Шкала депрессии, тревоги и стресса, DASS-21</string>
+    <string name="dass21_1">Мне было трудно успокоиться.</string>
+    <string name="dass21_2">Я чувствовал сухость во рту.</string>
+    <string name="dass21_3">Мне кажется, что я не испытывал никаких позитивных чувств.</string>
+    <string name="dass21_4">У меня были проблемы с дыханием (например, учащенное дыхание, одышка при отсутствии физической активности).</string>
+    <string name="dass21_5">Мне было трудно проявить инициативу для того, чтобы что-то сделать.</string>
+    <string name="dass21_6">Я слишком остро реагировал на некоторые ситуации.</string>
+    <string name="dass21_7">У меня была дрожь (например, в руках).</string>
+    <string name="dass21_8">Я чувствовал, что трачу много нервов.</string>
+    <string name="dass21_9">Меня тревожили ситуации, в которых я мог запаниковать и выглядеть глупо.</string>
+    <string name="dass21_10">Я чувствовал, что мне не на что надеяться.</string>
+    <string name="dass21_11">Я обнаруживал себя взволнованным.</string>
+    <string name="dass21_12">Мне было трудно расслабиться.</string>
+    <string name="dass21_13">Я чувствовал себя унылым и подавленным.</string>
+    <string name="dass21_14">Я был нетерпим ко всему, что мешало мне в моих делах.</string>
+    <string name="dass21_15">Я был близок к панике.</string>
+    <string name="dass21_16">Я не мог ничем увлечься.</string>
+    <string name="dass21_17">Мне казалось, что как человек я ничего не стою.</string>
+    <string name="dass21_18">Я чувствовал, что был довольно обидчив.</string>
+    <string name="dass21_19">Я чувствовал работу своего сердца при отсутствии физической активности (например, ощущение увеличения частоты сердечных сокращений, пропуска сердечных ударов).</string>
+    <string name="dass21_20">Мне было страшно без всякой на то причины.</string>
+    <string name="dass21_21">Мне казалось, что жизнь бессмысленна.</string>
+
 </resources>
