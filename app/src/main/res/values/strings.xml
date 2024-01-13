@@ -375,7 +375,7 @@
     <string name="danger_exaggerating">Приувеличение опасности</string>
     <string name="hypernormality">Гипернормативность</string>
 
-    <string name="normal">Умеренно выражено и не мешает жить</string>
+    <string name="moderately_pronounced">Умеренно выражено и не мешает жить</string>
     <string name="cognitive_errors">Есть когнитивные ошибки</string>
     
     <string name="dass21">DASS-21</string>
@@ -402,5 +402,12 @@
     <string name="dass21_19">Я чувствовал работу своего сердца при отсутствии физической активности (например, ощущение увеличения частоты сердечных сокращений, пропуска сердечных ударов).</string>
     <string name="dass21_20">Мне было страшно без всякой на то причины.</string>
     <string name="dass21_21">Мне казалось, что жизнь бессмысленна.</string>
+    
+    <string name="normal">Норма</string>
+    <string name="low">Низкий</string>
+    <string name="moderately">Умеренный</string>
+    <string name="high">Высокий</string>
+    <string name="very_high">Очень высокий</string>
 
+    <string name="stress">Стресс</string>
 </resources>

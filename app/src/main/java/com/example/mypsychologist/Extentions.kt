@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
@@ -92,4 +93,14 @@ fun Fragment.renderRebtBeliefType(it: String) =
 fun Fragment.showHint(titleId: Int, hintId: Int) {
     FragmentHint.newInstance(titleId, hintId)
         .show(childFragmentManager, "tag")
+}
+
+fun List<Int>.sum(elements: Array<Int>) = run {
+    var sum = 0
+
+    elements.forEach {index ->
+        sum += this[index]
+    }
+
+    sum
 }

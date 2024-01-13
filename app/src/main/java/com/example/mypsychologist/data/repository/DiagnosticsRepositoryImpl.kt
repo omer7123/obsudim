@@ -2,6 +2,7 @@ package com.example.mypsychologist.data.repository
 
 import com.example.mypsychologist.di.AppModule
 import com.example.mypsychologist.domain.entity.TestResultEntity
+import com.example.mypsychologist.domain.entity.TestScalesResultEntity
 import com.example.mypsychologist.domain.repository.DiagnosticRepository
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.GenericTypeIndicator
@@ -16,6 +17,18 @@ class DiagnosticsRepositoryImpl @Inject constructor(private val reference: Datab
     DiagnosticRepository {
 
     override fun saveTestResult(result: TestResultEntity, testTitle: String): Boolean =
+        try {
+            val ref = reference.child(DIAGNOSTIC_HISTORY).child(testTitle)
+            val key = ref.push().key
+
+            ref.child(key!!).setValue(result)
+
+            true
+        } catch (t: Throwable) {
+            false
+        }
+
+    override fun saveTestResult(result: TestScalesResultEntity, testTitle: String): Boolean =
         try {
             val ref = reference.child(DIAGNOSTIC_HISTORY).child(testTitle)
             val key = ref.push().key

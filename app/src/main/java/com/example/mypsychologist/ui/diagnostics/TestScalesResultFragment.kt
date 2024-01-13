@@ -11,28 +11,27 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
-import com.example.mypsychologist.databinding.FragmentDiagnosticDialogBinding
+import com.example.mypsychologist.databinding.FragmentDiagnosticScalesDialogBinding
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
 import com.example.mypsychologist.serializable
 import com.example.mypsychologist.ui.autoCleared
 
-class TestResultDialogFragment : DialogFragment() {
+class TestScalesResultFragment : DialogFragment() {
 
-    private var binding: FragmentDiagnosticDialogBinding by autoCleared()
+    private var binding: FragmentDiagnosticScalesDialogBinding by autoCleared()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDiagnosticDialogBinding.inflate(inflater, container, false)
+        binding = FragmentDiagnosticScalesDialogBinding.inflate(inflater, container, false)
 
         binding.apply {
             goButton.text = getString(R.string.main)
 
-            title.text = requireArguments().getInt(SCORE).toString()
-            text.text = requireArguments().getString(CONCLUSION)
-            setupAdapter(requireArguments().serializable<HashMap<Int, Int>>(SCALES))
+            requireArguments().serializable<HashMap<Int, Pair<Int, Int>>>(SCALES)
+                ?.let { setupAdapter(it) }
         }
 
         setupListeners()
@@ -55,11 +54,11 @@ class TestResultDialogFragment : DialogFragment() {
         }
     }
 
-    private fun setupAdapter(scales: Map<Int, Int>?) {
-        scales?.let { items ->
+    private fun setupAdapter(scales: Map<Int, Pair<Int, Int>>) {
+        scales.let { items ->
             binding.scalesRw.apply {
                 layoutManager = LinearLayoutManager(requireContext())
-           //     adapter = ScalesAdapter(items.toList())
+                adapter = ScalesAdapter(items.toList())
                 setHasFixedSize(true)
                 isVisible = true
             }
@@ -73,24 +72,18 @@ class TestResultDialogFragment : DialogFragment() {
 
     companion object {
         fun newInstance(
-            score: Int,
-            conclusion: String,
             titleId: Int,
-            scales: HashMap<Int, Int>? = null
+            scales: HashMap<Int, Pair<Int, Int>>
         ) =
             TestResultDialogFragment().apply {
                 arguments = bundleOf(
-                    SCORE to score,
-                    CONCLUSION to conclusion,
                     TITLE_ID to titleId,
                     SCALES to scales
                 )
             }
 
-        const val TAG = "test_dialog"
+        const val TAG = "test_scales_dialog"
         const val TITLE_ID = "title id"
-        const val SCORE = "score"
-        const val CONCLUSION = "conclusion"
         const val SCALES = "scales"
     }
 }

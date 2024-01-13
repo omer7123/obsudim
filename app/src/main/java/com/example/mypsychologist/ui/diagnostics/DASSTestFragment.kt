@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestBinding
+import com.example.mypsychologist.domain.entity.DASSResultEntity
 import com.example.mypsychologist.getAppComponent
 import com.example.mypsychologist.isNetworkConnect
 import com.example.mypsychologist.presentation.diagnostics.CMQScreenState
@@ -76,7 +77,19 @@ class DASSTestFragment : Fragment() {
             }
 
             is DASSScreenState.Result -> {
+                viewModel.save(state.result)
 
+                if (!isNetworkConnect()) {
+                    Snackbar.make(
+                        binding.coordinator,
+                        R.string.save_after_connect,
+                        Snackbar.LENGTH_LONG
+                    ).setAction(R.string.show_result) {
+                        showResult(state)
+                    }.show()
+                } else {
+                    showResult(state)
+                }
             }
 
             is DASSScreenState.Error -> {
@@ -84,6 +97,21 @@ class DASSTestFragment : Fragment() {
             }
         }
     }
+
+    private fun showResult(it: DASSScreenState.Result) {
+        TestScalesResultFragment.newInstance(
+            R.string.dass21,
+            it.result.toHashMap()
+        )
+            .show(childFragmentManager, TestResultDialogFragment.TAG)
+    }
+
+    private fun DASSResultEntity.toHashMap() =
+        hashMapOf(
+            R.string.stress to stressScoreAndConclusion,
+            R.string.anxiety to anxietyScoreAndConclusion,
+            R.string.depression to depressionScoreAndConclusion
+        )
 
     private fun setFragmentResultListeners() {
         childFragmentManager.setFragmentResultListener(

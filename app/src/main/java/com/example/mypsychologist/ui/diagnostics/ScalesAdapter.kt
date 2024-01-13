@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.ItemScaleResultBinding
 
-class ScalesAdapter(private val items: List<Pair<Int, Int>>) : RecyclerView.Adapter<ScalesAdapter.ViewHolder>(){
+class ScalesAdapter(private val items: List<Pair<Int, Pair<Int, Int>>>) : RecyclerView.Adapter<ScalesAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemScaleResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,9 +20,10 @@ class ScalesAdapter(private val items: List<Pair<Int, Int>>) : RecyclerView.Adap
     class ViewHolder(private val binding: ItemScaleResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(result: Pair<Int, Int>) {
+        fun bind(result: Pair<Int, Pair<Int, Int>>) {
             binding.scale.text = itemView.context.getString(result.first)
-            binding.result.text = result.second.toString()
+            binding.result.text = result.second.first.toString()
+            binding.conclusion.text = itemView.context.getString(result.second.second)
         }
     }
 }
