@@ -75,7 +75,7 @@ class TestScalesResultFragment : DialogFragment() {
             titleId: Int,
             scales: HashMap<Int, Pair<Int, Int>>
         ) =
-            TestResultDialogFragment().apply {
+            TestScalesResultFragment().apply {
                 arguments = bundleOf(
                     TITLE_ID to titleId,
                     SCALES to scales
