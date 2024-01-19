@@ -1,9 +1,7 @@
 package com.example.mypsychologist.domain.useCase
 
-import android.util.Log
 import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.DASSResultEntity
-import com.example.mypsychologist.sum
 import javax.inject.Inject
 
 class DASSConclusionUseCase @Inject constructor() {
@@ -14,21 +12,6 @@ class DASSConclusionUseCase @Inject constructor() {
             anxietyScoreAndConclusion = Anxiety(answers).calculate(),
             depressionScoreAndConclusion = Depression(answers).calculate()
         )
-    }
-
-    abstract class Scale(private val answers: List<Int>) {
-        fun calculate(): Pair<Int, Int> = run {
-            Pair(
-                score(),
-                getConclusion()
-            )
-        }
-
-        fun score() =
-            answers.sum(items())
-
-        abstract fun items(): Array<Int>
-        abstract fun getConclusion(): Int
     }
 
     class Stress(answers: List<Int>) : Scale(answers) {

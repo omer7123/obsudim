@@ -1,46 +1,52 @@
 package com.example.mypsychologist.presentation.diagnostics
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.domain.entity.DASSResultEntity
+import com.example.mypsychologist.domain.entity.STAIResultEntity
 import com.example.mypsychologist.domain.useCase.DASSConclusionUseCase
 import com.example.mypsychologist.domain.useCase.GetDASSTestUseCase
+import com.example.mypsychologist.domain.useCase.GetSTAITestUseCase
+import com.example.mypsychologist.domain.useCase.STAIConclusionUseCase
 import com.example.mypsychologist.domain.useCase.SaveDASSResultUseCase
+import com.example.mypsychologist.domain.useCase.SaveSTAIResultUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DASSTestViewModel(
-    getDASSTestUseCase: GetDASSTestUseCase,
-    private val DASSConclusionUseCase: DASSConclusionUseCase,
-    private val saveDASSResultUseCase: SaveDASSResultUseCase
+class STAITestViewModel(
+    getSTAITestUseCase: GetSTAITestUseCase,
+    private val staiConclusionUseCase: STAIConclusionUseCase,
+    private val saveSTAIResultUseCase: SaveSTAIResultUseCase
 ) : ViewModel() {
 
-    private val questions = getDASSTestUseCase()
+    private val questions = getSTAITestUseCase()
 
     private val answers = MutableList(questions.size) { 0 }
 
     private var questionNumber = 0
 
-    private val _screenState: MutableStateFlow<DASSScreenState> =
-        MutableStateFlow(
-            DASSScreenState.Question(
-                questions[questionNumber],
-                questionNumber,
-                questions.size
-            )
-        )
-    val screenState: StateFlow<DASSScreenState>
+    private val _screenState: MutableStateFlow<STAIScreenState> =
+        MutableStateFlow(STAIScreenState.Question(
+            questions[questionNumber],
+            questionNumber,
+            questions.size
+        ))
+    val screenState: StateFlow<STAIScreenState>
         get() = _screenState.asStateFlow()
 
     fun saveAnswerAndGoToNext(score: Int) {
         answers[questionNumber] = score
 
         nextQuestion()
+    }
+
+    fun save(result: STAIResultEntity) {
+        if (!saveSTAIResultUseCase(result))
+            _screenState.value = STAIScreenState.Error
     }
 
     private fun nextQuestion() {
@@ -50,13 +56,13 @@ class DASSTestViewModel(
 
             _screenState.value =
                 if (questionNumber < questions.size) {
-                    DASSScreenState.Question(
+                    STAIScreenState.Question(
                         questions[questionNumber],
                         questionNumber,
                         questions.size
                     )
                 } else {
-                    DASSScreenState.Result(DASSConclusionUseCase(answers))
+                    STAIScreenState.Result(staiConclusionUseCase(answers))
                 }
         }
     }
@@ -67,7 +73,7 @@ class DASSTestViewModel(
 
             viewModelScope.launch {
                 _screenState.value =
-                    DASSScreenState.Question(
+                    STAIScreenState.Question(
                         questions[questionNumber],
                         questionNumber,
                         questions.size
@@ -76,21 +82,16 @@ class DASSTestViewModel(
         }
     }
 
-    fun save(result: DASSResultEntity) {
-        if (!saveDASSResultUseCase(result))
-            _screenState.value = DASSScreenState.Error
-    }
-
     class Factory @Inject constructor(
-        private val getDASSTestUseCase: GetDASSTestUseCase,
-        private val DASSConclusionUseCase: DASSConclusionUseCase,
-        private val saveDASSResultUseCase: SaveDASSResultUseCase
+        private val getSTAITestUseCase: GetSTAITestUseCase,
+        private val staiConclusionUseCase: STAIConclusionUseCase,
+        private val saveSTAIResultUseCase: SaveSTAIResultUseCase
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return DASSTestViewModel(
-                getDASSTestUseCase, DASSConclusionUseCase, saveDASSResultUseCase
+            return STAITestViewModel(
+                getSTAITestUseCase, staiConclusionUseCase, saveSTAIResultUseCase
             ) as T
         }
     }

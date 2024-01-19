@@ -27,6 +27,11 @@ class TestsWithGroupsUseCase @Inject constructor() {
                     R.string.cmq,
                     R.string.cmq_desc_short,
                     R.string.cmq_desc
+                ),
+                TestCardEntity(
+                    R.string.stai,
+                    R.string.stai_desc_short,
+                    R.string.stai_desc
                 )
             )
         )

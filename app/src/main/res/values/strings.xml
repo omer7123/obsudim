@@ -203,13 +203,13 @@
     <string name="psychologists">Психологи</string>
 
     <string name="request">Запрос</string>
-    
+
     <string name="name">Имя</string>
     <string name="diagnosis">Диагноз</string>
     <string name="mail">Почта</string>
     <string name="phone">Телефон</string>
     <string name="password">Пароль</string>
-    
+
     <string name="describe_request">Опишите свой запрос</string>
     <string name="request_to_psychologist_disclaimer">Вы можете связаться с психологом с помощью этой формы. Прежде чем описать здесь проблему, проверьте данные в профиле - они будут доступны психологу. Не нужно дублировать их в данной форме. Помимо информации, психологу будут доступны результаты тестов и выполненные упражнения.</string>
 
@@ -230,7 +230,7 @@
 
     <string name="psychologist_is_checked">PSYCHOLOGIST IS CHECKED</string>
     <string name="is_psychologist">IS PSYCHOLOGIST</string>
-    
+
     <string name="chat">Чат</string>
     <string name="clients">Клиенты</string>
     <string name="schedule">Расписание</string>
@@ -245,7 +245,7 @@
     <string name="diagnosis_pattern">Диагноз: %1$s</string>
 
     <string name="add_task">Добавить задание</string>
-    
+
     <string name="nobody">Никого нет</string>
     <string name="no_psychologist_in_app">Вы еще не связались с психологом через наше приложение :(</string>
     <string name="find_specialist">Подобрать специалиста</string>
@@ -364,7 +364,7 @@
     <string name="smq_43">Когда меня просят что-то сделать, я бываю недовольным, ершистым.</string>
     <string name="smq_44">Я считаю, что все должно делаться по-моему или не делаться вовсе.</string>
     <string name="smq_45">Я склонен откладывать очень важные дела и бываю очень медлительным.</string>
-    
+
     <string name="personalization">Персонализация</string>
     <string name="mind_reading">Чтение мыслей</string>
     <string name="stubbornness">Упрямство</string>
@@ -377,7 +377,7 @@
 
     <string name="moderately_pronounced">Умеренно выражено и не мешает жить</string>
     <string name="cognitive_errors">Есть когнитивные ошибки</string>
-    
+
     <string name="dass21">DASS-21</string>
     <string name="dass21_desc">Данный опросник состоит из 21 вопроса о вашем самочувствии. Он поможет оценить ваше состояние за последнее время. Поэтому вспомните своё эмоциональное состояние за последние 2 недели и отметьте нужный вам вариант ответа. В опроснике используется три шкалы самоотчёта: депрессия, тревога и стресс</string>
     <string name="dass21_desc_short">Шкала депрессии, тревоги и стресса</string>
@@ -402,12 +402,66 @@
     <string name="dass21_19">Я чувствовал работу своего сердца при отсутствии физической активности (например, ощущение увеличения частоты сердечных сокращений, пропуска сердечных ударов).</string>
     <string name="dass21_20">Мне было страшно без всякой на то причины.</string>
     <string name="dass21_21">Мне казалось, что жизнь бессмысленна.</string>
-    
+
     <string name="normal">Норма</string>
     <string name="low">Низкий</string>
     <string name="moderately">Умеренный</string>
+    <string name="medium">Средний</string>
     <string name="high">Высокий</string>
     <string name="very_high">Очень высокий</string>
 
     <string name="stress">Стресс</string>
+
+    <string name="stai">STAI</string>
+    <string name="stai_desc_short">Шкала тревоги Спилбергера-Ханина</string>
+    <string name="stai_desc">В разработке</string>
+    <string name="stai_1">В данный момент я спокоен.</string>
+    <string name="stai_2">В данный момент мне ничто не угрожает.</string>
+    <string name="stai_3">В данный момент я нахожусь в напряжении.</string>
+    <string name="stai_4">В данный момент я внутренне скован.</string>
+    <string name="stai_5">В данный момент я чувствую себя свободно.</string>
+    <string name="stai_6">В данный момент я расстроен.</string>
+    <string name="stai_7">В данный момент меня волнуют возможные неудачи.</string>
+    <string name="stai_8">В данный момент я ощущаю душевный покой.</string>
+    <string name="stai_9">В данный момент я встревожен.</string>
+    <string name="stai_10">В данный момент я испытываю чувство внутреннего удовлетворения.</string>
+    <string name="stai_11">В данный момент я уверен в себе.</string>
+    <string name="stai_12">В данный момент я нервничаю.</string>
+    <string name="stai_13">В данный момент я не нахожу себе места.</string>
+    <string name="stai_14">В данный момент я взвинчен.</string>
+    <string name="stai_15">В данный момент я не чувствую скованности, напряжения.</string>
+    <string name="stai_16">В данный момент я доволен.</string>
+    <string name="stai_17">В данный момент я озабочен.</string>
+    <string name="stai_18">В данный момент я слишком возбужден и мне не по себе.</string>
+    <string name="stai_19">В данный момент мне радостно.</string>
+    <string name="stai_20">В данный момент мне приятно.</string>
+    <string name="stai_21">У меня бывает приподнятое настроение.</string>
+    <string name="stai_22">Я бываю раздражительным.</string>
+    <string name="stai_23">Я легко расстраиваюсь.</string>
+    <string name="stai_24">Я хотел бы быть таким же удачливым, как и другие.</string>
+    <string name="stai_25">Я сильно переживаю неприятности и долго не могу о них забыть.</string>
+    <string name="stai_26">Я чувствую прилив сил и желание работать.</string>
+    <string name="stai_27">Я спокоен, хладнокровен и собран.</string>
+    <string name="stai_28">Меня тревожат возможные трудности.</string>
+    <string name="stai_29">Я слишком переживаю из-за пустяков.</string>
+    <string name="stai_30">Я бываю вполне счастлив.</string>
+    <string name="stai_31">Я всё принимаю близко к сердцу.</string>
+    <string name="stai_32">Мне не хватает уверенности в себе.</string>
+    <string name="stai_33">Я чувствую себя беззащитным.</string>
+    <string name="stai_34">Я стараюсь избегать критических ситуаций и трудностей.</string>
+    <string name="stai_35">У меня бывает хандра.</string>
+    <string name="stai_36">Я бываю доволен.</string>
+    <string name="stai_37">Всякие пустяки отвлекают и волнуют меня.</string>
+    <string name="stai_38">Бывает, что я чувствую себя неудачником.</string>
+    <string name="stai_39">Я уравновешенный человек.</string>
+    <string name="stai_40">Меня охватывает беспокойство, когда я думаю о своих делах и заботах.</string>
+
+    <string name="no_it_is_not">Нет, это не так</string>
+    <string name="perhaps_so">Пожалуй, так</string>
+    <string name="right">Верно</string>
+    <string name="quite_true">Совершенно верно</string>
+
+    <string name="situational_anxiety">Ситуационная тревожность</string>
+    <string name="personal_anxiety">Личная тревожность</string>
+
 </resources>

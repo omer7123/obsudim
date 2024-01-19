@@ -5,6 +5,7 @@ import com.example.mypsychologist.ui.diagnostics.FragmentBeckDepressionTest
 import com.example.mypsychologist.ui.diagnostics.FragmentTestHistory
 import com.example.mypsychologist.ui.diagnostics.FragmentTests
 import com.example.mypsychologist.ui.diagnostics.SMQTestFragment
+import com.example.mypsychologist.ui.diagnostics.STAITestFragment
 import com.example.mypsychologist.ui.psychologist.FragmentClientTests
 import dagger.Subcomponent
 
@@ -17,6 +18,7 @@ interface DiagnosticComponent {
     fun inject(fragment: FragmentClientTests)
     fun inject(fragment: SMQTestFragment)
     fun inject(fragment: DASSTestFragment)
+    fun inject(fragment: STAITestFragment)
 
     @Subcomponent.Factory
     interface Factory {

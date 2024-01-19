@@ -152,4 +152,8 @@
         android:id="@+id/DASS_test_fragment"
         android:name="com.example.mypsychologist.ui.diagnostics.DASSTestFragment"
         android:label="DASSTestFragment" />
+    <fragment
+        android:id="@+id/STAI_test_fragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.STAITestFragment"
+        android:label="STAITestFragment" />
 </navigation>
