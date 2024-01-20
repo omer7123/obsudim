@@ -461,7 +461,7 @@
     <string name="right">Верно</string>
     <string name="quite_true">Совершенно верно</string>
 
-    <string name="situational_anxiety">Ситуационная тревожность</string>
-    <string name="personal_anxiety">Личная тревожность</string>
+    <string name="situational_anxiety">Ситуативная тревожность</string>
+    <string name="personal_anxiety">Личностная тревожность</string>
 
 </resources>
