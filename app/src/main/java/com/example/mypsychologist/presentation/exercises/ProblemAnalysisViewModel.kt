@@ -142,7 +142,7 @@ class ProblemAnalysisViewModel(
             ThoughtDiaryItemEntity(
                 R.string.dogmatic_requirement,
                 R.string.dogmatic_requirement_hint,
-                0,
+                R.string.dogmatic_requirement_help,
                 ::setRequirement,
                 ProblemAnalysisEntity::dogmaticRequirement.name
             )
@@ -151,7 +151,7 @@ class ProblemAnalysisViewModel(
             ThoughtDiaryItemEntity(
                 R.string.dramatization,
                 R.string.dramatization_hint,
-                0,
+                R.string.dramatization_help,
                 ::setDramatization,
                 ProblemAnalysisEntity::dramatization.name
             )
@@ -160,7 +160,7 @@ class ProblemAnalysisViewModel(
             ThoughtDiaryItemEntity(
                 R.string.LFT,
                 R.string.LFT_hint,
-                0,
+                R.string.LFT_help,
                 ::setLFT,
                 ProblemAnalysisEntity::lft.name
             )
@@ -169,7 +169,7 @@ class ProblemAnalysisViewModel(
             ThoughtDiaryItemEntity(
                 R.string.humiliating_remarks,
                 R.string.humiliating_remarks_hint,
-                0,
+                R.string.humiliating_remarks_help,
                 ::setRemarks,
                 ProblemAnalysisEntity::humiliatingRemarks.name
             )
@@ -184,7 +184,7 @@ class ProblemAnalysisViewModel(
             ThoughtDiaryItemEntity(
                 R.string.flexible_preference,
                 R.string.flexible_preference_hint,
-                0,
+                R.string.flexible_preference_help,
                 ::setPreference,
                 ProblemAnalysisEntity::flexiblePreference.name
             )
@@ -193,7 +193,7 @@ class ProblemAnalysisViewModel(
             ThoughtDiaryItemEntity(
                 R.string.perspective,
                 R.string.perspective_hint,
-                0,
+                R.string.perspective_help,
                 ::setPerspective,
                 ProblemAnalysisEntity::perspective.name
             )
@@ -202,7 +202,7 @@ class ProblemAnalysisViewModel(
             ThoughtDiaryItemEntity(
                 R.string.HFT,
                 R.string.HFT_hint,
-                0,
+                R.string.HFT_help,
                 ::setHFT,
                 ProblemAnalysisEntity::hft.name
             )
@@ -211,7 +211,7 @@ class ProblemAnalysisViewModel(
             ThoughtDiaryItemEntity(
                 R.string.unconditional_acceptance,
                 R.string.unconditional_acceptance_hint,
-                0,
+                R.string.unconditional_acceptance_help,
                 ::setAcceptance,
                 ProblemAnalysisEntity::unconditionalAcceptance.name
             )
