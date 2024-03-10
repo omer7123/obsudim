@@ -12,26 +12,19 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentBeliefVerificationBinding
-import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.BeliefVerificationScreenState
 import com.example.mypsychologist.presentation.exercises.BeliefVerificationViewModel
-import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
-import com.example.mypsychologist.presentation.exercises.ThoughtAnalysisScreenState
-import com.example.mypsychologist.renderRebtBeliefType
-import com.example.mypsychologist.showHint
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.renderRebtBeliefType
+import com.example.mypsychologist.extensions.showHint
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
-import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
-import com.example.mypsychologist.ui.exercises.cbt.SeekBarDelegate
 import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegate
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -108,7 +101,7 @@ class BeliefVerificationFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
 
             is BeliefVerificationScreenState.Data -> {
@@ -132,7 +125,7 @@ class BeliefVerificationFragment : Fragment() {
 
         when {
             !isSuccess -> {
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
 
             !isNetworkConnect() -> {
@@ -147,7 +140,7 @@ class BeliefVerificationFragment : Fragment() {
 
             else -> {
                 setResult()
-                showToast(getString(R.string.success))
+                requireContext().showToast(getString(R.string.success))
             }
         }
     }

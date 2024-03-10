@@ -2,7 +2,6 @@ package com.example.mypsychologist.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentMainBinding
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.setupCard
 import com.example.mypsychologist.presentation.main.MainViewModel
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
@@ -58,10 +59,11 @@ class MainFragment : Fragment() {
     private fun checkIfPsychologist() {
         val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
 
-       if (pref.getBoolean(getString(R.string.psychologist_is_checked), false)) {
+        if (pref.getBoolean(getString(R.string.psychologist_is_checked), false)) {
             if (pref.getBoolean(getString(R.string.is_psychologist), false)) {
                 setupCabinetCard()
-            } else { }
+            } else {
+            }
         } else {
 
             viewModel.checkIfPsychologist()

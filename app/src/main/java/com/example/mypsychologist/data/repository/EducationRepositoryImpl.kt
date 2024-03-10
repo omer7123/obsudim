@@ -4,7 +4,7 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.EducationTopicEntity
 import com.example.mypsychologist.domain.repository.EducationRepository
 import com.example.mypsychologist.domain.useCase.GetEducationMaterialUseCase
-import com.example.mypsychologist.pmap
+import com.example.mypsychologist.extensions.pmap
 import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestsBinding
 import com.example.mypsychologist.domain.entity.TestGroupEntity
-import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.diagnostics.TestsViewModel
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared

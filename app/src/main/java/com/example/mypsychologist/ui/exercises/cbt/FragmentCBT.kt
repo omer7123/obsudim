@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentCbtBinding
 import com.example.mypsychologist.domain.entity.DiaryCard
-import com.example.mypsychologist.setupCard
+import com.example.mypsychologist.extensions.setupCard
 import com.example.mypsychologist.ui.autoCleared
 
 class FragmentCBT : Fragment() {

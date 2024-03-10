@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestHistoryBinding
 import com.example.mypsychologist.domain.entity.TestResultEntity
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -83,7 +83,7 @@ class FragmentTestHistory : Fragment() {
             }
             is TestHistoryScreenState.Error -> {
                 binding.progressBar.isVisible = false
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             is TestHistoryScreenState.Init -> {}
         }

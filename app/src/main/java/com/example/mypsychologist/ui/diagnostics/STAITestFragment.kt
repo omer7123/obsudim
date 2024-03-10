@@ -13,11 +13,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestBinding
 import com.example.mypsychologist.domain.entity.STAIResultEntity
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.diagnostics.STAIScreenState
 import com.example.mypsychologist.presentation.diagnostics.STAITestViewModel
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -47,7 +47,8 @@ class STAITestFragment : Fragment() {
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
-            .onEach { render(it) }
+            .onEach {
+                render(it) }
             .launchIn(lifecycleScope)
 
         setFragmentResultListeners()
@@ -92,7 +93,7 @@ class STAITestFragment : Fragment() {
             }
 
             is STAIScreenState.Error -> {
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
         }
     }

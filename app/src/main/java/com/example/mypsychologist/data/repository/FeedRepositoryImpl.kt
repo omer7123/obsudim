@@ -5,8 +5,8 @@ import com.example.mypsychologist.domain.entity.FeedItemEntity
 import com.example.mypsychologist.domain.entity.FeedItemUI
 import com.example.mypsychologist.domain.entity.toUI
 import com.example.mypsychologist.domain.repository.FeedRepository
-import com.example.mypsychologist.getTypedValue
-import com.example.mypsychologist.pmap
+import com.example.mypsychologist.extensions.getTypedValue
+import com.example.mypsychologist.extensions.pmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database

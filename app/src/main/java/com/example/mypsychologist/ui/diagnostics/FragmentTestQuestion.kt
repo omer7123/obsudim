@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.TestBottomSheetBinding
 import com.example.mypsychologist.domain.entity.TestQuestionEntity
-import com.example.mypsychologist.parcelable
+import com.example.mypsychologist.extensions.parcelable
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -51,11 +52,13 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
     }
 
     private fun setupListeners() {
-        if (requireArguments().getInt(NUMBER) > 1) {
 
-            binding.backButton.setOnClickListener {
+        binding.backButton.setOnClickListener {
+            if (requireArguments().getInt(NUMBER) > 1) {
                 setFragmentResult(GO_BACK, bundleOf())
                 dismiss()
+            }else{
+                findNavController().popBackStack()
             }
         }
     }
@@ -75,6 +78,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
             setHasFixedSize(true)
         }
     }
+
 
     companion object {
         const val GO_BACK = "go back"

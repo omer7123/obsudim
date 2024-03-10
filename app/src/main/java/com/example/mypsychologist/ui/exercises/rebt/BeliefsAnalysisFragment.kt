@@ -2,7 +2,6 @@ package com.example.mypsychologist.ui.exercises.rebt
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +14,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentBeliefsVerificationBinding
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.BeliefsScreenState
 import com.example.mypsychologist.presentation.exercises.BeliefsVerificationViewModel
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.PagerAdapter
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
@@ -68,7 +67,7 @@ class BeliefsAnalysisFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is BeliefsScreenState.Data -> {
                 binding.progressBar.isVisible = false
@@ -76,7 +75,7 @@ class BeliefsAnalysisFragment : Fragment() {
             }
             is BeliefsScreenState.Error -> {
                 binding.progressBar.isVisible = false
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             is BeliefsScreenState.Init -> Unit
         }

@@ -13,7 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.databinding.FragmentTestsBinding
 import com.example.mypsychologist.domain.entity.TestGroupEntity
-import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
 import com.example.mypsychologist.presentation.diagnostics.TestsViewModel
 import com.example.mypsychologist.ui.MainAdapter
@@ -36,6 +37,7 @@ class FragmentTests : Fragment() {
         requireContext().getAppComponent().diagnosticComponent().create().inject(this)
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,11 +49,15 @@ class FragmentTests : Fragment() {
             findNavController().popBackStack()
         }
 
+
         setupAdapter()
+
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
-            .onEach { mainAdapter.submitList(it) }
+            .onEach {
+                mainAdapter.submitList(it)
+            }
             .launchIn(lifecycleScope)
 
         return binding.root
@@ -70,6 +76,7 @@ class FragmentTests : Fragment() {
         val onTestClick: (Int, Int) -> Unit = { titleId, description ->
             DiagnosticDialogFragment.newInstance(titleId, description, TestHistoryViewModel.OWN)
                 .show(childFragmentManager, DiagnosticDialogFragment.TAG)
+
         }
 
         mainAdapter = MainAdapter().apply {
@@ -82,4 +89,7 @@ class FragmentTests : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
+
+
+
 }

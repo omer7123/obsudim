@@ -15,16 +15,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentHarmfulThoughtsBinding
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.ProblemAnalysisViewModel
 import com.example.mypsychologist.presentation.exercises.ThoughtAnalysisScreenState
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
-import com.example.mypsychologist.ui.exercises.cbt.SeekBarDelegate
 import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -101,7 +99,7 @@ class RebtHarmfulThoughtFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
 
             is ThoughtAnalysisScreenState.Data -> {

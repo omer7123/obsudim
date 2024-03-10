@@ -1,12 +1,11 @@
 package com.example.mypsychologist.data.repository
 
 import android.net.Uri
-import android.util.Log
 import com.example.mypsychologist.di.AppModule
 import com.example.mypsychologist.domain.entity.*
 import com.example.mypsychologist.domain.repository.ProfileRepository
-import com.example.mypsychologist.getTypedValue
-import com.example.mypsychologist.pmap
+import com.example.mypsychologist.extensions.getTypedValue
+import com.example.mypsychologist.extensions.pmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database

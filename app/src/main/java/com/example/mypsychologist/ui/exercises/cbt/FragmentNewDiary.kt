@@ -13,6 +13,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentNewThoughtDiaryBinding
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryViewModel
 import com.example.mypsychologist.ui.DelegateItem
@@ -113,7 +116,7 @@ class FragmentNewDiary : Fragment() {
 
         when {
             !isSuccess -> {
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             !isNetworkConnect() -> {
                 Snackbar.make(
@@ -126,7 +129,7 @@ class FragmentNewDiary : Fragment() {
             }
             else -> {
                 findNavController().popBackStack()
-                showToast(getString(R.string.success))
+                requireContext().showToast(getString(R.string.success))
             }
         }
     }

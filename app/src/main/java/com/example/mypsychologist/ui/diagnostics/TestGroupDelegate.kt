@@ -40,6 +40,10 @@ class TestGroupDelegate(
             binding.arrow.setOnClickListener {
                 onClick(group, binding.arrow.isChecked)
             }
+            binding.testContainer.setOnClickListener {
+                binding.arrow.isChecked = !binding.arrow.isChecked
+                onClick(group, binding.arrow.isChecked)
+            }
         }
     }
 }

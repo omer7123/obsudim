@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.TestHistoryItemBinding
 import com.example.mypsychologist.domain.entity.TestResultEntity
-import com.example.mypsychologist.toDateString
+import com.example.mypsychologist.extensions.toDateString
 import java.util.*
 
 class TestHistoryAdapter(private val items: List<TestResultEntity>) :

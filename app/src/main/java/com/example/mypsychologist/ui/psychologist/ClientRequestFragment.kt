@@ -15,6 +15,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentClientRequestBinding
 import com.example.mypsychologist.domain.entity.ClientRequestEntity
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.parcelable
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.psychologist.AnswerScreenState
 import com.example.mypsychologist.presentation.main.ClientRequestViewModel
 import com.example.mypsychologist.ui.autoCleared
@@ -80,16 +84,16 @@ class ClientRequestFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is AnswerScreenState.Response -> {
                 binding.progressBar.isVisible = false
                 if (state.result) {
-                    showToast(getString(R.string.success))
+                    requireContext().showToast(getString(R.string.success))
                     findNavController().popBackStack()
                 }
                 else
-                    showToast(getString(R.string.db_error))
+                    requireContext().showToast(getString(R.string.db_error))
             }
             is AnswerScreenState.Init -> Unit
         }

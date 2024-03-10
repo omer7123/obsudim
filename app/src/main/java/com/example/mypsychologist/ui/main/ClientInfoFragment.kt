@@ -15,6 +15,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentClientInfoBinding
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.extensions.toYears
 import com.example.mypsychologist.presentation.main.ClientInfoScreenState
 import com.example.mypsychologist.presentation.main.ClientInfoViewModel
 import com.example.mypsychologist.ui.autoCleared
@@ -75,7 +79,7 @@ class ClientInfoFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is ClientInfoScreenState.Data -> {
                 binding.progressBar.isVisible = false
@@ -83,7 +87,7 @@ class ClientInfoFragment : Fragment() {
             }
             is ClientInfoScreenState.Error -> {
                 binding.progressBar.isVisible = false
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             is ClientInfoScreenState.Init -> Unit
         }

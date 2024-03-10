@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.MainActivity
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentProfileBinding
-import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.main.ProfileViewModel
 import com.example.mypsychologist.ui.ConfirmationDialogFragment
 import com.example.mypsychologist.ui.autoCleared

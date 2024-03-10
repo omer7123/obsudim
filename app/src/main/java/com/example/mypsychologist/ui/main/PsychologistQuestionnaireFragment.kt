@@ -19,6 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentPsychologistQuestionnaireBinding
 import com.example.mypsychologist.domain.entity.PsychologistInfo
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.extensions.toDateString
 import com.example.mypsychologist.presentation.main.PsychologistFormScreenState
 import com.example.mypsychologist.presentation.main.PsychologistQuestionnaireViewModel
 import com.example.mypsychologist.ui.MainAdapter
@@ -190,17 +194,17 @@ class PsychologistQuestionnaireFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is PsychologistFormScreenState.RequestResult -> {
                 binding.progressBar.isVisible = false
                 if (state.success) {
-                    showToast(getString(R.string.success))
+                    requireContext().showToast(getString(R.string.success))
                     writeInPreferences()
                     findNavController().popBackStack()
 
                 } else
-                    showToast(getString(R.string.db_error))
+                    requireContext().showToast(getString(R.string.db_error))
             }
             is PsychologistFormScreenState.ValidationError -> {
                 val fieldAndViews = mapOf(

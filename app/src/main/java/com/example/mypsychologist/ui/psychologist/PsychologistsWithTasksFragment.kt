@@ -14,11 +14,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentOwnPsychologistsBinding
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.presentation.psychologist.PsychologistsWithTasksViewModel
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
@@ -76,7 +76,7 @@ class PsychologistsWithTasksFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is ListScreenState.Data -> {
 
@@ -92,7 +92,7 @@ class PsychologistsWithTasksFragment : Fragment() {
                 }
             }
             is ListScreenState.Error -> {
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             is ListScreenState.Init -> Unit
         }

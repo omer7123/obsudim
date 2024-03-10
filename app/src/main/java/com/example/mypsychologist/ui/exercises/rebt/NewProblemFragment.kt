@@ -2,7 +2,6 @@ package com.example.mypsychologist.ui.exercises.rebt
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,11 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.AddProblemBottomSheetBinding
-import com.example.mypsychologist.domain.entity.ProblemEntity
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.AddProblemViewModel
 import com.example.mypsychologist.presentation.exercises.NewProblemScreenState
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
@@ -93,7 +91,7 @@ class NewProblemFragment : BottomSheetDialogFragment() {
     private fun render(state: NewProblemScreenState) {
         when (state) {
             is NewProblemScreenState.Success -> {
-                showToast(getString(R.string.success))
+                requireContext().showToast(getString(R.string.success))
 
                 setFragmentResult(
                     NEW_PROBLEM, bundleOf(
@@ -106,7 +104,7 @@ class NewProblemFragment : BottomSheetDialogFragment() {
             }
 
             is NewProblemScreenState.Error -> {
-                showToast(
+                requireContext().showToast(
                     getString(
                         if (isNetworkConnect())
                             R.string.db_error
@@ -120,7 +118,7 @@ class NewProblemFragment : BottomSheetDialogFragment() {
                 if (!state.textIsCorrect)
                     binding.problemLayout.error = getString(R.string.necessary_to_fill)
                 if (!state.chipsAreCorrect)
-                    showToast(getString(R.string.necessary_to_choice))
+                    requireContext().showToast(getString(R.string.necessary_to_choice))
             }
 
             is NewProblemScreenState.Init -> Unit

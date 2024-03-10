@@ -13,11 +13,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentFeedbackBinding
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.main.FeedbackScreenState
 import com.example.mypsychologist.presentation.main.FeedbackViewModel
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -69,15 +69,15 @@ class FeedbackFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is FeedbackScreenState.Response -> {
                 binding.progressBar.isVisible = false
                 if (state.result) {
-                    showToast(getString(R.string.success))
+                    requireContext().showToast(getString(R.string.success))
                     findNavController().popBackStack()
                 } else {
-                    showToast(getString(R.string.db_error))
+                    requireContext().showToast(getString(R.string.db_error))
                 }
             }
             is FeedbackScreenState.ValidationError -> {

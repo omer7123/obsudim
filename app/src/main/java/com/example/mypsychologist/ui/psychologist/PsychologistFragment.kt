@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentPsychologistBinding
 import com.example.mypsychologist.domain.entity.PsychologistInfo
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.extensions.toYears
 import com.example.mypsychologist.presentation.psychologist.PsychologistScreenState
 import com.example.mypsychologist.presentation.psychologist.PsychologistViewModel
 import com.example.mypsychologist.ui.StringAdapter
@@ -79,14 +83,14 @@ class PsychologistFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is PsychologistScreenState.Data -> {
                 binding.progressBar.isVisible = false
                 setupFields(state.psychologist.info)
             }
             is PsychologistScreenState.Error -> {
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             is PsychologistScreenState.Init -> Unit
         }

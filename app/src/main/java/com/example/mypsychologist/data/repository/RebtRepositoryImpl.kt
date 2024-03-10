@@ -1,6 +1,5 @@
 package com.example.mypsychologist.data.repository
 
-import android.util.Log
 import com.example.mypsychologist.domain.entity.AutoDialogMessageEntity
 import com.example.mypsychologist.domain.entity.BeliefAnalysisEntity
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
@@ -8,11 +7,10 @@ import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
 import com.example.mypsychologist.domain.entity.RebtProblemProgressEntity
 import com.example.mypsychologist.domain.repository.RebtRepository
-import com.example.mypsychologist.getTypedValue
+import com.example.mypsychologist.extensions.getTypedValue
 import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume

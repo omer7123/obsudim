@@ -490,5 +490,30 @@
     <string name="situational_anxiety">Ситуативная тревожность</string>
     <string name="personal_anxiety">Личностная тревожность</string>
 
+    <string name="jas">JAS</string>
+    <string name="jas_desc_short">Шкала профессиональной апатии</string>
+    <string name="jas_desc">Этот опросник позволяет измерять возникающие в профессиональной деятельности апатичные мысли (отсутствие интереса и эмоциональной приверженности к работе в организации) и апатичные действия (отсутствие стремления к реализации действий, необходимых для успешного решения рабочих задач).</string>
+    <string name="jas_1">Мне трудно чем-либо мотивировать себя в работе.</string>
+    <string name="jas_2">Я безразличен к своей работе.</string>
+    <string name="jas_3">Я не испытываю интеллектуального вовлечения в свою работу.</string>
+    <string name="jas_4">Я эмоционально отстранен от своей работы.</string>
+    <string name="jas_5">Мое отношение к работе можно охарактеризовать как пассивное</string>
+    <string name="jas_6">Если я сразу не найду чего-то, что необходимо для выполнения рабочего задания, то достаточно быстро прекращу поиски.</string>
+    <string name="jas_7">Хотя я и выполняю всё, что мне поручено, я обычно не работаю усерднее, чем необходимо.</string>
+    <string name="jas_8">Работа с результатом среднего качества кажется мне вполне допустимой.</string>
+    <string name="jas_9">Когда появляются новые рабочие задачи, я не возражаю, если за них берутся другие.</string>
+    <string name="jas_10">Обычно я не проявляю инициативу, когда начальство распределяет задания.</string>
+
+    <string name="do_not_agree">Не согласен</string>
+    <string name="rather_disagree">Скорее не согласен</string>
+    <string name="something_in_between">Нечто среднее</string>
+    <string name="rather_agree">Скорее согласен</string>
+    <string name="agree">Согласен</string>
+    
+    <string name="apathetic_actions">Апатичные действия</string>
+    <string name="apathetic_thoughts">Апатичные мысли</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

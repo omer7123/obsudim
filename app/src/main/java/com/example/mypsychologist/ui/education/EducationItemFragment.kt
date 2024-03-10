@@ -13,9 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.ItemEducationBinding
 import com.example.mypsychologist.domain.useCase.GetEducationMaterialUseCase
-import com.example.mypsychologist.getAppComponent
+import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.education.EducationViewModel
-import com.example.mypsychologist.serializable
+import com.example.mypsychologist.extensions.serializable
 import com.example.mypsychologist.ui.autoCleared
 import javax.inject.Inject
 

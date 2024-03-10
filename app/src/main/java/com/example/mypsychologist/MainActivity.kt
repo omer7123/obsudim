@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.example.mypsychologist.databinding.ActivityMainBinding
+import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.ui.psychologist.TasksWorker
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract

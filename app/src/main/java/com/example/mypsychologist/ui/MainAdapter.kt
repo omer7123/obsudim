@@ -21,6 +21,7 @@ class MainAdapter :
         delegates.add(delegate)
     }
 
+
     override fun getItemViewType(position: Int): Int =
         delegates.indexOfFirst { it.isOfViewType(currentList[position]) }
 

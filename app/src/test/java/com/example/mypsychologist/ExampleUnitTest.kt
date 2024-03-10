@@ -1,6 +1,7 @@
 package com.example.mypsychologist
 
 import com.example.mypsychologist.domain.useCase.DASSConclusionUseCase
+import com.example.mypsychologist.extensions.sum
 import org.junit.Test
 
 import org.junit.Assert.*

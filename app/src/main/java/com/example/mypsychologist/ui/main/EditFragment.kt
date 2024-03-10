@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -14,6 +15,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentEditBinding
 import com.example.mypsychologist.domain.entity.ClientDataEntity
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.extensions.toDateString
 import com.example.mypsychologist.presentation.main.EditScreenState
 import com.example.mypsychologist.presentation.main.EditViewModel
 import com.example.mypsychologist.ui.autoCleared
@@ -70,13 +75,13 @@ class EditFragment : Fragment() {
             }
             is EditScreenState.Loading -> {
                 if (!isNetworkConnect())
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is EditScreenState.Response -> {
                 if (state.result)
-                    showToast(getString(R.string.success))
+                    requireContext().showToast(getString(R.string.success))
                 else
-                    showToast(getString(R.string.db_error))
+                    requireContext().showToast(getString(R.string.db_error))
             }
             is EditScreenState.Init -> Unit
         }
@@ -154,23 +159,19 @@ class EditFragment : Fragment() {
             birthdayCard.cardImage.setOnClickListener {
                 val calendar = Calendar.getInstance()
 
-                DatePickerDialog(
-                    requireContext(),
-                    R.style.Theme_MyPsychologist,
-                    { _, year, month, day ->
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+                DatePickerDialog(requireContext(), {_, year, month, dayOfMonth->
+                    calendar.set(Calendar.YEAR, year)
+                    calendar.set(Calendar.MONTH, month)
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    viewModel.changeBirthday(calendar.timeInMillis)
+                    birthdayCard.cardDescription.text = Date(calendar.timeInMillis).toDateString()
+                }, year, month, day).show()
 
-                        calendar.set(Calendar.YEAR, year)
-                        calendar.set(Calendar.MONTH, month)
-                        calendar.set(Calendar.DAY_OF_MONTH, day)
 
-                        birthdayCard.cardDescription.text =
-                            Date(calendar.timeInMillis).toDateString()
-                        viewModel.changeBirthday(calendar.timeInMillis)
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                ).show()
+
             }
 
             genderCard.apply {
@@ -249,4 +250,6 @@ class EditFragment : Fragment() {
         private const val EDIT_DIAGNOSIS = "edit diagnosis"
         private const val EDIT_REQUEST = "edit request"
     }
+
+
 }

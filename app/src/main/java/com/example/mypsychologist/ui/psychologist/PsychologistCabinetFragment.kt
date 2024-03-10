@@ -14,6 +14,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentPsychologistCabinetBinding
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.setupCard
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.main.PsychologistCabinetScreenState
 import com.example.mypsychologist.presentation.main.PsychologistCabinetViewModel
 import com.example.mypsychologist.ui.autoCleared
@@ -86,11 +90,13 @@ class PsychologistCabinetFragment : Fragment() {
         when (state) {
             is PsychologistCabinetScreenState.Loading -> {
                 if (!isNetworkConnect())
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is PsychologistCabinetScreenState.Data -> {
                 if (state.requests.isNotEmpty())
                     binding.requests.isVisible = true
+                else
+                    binding.requests.isVisible =false
 
                 binding.requestsVp.apply {
                     clipChildren = false
@@ -104,7 +110,7 @@ class PsychologistCabinetFragment : Fragment() {
                 }
             }
             is PsychologistCabinetScreenState.Error -> {
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             is PsychologistCabinetScreenState.Init -> Unit
         }

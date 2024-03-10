@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiagnosticDialogBinding
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
-import com.example.mypsychologist.serializable
+import com.example.mypsychologist.extensions.serializable
 import com.example.mypsychologist.ui.autoCleared
 
 class TestResultDialogFragment : DialogFragment() {

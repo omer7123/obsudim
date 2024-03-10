@@ -1,5 +1,6 @@
 package com.example.mypsychologist.presentation.diagnostics
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -22,6 +23,7 @@ class TestsViewModel(
 
     private val testsWithCategories = testsWithGroupsUseCase()
 
+
     private val _screenState: MutableStateFlow<List<DelegateItem>> =
         MutableStateFlow(getCategories().toDelegateItem())
     val screenState: StateFlow<List<DelegateItem>> =
@@ -32,21 +34,22 @@ class TestsViewModel(
     }
 
     fun setupTestsFor(category: TestGroupEntity) {
-        viewModelScope.launch {
-            val newList = screenState.value.map { it }.toMutableList()
+            viewModelScope.launch {
+                val newList = screenState.value.map { it }.toMutableList()
 
-            val position =
-                newList.indexOf(newList.find {
-                    (it.content() is TestGroupEntity) &&
-                            (it.content() as TestGroupEntity).titleId == category.titleId
-                })
+                val position =
+                    newList.indexOf(newList.find {
+                        (it.content() is TestGroupEntity) &&
+                                (it.content() as TestGroupEntity).titleId == category.titleId
+                    })
 
-            newList.addAll(
-                position + 1,
-                (testsWithCategories[category] ?: listOf()).toDelegateItems(category.titleId)
-            )
-            _screenState.value = newList
-        }
+                newList.addAll(
+                    position + 1,
+                    (testsWithCategories[category] ?: listOf()).toDelegateItems(category.titleId)
+                )
+                _screenState.value = newList
+            }
+
     }
 
     fun hintTestsFor(groupTitleId: Int) {
@@ -60,6 +63,7 @@ class TestsViewModel(
             _screenState.value = newList
         }
     }
+
 
     class Factory @Inject constructor(private val testsWithGroupsUseCase: TestsWithGroupsUseCase) :
         ViewModelProvider.Factory {

@@ -52,6 +52,7 @@ class DiagnosticDialogFragment : DialogFragment() {
 
         binding.goButton.setOnClickListener {
             navigateToTest()
+            dismiss()
         }
     }
 

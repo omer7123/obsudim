@@ -2,7 +2,6 @@ package com.example.mypsychologist.ui.exercises.rebt
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +15,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentBeliefVerificationBinding
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.BeliefAnalysisViewModel
 import com.example.mypsychologist.presentation.exercises.BeliefVerificationScreenState
-import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
-import com.example.mypsychologist.renderRebtBeliefType
-import com.example.mypsychologist.showHint
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.renderRebtBeliefType
+import com.example.mypsychologist.extensions.showHint
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
@@ -107,7 +105,7 @@ class BeliefAnalysisFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is BeliefVerificationScreenState.Data -> {
                 binding.progressBar.isVisible = false
@@ -128,7 +126,7 @@ class BeliefAnalysisFragment : Fragment() {
 
         when {
             !isSuccess -> {
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
 
             !isNetworkConnect() -> {
@@ -143,7 +141,7 @@ class BeliefAnalysisFragment : Fragment() {
 
             else -> {
                 setResult()
-                showToast(getString(R.string.success))
+                requireContext().showToast(getString(R.string.success))
             }
         }
     }

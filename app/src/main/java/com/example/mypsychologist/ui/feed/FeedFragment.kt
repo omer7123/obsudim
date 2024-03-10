@@ -14,6 +14,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentFeedBinding
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.FeedViewModel
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.ui.MainAdapter
@@ -82,7 +85,7 @@ class FeedFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.swipeLayout.isRefreshing = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
             is ListScreenState.Data -> {
                 binding.swipeLayout.isRefreshing = false
@@ -91,7 +94,7 @@ class FeedFragment : Fragment() {
             }
             is ListScreenState.Error -> {
                 binding.swipeLayout.isRefreshing = false
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             is ListScreenState.Init -> Unit
         }
@@ -112,7 +115,7 @@ class FeedFragment : Fragment() {
                     binding.messageEditText.setText("")
                 }
                 else
-                    showToast(getString(R.string.necessary_to_fill))
+                    requireContext().showToast(getString(R.string.necessary_to_fill))
             }
         }
 

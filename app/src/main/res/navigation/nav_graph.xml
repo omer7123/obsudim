@@ -156,4 +156,9 @@
         android:id="@+id/STAI_test_fragment"
         android:name="com.example.mypsychologist.ui.diagnostics.STAITestFragment"
         android:label="STAITestFragment" />
+    <fragment
+        android:id="@+id/JASTestFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.JASTestFragment"
+        android:label="fragment_j_a_s_test"
+        tools:layout="@layout/fragment_j_a_s_test" />
 </navigation>

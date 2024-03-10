@@ -13,6 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentThoughtDiaryBinding
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.exercises.ThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.ThoughtDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
@@ -132,17 +135,17 @@ class FragmentThoughtDiary : Fragment() {
             is ThoughtDiaryScreenState.Init -> {}
             is ThoughtDiaryScreenState.Loading -> {
                 if (!isNetworkConnect()) {
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
                 }
             }
             is ThoughtDiaryScreenState.Error -> {
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             is ThoughtDiaryScreenState.EditingSuccess -> {
                 if (isNetworkConnect())
-                    showToast(getString(R.string.success))
+                    requireContext().showToast(getString(R.string.success))
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
         }
     }

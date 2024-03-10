@@ -15,11 +15,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentEducationTopicsBinding
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.presentation.education.EducationTopicsViewModel
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
@@ -86,7 +86,7 @@ class EducationTopicsFragment : Fragment() {
         when(state) {
             is ListScreenState.Loading -> {
                 if(!isNetworkConnect())
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
                 else
                     binding.progressBar.isVisible = true
             }
@@ -96,7 +96,7 @@ class EducationTopicsFragment : Fragment() {
             }
             is ListScreenState.Error -> {
                 binding.progressBar.isVisible = false
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
             is ListScreenState.Init -> Unit
         }

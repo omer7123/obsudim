@@ -2,11 +2,9 @@ package com.example.mypsychologist.ui.exercises.rebt
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -16,12 +14,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentRebtBinding
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.REBTScreenState
 import com.example.mypsychologist.presentation.exercises.REBTViewModel
-import com.example.mypsychologist.setupCard
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.setupCard
+import com.example.mypsychologist.extensions.showToast
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -112,7 +110,7 @@ class FragmentREBT : Fragment() {
                 binding.networkPlaceholder.layout.isVisible = false
                 binding.placeholder.isVisible = false
                 binding.content.isVisible = false
-                showToast(getString(R.string.db_error))
+                requireContext().showToast(getString(R.string.db_error))
             }
 
             is REBTScreenState.Init -> Unit

@@ -15,12 +15,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentRebtAlternativeThoughtBinding
-import com.example.mypsychologist.getAppComponent
-import com.example.mypsychologist.isNetworkConnect
-import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
+import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.exercises.ProblemAnalysisViewModel
 import com.example.mypsychologist.presentation.exercises.ThoughtAnalysisScreenState
-import com.example.mypsychologist.showToast
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
@@ -98,7 +97,7 @@ class RebtAlternativeThoughtFragment : Fragment() {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
-                    showToast(getString(R.string.network_error))
+                    requireContext().showToast(getString(R.string.network_error))
             }
 
             is ThoughtAnalysisScreenState.Data -> {
@@ -111,7 +110,7 @@ class RebtAlternativeThoughtFragment : Fragment() {
 
             is ThoughtAnalysisScreenState.RequestResult -> {
                 binding.progressBar.isVisible = false
-                showToast(
+                requireContext().showToast(
                     getString(
                         if (isNetworkConnect())
                             if (state.success) {

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.ItemFeedMessageBinding
 import com.example.mypsychologist.domain.entity.FeedItemUI
-import com.example.mypsychologist.toDateString
+import com.example.mypsychologist.extensions.toDateString
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 import java.util.*
