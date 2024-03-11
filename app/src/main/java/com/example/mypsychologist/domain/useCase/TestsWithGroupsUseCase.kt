@@ -14,11 +14,7 @@ class TestsWithGroupsUseCase @Inject constructor() {
                     R.string.dass21_desc_short,
                     R.string.dass21_desc
                 ),
-                TestCardEntity(
-                    R.string.jas,
-                    R.string.jas_desc_short,
-                    R.string.jas_desc
-                ),
+
             ),
             TestGroupEntity(
                 R.string.depression,
@@ -41,6 +37,13 @@ class TestsWithGroupsUseCase @Inject constructor() {
                     R.string.stai_desc_short,
                     R.string.stai_desc
                 )
+            ),
+            TestGroupEntity(R.string.burnout, R.drawable.ic_anxiety) to listOf(
+                TestCardEntity(
+                    R.string.jas,
+                    R.string.jas_desc_short,
+                    R.string.jas_desc
+                ),
             )
         )
 }
