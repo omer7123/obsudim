@@ -32,12 +32,11 @@ class JASConclusionUseCase @Inject constructor() {
             Array(5) { it }
 
         override fun getConclusion(): Int =
+
             when (score()) {
                 in 0..8 -> R.string.low
                 in 9..16 -> R.string.medium
                 else -> R.string.high
             }
-
-
     }
 }

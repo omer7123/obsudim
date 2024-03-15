@@ -161,4 +161,8 @@
         android:name="com.example.mypsychologist.ui.diagnostics.JASTestFragment"
         android:label="fragment_j_a_s_test"
         tools:layout="@layout/fragment_j_a_s_test" />
+    <fragment
+        android:id="@+id/MBITestFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.MBITestFragment"
+        android:label="MBITestFragment" />
 </navigation>

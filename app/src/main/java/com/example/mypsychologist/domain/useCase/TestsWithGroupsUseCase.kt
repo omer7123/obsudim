@@ -44,6 +44,12 @@ class TestsWithGroupsUseCase @Inject constructor() {
                     R.string.jas_desc_short,
                     R.string.jas_desc
                 ),
-            )
+                TestCardEntity(
+                    R.string.mbi,
+                    R.string.mbi_desc_short,
+                    R.string.mbi_desc
+                ),
+
+                )
         )
 }

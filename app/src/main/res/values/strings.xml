@@ -343,10 +343,19 @@
     <string name="cmq">CMQ</string>
     <string name="cmq_desc">Перед вами Опросник когнитивных ошибок CMQ. Этот опросник разработан для использования в рамках когнитивно-поведенческой терапии и нацелен на обнаружение когнитивных искажений – ошибок суждений, связанных с неправильной интерпретацией смысловых контекстов. Как инструмент самооценки, опросник был опубликован в книге А. Фримана «Десять глупейших ошибок, которые совершают люди» для широкого круга читателей.</string>
     <string name="cmq_desc_short">Опросник когнитивных ошибок</string>
+
     <string name="never">Никогда</string>
+    <string name="very_rarely">Очень редко</string>
+    <string name="rarely">Редко</string>
+
     <string name="sometimes">Иногда</string>
     <string name="often">Часто</string>
+    <string name="very_often">Очень часто</string>
+    <string name="daily">Ежедневно</string>
+
+
     <string name="always">Всегда</string>
+
     <string name="smq_1">Я слишком бурно реагирую даже на самые мелкие проблемы.</string>
     <string name="smq_2">Мне говорят, что я делаю из мухи слона.</string>
     <string name="smq_3">Я легко прихожу в возбуждение.</string>
@@ -511,9 +520,43 @@
     <string name="something_in_between">Нечто среднее</string>
     <string name="rather_agree">Скорее согласен</string>
     <string name="agree">Согласен</string>
-    
+
     <string name="apathetic_actions">Апатичные действия</string>
     <string name="apathetic_thoughts">Апатичные мысли</string>
+
+    <string name="mbi">Маслач MBI/ПВ</string>
+    <string name="mbi_desc_short">Опросник профессионального выгорания</string>
+    <string name="mbi_desc">предназначен для измерения основных показателей синдрома профессионального выгорания (перегорания): эмоционального истощения, деперсонализации и редукции профессиональных достижений.</string>
+    <string name="mbi_1">Я чувствую себя эмоционально опустошенным.</string>
+    <string name="mbi_2">После работы я чувствую себя как «выжатый лимон».</string>
+    <string name="mbi_3">Утром я чувствую усталость и нежелание идти на работу.</string>
+    <string name="mbi_4">Я хорошо понимаю, что чувствуют мои подчиненные и коллеги, и стараюсь учитывать это в интересах дела.</string>
+    <string name="mbi_5">Я чувствую, что общаюсь с некоторыми подчиненными и коллегами как с предметами (без теплоты и расположения к ним).</string>
+    <string name="mbi_6">Я чувствую себя энергичным и эмоционально воодушевленным.</string>
+    <string name="mbi_7">Я умею находить правильное решение в конфликтных ситуациях, возникающих при общении с коллегами.</string>
+    <string name="mbi_8">Я чувствую угнетенность и апатию.</string>
+    <string name="mbi_9">Я уверен, что моя работа нужна людям.</string>
+    <string name="mbi_10">В последнее время я стал более «черствым» по отношению к тем, с кем работаю.</string>
+    <string name="mbi_11">Я замечаю, что моя работа ожесточает меня.</string>
+    <string name="mbi_12">У меня много планов на будущее, и я верю в их осуществление.</string>
+    <string name="mbi_13">Моя работа всё больше меня разочаровывает.</string>
+    <string name="mbi_14">Мне кажется, что я слишком много работаю.</string>
+    <string name="mbi_15">Бывает, что мне действительно безразлично то, что происходит c некоторыми моими подчиненными и коллегами.</string>
+    <string name="mbi_16">Мне хочется уединиться и отдохнуть от всего и всех.</string>
+    <string name="mbi_17">Я легко могу создать атмосферу доброжелательности и сотрудничества в коллективе.</string>
+    <string name="mbi_18">Во время работы я чувствую приятное оживление.</string>
+    <string name="mbi_19">Благодаря своей работе я уже сделал в жизни много действительно ценного.</string>
+    <string name="mbi_20">Я чувствую равнодушие и потерю интереса ко многому, что радовало меня в моей работе.</string>
+    <string name="mbi_21">На работе я спокойно справляюсь с эмоциональными проблемами.</string>
+    <string name="mbi_22">В последнее время мне кажется, что коллеги и подчиненные всё чаще перекладывают на меня груз своих проблем и обязанностей.</string>
+
+    <string name="emotional_exhaustion">Эмоциональное истощение</string>
+    <string name="depersonalization">Деперсонализация</string>
+    <string name="reduction_of_personal_achievements">Редукция профессиональных достижений</string>
+    <string name="index_of_exhaustion">Индекс выгорания</string>
+    <string name="empty"></string>
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -1,7 +1,6 @@
 package com.example.mypsychologist.domain.useCase
 
 import com.example.mypsychologist.domain.entity.JASResultEntity
-import com.example.mypsychologist.domain.entity.STAIResultEntity
 import com.example.mypsychologist.domain.entity.TestScalesResultEntity
 import com.example.mypsychologist.domain.repository.DiagnosticRepository
 import java.util.Calendar

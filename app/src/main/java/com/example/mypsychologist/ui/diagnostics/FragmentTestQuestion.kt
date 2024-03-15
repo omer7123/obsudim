@@ -68,9 +68,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
         binding.answerVariantsRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
 
-            adapter = AnswersAdapter(
-                question.variants
-            ) { score ->
+            adapter = AnswersAdapter(question.variants) { score ->
                 setFragmentResult(ANSWER, bundleOf(SCORE to score))
                 dismiss()
             }
