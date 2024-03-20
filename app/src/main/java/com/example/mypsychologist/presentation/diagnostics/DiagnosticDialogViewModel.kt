@@ -12,6 +12,8 @@ class DiagnosticDialogViewModel : ViewModel() {
         R.string.stai to R.id.STAI_test_fragment,
         R.string.jas to R.id.JASTestFragment,
         R.string.mbi to R.id.MBITestFragment,
+        R.string.CSI to R.id.CSITestFragment,
+
     )
 
     fun getScreenIdFor(testTitleId: Int) =

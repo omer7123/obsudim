@@ -1,14 +1,13 @@
 package com.example.mypsychologist.presentation.diagnostics
 
 import com.example.mypsychologist.domain.entity.CSIResultEntity
-import com.example.mypsychologist.domain.entity.MBIResultEntity
 import com.example.mypsychologist.domain.entity.TestQuestionEntity
 
-sealed interface MBIScreenState {
+sealed interface CSIScreenState {
     class Question(val answerVariants: TestQuestionEntity, val number: Int, val count: Int) :
-        MBIScreenState
+        CSIScreenState
 
-    class Result(val result: MBIResultEntity) : MBIScreenState
+    class Result(val result: CSIResultEntity) : CSIScreenState
 
-    object Error : MBIScreenState
+    object Error : CSIScreenState
 }
