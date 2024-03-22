@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/main_item"
-        android:title="@string/main"
-        android:icon="@drawable/ic_cottage"/>
+    <item android:id="@+id/plan_item"
+        android:title="@string/plan"
+        android:icon="@drawable/ic_plan"/>
 
-    <item android:id="@+id/records_item"
-        android:title="@string/records"
-        android:icon="@drawable/ic_edit"/>
+    <item android:id="@+id/practice_item"
+        android:title="@string/practice"
+        android:icon="@drawable/ic_drop"/>
+
+    <item android:id="@+id/theory_item"
+        android:title="@string/theory"
+        android:icon="@drawable/ic_document"/>
 
     <item android:id="@+id/psychologist_item"
         android:title="@string/psychologist"
-        android:icon="@drawable/ic_patient_list"/>
-
-    <item android:id="@+id/feed_item"
-        android:title="@string/feed"
-        android:icon="@drawable/ic_add_reaction"/>
+        android:icon="@drawable/ic_message"/>
 </menu>

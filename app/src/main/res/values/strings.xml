@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Psychologist</string>
+    <string name="app_name">Обсудим?</string>
 
     <string name="in_design">Раздел в разработке</string>
 
@@ -11,9 +11,16 @@
     <string name="nothing">Ничего нет :(</string>
 
     <string name="main">Главная</string>
-    <string name="records">Записи</string>
+    <string name="my_program">Моя программа</string>
+    <string name="plan">План</string>
+    <string name="theory">Теория</string>
     <string name="psychologist">Психолог</string>
-    <string name="feed">Лента</string>
+    <string name="practice">Практика</string>
+    
+    <string name="tracker">Трекер настроения</string>
+    <string name="tracker_signature">Что ты чувствуешь прямо сейчас?</string>
+    <string name="diary">Дневник</string>
+    <string name="diary_signature">Выплесни эмоции</string>
 
     <string name="exercises">Упражнения</string>
     <string name="exercises_signature">Прокачай себя</string>
@@ -316,6 +323,7 @@
     <string name="unconditional_acceptance_help">Суть безусловного принятия себя можно отразить в двух понятиях:\n
 1. Ценность- безоговорочное принятие себя достойным человеком со всеми успехами и неудачами. «Я ценный(достойный) человек, когда я сдал экзамен» и «Я ценный (достойный) человек, когда я не сдал экзамен, я потерпел(а) неудачу, однако это не ставит на мне крест, как на личности». Это относится и ко всем людям, которые нас окружают.\n
 2. Подверженность ошибкам – свойство человеческой природы, говорящее о том, что каждый человек способен совершать ошибки или оказаться неправым.\n
+Мы вспомнили, что являемся ценными и достойными людьми по праву рождения и то, что ошибаться – абсолютно нормально.\n
 Мы вспомнили, что являемся ценными и достойными людьми по праву рождения и то, что ошибаться – абсолютно нормально.\n
 Принимая себя и других, мы сбрасываем груз негодования и учимся любить жизнь во всех её проявлениях! </string>
 

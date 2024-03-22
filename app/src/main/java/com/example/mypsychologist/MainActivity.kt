@@ -130,19 +130,20 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                 (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
 
             when (item.itemId) {
-                R.id.main_item -> {
+                R.id.plan_item -> {
                     navController.navigate(R.id.main_fragment)
                     true
                 }
-                R.id.records_item -> {
+                R.id.practice_item -> {
+                    navController.navigate(R.id.fragment_exercises)
+                    true
+                }
+                R.id.theory_item -> {
+                    navController.navigate(R.id.fragment_education_topics)
                     true
                 }
                 R.id.psychologist_item -> {
                     navController.navigate(R.id.fragment_psychologists_with_tasks)
-                    true
-                }
-                R.id.feed_item -> {
-                    navController.navigate(R.id.fragment_feed)
                     true
                 }
                 else -> {

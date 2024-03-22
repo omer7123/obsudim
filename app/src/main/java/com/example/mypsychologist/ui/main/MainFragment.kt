@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
     ): View {
 
         if (activity is NavbarHider) {
-            (activity as NavbarHider).setActualItem(R.id.main_item)
+            (activity as NavbarHider).setActualItem(R.id.plan_item)
         }
 
         binding = FragmentMainBinding.inflate(inflater, container, false)
@@ -51,35 +51,35 @@ class MainFragment : Fragment() {
 
         setupListeners()
 
-        checkIfPsychologist()
+    //    checkIfPsychologist()
 
         return binding.root
     }
 
-    private fun checkIfPsychologist() {
-        val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+    /* private fun checkIfPsychologist() {
+         val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
 
-        if (pref.getBoolean(getString(R.string.psychologist_is_checked), false)) {
-            if (pref.getBoolean(getString(R.string.is_psychologist), false)) {
-                setupCabinetCard()
-            } else {
-            }
-        } else {
+         if (pref.getBoolean(getString(R.string.psychologist_is_checked), false)) {
+             if (pref.getBoolean(getString(R.string.is_psychologist), false)) {
+                 setupCabinetCard()
+             } else {
+             }
+         } else {
 
-            viewModel.checkIfPsychologist()
+             viewModel.checkIfPsychologist()
 
-            viewModel.isPsychologist
-                .flowWithLifecycle(lifecycle)
-                .onEach {
-                    with(pref.edit()) {
-                        putBoolean(getString(R.string.psychologist_is_checked), true)
-                        putBoolean(getString(R.string.is_psychologist), it)
-                        apply()
-                    }
-                    if (it)
-                        setupCabinetCard()
-                }
-                .launchIn(lifecycleScope)
+             viewModel.isPsychologist
+                 .flowWithLifecycle(lifecycle)
+                 .onEach {
+                     with(pref.edit()) {
+                         putBoolean(getString(R.string.psychologist_is_checked), true)
+                         putBoolean(getString(R.string.is_psychologist), it)
+                         apply()
+                     }
+                     if (it)
+                         setupCabinetCard()
+                 }
+                 .launchIn(lifecycleScope)
         }
 
     }
@@ -93,31 +93,28 @@ class MainFragment : Fragment() {
             R.drawable.ic_diversity__ter,
             R.drawable.tertiary_card
         )
-    }
+    } */
 
     private fun setupCards() {
         binding.apply {
-            cabinetCard.card.isVisible = false
+        //    cabinetCard.card.isVisible = false
             setupCard(
-                exercisesCard,
-                R.string.exercises,
-                R.string.exercises_signature,
-                R.drawable.ic_neurology,
-                R.drawable.primary_card
+                trackerCard,
+                R.string.tracker,
+                R.string.tracker_signature,
+                backgroundRes = R.drawable.primary_card
             )
             setupCard(
-                educationCard,
-                R.string.psychoeducation,
-                R.string.psychoeducation_signature,
-                R.drawable.ic_cognition,
-                R.drawable.tertiary_card
+                diaryCard,
+                R.string.diary,
+                R.string.diary_signature,
+                backgroundRes = R.drawable.primary_card
             )
             setupCard(
                 diagnosticsCard,
                 R.string.diagnostics,
                 R.string.diagnostics_signature,
-                R.drawable.ic_play_shapes,
-                R.drawable.primary_card
+                backgroundRes = R.drawable.primary_card
             )
         }
     }
@@ -127,14 +124,14 @@ class MainFragment : Fragment() {
             profileIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_profile)
             }
-            cabinetCard.card.setOnClickListener {
+   /*         cabinetCard.card.setOnClickListener {
                 findNavController().navigate(R.id.fragment_psychologist_cabinet)
+            } */
+            trackerCard.card.setOnClickListener {
+           //    findNavController().navigate(R.id.fragment_exercises)
             }
-            exercisesCard.card.setOnClickListener {
-                findNavController().navigate(R.id.fragment_exercises)
-            }
-            educationCard.card.setOnClickListener {
-                findNavController().navigate(R.id.fragment_education_topics)
+            diaryCard.card.setOnClickListener {
+            //    findNavController().navigate(R.id.fragment_education_topics)
             }
             diagnosticsCard.card.setOnClickListener {
                 findNavController().navigate(R.id.fragment_tests)
