@@ -165,4 +165,8 @@
         android:id="@+id/MBITestFragment"
         android:name="com.example.mypsychologist.ui.diagnostics.MBITestFragment"
         android:label="MBITestFragment" />
+    <fragment
+        android:id="@+id/CSITestFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.CSITestFragment"
+        android:label="CSITestFragment" />
 </navigation>

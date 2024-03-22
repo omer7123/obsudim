@@ -15,7 +15,7 @@ class TestsWithGroupsUseCase @Inject constructor() {
                     R.string.dass21_desc
                 ),
 
-            ),
+                ),
             TestGroupEntity(
                 R.string.depression,
                 R.drawable.ic_sentiment_very_dissatisfied
@@ -48,6 +48,11 @@ class TestsWithGroupsUseCase @Inject constructor() {
                     R.string.mbi,
                     R.string.mbi_desc_short,
                     R.string.mbi_desc
+                ),
+                TestCardEntity(
+                    R.string.CSI,
+                    R.string.csi_desc_short,
+                    R.string.csi_desc
                 ),
 
                 )

@@ -441,6 +441,8 @@
     <string name="dass21_21">Мне казалось, что жизнь бессмысленна.</string>
 
     <string name="normal">Норма</string>
+
+    <string name="very_low">Очень низкий</string>
     <string name="low">Низкий</string>
     <string name="moderately">Умеренный</string>
     <string name="medium">Средний</string>
@@ -520,6 +522,7 @@
     <string name="something_in_between">Нечто среднее</string>
     <string name="rather_agree">Скорее согласен</string>
     <string name="agree">Согласен</string>
+    <string name="completely_agree">Полностью согласен</string>
 
     <string name="apathetic_actions">Апатичные действия</string>
     <string name="apathetic_thoughts">Апатичные мысли</string>
@@ -556,6 +559,50 @@
     <string name="index_of_exhaustion">Индекс выгорания</string>
     <string name="empty"></string>
 
+    <string name="CSI">Индикатор копинг-стратегий</string>
+    <string name="csi_1">Позволяю себе поделиться чувством с другом</string>
+    <string name="csi_2">Стараюсь все сделать так, чтобы иметь возможность наилучшим образом решить проблему</string>
+    <string name="csi_3">Осуществляю поиск всех возможных решений, прежде чем что-то предпринять</string>
+    <string name="csi_4">Пытаюсь отвлечься от проблемы</string>
+    <string name="csi_5">Принимаю сочувствие и понимание от кого-либо</string>
+    <string name="csi_6">Делаю все возможное, чтобы не дать окружающим увидеть, что мои дела плохи</string>
+    <string name="csi_7">Обсуждаю ситуацию с людьми, так как обсуждение помогает мне чувствовать себя лучше</string>
+    <string name="csi_8">Ставлю для себя ряд целей, позволяющих постепенно справляться с ситуацией</string>
+    <string name="csi_9">Очень тщательно взвешиваю возможности выбора</string>
+    <string name="csi_10">Мечтаю, фантазирую о лучших временах</string>
+    <string name="csi_11">Пытаюсь различными способами решать проблему, пока не найду подходящий</string>
+    <string name="csi_12">Доверяю свои страхи родственнику или другу</string>
+    <string name="csi_13">Больше времени, чем обычно, провожу один</string>
+    <string name="csi_14">Рассказываю другим людям о ситуации, так как только ее обсуждение помогает мне прийти к ее разрешению</string>
+    <string name="csi_15">Думаю о том, что нужно сделать, чтобы исправить положение</string>
+    <string name="csi_16">Сосредотачиваюсь полностью на решении проблемы</string>
+    <string name="csi_17">Обдумываю про себя план действий</string>
+    <string name="csi_18">Смотрю телевизор дольше, чем обычно</string>
+    <string name="csi_19">Иду к кому-нибудь (другу или специалисту), чтобы он помог мне чувствовать себя лучше</string>
+    <string name="csi_20">Стою твердо и борюсь за то, что мне нужно в этой ситуации</string>
+    <string name="csi_21">Избегаю общения с людьми</string>
+    <string name="csi_22">Переключаюсь на хобби или занимаюсь спортом, чтобы избежать проблем</string>
+    <string name="csi_23">Иду к другу за советом - как исправить ситуацию</string>
+    <string name="csi_24">Иду к другу, чтобы он помог мне лучше почувствовать проблему</string>
+    <string name="csi_25">Принимаю сочувствие, взаимопонимание друзей</string>
+    <string name="csi_26">Сплю больше обычного</string>
+    <string name="csi_27">Фантазирую о том, что все могло бы быть иначе</string>
+    <string name="csi_28">Представляю себя героем книги или кино</string>
+    <string name="csi_29">Пытаюсь решить проблему</string>
+    <string name="csi_30">Хочу, чтобы люди оставили меня одного</string>
+    <string name="csi_31">Принимаю помощь от друзей или родственников</string>
+    <string name="csi_32">Ищу успокоения у тех, кто знает меня лучше</string>
+    <string name="csi_33">Пытаюсь тщательно планировать свои действия, а не действовать импульсивно под влиянием внешнего побуждения</string>
+
+
+    <string name="problem_solving">Разрешение проблем</string>
+    <string name="seeking_social_support">Поиск социальной поддержки</string>
+    <string name="avoiding_problems">Избегание проблем</string>
+
+    <string name="csi_desc_short">Опросник Индикатор копинг-стратегий</string>
+    <string name="csi_desc">предназначен для диагностики доминирующих копинг-стратегий личности.
+        Методика выделяет три группы стратегий: разрешения проблем, поиска социальной поддержки
+        и избегания.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

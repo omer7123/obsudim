@@ -1,5 +1,6 @@
 package com.example.mypsychologist.di
 
+import com.example.mypsychologist.ui.diagnostics.CSITestFragment
 import com.example.mypsychologist.ui.diagnostics.DASSTestFragment
 import com.example.mypsychologist.ui.diagnostics.FragmentBeckDepressionTest
 import com.example.mypsychologist.ui.diagnostics.FragmentTestHistory
@@ -23,6 +24,7 @@ interface DiagnosticComponent {
     fun inject(fragment: STAITestFragment)
     fun inject(fragment: JASTestFragment)
     fun inject(fragment: MBITestFragment)
+    fun inject(fragment: CSITestFragment)
 
     @Subcomponent.Factory
     interface Factory {
