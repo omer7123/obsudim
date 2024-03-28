@@ -4,6 +4,8 @@ import com.example.mypsychologist.ui.exercises.FragmentExercises
 import com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries
 import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
 import com.example.mypsychologist.ui.exercises.cbt.FragmentNewDiary
+import com.example.mypsychologist.ui.exercises.cbt.FreeDiaryFragment
+import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
 import com.example.mypsychologist.ui.exercises.rebt.AutoDialogFragment
 import com.example.mypsychologist.ui.exercises.rebt.BeliefAnalysisFragment
 import com.example.mypsychologist.ui.exercises.rebt.BeliefVerificationFragment
@@ -35,7 +37,9 @@ interface ExercisesComponent {
     fun inject(fragment: FragmentDiaries)
     fun inject(fragment: FragmentThoughtDiary)
     fun inject(fragment: FragmentNewDiary)
+    fun inject(fragment: FreeDiaryFragment)
 
+    fun inject(fragment: NewFreeDiaryFragment)
     @Subcomponent.Factory
     interface Factory {
         fun create(): ExercisesComponent

@@ -169,4 +169,13 @@
         android:id="@+id/CSITestFragment"
         android:name="com.example.mypsychologist.ui.diagnostics.CSITestFragment"
         android:label="CSITestFragment" />
+    <fragment
+        android:id="@+id/freeDiaryFragment"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.FreeDiaryFragment"
+        android:label="FreeDiaryFragment" />
+    <fragment
+        android:id="@+id/newFreeDiaryFragment"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment"
+        android:label="fragment_new_free_diary"
+        tools:layout="@layout/fragment_new_free_diary" />
 </navigation>

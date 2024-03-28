@@ -2,24 +2,25 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
-import com.example.mypsychologist.databinding.FragmentDiariesBinding
+import com.example.mypsychologist.databinding.FragmentFreeDiaryBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
 import com.example.mypsychologist.presentation.exercises.ThoughtDiariesScreenState
 import com.example.mypsychologist.presentation.exercises.ThoughtDiariesViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.psychologist.ExercisesFragment
@@ -27,18 +28,19 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class FragmentDiaries : Fragment() {
 
-    private var binding: FragmentDiariesBinding by autoCleared()
+class FreeDiaryFragment : Fragment() {
+    private var binding: FragmentFreeDiaryBinding by autoCleared()
     private lateinit var adapter: MainAdapter
+
 
     private lateinit var clientId: String
 
     @Inject
-    lateinit var vmFactory: ThoughtDiariesViewModel.Factory
+    lateinit var vmFactory: FreeDiariesViewModel.Factory
 
-    private val viewModel: ThoughtDiariesViewModel by viewModels {
-        ThoughtDiariesViewModel.provideFactory(
+    private val viewModel: FreeDiariesViewModel by viewModels {
+        FreeDiariesViewModel.provideFactory(
             vmFactory,
             clientId
         )
@@ -52,11 +54,10 @@ class FragmentDiaries : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDiariesBinding.inflate(inflater, container, false)
+        binding = FragmentFreeDiaryBinding.inflate(layoutInflater)
 
         setupToolbarAndFAB()
 
@@ -72,7 +73,7 @@ class FragmentDiaries : Fragment() {
 
     private fun setupToolbarAndFAB() {
         binding.include.toolbar.apply {
-            title = getString(R.string.thought_diary)
+            title = getString(R.string.free_diary)
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
 
@@ -80,7 +81,7 @@ class FragmentDiaries : Fragment() {
             binding.newDiaryFab.isVisible = false
         else
             binding.newDiaryFab.setOnClickListener {
-                findNavController().navigate(R.id.fragment_new_diary)
+                findNavController().navigate(R.id.newFreeDiaryFragment)
             }
     }
 
@@ -102,7 +103,6 @@ class FragmentDiaries : Fragment() {
             binding.recordsRw.layoutManager = LinearLayoutManager(requireContext())
         }
     }
-
     private fun render(it: ThoughtDiariesScreenState) {
         when (it) {
             is ThoughtDiariesScreenState.Data -> {

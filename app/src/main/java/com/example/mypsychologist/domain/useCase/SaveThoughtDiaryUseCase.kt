@@ -8,3 +8,4 @@ class SaveThoughtDiaryUseCase @Inject constructor(private val repository: CbtRep
     operator fun invoke(it: ThoughtDiaryEntity) =
         repository.saveThoughtDiary(it)
 }
+

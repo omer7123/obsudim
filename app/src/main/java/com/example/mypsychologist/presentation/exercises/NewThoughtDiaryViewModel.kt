@@ -39,6 +39,7 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
         when (titleId) {
             R.string.level ->
                 diary = diary.copy(level = it)
+
             R.string.new_level ->
                 diary = diary.copy(newLevel = it)
         }
