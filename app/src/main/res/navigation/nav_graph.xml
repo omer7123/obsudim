@@ -178,4 +178,9 @@
         android:name="com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment"
         android:label="fragment_new_free_diary"
         tools:layout="@layout/fragment_new_free_diary" />
+    <fragment
+        android:id="@+id/trackerMoodFragment"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment"
+        android:label="fragment_tracker_mood"
+        tools:layout="@layout/fragment_tracker_mood" />
 </navigation>

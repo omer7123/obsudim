@@ -51,7 +51,7 @@ class MainFragment : Fragment() {
 
         setupListeners()
 
-    //    checkIfPsychologist()
+        //    checkIfPsychologist()
 
         return binding.root
     }
@@ -97,7 +97,7 @@ class MainFragment : Fragment() {
 
     private fun setupCards() {
         binding.apply {
-        //    cabinetCard.card.isVisible = false
+            //    cabinetCard.card.isVisible = false
             setupCard(
                 trackerCard,
                 R.string.tracker,
@@ -124,11 +124,11 @@ class MainFragment : Fragment() {
             profileIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_profile)
             }
-   /*         cabinetCard.card.setOnClickListener {
-                findNavController().navigate(R.id.fragment_psychologist_cabinet)
-            } */
+            /*         cabinetCard.card.setOnClickListener {
+                         findNavController().navigate(R.id.fragment_psychologist_cabinet)
+                     } */
             trackerCard.card.setOnClickListener {
-           //    findNavController().navigate(R.id.fragment_exercises)
+                findNavController().navigate(R.id.trackerMoodFragment)
             }
             diaryCard.card.setOnClickListener {
                 findNavController().navigate(R.id.freeDiaryFragment)

@@ -618,5 +618,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="what_do_you_want_to_share">Чем хочешь поделиться?</string>
     <string name="go_to_kpt_diary">Перейти в КПТ-дневник</string>
+    <string name="tracker_mood">Трекер настроения</string>
+    <string name="terrible">Ужасно</string>
+    <string name="amazing">Потрясающе</string>
 
 </resources>
