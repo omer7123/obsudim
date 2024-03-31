@@ -17,6 +17,7 @@ import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.setupCard
 import com.example.mypsychologist.presentation.main.MainViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -128,7 +129,8 @@ class MainFragment : Fragment() {
                          findNavController().navigate(R.id.fragment_psychologist_cabinet)
                      } */
             trackerCard.card.setOnClickListener {
-                findNavController().navigate(R.id.trackerMoodFragment)
+                val track: TrackerMoodFragment = TrackerMoodFragment()
+                track.show(childFragmentManager, "fs")
             }
             diaryCard.card.setOnClickListener {
                 findNavController().navigate(R.id.freeDiaryFragment)

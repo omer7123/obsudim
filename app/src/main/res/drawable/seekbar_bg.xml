@@ -4,7 +4,7 @@
     <item android:gravity="center_vertical">
         <shape android:shape="rectangle">
 
-            <solid android:color="#cee5ff" />
+            <solid android:color="@color/md_theme_light_inversePrimary" />
 
             <size android:height="16dp" />
             <corners android:radius="20dp" />
@@ -21,7 +21,7 @@
                 <item>
                     <shape android:shape="rectangle">
 
-                        <solid android:color="#2e628c"/>
+                        <solid android:color="@color/md_theme_light_primary"/>
                         <size android:height="16dp"/>
                         <corners android:radius="20dp"
 

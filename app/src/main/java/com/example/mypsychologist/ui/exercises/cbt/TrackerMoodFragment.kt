@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTrackerMoodBinding
-import com.example.mypsychologist.ui.exercises.FragmentEditField
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -23,5 +22,11 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.specifyBtn.setOnClickListener {
+            findNavController().navigate(R.id.newFreeDiaryFragment)
+        }
+    }
 
 }

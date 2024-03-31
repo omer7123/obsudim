@@ -621,5 +621,6 @@
     <string name="tracker_mood">Трекер настроения</string>
     <string name="terrible">Ужасно</string>
     <string name="amazing">Потрясающе</string>
+    <string name="specify">Уточнить</string>
 
 </resources>
