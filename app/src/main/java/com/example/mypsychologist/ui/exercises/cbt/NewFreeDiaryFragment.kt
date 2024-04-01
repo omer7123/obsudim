@@ -70,12 +70,9 @@ class NewFreeDiaryFragment : Fragment() {
 
     private fun iniListener() {
         binding.field.addTextChangedListener {
-            if (it.toString().isNotEmpty())
-                binding.saveButton.visibility = View.VISIBLE
-            else
-                binding.saveButton.visibility = View.GONE
-
+            binding.saveButton.isClickable = it.toString().isNotEmpty()
         }
+
         binding.saveButton.setOnClickListener {
             viewModel.tryToSaveDiary(FreeDiaryEntity(binding.field.text.toString()))
         }
@@ -85,7 +82,7 @@ class NewFreeDiaryFragment : Fragment() {
 
         binding.KPTDiaryTv.setOnClickListener {
 
-            findNavController().navigate(R.id.fragment_diaries)
+            findNavController().navigate(R.id.fragment_new_diary)
         }
     }
 
@@ -96,7 +93,7 @@ class NewFreeDiaryFragment : Fragment() {
             }
 
             is NewFreeDiaryScreenState.Error -> {
-                requireContext().showToast("Произошла непредвиденная ошибка")
+                requireContext().showToast(getString(R.string.db_error))
             }
 
             is NewFreeDiaryScreenState.Init -> {}

@@ -622,5 +622,6 @@
     <string name="terrible">Ужасно</string>
     <string name="amazing">Потрясающе</string>
     <string name="specify">Уточнить</string>
+    <string name="save_without_specify">Сохранить без подробностей</string>
 
 </resources>
