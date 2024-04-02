@@ -627,5 +627,6 @@
 
     <string name="register">Зарегистрироваться</string>
     <string name="log_in">Войти</string>
+    <string name="coping_behavior">Совладающее поведение</string>
 
 </resources>
