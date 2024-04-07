@@ -628,5 +628,8 @@
     <string name="register">Зарегистрироваться</string>
     <string name="log_in">Войти</string>
     <string name="coping_behavior">Совладающее поведение</string>
+    <string name="restore">Восстановить</string>
+    <string name="forgot_your_password">Забыли пароль?</string>
+    <string name="not_registered_yet">Еще не зарегистрированы?</string>
 
 </resources>

@@ -50,7 +50,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="20dp"
         android:orientation="horizontal">
 
         <TextView
@@ -59,14 +59,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingVertical="16dp"
-            android:text="Еще не зарегистрированны?" />
+            android:text="@string/not_registered_yet" />
 
         <TextView
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="Регистрация" />
+            android:text="@string/register" />
 
 
     </LinearLayout>
@@ -74,7 +74,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="20dp"
         android:orientation="horizontal">
 
         <TextView
@@ -83,14 +83,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingVertical="16dp"
-            android:text="Забыли пароль?" />
+            android:text="@string/forgot_your_password" />
 
         <TextView
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="Восстановить" />
+            android:text="@string/restore" />
 
 
     </LinearLayout>
@@ -99,14 +99,9 @@
         android:id="@+id/registration_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="16dp"
         android:text="@string/log_in" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_google" />
 
 </LinearLayout>
