@@ -12,6 +12,8 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(activity: MainActivity)
 
+    fun apiUrlProvider(): ApiUrlProvider
+
     fun exercisesComponent(): ExercisesComponent.Factory
     fun diagnosticComponent(): DiagnosticComponent.Factory
     fun profileComponent(): ProfileComponent.Factory

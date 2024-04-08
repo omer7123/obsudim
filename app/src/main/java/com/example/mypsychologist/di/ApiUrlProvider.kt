@@ -9,5 +9,5 @@ interface ApiUrlProvider {
 class ApiUrlProviderImpl @Inject constructor() : ApiUrlProvider {
 
     override var url =
-        ""
+        "сервер.психолог.демо-стенд.рф/"
 }
