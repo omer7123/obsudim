@@ -48,7 +48,7 @@
     <string name="dialog_signature">Анализ проблемы</string>
     <string name="add">Добавить</string>
 
-    <string name="thought_diary">Дневник мыслей</string>
+    <string name="cbt_diary">КПТ-дневник</string>
     <string name="free_diary">Вольный дневник</string>
     <string name="thought_diary_signature">Способ зафиксировать и изучить важные события своей жизни</string>
     <string name="situation">Ситуация</string>

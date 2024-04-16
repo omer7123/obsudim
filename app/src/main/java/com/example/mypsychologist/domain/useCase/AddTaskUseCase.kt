@@ -1,6 +1,5 @@
 package com.example.mypsychologist.domain.useCase
 
-import com.example.mypsychologist.domain.entity.TaskEntity
 import com.example.mypsychologist.domain.repository.ProfileRepository
 import javax.inject.Inject
 

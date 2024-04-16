@@ -47,7 +47,7 @@ class FragmentCBT : Fragment() {
 
     private fun setupAdapter() {
         val items = listOf(
-            DiaryCard(getString(R.string.thought_diary), getString(R.string.thought_diary_signature))
+            DiaryCard(getString(R.string.cbt_diary), getString(R.string.thought_diary_signature))
         )
 
         binding.diariesRw.apply {
@@ -56,7 +56,7 @@ class FragmentCBT : Fragment() {
             adapter = DiariesAdapter(items) { title ->
                 findNavController().navigate(
                     when (title) {
-                        getString(R.string.thought_diary) -> R.id.fragment_diaries
+                        getString(R.string.cbt_diary) -> R.id.fragment_diaries
                         else -> R.id.fragment_diaries
                     }
                 )

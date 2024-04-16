@@ -60,7 +60,7 @@ class ExercisesFragment : Fragment() {
     }
 
     private fun exercisesWithScreens(): Map<String, Int> = mapOf(
-        getString(R.string.thought_diary) to R.id.fragment_diaries
+        getString(R.string.cbt_diary) to R.id.fragment_diaries
     )
 
     companion object {

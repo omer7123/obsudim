@@ -72,7 +72,7 @@ class FragmentDiaries : Fragment() {
 
     private fun setupToolbarAndFAB() {
         binding.include.toolbar.apply {
-            title = getString(R.string.thought_diary)
+            title = getString(R.string.cbt_diary)
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
 

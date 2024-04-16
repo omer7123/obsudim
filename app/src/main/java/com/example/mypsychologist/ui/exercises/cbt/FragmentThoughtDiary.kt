@@ -72,7 +72,7 @@ class FragmentThoughtDiary : Fragment() {
 
     private fun setupTitles() {
         binding.apply {
-            includeToolbar.toolbar.title = getString(R.string.thought_diary)
+            includeToolbar.toolbar.title = getString(R.string.cbt_diary)
 
             includeSituation.cardTitle.text = getString(R.string.situation)
             includeMood.cardTitle.text = getString(R.string.mood)

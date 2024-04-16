@@ -3,7 +3,7 @@ package com.example.mypsychologist.di
 import com.example.mypsychologist.ui.exercises.FragmentExercises
 import com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries
 import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
-import com.example.mypsychologist.ui.exercises.cbt.FragmentNewDiary
+import com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary
 import com.example.mypsychologist.ui.exercises.cbt.FreeDiaryFragment
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
 import com.example.mypsychologist.ui.exercises.rebt.AutoDialogFragment
@@ -36,7 +36,7 @@ interface ExercisesComponent {
 
     fun inject(fragment: FragmentDiaries)
     fun inject(fragment: FragmentThoughtDiary)
-    fun inject(fragment: FragmentNewDiary)
+    fun inject(fragment: FragmentNewCBTDiary)
     fun inject(fragment: FreeDiaryFragment)
 
     fun inject(fragment: NewFreeDiaryFragment)

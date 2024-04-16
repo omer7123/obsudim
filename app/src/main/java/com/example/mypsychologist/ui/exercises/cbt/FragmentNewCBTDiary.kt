@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class FragmentNewDiary : Fragment() {
+class FragmentNewCBTDiary : Fragment() {
 
     private var binding: FragmentNewThoughtDiaryBinding by autoCleared()
     private var navbarHider: NavbarHider? = null
@@ -54,7 +54,7 @@ class FragmentNewDiary : Fragment() {
     ): View {
         binding = FragmentNewThoughtDiaryBinding.inflate(inflater, container, false)
 
-        binding.includeToolbar.toolbar.title = getString(R.string.thought_diary)
+        binding.includeToolbar.toolbar.title = getString(R.string.cbt_diary)
 
         setupAdapter(viewModel.items)
 
@@ -82,7 +82,6 @@ class FragmentNewDiary : Fragment() {
 
         binding.itemsRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
-
             adapter = mainAdapter
         }
     }
