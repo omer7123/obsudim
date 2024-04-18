@@ -43,15 +43,32 @@ class EducationRepositoryImpl @Inject constructor(private val reference: Databas
     override fun getCBTBase(): Int =
         R.array.cbt_base
 
+    override fun getBurnout(): Int =
+        R.array.burnout
+
+    override fun getBreathingTechniques(): Int =
+        R.array.breathing_techniques
+
+
+    override fun getRelaxationTechniques(): Int =
+        R.array.relaxation_techniques
+
+
     private val topics = listOf(
         EducationTopicEntity(R.string.psychology_base, BASE_COUNT, GetEducationMaterialUseCase.Topic.BASE),
         EducationTopicEntity(R.string.cbt_base, CBT_COUNT, GetEducationMaterialUseCase.Topic.CBT_BASE),
-      //  EducationTopicEntity(R.string.rebt_base, 0, REBT_BASE)
+        EducationTopicEntity(R.string.burnout, BURNOUT_COUNT, GetEducationMaterialUseCase.Topic.BURNOUT),
+        EducationTopicEntity(R.string.breathing_techniques, BREATHING_TECHNIQUES_COUNT, GetEducationMaterialUseCase.Topic.BREATHING_TECHNIQUES),
+        EducationTopicEntity(R.string.relaxation_techniques, RELAXATION_TECHNIQUES_COUNT, GetEducationMaterialUseCase.Topic.RELAXATION_TECHNIQUES)
+//        EducationTopicEntity(R.string.burnout, BURNOUT_COUNT, GetEducationMaterialUseCase.Topic.BURNOUT)
     )
 
     companion object {
         const val EDUCATION = "education"
         private const val BASE_COUNT = 3
         private const val CBT_COUNT = 16
+        private const val BURNOUT_COUNT = 9
+        private const val BREATHING_TECHNIQUES_COUNT = 13
+        private const val RELAXATION_TECHNIQUES_COUNT = 8
     }
 }

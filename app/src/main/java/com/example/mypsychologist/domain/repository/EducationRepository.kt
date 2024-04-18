@@ -8,4 +8,7 @@ interface EducationRepository {
     suspend fun saveProgress(topic: String, progress: Int)
     fun getBase(): Int
     fun getCBTBase(): Int
+    fun getBurnout(): Int
+    fun getBreathingTechniques(): Int
+    fun getRelaxationTechniques(): Int
 }

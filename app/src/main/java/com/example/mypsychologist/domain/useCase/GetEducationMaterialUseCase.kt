@@ -12,9 +12,18 @@ class GetEducationMaterialUseCase @Inject constructor(private val repository: Ed
             Topic.CBT_BASE -> {
                 repository.getCBTBase()
             }
+            Topic.BURNOUT->{
+                repository.getBurnout()
+            }
+            Topic.BREATHING_TECHNIQUES->{
+                repository.getBreathingTechniques()
+            }
+            Topic.RELAXATION_TECHNIQUES->{
+                repository.getRelaxationTechniques()
+            }
         }
 
     enum class Topic {
-        BASE, CBT_BASE
+        BASE, CBT_BASE, BURNOUT, BREATHING_TECHNIQUES, RELAXATION_TECHNIQUES
     }
 }
