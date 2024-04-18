@@ -11,4 +11,5 @@ interface EducationRepository {
     fun getBurnout(): Int
     fun getBreathingTechniques(): Int
     fun getRelaxationTechniques(): Int
+    fun getCopingStrategies():Int
 }
