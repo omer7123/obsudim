@@ -53,7 +53,8 @@ class NewFreeDiaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNewFreeDiaryBinding.inflate(layoutInflater)
-        binding.includeToolbar.toolbar.title = getString(R.string.free_diary)
+//        binding.includeToolbar.toolbar.title = getString(R.string.free_diary)
+
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
             .onEach { render(it) }
@@ -64,11 +65,12 @@ class NewFreeDiaryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        iniListener()
+        initListener()
 
     }
 
-    private fun iniListener() {
+    private fun initListener() {
+
         binding.field.addTextChangedListener {
             binding.saveButton.isClickable = it.toString().isNotEmpty()
         }
