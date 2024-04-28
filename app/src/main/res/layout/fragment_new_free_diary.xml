@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/include_toolbar"
-        layout="@layout/include_toolbar" />
+        layout="@layout/include_simple_toolbar" />
 
     <TextView
         android:id="@+id/title"

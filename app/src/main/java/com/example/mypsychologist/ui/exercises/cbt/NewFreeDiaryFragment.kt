@@ -53,7 +53,7 @@ class NewFreeDiaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNewFreeDiaryBinding.inflate(layoutInflater)
-//        binding.includeToolbar.toolbar.title = getString(R.string.free_diary)
+        binding.includeToolbar.toolbar.title = getString(R.string.free_diary)
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
