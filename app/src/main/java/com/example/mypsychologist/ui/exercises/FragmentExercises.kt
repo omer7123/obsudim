@@ -22,7 +22,6 @@ import com.example.mypsychologist.presentation.exercises.REBTScreenState
 import com.example.mypsychologist.presentation.exercises.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
-import com.example.mypsychologist.ui.exercises.rebt.FragmentREBT
 import com.example.mypsychologist.ui.exercises.rebt.ProblemsFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -175,7 +174,7 @@ class FragmentExercises : Fragment() {
             viewModel.getProblemProgress(bundle.getString(ProblemsFragment.PROBLEM)!!)
         }
 
-        ProblemsFragment().show(childFragmentManager, FragmentREBT.TAG)
+        ProblemsFragment().show(childFragmentManager, FragmentExercises.TAG)
     }
 
 
@@ -222,5 +221,8 @@ class FragmentExercises : Fragment() {
                 R.drawable.ic_dialog
             )
         }
+    }
+    companion object{
+        const val TAG ="tag"
     }
 }

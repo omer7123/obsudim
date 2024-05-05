@@ -11,7 +11,6 @@ import com.example.mypsychologist.ui.exercises.rebt.BeliefAnalysisFragment
 import com.example.mypsychologist.ui.exercises.rebt.BeliefVerificationFragment
 import com.example.mypsychologist.ui.exercises.rebt.BeliefsAnalysisFragment
 import com.example.mypsychologist.ui.exercises.rebt.BeliefsVerificationFragment
-import com.example.mypsychologist.ui.exercises.rebt.FragmentREBT
 import com.example.mypsychologist.ui.exercises.rebt.NewProblemFragment
 import com.example.mypsychologist.ui.exercises.rebt.ProblemsFragment
 import com.example.mypsychologist.ui.exercises.rebt.RebtAlternativeThoughtFragment
@@ -22,7 +21,7 @@ import dagger.Subcomponent
 @Subcomponent(modules = [ExercisesModule::class])
 interface ExercisesComponent {
     fun inject(fragment: FragmentExercises)
-    fun inject(fragment: FragmentREBT)
+
     fun inject(fragment: ProblemsFragment)
     fun inject(fragment: NewProblemFragment)
     fun inject(rebtHarmfulThoughtFragment: RebtHarmfulThoughtFragment)
