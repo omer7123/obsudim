@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import com.example.mypsychologist.ConnectionChecker
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.CardViewGroupBinding
+import com.example.mypsychologist.databinding.SmallCardViewGroupBinding
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
 import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
-
 
 
 fun Fragment.isNetworkConnect(): Boolean =
@@ -44,8 +44,20 @@ fun Fragment.setupCard(
         cardTitle.text = getString(titleRes)
         cardDescription.text = getString(descriptionRes)
         imageRes?.let { cardImage.setImageResource(it) }
-        backgroundRes?.let { this.card.background =
-            AppCompatResources.getDrawable(requireContext(), it)
+        backgroundRes?.let {
+            this.card.background =
+                AppCompatResources.getDrawable(requireContext(), it)
         }
+    }
+}
+
+fun Fragment.setupSmallCard(
+    card: SmallCardViewGroupBinding,
+    titleRes: Int,
+    imageRes: Int? = null
+) {
+    card.apply {
+        cardTitle.text = getString(titleRes)
+        imageRes?.let { cardImage.setImageResource(it) }
     }
 }
