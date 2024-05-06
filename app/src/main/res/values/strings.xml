@@ -30,6 +30,8 @@
     <string name="psychoeducation_signature">Познай психологию</string>
     <string name="diagnostics">Диагностика</string>
     <string name="diagnostics_signature">Познай себя</string>
+    <string name="daily_tasks">Ежедневные задания</string>
+    <string name="problem_work">Проработка проблемы:\n</string>
 
     <string name="cbt">КПТ</string>
     <string name="plans">Планы</string>

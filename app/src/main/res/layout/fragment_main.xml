@@ -8,8 +8,9 @@
     android:orientation="vertical"
     tools:context=".ui.main.MainFragment">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        app:titleCentered="true"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:background="?attr/colorSurface"
@@ -25,7 +26,7 @@
             android:padding="10dp"
             android:src="@drawable/ic_profile" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <ScrollView
         android:layout_width="match_parent"

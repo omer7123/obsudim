@@ -63,7 +63,7 @@ class FragmentExercises : Fragment() {
             is REBTScreenState.Data -> {
                 binding.networkPlaceholder.layout.isVisible = false
                 binding.placeholder.isVisible = false
-                binding.content.isVisible = true
+           //     binding.content.isVisible = true
                 setupData(it)
             }
 
@@ -71,21 +71,21 @@ class FragmentExercises : Fragment() {
                 if (!isNetworkConnect()) {
                     binding.networkPlaceholder.layout.isVisible = true
                     binding.placeholder.isVisible = false
-                    binding.content.isVisible = false
+              //      binding.content.isVisible = false
                 }
             }
 
             is REBTScreenState.Empty -> {
                 binding.networkPlaceholder.layout.isVisible = false
                 binding.placeholder.isVisible = true
-                binding.content.isVisible = false
+           //     binding.content.isVisible = false
 
             }
 
             is REBTScreenState.Error -> {
                 binding.networkPlaceholder.layout.isVisible = false
                 binding.placeholder.isVisible = false
-                binding.content.isVisible = false
+           //     binding.content.isVisible = false
                 requireContext().showToast(getString(R.string.db_error))
             }
 
@@ -103,7 +103,7 @@ class FragmentExercises : Fragment() {
                 AppCompatResources.getDrawable(requireContext(), R.drawable.primary_card)
 
             if (problemAnalysisCompleted) {
-                binding.problemAnalysis.root.background =
+                binding.problemAnalysis.card.background =
                     primaryCard
 
                 binding.beliefsCheck.root.setOnClickListener {
@@ -111,7 +111,7 @@ class FragmentExercises : Fragment() {
                 }
             }
             if (beliefsCheckCompleted) {
-                binding.beliefsCheck.root.background =
+                binding.beliefsCheck.card.background =
                     primaryCard
 
                 binding.beliefsAnalysis.root.setOnClickListener {
@@ -119,7 +119,7 @@ class FragmentExercises : Fragment() {
                 }
             }
             if (beliefsAnalysisCompleted) {
-                binding.beliefsAnalysis.root.background =
+                binding.beliefsAnalysis.card.background =
                     primaryCard
 
                 binding.dialog.root.setOnClickListener {
@@ -127,7 +127,7 @@ class FragmentExercises : Fragment() {
                 }
             }
             if (dialogCompleted)
-                binding.dialog.root.background =
+                binding.dialog.card.background =
                     primaryCard
         }
     }
@@ -146,10 +146,6 @@ class FragmentExercises : Fragment() {
 
             diaryNotesCard.root.setOnClickListener {
                 findNavController().navigate(R.id.freeDiaryFragment)
-            }
-
-            profileIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_profile)
             }
 
             binding.changeButton.setOnClickListener {
