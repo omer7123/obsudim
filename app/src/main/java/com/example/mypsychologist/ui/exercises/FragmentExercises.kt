@@ -52,6 +52,12 @@ class FragmentExercises : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+        binding.include.toolbar.apply {
+            title = getString(R.string.exercises)
+            setNavigationOnClickListener { findNavController().popBackStack() }
+        }
+
+
         setupCards()
         initListener()
 
