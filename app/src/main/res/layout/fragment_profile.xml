@@ -30,6 +30,7 @@
         android:id="@+id/for_psychologist"
         android:textColor="?attr/colorPrimary"
         android:gravity="center_vertical"
+        android:visibility="gone"
         style="@style/TextAppearance.Material3.BodyLarge"
         android:layout_width="0dp"
         android:layout_height="56dp"

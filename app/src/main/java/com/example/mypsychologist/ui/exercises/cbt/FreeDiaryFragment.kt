@@ -89,13 +89,13 @@ class FreeDiaryFragment : Fragment() {
         adapter = MainAdapter().apply {
             addDelegate(
                 RecordDelegate { id ->
-                    findNavController().navigate(
+               /*     findNavController().navigate(
                         R.id.fragment_diary,
                         bundleOf(
                             FragmentThoughtDiary.ID to id,
                             ExercisesFragment.CLIENT_ID to clientId
                         )
-                    )
+                    ) */
                 }
             )
 

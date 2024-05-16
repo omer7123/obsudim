@@ -92,7 +92,7 @@ class EditFragment : Fragment() {
             nameCard.cardDescription.text = info.name
             birthdayCard.cardDescription.text = Date(info.birthday).toDateString()
             genderCard.cardDescription.text = info.gender
-            diagnosisCard.cardDescription.text = info.diagnosis
+       //     diagnosisCard.cardDescription.text = info.diagnosis
             setupChips(info.request)
             mailCard.cardDescription.text = info.mail
             phoneCard.cardDescription.text = info.phone
@@ -114,10 +114,10 @@ class EditFragment : Fragment() {
                 cardTitle.text = getString(R.string.gender)
                 cardImage.setImageResource(R.drawable.ic_edit)
             }
-            diagnosisCard.apply {
+    /*        diagnosisCard.apply {
                 cardTitle.text = getString(R.string.diagnosis)
                 cardImage.setImageResource(R.drawable.ic_edit)
-            }
+            } */
             mailCard.apply {
                 cardTitle.text = getString(R.string.mail)
                 cardImage.setImageResource(R.drawable.ic_edit)
@@ -194,7 +194,7 @@ class EditFragment : Fragment() {
                 }
             }
 
-            diagnosisCard.apply {
+     /*       diagnosisCard.apply {
                 cardImage.setOnClickListener {
 
                     childFragmentManager.setFragmentResultListener(
@@ -212,7 +212,7 @@ class EditFragment : Fragment() {
                         cardDescription.text.toString()
                     ).show(childFragmentManager, EDIT_DIAGNOSIS)
                 }
-            }
+            } */
 
             changeRequestButton.setOnClickListener {
 

@@ -143,8 +143,8 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                     true
                 }
                 R.id.psychologist_item -> {
-                    navController.navigate(R.id.fragment_psychologists_with_tasks)
-                    true
+               //     navController.navigate(R.id.fragment_psychologists_with_tasks)
+                    false
                 }
                 else -> {
                     false

@@ -19,11 +19,12 @@ import kotlin.coroutines.suspendCoroutine
 
 class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseReference) :
     RebtRepository {
-    override suspend fun getREBTProblemProgress(problemId: String): RebtProblemProgressEntity =
+
+    override suspend fun getREBTProblemProgress(problemId: String): RebtProblemProgressEntity? =
         suspendCoroutine { continuation ->
             reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId).get()
                 .addOnSuccessListener { snapshot ->
-                    continuation.resume(snapshot.getTypedValue()!!)
+                    continuation.resume(snapshot.getTypedValue())
                 }
                 .addOnFailureListener {
                     continuation.resumeWithException(it)
@@ -32,11 +33,12 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
 
     override suspend fun getCurrentREBTProblemProgress(): RebtProblemProgressEntity? =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            val currentProblemId = getCurrentProblemId()
-            if (currentProblemId != null)
-                getREBTProblemProgress(currentProblemId)
-            else
+            try {
+                getREBTProblemProgress(getCurrentProblemId()!!)
+            }
+            catch (t: Throwable) {
                 null
+            }
         }
 
     private suspend fun getCurrentProblemId(): String? =

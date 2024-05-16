@@ -53,7 +53,7 @@ class FragmentExercises : Fragment() {
             .launchIn(lifecycleScope)
 
         binding.include.toolbar.apply {
-            title = getString(R.string.exercises)
+            title = getString(R.string.practice)
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
 
@@ -68,30 +68,30 @@ class FragmentExercises : Fragment() {
         when (it) {
             is REBTScreenState.Data -> {
                 binding.networkPlaceholder.layout.isVisible = false
-                binding.placeholder.isVisible = false
-           //     binding.content.isVisible = true
+                binding.sectionPlaceholder.isVisible = false
+                binding.sectionProblem.isVisible = true
                 setupData(it)
             }
 
             is REBTScreenState.Loading -> {
                 if (!isNetworkConnect()) {
                     binding.networkPlaceholder.layout.isVisible = true
-                    binding.placeholder.isVisible = false
-              //      binding.content.isVisible = false
+                    binding.sectionPlaceholder.isVisible = false
+                    binding.sectionProblem.isVisible = false
                 }
             }
 
             is REBTScreenState.Empty -> {
                 binding.networkPlaceholder.layout.isVisible = false
-                binding.placeholder.isVisible = true
-           //     binding.content.isVisible = false
+                binding.sectionPlaceholder.isVisible = true
+                binding.sectionProblem.isVisible = false
 
             }
 
             is REBTScreenState.Error -> {
                 binding.networkPlaceholder.layout.isVisible = false
-                binding.placeholder.isVisible = false
-           //     binding.content.isVisible = false
+                binding.sectionPlaceholder.isVisible = false
+                binding.sectionProblem.isVisible = false
                 requireContext().showToast(getString(R.string.db_error))
             }
 
@@ -176,9 +176,8 @@ class FragmentExercises : Fragment() {
             viewModel.getProblemProgress(bundle.getString(ProblemsFragment.PROBLEM)!!)
         }
 
-        ProblemsFragment().show(childFragmentManager, FragmentExercises.TAG)
+        ProblemsFragment().show(childFragmentManager, TAG)
     }
-
 
     private fun setupCards() {
         binding.apply {

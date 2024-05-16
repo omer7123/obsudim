@@ -8,14 +8,16 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/include_simple_toolbar" />
+        layout="@layout/include_simple_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/titleUp_tv"
         style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="@string/daily_tasks"
         app:layout_constraintStart_toStartOf="@+id/start"
         app:layout_constraintTop_toBottomOf="@id/include" />
@@ -24,7 +26,6 @@
         android:id="@+id/container_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/start"
@@ -44,6 +45,11 @@
 
     </com.google.android.flexbox.FlexboxLayout>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/section_problem"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="problem_title, change_button, container_task_problem"/>
 
     <TextView
         android:id="@+id/problem_title"
@@ -72,10 +78,10 @@
         android:id="@+id/container_task_problem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintTop_toBottomOf="@+id/problem_title">
+        app:layout_constraintTop_toBottomOf="@+id/problem_title"
+        app:flexWrap="wrap">
 
         <include
             android:id="@+id/problem_analysis"
@@ -92,60 +98,41 @@
         <include
             android:id="@+id/dialog"
             layout="@layout/small_card_view_group" />
+
     </com.google.android.flexbox.FlexboxLayout>
 
-    <include
-        android:id="@+id/network_placeholder"
-        layout="@layout/include_network_placeholder" />
-
-    <LinearLayout
-        android:id="@+id/placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="center"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/section_placeholder"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="placeholder_text, begin_button"/>
 
+    <TextView
+        android:id="@+id/placeholder_text"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="@string/no_problems"
+        app:layout_constraintEnd_toStartOf="@+id/end"
+        app:layout_constraintStart_toStartOf="@+id/start"
+        app:layout_constraintTop_toBottomOf="@+id/container_task" />
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_psychology_alt" />
+    <Button
+        android:id="@+id/begin_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/begin"
+        app:layout_constraintEnd_toStartOf="@+id/end"
+        app:layout_constraintStart_toStartOf="@+id/start"
+        app:layout_constraintTop_toBottomOf="@+id/placeholder_text" />
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/TextAppearance.Material3.TitleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/nothing" />
-
-        <TextView
-            android:id="@+id/text"
-            style="@style/TextAppearance.Material3.BodyLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="@string/no_problems" />
-
-        <Button
-            android:id="@+id/begin_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/begin" />
-
-    </LinearLayout>
+    <include layout="@layout/include_network_placeholder"
+        android:id="@+id/network_placeholder" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/start"

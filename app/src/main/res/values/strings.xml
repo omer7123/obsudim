@@ -4,7 +4,7 @@
     <string name="in_design">Раздел в разработке</string>
 
     <string name="hallow">Добро пожаловать!</string>
-    <string name="network_error">Ошибка сети. При восстановлении соединения запрос выполнится автоматически, если не закрывать приложение</string>
+    <string name="network_error">Ошибка сети.</string>
     <string name="connect">Соединение восстановлено</string>
     <string name="db_error">Ошибка базы данных</string>
     <string name="after_connection">При восстановлении соединения данные загрузятся автоматически</string>
@@ -31,7 +31,7 @@
     <string name="diagnostics">Диагностика</string>
     <string name="diagnostics_signature">Познай себя</string>
     <string name="daily_tasks">Ежедневные задания</string>
-    <string name="problem_work">Проработка проблемы:\n</string>
+    <string name="problem_work">Проработка проблемы:</string>
 
     <string name="cbt">КПТ</string>
     <string name="plans">Планы</string>
@@ -42,14 +42,14 @@
     <string name="ladders_signature">Маленькими шагами к успеху</string>
     <string name="rebt">РЭПТ</string>
     <string name="change">Изменить</string>
-    <string name="problem_analysis">Анализ проблемы</string>
-    <string name="problem_analysis_signature">Анализ проблемы</string>
-    <string name="beliefs_check">Проверка убеждений</string>
-    <string name="beliefs_check_signature">Анализ проблемы</string>
-    <string name="beliefs_analysis">Анализ убеждений</string>
+    <string name="problem_analysis">Анализ\nпроблемы</string>
+    <string name="problem_analysis_signature">Анализ\nпроблемы</string>
+    <string name="beliefs_check">Проверка\nубеждений</string>
+    <string name="beliefs_check_signature">Анализ\nпроблемы</string>
+    <string name="beliefs_analysis">Анализ\nубеждений</string>
     <string name="beliefs_analysis_signature">Анализ проблемы</string>
     <string name="dialog">Диалог</string>
-    <string name="dialog_me">Диалог с собой</string>
+    <string name="dialog_me">Диалог\nс собой</string>
     <string name="dialog_signature">Анализ проблемы</string>
     <string name="add">Добавить</string>
 
