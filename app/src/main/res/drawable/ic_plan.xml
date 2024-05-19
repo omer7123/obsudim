@@ -5,14 +5,14 @@
     android:viewportHeight="20">
   <path
       android:pathData="M0.83,2.25C0.83,1.007 1.837,0 3.08,0H7.25C8.493,0 9.5,1.007 9.5,2.25V4.42C9.5,5.663 8.493,6.67 7.25,6.67H3.08C1.837,6.67 0.83,5.663 0.83,4.42V2.25Z"
-      android:fillColor="#42474E"/>
+      android:fillColor="@color/md_theme_light_surfaceVariant"/>
   <path
       android:pathData="M12.17,2.25C12.17,1.007 13.177,0 14.42,0H17.92C19.163,0 20.17,1.007 20.17,2.25V9.08C20.17,10.323 19.163,11.33 17.92,11.33H14.42C13.177,11.33 12.17,10.323 12.17,9.08V2.25Z"
-      android:fillColor="#42474E"/>
+      android:fillColor="@color/md_theme_light_surfaceVariant"/>
   <path
       android:pathData="M12.17,16.25C12.17,15.007 13.177,14 14.42,14H17.92C19.163,14 20.17,15.007 20.17,16.25V17.75C20.17,18.993 19.163,20 17.92,20H14.42C13.177,20 12.17,18.993 12.17,17.75V16.25Z"
-      android:fillColor="#42474E"/>
+      android:fillColor="@color/md_theme_light_surfaceVariant"/>
   <path
       android:pathData="M0.83,11.58C0.83,10.337 1.837,9.33 3.08,9.33H7.25C8.493,9.33 9.5,10.337 9.5,11.58V17.75C9.5,18.993 8.493,20 7.25,20H3.08C1.837,20 0.83,18.993 0.83,17.75V11.58Z"
-      android:fillColor="#42474E"/>
+      android:fillColor="@color/md_theme_light_surfaceVariant"/>
 </vector>
