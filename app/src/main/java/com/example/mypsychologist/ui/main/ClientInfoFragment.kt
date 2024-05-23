@@ -36,6 +36,7 @@ class ClientInfoFragment : Fragment() {
 
     @Inject
     lateinit var vmFactory: ClientInfoViewModel.Factory
+
     private val viewModel: ClientInfoViewModel by viewModels {
         ClientInfoViewModel.provideFactory(
             vmFactory,
