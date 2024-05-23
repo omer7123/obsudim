@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import javax.inject.Inject
 
-class AuthenticationSharedPrefDataSourceImpl @Inject constructor(val context: Context) :
+class AuthenticationSharedPrefDataSourceImpl @Inject constructor(private val context: Context) :
     AuthenticationSharedPrefDataSource {
 
     private val sharedPref: SharedPreferences =

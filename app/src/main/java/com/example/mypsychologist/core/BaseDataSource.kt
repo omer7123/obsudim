@@ -12,7 +12,7 @@ abstract class BaseDataSource {
                 val body = response.body()
 
                 if (body != null || response.code() in 200..299) {
-                    return Resource.Success(body)
+                    return Resource.Success(body!!)
                 } else {
                     return Resource.Error(response.message(), response.body())
                 }
