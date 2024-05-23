@@ -33,7 +33,8 @@ class RegisterViewModel @Inject constructor(
                 _stateScreen.value =
                     RegisterState.Error
             }
-            else->{
+
+            else -> {
                 throw error
             }
         }
@@ -51,7 +52,9 @@ class RegisterViewModel @Inject constructor(
 
     private fun saveToken(result: Resource.Success<User>) {
         viewModelScope.launch(handler) {
+            _stateScreen.value = RegisterState.Loading
             saveTokenUseCase(result.data.token)
+            _stateScreen.value = RegisterState.Success
         }
     }
 }
