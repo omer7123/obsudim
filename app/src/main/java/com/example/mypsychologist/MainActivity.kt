@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
         registerNetworkCallback()
 
-        if (auth.currentUser == null)
-            createSignInIntent()
+//        if (auth.currentUser == null)
+//            createSignInIntent()
 
         setupNavigationListener()
     }

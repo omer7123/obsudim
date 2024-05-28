@@ -8,7 +8,7 @@ import javax.inject.Scope
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, DataModule::class, DomainModule::class])
+@Component(modules = [AppModule::class, DataModule::class, DomainModule::class, DataSourceModule::class])
 interface AppComponent {
     fun inject(activity: MainActivity)
 
@@ -20,6 +20,7 @@ interface AppComponent {
     fun psychologistComponent(): PsychologistComponent.Factory
     fun feedComponent(): FeedComponent.Factory
     fun educationComponent(): EducationComponent.Factory
+    fun authenticationComponent(): AuthenticationComponent.Factory
 
     @Component.Factory
     interface Factory {

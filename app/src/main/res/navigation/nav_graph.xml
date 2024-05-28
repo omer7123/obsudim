@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/main_fragment">
+    app:startDestination="@id/registrationFragment">
 
     <fragment
         android:id="@+id/main_fragment"
@@ -183,4 +183,8 @@
         android:name="com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment"
         android:label="fragment_tracker_mood"
         tools:layout="@layout/fragment_tracker_mood" />
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.mypsychologist.ui.authentication.RegistrationFragment"
+        android:label="RegistrationFragment" />
 </navigation>

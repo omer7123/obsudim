@@ -1,5 +1,6 @@
 package com.example.mypsychologist.data.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -26,3 +27,12 @@ data class UserModel(
     val token: String,
     val role: String
 )
+
+data class OldRegister(
+    val email: String,
+    val username: String,
+    val password: String,
+
+    @SerialName("confirm_password")
+    val confirm_password: String
+) //Для старого бэка, который сейчас

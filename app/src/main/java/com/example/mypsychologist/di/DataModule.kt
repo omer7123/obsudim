@@ -1,15 +1,7 @@
 package com.example.mypsychologist.di
 
-import android.app.Application
-import android.content.Context
-import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
-import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSourceImpl
-import com.example.mypsychologist.data.remote.AuthenticationDataSource
-import com.example.mypsychologist.data.remote.AuthenticationDataSourceImpl
-import com.example.mypsychologist.data.repository.AuthenticationRepositoryImpl
-import com.example.mypsychologist.domain.repository.retrofit.AuthenticationRepository
+import com.example.mypsychologist.data.remote.AuthenticationService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -42,5 +34,11 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideContext(application: Application): Context = application.applicationContext
+    fun provideAuthenticationService(retrofit: Retrofit): AuthenticationService {
+        return retrofit.create(AuthenticationService::class.java)
+    }
+
+//    @Provides
+//    @Singleton
+//    fun provideContext(application: Application): Context = application.applicationContext
 }
