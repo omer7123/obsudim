@@ -47,6 +47,7 @@ class RegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //viewModel.register(Register(Auth("ilyafomin12@gmail.com", "fdfd123456789"), "fdfd123456789")) Это запрос для нового бэка
         viewModel.registerOld(OldRegister("ilyafomin1@gmail.com", "il", "fdfd123456789", "fdfd123456789"))
+        //Данные пока mock просто для теста
     }
 
     private fun render(state: RegisterState) {
