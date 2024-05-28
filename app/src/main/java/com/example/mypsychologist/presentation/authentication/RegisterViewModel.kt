@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.model.OldRegister
 import com.example.mypsychologist.domain.entity.authenticationEntity.Register
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
 import com.example.mypsychologist.domain.useCase.GetMBITestUseCase
@@ -48,11 +49,11 @@ class RegisterViewModel @Inject constructor(
 
     fun register(register: Register) {
         viewModelScope.launch {
-            when (val result = registerUseCase(register)) {
+            when (val result = registerUseCase.register(register)) {
                 is Resource.Error -> _stateScreen.value = RegisterState.Error(result.msg.toString())
                 Resource.Loading -> _stateScreen.value = RegisterState.Loading
                 is Resource.Success -> {
-                    //saveToken(result)
+                    saveToken(result)
                 }
             }
         }
@@ -63,6 +64,16 @@ class RegisterViewModel @Inject constructor(
             _stateScreen.value = RegisterState.Loading
             saveTokenUseCase(result.data.token)
             _stateScreen.value = RegisterState.Success
+        }
+    }
+
+    fun registerOld(register: OldRegister){
+        viewModelScope.launch {
+            when(val res = registerUseCase.registerOld(register)){
+                is Resource.Error -> _stateScreen.value = RegisterState.Error(res.msg.toString())
+                Resource.Loading -> _stateScreen.value = RegisterState.Loading
+                is Resource.Success -> _stateScreen.value = RegisterState.Success
+            }
         }
     }
 

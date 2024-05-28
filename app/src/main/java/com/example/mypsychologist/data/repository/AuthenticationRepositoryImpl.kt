@@ -4,6 +4,8 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toRegisterModel
 import com.example.mypsychologist.data.converters.toUser
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
+import com.example.mypsychologist.data.model.OldRegister
+import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.data.remote.AuthenticationDataSource
 import com.example.mypsychologist.domain.entity.authenticationEntity.Register
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
@@ -24,6 +26,10 @@ class AuthenticationRepositoryImpl @Inject constructor(
             Resource.Loading -> Resource.Loading
         }
         return returnResult
+    }
+
+    override suspend fun oldRegister(register: OldRegister): Resource<Token> {
+        return dataSource.registerOld(register)
     }
 
     override suspend fun saveToken(token: String) {

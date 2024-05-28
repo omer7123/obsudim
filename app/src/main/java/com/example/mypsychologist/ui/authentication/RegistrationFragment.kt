@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.mypsychologist.data.model.OldRegister
 import com.example.mypsychologist.databinding.FragmentRegistrationBinding
 import com.example.mypsychologist.domain.entity.authenticationEntity.Auth
 import com.example.mypsychologist.domain.entity.authenticationEntity.Register
@@ -45,6 +46,7 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //viewModel.register(Register(Auth("ilyafomin12@gmail.com", "fdfd123456789"), "fdfd123456789")) Это запрос для нового бэка
+        viewModel.registerOld(OldRegister("ilyafomin1@gmail.com", "il", "fdfd123456789", "fdfd123456789"))
     }
 
     private fun render(state: RegisterState) {

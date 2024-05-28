@@ -28,11 +28,15 @@ data class UserModel(
     val role: String
 )
 
+@Serializable
 data class OldRegister(
     val email: String,
     val username: String,
     val password: String,
-
-    @SerialName("confirm_password")
     val confirm_password: String
 ) //Для старого бэка, который сейчас
+
+@Serializable
+data class Token(
+    val token: String
+)
