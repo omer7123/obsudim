@@ -1,20 +1,14 @@
-package com.example.mypsychologist.presentation.authentication
+package com.example.mypsychologist.presentation.authentication.registrationFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.OldRegister
-import com.example.mypsychologist.domain.entity.authenticationEntity.Register
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
-import com.example.mypsychologist.domain.useCase.GetMBITestUseCase
-import com.example.mypsychologist.domain.useCase.MBIConclusionUseCase
-import com.example.mypsychologist.domain.useCase.SaveMBIResultUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.RegisterUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveTokenUseCase
-import com.example.mypsychologist.presentation.diagnostics.MBITestViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -47,17 +41,6 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun register(register: Register) {
-        viewModelScope.launch {
-            when (val result = registerUseCase.register(register)) {
-                is Resource.Error -> _stateScreen.value = RegisterState.Error(result.msg.toString())
-                Resource.Loading -> _stateScreen.value = RegisterState.Loading
-                is Resource.Success -> {
-                    saveToken(result)
-                }
-            }
-        }
-    }
 
     private fun saveToken(result: Resource.Success<User>) {
         viewModelScope.launch(handler) {
@@ -67,26 +50,24 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun registerOld(register: OldRegister){
-        viewModelScope.launch {
-            when(val res = registerUseCase.registerOld(register)){
-                is Resource.Error -> _stateScreen.value = RegisterState.Error(res.msg.toString())
-                Resource.Loading -> _stateScreen.value = RegisterState.Loading
-                is Resource.Success -> _stateScreen.value = RegisterState.Success
+    fun register(register: OldRegister) {
+        if (register.email.isNotEmpty() && register.password.isNotEmpty() && register.confirm_password.isNotEmpty() && register.password == register.confirm_password) {
+            viewModelScope.launch {
+                when (val result = registerUseCase.registerOld(register)) {
+                    is Resource.Error -> _stateScreen.value = RegisterState.Error(result.msg.toString())
+                    Resource.Loading -> _stateScreen.value = RegisterState.Loading
+                    is Resource.Success -> {
+                        saveToken(result)
+                    }
+                }
             }
+        } else {
+            _stateScreen.value = RegisterState.Content(
+                email = register.email.isEmpty(),
+                password = register.password.isEmpty(),
+                confirmPassword = register.confirm_password.isEmpty(),
+            )
         }
     }
 
-    class Factory @Inject constructor(
-        private val registerUseCase: RegisterUseCase,
-        private val saveTokenUseCase: SaveTokenUseCase
-    ) : ViewModelProvider.Factory {
-
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return RegisterViewModel(
-                registerUseCase, saveTokenUseCase
-            ) as T
-        }
-    }
 }

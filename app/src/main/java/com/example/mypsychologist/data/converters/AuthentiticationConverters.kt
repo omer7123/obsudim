@@ -23,10 +23,9 @@ fun RegisterModel.toRegister(): Register {
 
 fun UserModel.toUser(): User {
     return User(
-        id = this.id,
+        user_id = this.userId,
         email = this.email,
         username = this.username,
-        photo = this.photo,
         token = this.token,
         role = this.role
     )
@@ -48,10 +47,9 @@ fun Register.toRegisterModel(): RegisterModel {
 
 fun User.toUserModel(): UserModel {
     return UserModel(
-        id = this.id,
+        userId = this.user_id,
         email = this.email,
         username = this.username,
-        photo = this.photo,
         token = this.token,
         role = this.role
     )

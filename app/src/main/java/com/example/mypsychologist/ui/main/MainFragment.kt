@@ -2,24 +2,22 @@ package com.example.mypsychologist.ui.main
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.*
+import com.example.mypsychologist.NavbarHider
+import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentMainBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.setupCard
-import com.example.mypsychologist.presentation.main.MainViewModel
+import com.example.mypsychologist.presentation.main.mainFragment.MainScreenState
+import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 
@@ -30,6 +28,7 @@ class MainFragment : Fragment() {
     @Inject
     lateinit var vmFactory: MainViewModel.Factory
     private val viewModel: MainViewModel by viewModels { vmFactory }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,9 +53,35 @@ class MainFragment : Fragment() {
 
         //    checkIfPsychologist()
 
+        viewModel.screenState.observe(viewLifecycleOwner){state->
+            render(state)
+        }
+
         return binding.root
     }
 
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.authByToken()
+    }
+
+    private fun render(state: MainScreenState) {
+        when(state){
+            is MainScreenState.Error -> {
+                Log.e("token", "не найден")
+                findNavController().navigate(R.id.registrationFragment)
+            }
+            MainScreenState.Initial -> {}
+            MainScreenState.Loading -> {
+
+            }
+            MainScreenState.Success -> {
+
+            }
+        }
+    }
     /* private fun checkIfPsychologist() {
          val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
 

@@ -13,7 +13,7 @@ class RegisterUseCase @Inject constructor(private val repository: Authentication
         return repository.register(register)
     }
 
-    suspend fun registerOld(register: OldRegister): Resource<Token>{
+    suspend fun registerOld(register: OldRegister): Resource<User>{
         return repository.oldRegister(register)
     }
 

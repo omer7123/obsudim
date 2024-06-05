@@ -17,6 +17,10 @@ class AuthenticationSharedPrefDataSourceImpl @Inject constructor(private val con
         }
     }
 
+    override suspend fun getToken(): String {
+        return sharedPref.getString(TOKEN, "").toString()
+    }
+
     companion object {
         private const val TOKEN = "token"
     }
