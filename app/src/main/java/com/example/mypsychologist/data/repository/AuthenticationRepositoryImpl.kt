@@ -18,16 +18,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
     private val localDataSource: AuthenticationSharedPrefDataSource
 ) :
     AuthenticationRepository {
-    override suspend fun register(register: Register): Resource<User> {
-        val result = dataSource.register(registerModel = register.toRegisterModel())
 
-        val returnResult: Resource<User> = when (result) {
-            is Resource.Success -> Resource.Success(result.data.toUser())
-            is Resource.Error -> Resource.Error(result.msg, result.data?.toUser())
-            Resource.Loading -> Resource.Loading
-        }
-        return returnResult
-    }
 
     override suspend fun oldRegister(register: OldRegister): Resource<User> {
         return dataSource.registerOld(register)

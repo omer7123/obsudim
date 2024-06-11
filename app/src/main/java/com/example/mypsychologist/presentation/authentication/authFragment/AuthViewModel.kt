@@ -20,39 +20,25 @@ class AuthViewModel @Inject constructor(
     private val saveTokenUseCase: SaveTokenUseCase
 ) : ViewModel() {
 
-    private val _stateScreen: MutableLiveData<AuthState> =
-        MutableLiveData(AuthState.Initial)
-
+    private val _stateScreen: MutableLiveData<AuthState> = MutableLiveData(AuthState.Initial)
     val stateScreen: LiveData<AuthState> = _stateScreen
 
     private val handler = CoroutineExceptionHandler { _, error ->
-        when (error) {
-            is IllegalArgumentException -> {
-                _stateScreen.value =
-                    AuthState.Error(error.toString())
-            }
-
-            is NullPointerException -> {
-                _stateScreen.value =
-                    AuthState.Error(error.toString())
-            }
-
-            else -> {
-                throw error
-            }
-        }
+        _stateScreen.value =
+            AuthState.Error(error.toString())
     }
 
     fun auth(auth: AuthModel) {
         if (auth.email.isNotEmpty() && auth.password.isNotEmpty()) {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
+                _stateScreen.value = AuthState.Loading
                 when (val result = authWithDataUserUseCase(auth)) {
                     is Resource.Error -> _stateScreen.value = AuthState.Error(result.msg.toString())
                     Resource.Loading -> _stateScreen.value = AuthState.Loading
                     is Resource.Success -> saveToken(result.data)
                 }
             }
-        }else{
+        } else {
             _stateScreen.value = AuthState.Content(
                 email = auth.email.isEmpty(),
                 password = auth.password.isEmpty(),
@@ -60,13 +46,9 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun saveToken(result: User) {
-        viewModelScope.launch(handler) {
+    private suspend fun saveToken(result: User) {
             _stateScreen.value = AuthState.Loading
             saveTokenUseCase(result.token)
             _stateScreen.value = AuthState.Success
-        }
     }
-
-
 }

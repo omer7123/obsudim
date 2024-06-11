@@ -11,11 +11,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthenticationService {
-    @POST("/api/users/reg")
-    suspend fun register(@Body register: RegisterModel): Response<UserModel>
 
-    @POST("/users/reg") //Старый бэк
-    suspend fun registerOld(@Body register: OldRegister): Response<User>
+    @POST("/users/reg")
+    suspend fun register(@Body register: OldRegister): Response<User>
 
     @POST("/users/auth")
     suspend fun authOld(@Body auhModel: AuthModel): Response<User>

@@ -29,7 +29,7 @@ class RegistrationFragment : Fragment() {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = requireNotNull(_binding)
 
-//    private var navbarHider: NavbarHider? = null
+    private var navbarHider: NavbarHider? = null
 
 
     @Inject
@@ -42,10 +42,14 @@ class RegistrationFragment : Fragment() {
         super.onAttach(context)
         requireContext().getAppComponent().authenticationComponent().create().inject(this)
 
-//        if (context is NavbarHider) {
-//            navbarHider = context
-//            navbarHider!!.setNavbarVisibility(false)
-//        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (context is NavbarHider) {
+            navbarHider = context as NavbarHider
+            navbarHider!!.setNavbarVisibility(false)
+        }
     }
 
     override fun onCreateView(
@@ -64,8 +68,10 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.authByToken()
         initListener()
     }
+
 
     private fun initListener() {
         binding.registrationButton.setOnClickListener {
@@ -77,25 +83,17 @@ class RegistrationFragment : Fragment() {
         }
 
         binding.goToLoginButton.setOnClickListener {
-            findNavController().navigate(R.id.authFragment)
+            findNavController().navigate(R.id.action_registrationFragment_to_authFragment)
         }
     }
 
     private fun render(state: RegisterState) {
         when (state) {
-            is RegisterState.Error -> {
-                renderError(state.msg)
-            }
-
-            is RegisterState.Success -> {
-                renderSuccess()
-            }
-
+            is RegisterState.Error -> renderError(state.msg)
+            is RegisterState.Success -> renderSuccess()
             RegisterState.Initial -> {}
             RegisterState.Loading -> renderLoading()
-            is RegisterState.Content -> {
-                renderContent(state)
-            }
+            is RegisterState.Content -> renderContent(state)
         }
     }
 
@@ -112,22 +110,24 @@ class RegistrationFragment : Fragment() {
 
     private fun renderError(msg: String) {
         Log.e("Error: ", msg)
+        binding.content.isVisible = true
         binding.progressCircular.isVisible = false
         requireContext().showToast(msg)
     }
 
     private fun renderLoading() {
+        binding.content.isVisible = false
         binding.progressCircular.isVisible = true
     }
 
     private fun renderSuccess() {
         binding.progressCircular.isVisible = false
-        findNavController().navigate(R.id.main_fragment)
+        findNavController().navigate(R.id.action_registrationFragment_to_main_fragment)
     }
 
     override fun onDetach() {
-//        navbarHider?.setNavbarVisibility(true)
-//        navbarHider = null
+        navbarHider?.setNavbarVisibility(true)
+        navbarHider = null
         super.onDetach()
     }
 

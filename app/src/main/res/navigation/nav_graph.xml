@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/main_fragment">
+    app:startDestination="@id/registrationFragment">
 
     <fragment
         android:id="@+id/main_fragment"
@@ -14,37 +14,37 @@
         android:id="@+id/fragment_exercises"
         android:name="com.example.mypsychologist.ui.exercises.FragmentExercises"
         android:label="FragmentExercises"
-        tools:layout="@layout/fragment_exercises"/>
+        tools:layout="@layout/fragment_exercises" />
     <fragment
         android:id="@+id/fragment_diaries"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries"
         android:label="FragmentDiaries"
-        tools:layout="@layout/fragment_diaries"/>
+        tools:layout="@layout/fragment_diaries" />
     <fragment
         android:id="@+id/fragment_diary"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary"
         android:label="FragmentDiary"
-        tools:layout="@layout/fragment_thought_diary"/>
+        tools:layout="@layout/fragment_thought_diary" />
     <fragment
         android:id="@+id/fragment_new_diary"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary"
         android:label="FragmentNewDiary"
-        tools:layout="@layout/fragment_new_thought_diary"/>
+        tools:layout="@layout/fragment_new_thought_diary" />
     <fragment
         android:id="@+id/fragment_tests"
         android:name="com.example.mypsychologist.ui.diagnostics.FragmentTests"
         android:label="FragmentTests"
-        tools:layout="@layout/fragment_tests"/>
+        tools:layout="@layout/fragment_tests" />
     <fragment
         android:id="@+id/fragment_beck_depression_test"
         android:name="com.example.mypsychologist.ui.diagnostics.FragmentBeckDepressionTest"
         android:label="FragmentBeckDepressionTest"
-        tools:layout="@layout/fragment_test"/>
+        tools:layout="@layout/fragment_test" />
     <fragment
         android:id="@+id/fragment_test_history"
         android:name="com.example.mypsychologist.ui.diagnostics.FragmentTestHistory"
         android:label="FragmentTestHistory"
-        tools:layout="@layout/fragment_test_history"/>
+        tools:layout="@layout/fragment_test_history" />
     <fragment
         android:id="@+id/fragment_profile"
         android:name="com.example.mypsychologist.ui.main.ProfileFragment"
@@ -54,12 +54,12 @@
         android:id="@+id/fragment_feedback"
         android:name="com.example.mypsychologist.ui.main.FeedbackFragment"
         android:label="FeedbackFragment"
-        tools:layout="@layout/fragment_feedback"/>
+        tools:layout="@layout/fragment_feedback" />
     <fragment
         android:id="@+id/fragment_psychologist_questionnaire"
         android:name="com.example.mypsychologist.ui.main.PsychologistQuestionnaireFragment"
         android:label="PsychologistQuestionnaireFragment"
-        tools:layout="@layout/fragment_psychologist_questionnaire"/>
+        tools:layout="@layout/fragment_psychologist_questionnaire" />
     <fragment
         android:id="@+id/fragment_psychologists"
         android:name="com.example.mypsychologist.ui.psychologist.PsychologistsFragment"
@@ -186,10 +186,25 @@
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.mypsychologist.ui.authentication.registrationFragment.RegistrationFragment"
-        android:label="RegistrationFragment" />
+        android:label="RegistrationFragment">
+        <action
+            android:id="@+id/action_registrationFragment_to_main_fragment"
+            app:destination="@id/main_fragment"
+            app:popUpTo="@id/registrationFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_registrationFragment_to_authFragment"
+            app:destination="@id/authFragment" />
+    </fragment>
     <fragment
         android:id="@+id/authFragment"
         android:name="com.example.mypsychologist.ui.authentication.authFragment.AuthFragment"
         android:label="fragment_auth"
-        tools:layout="@layout/fragment_auth" />
+        tools:layout="@layout/fragment_auth">
+        <action
+            android:id="@+id/action_authFragment_to_main_fragment"
+            app:destination="@id/main_fragment"
+            app:popUpTo="@id/registrationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

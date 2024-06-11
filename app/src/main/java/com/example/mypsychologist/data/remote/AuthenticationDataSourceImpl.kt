@@ -12,12 +12,9 @@ import javax.inject.Inject
 
 class AuthenticationDataSourceImpl @Inject constructor(val api: AuthenticationService) :
     AuthenticationDataSource, BaseDataSource() {
-    override suspend fun register(registerModel: RegisterModel): Resource<UserModel> = getResult {
-        api.register(registerModel)
-    }
 
     override suspend fun registerOld(registerModel: OldRegister): Resource<User> = getResult {
-        api.registerOld(registerModel)
+        api.register(registerModel)
     }
 
     override suspend fun authOld(authModel: AuthModel): Resource<User> = getResult {

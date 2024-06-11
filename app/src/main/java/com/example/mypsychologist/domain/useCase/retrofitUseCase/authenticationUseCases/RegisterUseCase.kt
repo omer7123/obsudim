@@ -9,12 +9,8 @@ import com.example.mypsychologist.domain.repository.retrofit.AuthenticationRepos
 import javax.inject.Inject
 
 class RegisterUseCase @Inject constructor(private val repository: AuthenticationRepository) {
-    suspend fun register(register: Register): Resource<User> {
-        return repository.register(register)
-    }
 
-    suspend fun registerOld(register: OldRegister): Resource<User>{
-        return repository.oldRegister(register)
-    }
+    suspend operator fun invoke(register: OldRegister): Resource<User> =
+        repository.oldRegister(register)
 
 }

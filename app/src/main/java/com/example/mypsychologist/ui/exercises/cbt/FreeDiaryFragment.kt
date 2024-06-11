@@ -36,20 +36,20 @@ class FreeDiaryFragment : Fragment() {
 
     private lateinit var clientId: String
 
-    @Inject
-    lateinit var vmFactory: FreeDiariesViewModel.Factory
-
-    private val viewModel: FreeDiariesViewModel by viewModels {
-        FreeDiariesViewModel.provideFactory(
-            vmFactory,
-            clientId
-        )
-    }
+//    @Inject
+//    lateinit var vmFactory: FreeDiariesViewModel.Factory
+//
+//    private val viewModel: FreeDiariesViewModel by viewModels {
+//        FreeDiariesViewModel.provideFactory(
+//            vmFactory,
+//            clientId
+//        )
+//    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        clientId = arguments?.getString(ExercisesFragment.CLIENT_ID, ThoughtDiariesViewModel.OWN)
-            ?: ThoughtDiariesViewModel.OWN
+//        clientId = arguments?.getString(ExercisesFragment.CLIENT_ID, ThoughtDiariesViewModel.OWN)
+//            ?: ThoughtDiariesViewModel.OWN
         requireContext().getAppComponent().exercisesComponent().create().inject(this)
     }
 
@@ -63,10 +63,10 @@ class FreeDiaryFragment : Fragment() {
 
         setupAdapter()
 
-        viewModel.screenState
-            .flowWithLifecycle(lifecycle)
-            .onEach { render(it) }
-            .launchIn(lifecycleScope)
+//        viewModel.screenState
+//            .flowWithLifecycle(lifecycle)
+//            .onEach { render(it) }
+//            .launchIn(lifecycleScope)
 
         return binding.root
     }
@@ -77,12 +77,12 @@ class FreeDiaryFragment : Fragment() {
             setNavigationOnClickListener { findNavController().popBackStack() }
         }
 
-        if (clientId != ThoughtDiariesViewModel.OWN)
-            binding.newDiaryFab.isVisible = false
-        else
-            binding.newDiaryFab.setOnClickListener {
-                findNavController().navigate(R.id.newFreeDiaryFragment)
-            }
+//        if (clientId != ThoughtDiariesViewModel.OWN)
+//            binding.newDiaryFab.isVisible = false
+//        else
+//            binding.newDiaryFab.setOnClickListener {
+//                findNavController().navigate(R.id.newFreeDiaryFragment)
+//            }
     }
 
     private fun setupAdapter() {
@@ -140,6 +140,6 @@ class FreeDiaryFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadDiaries()
+//        viewModel.loadDiaries()
     }
 }

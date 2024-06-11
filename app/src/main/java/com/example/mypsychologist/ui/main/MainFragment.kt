@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -29,6 +30,7 @@ class MainFragment : Fragment() {
     lateinit var vmFactory: MainViewModel.Factory
     private val viewModel: MainViewModel by viewModels { vmFactory }
 
+    private var navbarHider: NavbarHider? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -64,7 +66,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.authByToken()
     }
 
     private fun render(state: MainScreenState) {
@@ -75,10 +76,20 @@ class MainFragment : Fragment() {
             }
             MainScreenState.Initial -> {}
             MainScreenState.Loading -> {
-
+                if (context is NavbarHider) {
+                    navbarHider = context as NavbarHider
+                    navbarHider!!.setNavbarVisibility(false)
+                }
+                binding.content.isVisible = false
+                binding.progressCircular.isVisible = true
             }
             MainScreenState.Success -> {
-
+                if (context is NavbarHider) {
+                    navbarHider = context as NavbarHider
+                    navbarHider!!.setNavbarVisibility(true)
+                }
+                binding.content.isVisible = true
+                binding.progressCircular.isVisible = false
             }
         }
     }

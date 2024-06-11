@@ -1,5 +1,7 @@
 package com.example.mypsychologist.di
 
+import com.example.mypsychologist.core.AddCookiesInterceptor
+import com.example.mypsychologist.core.ReceivedCookiesInterceptor
 import com.example.mypsychologist.data.remote.AuthenticationService
 import com.google.gson.Gson
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -36,6 +38,8 @@ class DataModule {
         }
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(ReceivedCookiesInterceptor())
+            .addInterceptor(AddCookiesInterceptor())
             .build()
     }
 

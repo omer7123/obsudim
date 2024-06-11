@@ -13,7 +13,7 @@ import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.data.model.AuthModel
 import com.example.mypsychologist.databinding.FragmentAuthBinding
-import com.example.mypsychologist.domain.entity.authenticationEntity.Auth
+import com.example.mypsychologist.extensions.bounce
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.authentication.authFragment.AuthState
@@ -69,6 +69,10 @@ class AuthFragment : Fragment() {
 
             viewModel.auth(AuthModel(email, password))
         }
+
+        binding.toolbar.toolbar.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
 
@@ -78,22 +82,33 @@ class AuthFragment : Fragment() {
             is AuthState.Error -> renderError(state.msg)
             AuthState.Loading -> renderLoading()
             AuthState.Success -> renderSuccess()
-            is AuthState.Content -> {}
+            is AuthState.Content -> renderContent(state)
         }
+    }
+
+    private fun renderContent(state: AuthState.Content) {
+        if (state.email)
+            binding.inputMailLayout.bounce()
+
+        if (state.password)
+            binding.inputPasswordLayout.bounce()
+
     }
 
     private fun renderError(msg: String) {
         binding.progressCircular.isVisible = false
+        binding.content.isVisible = true
         requireContext().showToast(msg)
     }
 
     private fun renderSuccess() {
         binding.progressCircular.isVisible = false
-        findNavController().navigate(R.id.main_fragment)
+        findNavController().navigate(R.id.action_authFragment_to_main_fragment)
     }
 
     private fun renderLoading() {
         binding.progressCircular.isVisible = true
+        binding.content.isVisible = false
     }
 
     override fun onDetach() {

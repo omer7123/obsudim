@@ -13,6 +13,7 @@ import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationU
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveTokenUseCase
 import com.example.mypsychologist.presentation.authentication.authFragment.AuthState
 import com.example.mypsychologist.presentation.authentication.registrationFragment.RegisterState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,9 +22,7 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val checkIfPsychologistUseCase: CheckIfPsychologistUseCase,
-    private val authByTokenUseCase: AuthByTokenUseCase,
-    private val getTokenUseCase: GetTokenUseCase,
-    private val saveTokenUseCase: SaveTokenUseCase
+
 ) : ViewModel() {
     private val _isPsychologist: MutableStateFlow<Boolean> =
         MutableStateFlow(false)
@@ -41,31 +40,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun authByToken() {
-        viewModelScope.launch {
-            _screenState.value = MainScreenState.Loading
-            val token = getTokenUseCase.invoke()
-            if (token == "")
-                _screenState.value = MainScreenState.Error("Ошибка авторизации")
-            else {
-                when (val result = authByTokenUseCase.invoke(Token(token))) {
-                    is Resource.Error -> _screenState.value = MainScreenState.Error(result.msg.toString())
-                    Resource.Loading -> _screenState.value = MainScreenState.Loading
-                    is Resource.Success -> {
-                        saveTokenUseCase.invoke(result.data.token)
-                        _screenState.value = MainScreenState.Success
-                    }
-                }
-
-            }
-        }
-    }
 
     class Factory @Inject constructor(
         private val checkIfPsychologistUseCase: CheckIfPsychologistUseCase,
-        private val authByTokenUseCase: AuthByTokenUseCase,
-        private val getTokenUseCase: GetTokenUseCase,
-        private val saveTokenUseCase: SaveTokenUseCase
     ) :
         ViewModelProvider.Factory {
 
@@ -73,9 +50,6 @@ class MainViewModel @Inject constructor(
             @Suppress("UNCHECKED_CAST")
             return MainViewModel(
                 checkIfPsychologistUseCase,
-                authByTokenUseCase = authByTokenUseCase,
-                getTokenUseCase = getTokenUseCase,
-                saveTokenUseCase
             ) as T
         }
     }

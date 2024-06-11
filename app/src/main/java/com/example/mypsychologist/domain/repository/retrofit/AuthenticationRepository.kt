@@ -9,7 +9,6 @@ import com.example.mypsychologist.domain.entity.authenticationEntity.User
 
 interface AuthenticationRepository {
 
-    suspend fun register(register: Register): Resource<User>
     suspend fun oldRegister(register: OldRegister): Resource<User>
     suspend fun authOld(authModel: AuthModel): Resource<User>
     suspend fun saveToken(token: String)
