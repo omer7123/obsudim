@@ -1,6 +1,9 @@
 package com.example.mypsychologist.extensions
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.view.View
+import android.view.ViewGroup
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
@@ -15,4 +18,22 @@ fun View.bounce() {
         spring = springForce
         start()
     }
+}
+
+fun ViewGroup.shrink() {
+    val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0f)
+    val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f)
+
+    ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY)
+        .setDuration(500)
+        .start()
+}
+
+fun View.expand() {
+    val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f)
+    val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f)
+
+    ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY)
+        .setDuration(500)
+        .start()
 }

@@ -2,9 +2,13 @@ package com.example.mypsychologist.di
 
 import androidx.lifecycle.ViewModel
 import com.example.mypsychologist.data.repository.AuthenticationRepositoryImpl
+import com.example.mypsychologist.data.repository.FreeDiaryRepositoryImpl
 import com.example.mypsychologist.domain.repository.retrofit.AuthenticationRepository
+import com.example.mypsychologist.domain.repository.retrofit.FreeDiaryRepository
 import com.example.mypsychologist.presentation.authentication.authFragment.AuthViewModel
 import com.example.mypsychologist.presentation.authentication.registrationFragment.RegisterViewModel
+import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
+import com.example.mypsychologist.presentation.exercises.NewFreeDiaryViewModel
 import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
 import dagger.Binds
 import dagger.Module
@@ -14,6 +18,10 @@ import javax.inject.Singleton
 
 @Module
 interface DomainModule {
+
+    @Binds
+    @Singleton
+    fun bindFreeDiaryRepository(impl: FreeDiaryRepositoryImpl): FreeDiaryRepository
 
     @Binds
     @Singleton
@@ -27,7 +35,12 @@ interface DomainModule {
     @[IntoMap ClassKey(AuthViewModel::class)]
     fun provideAuthViewModel(authViewModel: AuthViewModel): ViewModel
 
+    @Binds
+    @[IntoMap ClassKey(FreeDiariesViewModel::class)]
+    fun provideFreeDiariesViewModel(freeDiariesViewModel: FreeDiariesViewModel): ViewModel
 
-
+    @Binds
+    @[IntoMap ClassKey(NewFreeDiaryViewModel::class)]
+    fun provideNewFreeDiaryViewModel(newFreeDiaryViewModel: NewFreeDiaryViewModel): ViewModel
 
 }

@@ -1,12 +1,10 @@
-package com.example.mypsychologist.data.remote
+package com.example.mypsychologist.data.remote.authentication
 
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
 import com.example.mypsychologist.data.model.OldRegister
-import com.example.mypsychologist.data.model.RegisterModel
 import com.example.mypsychologist.data.model.Token
-import com.example.mypsychologist.data.model.UserModel
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
 import javax.inject.Inject
 

@@ -1,15 +1,17 @@
 package com.example.mypsychologist.presentation.exercises
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.mypsychologist.domain.entity.FreeDiaryEntity
-import com.example.mypsychologist.domain.useCase.SaveFreeDiaryUseCase
+import androidx.lifecycle.viewModelScope
+import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.domain.entity.FreeDiary
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.freeDiaryUseCase.AddFreeDiaryUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewFreeDiaryViewModel(private val saveThoughtDiaryUseCase: SaveFreeDiaryUseCase) :
+class NewFreeDiaryViewModel @Inject constructor(private val addFreeDiaryUseCase: AddFreeDiaryUseCase) :
     ViewModel() {
 
     private val _screenState: MutableStateFlow<NewFreeDiaryScreenState> =
@@ -18,17 +20,21 @@ class NewFreeDiaryViewModel(private val saveThoughtDiaryUseCase: SaveFreeDiaryUs
         get() = _screenState.asStateFlow()
 
 
-    fun tryToSaveDiary(diary: FreeDiaryEntity) {
-        _screenState.value =
-            NewFreeDiaryScreenState.RequestResult(saveThoughtDiaryUseCase(diary))
+    fun addDiary(diary: FreeDiary) {
+        if (diary.text.isNotEmpty()) {
+            viewModelScope.launch {
+                _screenState.value =
+                    NewFreeDiaryScreenState.Loading
+                when (val result = addFreeDiaryUseCase(diary)) {
+                    is Resource.Error -> _screenState.value =
+                        NewFreeDiaryScreenState.Error(result.msg.toString())
 
-    }
-
-    class Factory @Inject constructor(private val saveFreeDiaryUseCase: SaveFreeDiaryUseCase) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return NewFreeDiaryViewModel(saveFreeDiaryUseCase) as T
+                    Resource.Loading -> _screenState.value = NewFreeDiaryScreenState.Loading
+                    is Resource.Success -> _screenState.value = NewFreeDiaryScreenState.Success
+                }
+            }
+        }else{
+            _screenState.value = NewFreeDiaryScreenState.Content
         }
     }
 }

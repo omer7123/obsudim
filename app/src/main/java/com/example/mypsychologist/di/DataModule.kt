@@ -2,14 +2,13 @@ package com.example.mypsychologist.di
 
 import com.example.mypsychologist.core.AddCookiesInterceptor
 import com.example.mypsychologist.core.ReceivedCookiesInterceptor
-import com.example.mypsychologist.data.remote.AuthenticationService
-import com.google.gson.Gson
+import com.example.mypsychologist.data.remote.authentication.AuthenticationService
+import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -59,6 +58,12 @@ class DataModule {
     @Singleton
     fun provideAuthenticationService(retrofit: Retrofit): AuthenticationService {
         return retrofit.create(AuthenticationService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFreeDiaryService(retrofit: Retrofit): FreeDiaryService {
+        return retrofit.create(FreeDiaryService::class.java)
     }
 
 //    @Provides

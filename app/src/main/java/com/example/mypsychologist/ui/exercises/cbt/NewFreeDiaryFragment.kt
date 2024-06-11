@@ -10,16 +10,23 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentNewFreeDiaryBinding
+import com.example.mypsychologist.domain.entity.FreeDiary
 import com.example.mypsychologist.domain.entity.FreeDiaryEntity
+import com.example.mypsychologist.extensions.bounce
+import com.example.mypsychologist.extensions.expand
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.extensions.shrink
+import com.example.mypsychologist.presentation.di.MultiViewModelFactory
+import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryViewModel
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
@@ -36,8 +43,10 @@ class NewFreeDiaryFragment : Fragment() {
     private var navbarHider: NavbarHider? = null
 
     @Inject
-    lateinit var vmFactory: NewFreeDiaryViewModel.Factory
-    private val viewModel: NewFreeDiaryViewModel by viewModels { vmFactory }
+    lateinit var viewModelFactory: MultiViewModelFactory
+    private val viewModel: NewFreeDiaryViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[NewFreeDiaryViewModel::class.java]
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,6 +57,7 @@ class NewFreeDiaryFragment : Fragment() {
             navbarHider!!.setNavbarVisibility(false)
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,7 +76,6 @@ class NewFreeDiaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListener()
-
     }
 
     private fun initListener() {
@@ -76,39 +85,45 @@ class NewFreeDiaryFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            viewModel.tryToSaveDiary(FreeDiaryEntity(binding.field.text.toString()))
+            viewModel.addDiary(FreeDiary(binding.field.text.toString()))
         }
+
         binding.includeToolbar.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
 
         binding.KPTDiaryTv.setOnClickListener {
-
             findNavController().navigate(R.id.fragment_new_diary)
         }
     }
 
     private fun render(state: NewFreeDiaryScreenState) {
         when (state) {
-            is NewFreeDiaryScreenState.RequestResult -> {
-                renderRequest(state.success)
-            }
 
             is NewFreeDiaryScreenState.Error -> {
-                requireContext().showToast(getString(R.string.db_error))
+                requireContext().showToast(state.msg)
             }
-
             is NewFreeDiaryScreenState.Init -> {}
+            NewFreeDiaryScreenState.Loading -> renderLoading()
+            NewFreeDiaryScreenState.Success -> renderRequest()
+            NewFreeDiaryScreenState.Content -> renderContent()
         }
     }
 
-    private fun renderRequest(isSuccess: Boolean) {
+    private fun renderContent() {
+        binding.field.bounce()
+    }
+
+    private fun renderLoading() {
+        binding.progressCircular.isVisible = true
+        binding.progressCircular.scaleX = 0f
+        binding.progressCircular.scaleY = 0f
+        binding.progressCircular.expand()
+    }
+
+    private fun renderRequest() {
 
         when {
-            !isSuccess -> {
-                requireContext().showToast(getString(R.string.db_error))
-            }
-
             !isNetworkConnect() -> {
                 Snackbar.make(
                     binding.constraint,
@@ -121,11 +136,11 @@ class NewFreeDiaryFragment : Fragment() {
 
             else -> {
                 findNavController().popBackStack()
-                requireContext().showToast(getString(R.string.success))
             }
         }
 
     }
+
     override fun onDetach() {
         navbarHider?.setNavbarVisibility(true)
         navbarHider = null

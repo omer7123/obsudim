@@ -1,4 +1,4 @@
-package com.example.mypsychologist.data.remote
+package com.example.mypsychologist.data.remote.authentication
 
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
