@@ -82,13 +82,8 @@ class EditViewModel(
     }
 
     class Factory @Inject constructor(
-        private val changeBirthdayUseCase: ChangeBirthdayUseCase,
-        private val changeDiagnosisUseCase: ChangeDiagnosisUseCase,
-        private val changeGenderUseCase: ChangeGenderUseCase,
-        private val changeNameUseCase: ChangeNameUseCase,
         private val changePasswordUseCase: ChangePasswordUseCase,
         private val changePhoneUseCase: ChangePhoneUseCase,
-        private val changeRequestUseCase: ChangeRequestUseCase,
         private val getClientDataUseCase: GetClientDataUseCase
     ) :
         ViewModelProvider.Factory {

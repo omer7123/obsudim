@@ -4,6 +4,7 @@ import com.example.mypsychologist.domain.repository.ProfileRepository
 import javax.inject.Inject
 
 class GetClientDataUseCase @Inject constructor(private val repository: ProfileRepository) {
-    suspend operator fun invoke() =
-        repository.getClientData()
+    suspend operator fun invoke() {
+        TODO()
+    }
 }
