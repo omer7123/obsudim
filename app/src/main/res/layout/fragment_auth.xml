@@ -53,33 +53,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
                     android:imeOptions="actionDone"
-                    android:inputType="text" />
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingVertical="16dp"
-                    android:text="@string/not_registered_yet" />
-
-                <Button
-                    android:id="@+id/to_registration_button"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="@string/register" />
-
-
-            </LinearLayout>
 
             <!--     <LinearLayout
                      android:layout_width="match_parent"
@@ -112,7 +88,33 @@
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/log_in" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingVertical="16dp"
+                    android:text="@string/not_registered_yet" />
+
+                <Button
+                    android:id="@+id/to_registration_button"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/register" />
+
+
+            </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
 
     <ProgressBar

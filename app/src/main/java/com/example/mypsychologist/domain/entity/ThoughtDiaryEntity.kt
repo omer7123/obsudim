@@ -1,3 +1,5 @@
+@file:JvmName("InputItemEntityKt")
+
 package com.example.mypsychologist.domain.entity
 
 

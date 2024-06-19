@@ -11,7 +11,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 
 @Module
-abstract class ProfileModule {
+class ProfileModule {
     @Provides
     fun provideRepository(impl: ProfileRepositoryImpl): ProfileRepository = impl
 

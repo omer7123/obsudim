@@ -97,12 +97,10 @@ class ClientInfoFragment : Fragment() {
     private fun setupFields(info: ClientInfoEntity) {
         binding.apply {
             name.text = info.name
-            age.text =
-                getString(R.string.age_pattern, (Date().time - info.birthday).toYears().toString())
+            age.text = info.birthday
             gender.text = getString(R.string.gender_pattern, info.gender)
-            diagnosis.text = getString(R.string.diagnosis_pattern, info.diagnosis)
         }
-        setupChips(info.request)
+        setupChips(info.request.map { it.title })
     }
 
     private fun setupChips(list: List<String>) {
