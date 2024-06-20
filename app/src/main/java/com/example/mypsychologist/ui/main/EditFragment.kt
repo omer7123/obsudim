@@ -61,8 +61,6 @@ class EditFragment : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
-        setupTitlesAndIcons()
-
         setupListeners()
 
         return binding.root
@@ -71,148 +69,28 @@ class EditFragment : Fragment() {
     private fun render(state: EditScreenState) {
         when (state) {
             is EditScreenState.CurrentData -> {
-                setupData(state.data)
+
             }
+
             is EditScreenState.Loading -> {
                 if (!isNetworkConnect())
                     requireContext().showToast(getString(R.string.network_error))
             }
+
             is EditScreenState.Response -> {
                 if (state.result)
                     requireContext().showToast(getString(R.string.success))
                 else
                     requireContext().showToast(getString(R.string.db_error))
             }
+
             is EditScreenState.Init -> Unit
         }
     }
 
-    private fun setupData(info: ClientDataEntity) {
-        binding.apply {
-            nameCard.cardDescription.text = info.name
-            birthdayCard.cardDescription.text = Date(info.birthday).toDateString()
-            genderCard.cardDescription.text = info.gender
-       //     diagnosisCard.cardDescription.text = info.diagnosis
-            setupChips(info.request)
-            mailCard.cardDescription.text = info.mail
-            phoneCard.cardDescription.text = info.phone
-            passwordCard.cardDescription.text = info.password
-        }
-    }
-
-    private fun setupTitlesAndIcons() {
-        binding.apply {
-            nameCard.apply {
-                cardTitle.text = getString(R.string.name)
-                cardImage.setImageResource(R.drawable.ic_edit)
-            }
-            birthdayCard.apply {
-                cardTitle.text = getString(R.string.birthday)
-                cardImage.setImageResource(R.drawable.ic_edit)
-            }
-            genderCard.apply {
-                cardTitle.text = getString(R.string.gender)
-                cardImage.setImageResource(R.drawable.ic_edit)
-            }
-    /*        diagnosisCard.apply {
-                cardTitle.text = getString(R.string.diagnosis)
-                cardImage.setImageResource(R.drawable.ic_edit)
-            } */
-            mailCard.apply {
-                cardTitle.text = getString(R.string.mail)
-                cardImage.setImageResource(R.drawable.ic_edit)
-            }
-            phoneCard.apply {
-                cardTitle.text = getString(R.string.phone)
-                cardImage.setImageResource(R.drawable.ic_edit)
-            }
-            passwordCard.apply {
-                cardTitle.text = getString(R.string.password)
-                cardImage.setImageResource(R.drawable.ic_edit)
-            }
-        }
-    }
 
     private fun setupListeners() {
         binding.apply {
-
-            nameCard.apply {
-                cardImage.setOnClickListener {
-
-                    childFragmentManager.setFragmentResultListener(
-                        EDIT_NAME, viewLifecycleOwner
-                    ) { _, bundle ->
-
-                        bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
-                            viewModel.changeName(newText)
-                            cardDescription.text = newText
-                        }
-                    }
-
-                    FragmentEditField.newInstance(
-                        cardTitle.text.toString(),
-                        cardDescription.text.toString()
-                    ).show(childFragmentManager, EDIT_NAME)
-                }
-            }
-
-            birthdayCard.cardImage.setOnClickListener {
-                val calendar = Calendar.getInstance()
-
-                val year = calendar.get(Calendar.YEAR)
-                val month = calendar.get(Calendar.MONTH)
-                val day = calendar.get(Calendar.DAY_OF_MONTH)
-                DatePickerDialog(requireContext(), {_, year, month, dayOfMonth->
-                    calendar.set(Calendar.YEAR, year)
-                    calendar.set(Calendar.MONTH, month)
-                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    viewModel.changeBirthday(calendar.timeInMillis)
-                    birthdayCard.cardDescription.text = Date(calendar.timeInMillis).toDateString()
-                }, year, month, day).show()
-
-
-
-            }
-
-            genderCard.apply {
-                cardImage.setOnClickListener {
-
-                    childFragmentManager.setFragmentResultListener(
-                        EDIT_GENDER, viewLifecycleOwner
-                    ) { _, bundle ->
-
-                        bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
-                            viewModel.changeGender(newText)
-                            cardDescription.text = newText
-                        }
-                    }
-
-                    FragmentEditField.newInstance(
-                        cardTitle.text.toString(),
-                        cardDescription.text.toString()
-                    ).show(childFragmentManager, EDIT_GENDER)
-                }
-            }
-
-     /*       diagnosisCard.apply {
-                cardImage.setOnClickListener {
-
-                    childFragmentManager.setFragmentResultListener(
-                        EDIT_DIAGNOSIS, viewLifecycleOwner
-                    ) { _, bundle ->
-
-                        bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
-                            viewModel.changeDiagnosis(newText)
-                            cardDescription.text = newText
-                        }
-                    }
-
-                    FragmentEditField.newInstance(
-                        cardTitle.text.toString(),
-                        cardDescription.text.toString()
-                    ).show(childFragmentManager, EDIT_DIAGNOSIS)
-                }
-            } */
 
             changeRequestButton.setOnClickListener {
 

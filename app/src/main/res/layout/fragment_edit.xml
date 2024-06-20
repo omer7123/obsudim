@@ -12,37 +12,10 @@
             android:id="@+id/include_toolbar"
             layout="@layout/include_simple_toolbar" />
 
-        <include
-            android:id="@+id/name_card"
-            layout="@layout/card_view_group"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/items_rw"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp" />
-
-        <include
-            android:id="@+id/birthday_card"
-            layout="@layout/card_view_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp" />
-
-        <include
-            android:id="@+id/gender_card"
-            layout="@layout/card_view_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp" />
-
-    <!--    <include
-            android:id="@+id/diagnosis_card"
-            layout="@layout/card_view_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp" /> -->
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,28 +47,28 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="10dp" />
 
-        <include
-            android:id="@+id/mail_card"
-            layout="@layout/card_view_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp" />
+        <!--        <include
+                    android:id="@+id/mail_card"
+                    layout="@layout/card_view_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="20dp" />
 
-        <include
-            android:id="@+id/phone_card"
-            layout="@layout/card_view_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp" />
+                <include
+                    android:id="@+id/phone_card"
+                    layout="@layout/card_view_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="20dp" />
 
-        <include
-            android:id="@+id/password_card"
-            layout="@layout/card_view_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="20dp" />
+                <include
+                    android:id="@+id/password_card"
+                    layout="@layout/card_view_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="20dp" /> -->
     </LinearLayout>
 </ScrollView>

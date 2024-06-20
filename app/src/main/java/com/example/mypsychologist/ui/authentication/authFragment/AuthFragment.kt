@@ -64,15 +64,14 @@ class AuthFragment : Fragment() {
     }
 
     private fun initListener() {
-        binding.registrationButton.setOnClickListener {
+        binding.authButton.setOnClickListener {
             val email = binding.mail.text.toString()
             val password = binding.password.text.toString()
 
             viewModel.auth(AuthModel(email, password))
         }
-
-        binding.toolbar.toolbar.setOnClickListener {
-            findNavController().popBackStack()
+        binding.toRegistrationButton.setOnClickListener {
+            findNavController().navigate(R.id.action_authFragment_to_registrationFragment)
         }
     }
 

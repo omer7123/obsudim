@@ -51,6 +51,7 @@ class RegisterViewModel @Inject constructor(
                 when (val result = registerUseCase(register)) {
                     is Resource.Error -> _stateScreen.value =
                         RegisterState.Error(result.msg.toString())
+
                     Resource.Loading -> _stateScreen.value = RegisterState.Loading
                     is Resource.Success -> {
                         saveToken(result)
