@@ -2,7 +2,7 @@ package com.example.mypsychologist.data.repository
 
 import android.net.Uri
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.data.converters.toUserInfo
+import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.data.remote.profile.UserDataSource
@@ -10,9 +10,6 @@ import com.example.mypsychologist.di.AppModule
 import com.example.mypsychologist.domain.entity.*
 import com.example.mypsychologist.domain.repository.ProfileRepository
 import com.example.mypsychologist.extensions.getTypedValue
-import com.example.mypsychologist.extensions.pmap
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +27,7 @@ class ProfileRepositoryImpl @Inject constructor(
     ProfileRepository {
 
     override suspend fun saveClient(info: ClientInfoEntity): Resource<String> =
-        dataSource.updateUser(info.toUserInfo(), Token(localDataSource.getToken()))
+        dataSource.updateUser(info.toEntity(), Token(localDataSource.getToken()))
 
 
 

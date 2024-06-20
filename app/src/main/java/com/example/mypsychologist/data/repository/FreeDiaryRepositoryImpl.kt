@@ -8,7 +8,9 @@ import com.example.mypsychologist.domain.repository.retrofit.FreeDiaryRepository
 import javax.inject.Inject
 
 class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDiaryDataSource): FreeDiaryRepository {
+
     override suspend fun getFreeDiaryList(): Resource<List<FreeDiary>> {
+
         return when (val result = dataSource.getFreeDiaryList()) {
             is Resource.Error -> Resource.Error(result.msg.toString(), null)
             Resource.Loading -> Resource.Loading

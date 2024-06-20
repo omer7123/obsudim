@@ -1,12 +1,10 @@
 package com.example.mypsychologist.ui.main
 
-import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -14,19 +12,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
 import com.example.mypsychologist.databinding.FragmentEditBinding
-import com.example.mypsychologist.domain.entity.ClientDataEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.extensions.toDateString
 import com.example.mypsychologist.presentation.main.EditScreenState
 import com.example.mypsychologist.presentation.main.EditViewModel
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.FragmentEditField
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.util.*
 import javax.inject.Inject
 
 class EditFragment : Fragment() {
@@ -98,15 +92,13 @@ class EditFragment : Fragment() {
                     EDIT_REQUEST, viewLifecycleOwner
                 ) { _, bundle ->
 
-                    bundle.getStringArray(ChipsFragment.CHIPS)?.let { request ->
+                    bundle.getStringArray(TagsFragment.TAGS)?.let { request ->
                         viewModel.changeRequest(request.toList())
                         setupChips(request.toList())
                     }
                 }
 
-                ChipsFragment.newInstance(
-                    resources.getStringArray(R.array.specializations)
-                ).show(childFragmentManager, EDIT_REQUEST)
+                TagsFragment.newInstance().show(childFragmentManager, EDIT_REQUEST)
             }
         }
     }

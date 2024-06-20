@@ -10,7 +10,7 @@ class UserDataSourceImpl @Inject constructor(private val api: UserService) :
     UserDataSource, BaseDataSource() {
     override suspend fun updateUser(info: UserInfoModel, token: Token): Resource<String> =
         getResult {
-            api.updateUser(info, token)
+            api.updateUser(info)
         }
 
 }
