@@ -5,6 +5,6 @@ import com.example.mypsychologist.domain.entity.FreeDiary
 
 interface FreeDiaryRepository {
 
-    suspend fun getFreeDiaryList(): Resource<List<String>>
+    suspend fun getFreeDiaryList(): Resource<List<FreeDiary>>
     suspend fun addFreeDiary(freeDiary: FreeDiary): Resource<String>
 }

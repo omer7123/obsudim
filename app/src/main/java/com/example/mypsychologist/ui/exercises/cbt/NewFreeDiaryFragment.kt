@@ -85,7 +85,7 @@ class NewFreeDiaryFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            viewModel.addDiary(FreeDiary(binding.field.text.toString()))
+//            viewModel.addDiary(FreeDiary(binding.field.text.toString()))
         }
 
         binding.includeToolbar.toolbar.setNavigationOnClickListener {

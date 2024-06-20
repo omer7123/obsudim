@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.authentication.authFragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -98,6 +99,7 @@ class AuthFragment : Fragment() {
     private fun renderError(msg: String) {
         binding.progressCircular.isVisible = false
         binding.content.isVisible = true
+        Log.e("fdf", msg)
         requireContext().showToast(msg)
     }
 
