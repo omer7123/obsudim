@@ -8,8 +8,8 @@ import retrofit2.http.POST
 interface DiaryService {
 
     @POST("/diary/writing_think_diary")
-    fun saveCBTDiary(@Body diary: CBTDiaryModel): Response<String>
+    suspend fun saveCBTDiary(@Body diary: CBTDiaryModel): Response<String>
 
     @POST("/diary/reading_think_diary")
-    fun getCBTDiaryRecord(@Body think_diary_id: String): Response<CBTDiaryModel>
+    suspend fun getCBTDiaryRecord(@Body think_diary_id: String): Response<CBTDiaryModel>
 }

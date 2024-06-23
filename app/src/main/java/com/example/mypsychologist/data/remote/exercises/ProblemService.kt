@@ -7,5 +7,5 @@ import retrofit2.http.POST
 
 interface ProblemService {
     @POST("/problem/new_problem")
-    fun saveNewProblem(@Body problem: ProblemModel): Response<String>
+    suspend fun saveNewProblem(@Body problem: ProblemModel): Response<String>
 }

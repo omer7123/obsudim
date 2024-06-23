@@ -7,8 +7,8 @@ import retrofit2.http.POST
 
 interface BeliefService {
     @POST("/belief/save_belief_check")
-    fun saveBeliefCheck(@Body it: BeliefCheckModel): Response<String>
+    suspend fun saveBeliefCheck(@Body it: BeliefCheckModel): Response<String>
 
     @POST("/belief/get_belief_check")
-    fun getBeliefCheck(@Body intermediate_conviction_id: String): Response<String>
+    suspend fun getBeliefCheck(@Body intermediate_conviction_id: String): Response<BeliefCheckModel>
 }
