@@ -122,17 +122,7 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override suspend fun newTask(task: String, clientId: String): String =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-
-            val psychologistId = getOwnPsychologistId()
-
-            val ref = Firebase.database(AppModule.URL).reference.child(clientId)
-                .child(PsychologistRepositoryImpl.TASKS).child(psychologistId)
-
-            val key = ref.push().key!!
-
-            ref.child(key).setValue(TaskEntity(text = task, psychologistId = psychologistId))
-
-            key
+            ""
         }
 
 

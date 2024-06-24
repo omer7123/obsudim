@@ -9,5 +9,6 @@ data class TaskModel(
     @Json(name = "test_title")
     val testTitle: String,
     @Json(name = "text_id")
-    val testId: String
+    val testId: String,
+    val isCompleted: Boolean
 )

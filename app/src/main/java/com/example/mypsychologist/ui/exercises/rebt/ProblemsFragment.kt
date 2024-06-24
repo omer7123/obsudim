@@ -57,7 +57,7 @@ class ProblemsFragment : BottomSheetDialogFragment() {
             childFragmentManager.setFragmentResultListener(
                 NewProblemFragment.NEW_PROBLEM, viewLifecycleOwner
             ) { _, bundle ->
-                viewModel.add(bundle.getString(NewProblemFragment.TITLE)!!, bundle.getString(NewProblemFragment.ID)!!)
+                viewModel.add(bundle.getString(NewProblemFragment.TITLE)!!, "", bundle.getString(NewProblemFragment.ID)!!)
             }
 
             NewProblemFragment().show(childFragmentManager, TAG)

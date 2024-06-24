@@ -9,5 +9,5 @@ data class BeliefCheckModel(
     val consistency: String,
     val benefit: String,
     @Json(name = "intermediate_conviction_id")
-    val beliefId: String
+    val beliefId: String = ""
 )

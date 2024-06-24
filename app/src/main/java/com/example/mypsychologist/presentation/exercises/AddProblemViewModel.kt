@@ -21,12 +21,12 @@ class AddProblemViewModel(private val saveProblemUseCase: SaveProblemUseCase) : 
 
     val moods = mutableListOf<String>()
 
-    fun tryToSave(problem: String) {
+    fun tryToSave(problem: String, goal: String) {
         viewModelScope.launch {
             _screenState.value =
-                if (problem.isNotEmpty() && moods.isNotEmpty()) {
+                if (problem.isNotEmpty()) {
                     try {
-                        NewProblemScreenState.Success(saveProblemUseCase(ProblemEntity(problem, moods)))
+                        NewProblemScreenState.Success(saveProblemUseCase(ProblemEntity(problem, goal = goal)))
                     } catch (t: Throwable) {
                         NewProblemScreenState.Error
                     }

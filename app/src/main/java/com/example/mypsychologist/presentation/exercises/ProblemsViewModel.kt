@@ -34,9 +34,9 @@ class ProblemsViewModel(getProblemsUseCase: GetProblemsUseCase, private val chan
         }
     }
 
-    fun add(problem: String, id: String) {
+    fun add(problem: String, goal: String, id: String) {
         val newMap = HashMap((screenState.value as ProblemsScreenState.Data).problems)
-        newMap[id] = ProblemEntity(problem)
+        newMap[id] = ProblemEntity(problem, goal = goal)
         _screenState.value = ProblemsScreenState.Data(newMap)
     }
 

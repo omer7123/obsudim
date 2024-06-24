@@ -81,7 +81,7 @@ class NewProblemFragment : BottomSheetDialogFragment() {
 
     private fun setupListeners() {
         binding.saveButton.setOnClickListener {
-            viewModel.tryToSave(binding.problemField.text.toString())
+            viewModel.tryToSave(binding.problemField.text.toString(), "")       // цель
         }
         binding.cancelButton.setOnClickListener {
             dismiss()

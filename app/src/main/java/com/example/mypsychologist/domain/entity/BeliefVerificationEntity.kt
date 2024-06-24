@@ -3,7 +3,8 @@ package com.example.mypsychologist.domain.entity
 data class BeliefVerificationEntity(
     val truthfulness: String = "",
     val consistency: String = "",
-    val benefit: String = ""
+    val benefit: String = "",
+    val beliefId: String = ""
 )
 
 fun BeliefVerificationEntity.getMapOfMembers() =

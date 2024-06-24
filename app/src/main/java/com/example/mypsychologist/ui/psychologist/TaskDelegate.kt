@@ -39,7 +39,7 @@ class TaskDelegate(private val check: (String, String, Boolean) -> Unit) : Adapt
                 binding.checkBox.isChecked = true
 
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
-                check(item.first, item.second.psychologistId, isChecked)
+                check(item.first, item.second.userId, isChecked)
             }
         }
     }
