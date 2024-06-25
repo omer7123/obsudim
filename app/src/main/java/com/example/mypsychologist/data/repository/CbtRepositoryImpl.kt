@@ -1,5 +1,10 @@
 package com.example.mypsychologist.data.repository
 
+import android.util.Log
+import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.converters.toEntity
+import com.example.mypsychologist.data.converters.toModel
+import com.example.mypsychologist.data.remote.exercises.DiaryDataSource
 import com.example.mypsychologist.di.AppModule
 import com.example.mypsychologist.domain.entity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
@@ -13,7 +18,10 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class CbtRepositoryImpl @Inject constructor(private val reference: DatabaseReference) :
+class CbtRepositoryImpl @Inject constructor(
+    private val diaryDataSource: DiaryDataSource,
+    private val reference: DatabaseReference
+) :
     CbtRepository {
 
     override suspend fun getThoughtDiaries(): HashMap<String, String> =
@@ -31,6 +39,7 @@ class CbtRepositoryImpl @Inject constructor(private val reference: DatabaseRefer
                 }
 
         }
+
     override suspend fun getFreeDiaries(): HashMap<String, String> =
         suspendCoroutine { continuation ->
 
@@ -62,6 +71,7 @@ class CbtRepositoryImpl @Inject constructor(private val reference: DatabaseRefer
                     continuation.resumeWithException(it)
                 }
         }
+
     override suspend fun getFreeDiariesFor(clientId: String): HashMap<String, String> =
         suspendCoroutine { continuation ->
 
@@ -78,21 +88,17 @@ class CbtRepositoryImpl @Inject constructor(private val reference: DatabaseRefer
                 }
         }
 
-    override suspend fun getThoughtDiary(id: String): ThoughtDiaryEntity =
-        suspendCoroutine { continuation ->
-
-            reference.child(ThoughtDiaryEntity::class.simpleName!!).child(id).get()
-                .addOnSuccessListener {
-                    continuation.resume(
-                        it.getValue(object : GenericTypeIndicator<ThoughtDiaryEntity>() {})
-                            ?: ThoughtDiaryEntity()
-                    )
-                }
-                .addOnFailureListener {
-                    continuation.resumeWithException(it)
-                }
-
+    override suspend fun getThoughtDiary(id: String): Resource<ThoughtDiaryEntity> =
+        when(val result = diaryDataSource.getCBTDiaryRecord(id)) {
+            is Resource.Error -> {
+                Log.d("Diary Error", result.msg.toString())
+                Resource.Error(result.msg.toString(), null)
+            }
+            is Resource.Loading -> Resource.Loading
+            is Resource.Success ->
+                Resource.Success(result.data.toEntity())
         }
+
 
     override suspend fun getThoughtDiaryFor(clientId: String, id: String): ThoughtDiaryEntity =
         suspendCoroutine { continuation ->
@@ -112,18 +118,15 @@ class CbtRepositoryImpl @Inject constructor(private val reference: DatabaseRefer
         }
 
 
-    override fun saveThoughtDiary(it: ThoughtDiaryEntity): Boolean =
-        try {
-            val ref = reference.child(ThoughtDiaryEntity::class.simpleName!!)
-            val key = ref.push().key
-
-            ref.child(key!!).setValue(it)
-
-            reference.child(THOUGHT_DIARIES_LIST).child(key).setValue(it.situation)
-
-            true
-        } catch (t: Throwable) {
-            false
+    override suspend fun saveThoughtDiary(it: ThoughtDiaryEntity): Resource<String> =
+        when(val result = diaryDataSource.save(it.toModel())) {
+            is Resource.Error -> {
+                Log.d("Diary Error", result.msg.toString())
+                Resource.Error(result.msg.toString(), null)
+            }
+            is Resource.Loading -> Resource.Loading
+            is Resource.Success ->
+                Resource.Success(result.data)
         }
 
     override fun saveFreeDiary(it: FreeDiaryEntity): Boolean =
@@ -139,6 +142,7 @@ class CbtRepositoryImpl @Inject constructor(private val reference: DatabaseRefer
         } catch (t: Throwable) {
             false
         }
+
     override fun editAutoThought(diaryId: String, newText: String): Boolean =
         try {
             reference.child(ThoughtDiaryEntity::class.simpleName!!)

@@ -1,5 +1,6 @@
 package com.example.mypsychologist.domain.repository
 
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.DiaryRecordEntity
 import com.example.mypsychologist.domain.entity.FreeDiaryEntity
@@ -11,10 +12,10 @@ interface CbtRepository {
     suspend fun getFreeDiaries(): HashMap<String, String>
 
 
-    suspend fun getThoughtDiary(id: String): ThoughtDiaryEntity
+    suspend fun getThoughtDiary(id: String): Resource<ThoughtDiaryEntity>
 
 
-    fun saveThoughtDiary(it: ThoughtDiaryEntity): Boolean
+    suspend fun saveThoughtDiary(it: ThoughtDiaryEntity): Resource<String>
     fun editAutoThought(diaryId: String, newText: String): Boolean
     fun editAlternativeThought(diaryId: String, newText: String): Boolean
     suspend fun getThoughtDiaryFor(clientId: String, id: String): ThoughtDiaryEntity

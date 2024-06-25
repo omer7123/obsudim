@@ -11,6 +11,7 @@ import com.example.mypsychologist.domain.useCase.SaveThoughtDiaryUseCase
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.IntDelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegateItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -66,9 +67,11 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
     }
 
     fun tryToSaveDiary() {
-        if (fieldsAreCorrect()) {
-            _screenState.value =
-                NewThoughtDiaryScreenState.RequestResult(saveThoughtDiaryUseCase(diary))
+        viewModelScope.launch(Dispatchers.IO) {
+            if (fieldsAreCorrect()) {
+                _screenState.value =
+                    NewThoughtDiaryScreenState.RequestResult(saveThoughtDiaryUseCase(diary))
+            }
         }
     }
 
@@ -185,4 +188,8 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
             ::newMood.name to R.string.new_mood,
             ::newLevel.name to R.string.new_level.toString()
         )
+
+    companion object {
+
+    }
 }
