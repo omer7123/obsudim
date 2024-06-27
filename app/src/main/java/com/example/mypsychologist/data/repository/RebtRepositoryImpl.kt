@@ -1,5 +1,11 @@
 package com.example.mypsychologist.data.repository
 
+import android.util.Log
+import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.converters.toEntity
+import com.example.mypsychologist.data.converters.toModel
+import com.example.mypsychologist.data.remote.exercises.BeliefsDataSource
+import com.example.mypsychologist.data.remote.exercises.ProblemDataSource
 import com.example.mypsychologist.domain.entity.AutoDialogMessageEntity
 import com.example.mypsychologist.domain.entity.BeliefAnalysisEntity
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
@@ -17,11 +23,16 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseReference) :
+class RebtRepositoryImpl @Inject constructor(
+    private val beliefsDataSource: BeliefsDataSource,
+    private val problemDataSource: ProblemDataSource,
+    private val reference: DatabaseReference
+) :
     RebtRepository {
 
     override suspend fun getREBTProblemProgress(problemId: String): RebtProblemProgressEntity? =
         suspendCoroutine { continuation ->
+            TODO()
             reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId).get()
                 .addOnSuccessListener { snapshot ->
                     continuation.resume(snapshot.getTypedValue())
@@ -33,16 +44,17 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
 
     override suspend fun getCurrentREBTProblemProgress(): RebtProblemProgressEntity? =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            TODO()
             try {
                 getREBTProblemProgress(getCurrentProblemId()!!)
-            }
-            catch (t: Throwable) {
+            } catch (t: Throwable) {
                 null
             }
         }
 
     private suspend fun getCurrentProblemId(): String? =
         suspendCoroutine { continuation ->
+            TODO()
             reference.child(CURRENT_REBT_PROBLEM).get()
                 .addOnSuccessListener {
                     continuation.resume(it.getTypedValue())
@@ -54,6 +66,7 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
 
     override suspend fun getREBTProblems(): HashMap<String, ProblemEntity> =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            TODO()
             val currentProblem = getCurrentProblemId()
             HashMap(
                 loadProblems().map {
@@ -64,6 +77,7 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
 
     private suspend fun loadProblems(): HashMap<String, ProblemEntity> =
         suspendCoroutine { continuation ->
+            TODO()
             reference.child(ProblemEntity::class.simpleName!!).get()
                 .addOnSuccessListener { snapshot ->
                     continuation.resume(snapshot.getTypedValue() ?: HashMap())
@@ -74,20 +88,11 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
         }
 
     override suspend fun saveProblem(problemEntity: ProblemEntity) =
-        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            val ref = reference.child(ProblemEntity::class.simpleName!!)
-            val key = ref.push().key!!
-
-            ref.child(key).setValue(problemEntity)
-
-            reference.child(RebtProblemProgressEntity::class.simpleName!!).child(key)
-                .setValue(RebtProblemProgressEntity(problem = problemEntity.title))
-
-            key
-        }
+        problemDataSource.save(problemEntity.toModel())
 
     override suspend fun saveCurrentProblem(id: String): Boolean =
         try {
+            TODO()
             reference.child(CURRENT_REBT_PROBLEM).setValue(id)
             true
         } catch (t: Throwable) {
@@ -132,58 +137,26 @@ class RebtRepositoryImpl @Inject constructor(private val reference: DatabaseRefe
     override suspend fun saveBeliefVerification(
         it: BeliefVerificationEntity,
         type: String
-    ): Boolean =
-        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            try {
-                val problemId = getCurrentProblemId()!!
-                reference.child(BeliefVerificationEntity::class.simpleName!!).child(problemId)
-                    .child(type).setValue(it)
+    ): Resource<String> =
+        beliefsDataSource.save(it.toModel())
 
-                reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
-                    .child(RebtProblemProgressEntity::beliefsCheckCompleted.name)
-                    .setValue(true)    // косяк
-
-                true
-            } catch (t: Throwable) {
-                false
+    override suspend fun getBeliefVerification(problemId: String): Resource<BeliefVerificationEntity> = run {
+        when(val result = beliefsDataSource.getBeliefCheck(problemId)) {
+            is Resource.Error -> {
+                Log.d("Belied check Error", result.msg.toString())
+                Resource.Error(result.msg.toString(), null)
             }
+            is Resource.Loading -> Resource.Loading
+            is Resource.Success ->
+                Resource.Success(result.data.toEntity())
         }
+    }
 
-    override suspend fun getBeliefVerification(type: String): BeliefVerificationEntity =
+
+
+    override suspend fun saveBeliefAnalysis(it: BeliefAnalysisEntity, type: String): Resource<String> =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            loadBeliefVerification(getCurrentProblemId()!!, type)
-        }
-
-    private suspend fun loadBeliefVerification(
-        problemId: String,
-        type: String
-    ): BeliefVerificationEntity =
-        suspendCoroutine { continuation ->
-            reference.child(BeliefVerificationEntity::class.simpleName!!).child(problemId)
-                .child(type).get()
-                .addOnSuccessListener { snapshot ->
-                    continuation.resume(snapshot.getTypedValue() ?: BeliefVerificationEntity())
-                }
-                .addOnFailureListener {
-                    continuation.resumeWithException(it)
-                }
-        }
-
-    override suspend fun saveBeliefAnalysis(it: BeliefAnalysisEntity, type: String): Boolean =
-        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            try {
-                val problemId = getCurrentProblemId()!!
-                reference.child(BeliefAnalysisEntity::class.simpleName!!).child(problemId)
-                    .child(type).setValue(it)
-
-                reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId)
-                    .child(RebtProblemProgressEntity::beliefsAnalysisCompleted.name)
-                    .setValue(true) // косяк
-
-                true
-            } catch (t: Throwable) {
-                false
-            }
+            TODO()
         }
 
     override suspend fun getBeliefAnalysis(type: String): BeliefAnalysisEntity =

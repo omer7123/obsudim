@@ -14,6 +14,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentBeliefVerificationBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
@@ -119,13 +120,17 @@ class BeliefAnalysisFragment : Fragment() {
                 mainAdapter.submitList(state.listWithErrors)
             }
             is BeliefVerificationScreenState.Init -> Unit
+            is BeliefVerificationScreenState.Error -> {
+                requireContext().showToast(state.message)
+            }
         }
     }
 
-    private fun renderRequest(isSuccess: Boolean) {
+    private fun renderRequest(resource: Resource<String>) {
 
         when {
-            !isSuccess -> {
+
+         /*   !isSuccess -> {
                 requireContext().showToast(getString(R.string.db_error))
             }
 
@@ -142,7 +147,7 @@ class BeliefAnalysisFragment : Fragment() {
             else -> {
                 setResult()
                 requireContext().showToast(getString(R.string.success))
-            }
+            } */
         }
     }
 

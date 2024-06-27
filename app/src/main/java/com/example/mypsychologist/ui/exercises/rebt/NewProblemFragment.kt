@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.mypsychologist.R
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.AddProblemBottomSheetBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
@@ -90,28 +91,8 @@ class NewProblemFragment : BottomSheetDialogFragment() {
 
     private fun render(state: NewProblemScreenState) {
         when (state) {
-            is NewProblemScreenState.Success -> {
-                requireContext().showToast(getString(R.string.success))
-
-                setFragmentResult(
-                    NEW_PROBLEM, bundleOf(
-                        ID to state.id,
-                        TITLE to binding.problemField.text.toString()
-                    )
-                )
-
-                dismiss()
-            }
-
-            is NewProblemScreenState.Error -> {
-                requireContext().showToast(
-                    getString(
-                        if (isNetworkConnect())
-                            R.string.db_error
-                        else
-                            R.string.network_error
-                    )
-                )
+            is NewProblemScreenState.Result -> {
+                render(state.id)
             }
 
             is NewProblemScreenState.ValidationError -> {
@@ -122,6 +103,34 @@ class NewProblemFragment : BottomSheetDialogFragment() {
             }
 
             is NewProblemScreenState.Init -> Unit
+        }
+    }
+
+    private fun render(resource: Resource<String>) {
+        when (resource) {
+            is Resource.Loading -> {}
+            is Resource.Success -> {
+                requireContext().showToast(getString(R.string.success))
+
+                setFragmentResult(
+                    NEW_PROBLEM, bundleOf(
+                        ID to resource.data,
+                        TITLE to binding.problemField.text.toString()
+                    )
+                )
+
+                dismiss()
+            }
+            is Resource.Error -> {
+                requireContext().showToast(
+                    getString(
+                        if (isNetworkConnect())
+                            R.string.db_error
+                        else
+                            R.string.network_error
+                    )
+                )
+            }
         }
     }
 

@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentNewThoughtDiaryBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
@@ -102,7 +103,7 @@ class FragmentNewCBTDiary : Fragment() {
     private fun render(state: NewThoughtDiaryScreenState) {
         when (state) {
             is NewThoughtDiaryScreenState.RequestResult -> {
-                renderRequest(state.success)
+                renderRequest(state.resource)
             }
             is NewThoughtDiaryScreenState.ValidationError -> {
                 mainAdapter.submitList(state.listWithErrors)
@@ -111,25 +112,17 @@ class FragmentNewCBTDiary : Fragment() {
         }
     }
 
-    private fun renderRequest(isSuccess: Boolean) {
+    private fun renderRequest(resource: Resource<String>) {
 
-        when {
-            !isSuccess -> {
-                requireContext().showToast(getString(R.string.db_error))
+        when(resource) {
+            is Resource.Error -> {
+                requireContext().showToast(resource.msg.toString())
             }
-            !isNetworkConnect() -> {
-                Snackbar.make(
-                    binding.coordinator,
-                    R.string.save_after_connect,
-                    Snackbar.LENGTH_LONG
-                ).setAction(R.string.go) {
-                    findNavController().popBackStack()
-                }.show()
-            }
-            else -> {
+            is Resource.Success -> {
                 findNavController().popBackStack()
                 requireContext().showToast(getString(R.string.success))
             }
+            is Resource.Loading -> Unit
         }
     }
 

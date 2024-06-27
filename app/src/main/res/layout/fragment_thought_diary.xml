@@ -6,69 +6,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-    <include
-        android:id="@+id/include_toolbar"
-        layout="@layout/include_simple_toolbar" />
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/include_simple_toolbar" />
 
-    <include
-        android:id="@+id/include_situation"
-        layout="@layout/card_view_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp" />
+        <include
+            android:id="@+id/include_situation"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp" />
 
-    <include
-        android:id="@+id/include_mood"
-        layout="@layout/card_view_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp" />
+        <include
+            android:id="@+id/include_mood"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp" />
 
-    <include
-        android:id="@+id/include_auto_thought"
-        layout="@layout/card_view_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp" />
+        <include
+            android:id="@+id/include_auto_thought"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp" />
 
-    <include
-        android:id="@+id/include_proofs"
-        layout="@layout/card_view_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp" />
+        <include
+            android:id="@+id/include_proofs"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp" />
 
-    <include
-        android:id="@+id/include_refutations"
-        layout="@layout/card_view_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp" />
+        <include
+            android:id="@+id/include_refutations"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp" />
 
-    <include
-        android:id="@+id/include_alternative_thought"
-        layout="@layout/card_view_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp" />
+        <include
+            android:id="@+id/include_alternative_thought"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp" />
 
-    <include
-        android:id="@+id/include_new_mood"
-        layout="@layout/card_view_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="20dp" />
-</LinearLayout>
-    </ScrollView>
+        <include
+            android:id="@+id/include_new_mood"
+            layout="@layout/card_view_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="20dp" />
+    </LinearLayout>
+</ScrollView>
 
     <!--    <TextView
             android:id="@+id/level_title"

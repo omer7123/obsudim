@@ -11,6 +11,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.*
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentThoughtDiaryBinding
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.extensions.getAppComponent
@@ -36,7 +37,7 @@ class FragmentThoughtDiary : Fragment() {
         ThoughtDiaryViewModel.provideFactory(
             vmFactory,
             requireArguments().getString(ID, ""),
-            requireArguments().getString(ExercisesFragment.CLIENT_ID, "")
+            //requireArguments().getString(ExercisesFragment.CLIENT_ID, "")
         )
     }
 
@@ -91,7 +92,7 @@ class FragmentThoughtDiary : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.includeAutoThought.cardImage.setOnClickListener {
+    /*    binding.includeAutoThought.cardImage.setOnClickListener {
 
             childFragmentManager.setFragmentResultListener(
                 EDIT_AUTO_THOUGHT, viewLifecycleOwner
@@ -124,29 +125,26 @@ class FragmentThoughtDiary : Fragment() {
                 binding.includeAlternativeThought.cardTitle.text.toString(),
                 binding.includeAlternativeThought.cardDescription.text.toString()
             ).show(childFragmentManager, EDIT_ALTERNATIVE_THOUGHT)
-        }
+        } */
     }
 
-    private fun render(it: ThoughtDiaryScreenState) {
+    private fun render(it: Resource<ThoughtDiaryEntity>) {
         when (it) {
-            is ThoughtDiaryScreenState.Data -> {
-                setupRecords(it.diary)
+            is Resource.Success -> {
+                setupRecords(it.data)
             }
-            is ThoughtDiaryScreenState.Init -> {}
-            is ThoughtDiaryScreenState.Loading -> {
+            is Resource.Error -> {
                 if (!isNetworkConnect()) {
-                    requireContext().showToast(getString(R.string.network_error))
+                    requireContext().showToast(it.msg.toString())
                 }
             }
-            is ThoughtDiaryScreenState.Error -> {
-                requireContext().showToast(getString(R.string.db_error))
-            }
-            is ThoughtDiaryScreenState.EditingSuccess -> {
+            is Resource.Loading -> {}
+        /*    is ThoughtDiaryScreenState.EditingSuccess -> {
                 if (isNetworkConnect())
                     requireContext().showToast(getString(R.string.success))
                 else
                     requireContext().showToast(getString(R.string.network_error))
-            }
+            } */
         }
     }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
@@ -46,18 +47,31 @@ class BeliefVerificationViewModel @AssistedInject constructor(
     }
 
     private suspend fun getSavedVerification() {
-        beliefsVerification = getBeliefVerificationUseCase(type)
+        _screenState.value =
+            when (val result = getBeliefVerificationUseCase(type)) {
+                is Resource.Success -> {
+                    beliefsVerification = result.data
 
-        beliefsVerification.getMapOfMembers().forEach { (key, value) ->
+                    beliefsVerification.getMapOfMembers().forEach { (key, value) ->
 
-            _items = items.map {
-                if (it.content().fieldName == key) ThoughtDiaryDelegateItem(
-                    it.content().copy(text = value)
-                ) else it
-            }.toMutableList()
-        }
+                        _items = items.map {
+                            if (it.content().fieldName == key) ThoughtDiaryDelegateItem(
+                                it.content().copy(text = value)
+                            ) else it
+                        }.toMutableList()
+                    }
 
-        _screenState.value = BeliefVerificationScreenState.Data(items)
+                    BeliefVerificationScreenState.Data(items)
+                }
+
+                is Resource.Loading -> {
+                    BeliefVerificationScreenState.Loading
+                }
+
+                is Resource.Error -> {
+                    BeliefVerificationScreenState.Error(result.msg.toString())
+                }
+            }
     }
 
     fun tryToSaveBeliefVerification(type: String) {

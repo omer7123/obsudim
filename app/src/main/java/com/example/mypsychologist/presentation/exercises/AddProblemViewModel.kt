@@ -25,11 +25,8 @@ class AddProblemViewModel(private val saveProblemUseCase: SaveProblemUseCase) : 
         viewModelScope.launch {
             _screenState.value =
                 if (problem.isNotEmpty()) {
-                    try {
-                        NewProblemScreenState.Success(saveProblemUseCase(ProblemEntity(problem, goal = goal)))
-                    } catch (t: Throwable) {
-                        NewProblemScreenState.Error
-                    }
+                    NewProblemScreenState.Result(saveProblemUseCase(ProblemEntity(problem, goal = goal)))
+
                 } else {
                     NewProblemScreenState.ValidationError(problem.isNotEmpty(), moods.isNotEmpty())
                 }

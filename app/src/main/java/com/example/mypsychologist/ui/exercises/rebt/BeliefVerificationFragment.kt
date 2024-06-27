@@ -14,6 +14,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentBeliefVerificationBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
@@ -108,9 +109,10 @@ class BeliefVerificationFragment : Fragment() {
                 binding.progressBar.isVisible = false
                 mainAdapter.submitList(state.saved)
             }
+
             is BeliefVerificationScreenState.RequestResult -> {
                 binding.progressBar.isVisible = false
-                renderRequest(state.success)
+                render(state.success)
             }
 
             is BeliefVerificationScreenState.ValidationError -> {
@@ -118,30 +120,31 @@ class BeliefVerificationFragment : Fragment() {
             }
 
             is BeliefVerificationScreenState.Init -> Unit
+            is BeliefVerificationScreenState.Error -> {
+                requireContext().showToast(state.message)
+            }
         }
     }
 
-    private fun renderRequest(isSuccess: Boolean) {
+    private fun render(resource: Resource<String>) {
 
-        when {
-            !isSuccess -> {
-                requireContext().showToast(getString(R.string.db_error))
-            }
+        when (resource) {
 
-            !isNetworkConnect() -> {
-                Snackbar.make(
-                    binding.coordinator,
-                    R.string.save_after_connect,
-                    Snackbar.LENGTH_LONG
-                ).setAction(R.string.go) {
-                    setResult()
-                }.show()
-            }
-
-            else -> {
-                setResult()
+            is Resource.Loading -> {}
+            is Resource.Success -> {
                 requireContext().showToast(getString(R.string.success))
             }
+            is Resource.Error -> {
+                requireContext().showToast(
+                    getString(
+                        if (isNetworkConnect())
+                            R.string.db_error
+                        else
+                            R.string.network_error
+                    )
+                )
+            }
+
         }
     }
 
