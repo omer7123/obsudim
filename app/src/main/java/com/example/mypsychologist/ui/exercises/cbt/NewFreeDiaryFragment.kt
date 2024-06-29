@@ -6,10 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,20 +15,15 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentNewFreeDiaryBinding
-import com.example.mypsychologist.domain.entity.FreeDiary
-import com.example.mypsychologist.domain.entity.FreeDiaryEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 import com.example.mypsychologist.extensions.bounce
 import com.example.mypsychologist.extensions.expand
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.extensions.shrink
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
-import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryViewModel
-import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
-import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -85,7 +78,7 @@ class NewFreeDiaryFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-//            viewModel.addDiary(FreeDiary(binding.field.text.toString()))
+            viewModel.addDiary(NewFreeDiaryEntity(binding.field.text.toString()))
         }
 
         binding.includeToolbar.toolbar.setNavigationOnClickListener {

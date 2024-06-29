@@ -3,7 +3,7 @@ package com.example.mypsychologist.presentation.exercises
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.domain.entity.FreeDiary
+import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.freeDiaryUseCase.AddFreeDiaryUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +20,7 @@ class NewFreeDiaryViewModel @Inject constructor(private val addFreeDiaryUseCase:
         get() = _screenState.asStateFlow()
 
 
-    fun addDiary(diary: FreeDiary) {
+    fun addDiary(diary: NewFreeDiaryEntity) {
         if (diary.text.isNotEmpty()) {
             viewModelScope.launch {
                 _screenState.value =

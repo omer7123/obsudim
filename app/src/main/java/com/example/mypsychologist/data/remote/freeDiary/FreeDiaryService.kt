@@ -1,7 +1,8 @@
 package com.example.mypsychologist.data.remote.freeDiary
 
 import com.example.mypsychologist.data.model.FreeDiaryModel
-import com.example.mypsychologist.domain.entity.FreeDiary
+import com.example.mypsychologist.data.model.NewFreeDiaryModel
+import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -13,5 +14,5 @@ interface FreeDiaryService {
     suspend fun getFreeDiaryList(): Response<List<FreeDiaryModel>>
 
     @POST("/diary/writing_free_diary")
-    suspend fun addFreeDiary(@Body freeDiary: FreeDiary): Response<String>
+    suspend fun addFreeDiary(@Body freeDiary: NewFreeDiaryModel): Response<String>
 }

@@ -6,7 +6,7 @@ import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.remote.exercises.DiaryDataSource
 import com.example.mypsychologist.di.AppModule
-import com.example.mypsychologist.domain.entity.FreeDiaryEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.repository.CbtRepository
 import com.google.firebase.database.DatabaseReference
@@ -129,14 +129,14 @@ class CbtRepositoryImpl @Inject constructor(
                 Resource.Success(result.data)
         }
 
-    override fun saveFreeDiary(it: FreeDiaryEntity): Boolean =
+    override fun saveFreeDiary(it: NewFreeDiaryEntity): Boolean =
         try {
-            val ref = reference.child(FreeDiaryEntity::class.simpleName!!)
-            val key = ref.push().key
-
-            ref.child(key!!).setValue(it)
-
-            reference.child(FREE_DIARIES_LIST).child(key).setValue(it.situation)
+//            val ref = reference.child(FreeDiaryEntity::class.simpleName!!)
+//            val key = ref.push().key
+//
+//            ref.child(key!!).setValue(it)
+//
+//            reference.child(FREE_DIARIES_LIST).child(key).setValue(it.text)
 
             true
         } catch (t: Throwable) {

@@ -39,7 +39,6 @@ class FreeDiaryFragment : Fragment() {
     private var binding: FragmentFreeDiaryBinding by autoCleared()
     private lateinit var adapter: MainAdapter
 
-
     @Inject
     lateinit var viewModelFactory: MultiViewModelFactory
     private val viewModel: FreeDiariesViewModel by lazy {
@@ -57,9 +56,7 @@ class FreeDiaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFreeDiaryBinding.inflate(layoutInflater)
-
         setupToolbarAndFAB()
-
         setupAdapter()
 
         viewModel.screenState
@@ -84,7 +81,6 @@ class FreeDiaryFragment : Fragment() {
         binding.newDiaryFab.setOnClickListener {
             findNavController().navigate(R.id.newFreeDiaryFragment)
         }
-
     }
 
     private fun setupAdapter() {

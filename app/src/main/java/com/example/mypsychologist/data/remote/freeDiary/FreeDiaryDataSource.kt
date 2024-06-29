@@ -2,9 +2,9 @@ package com.example.mypsychologist.data.remote.freeDiary
 
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.FreeDiaryModel
-import com.example.mypsychologist.domain.entity.FreeDiary
+import com.example.mypsychologist.data.model.NewFreeDiaryModel
 
 interface FreeDiaryDataSource {
-    suspend fun getFreeDiaryList(): Resource<List<FreeDiaryModel>>
-    suspend fun addFreeDiary(freeDiary: FreeDiary): Resource<String>
+    suspend fun getFreeDiaries(): Resource<List<FreeDiaryModel>>
+    suspend fun addFreeDiary(freeDiary: NewFreeDiaryModel): Resource<String>
 }

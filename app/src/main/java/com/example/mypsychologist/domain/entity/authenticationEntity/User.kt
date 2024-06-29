@@ -1,6 +1,5 @@
 package com.example.mypsychologist.domain.entity.authenticationEntity
 
-import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 data class Auth(
@@ -15,7 +14,6 @@ data class Register(
 
 @Serializable
 data class User(
-    @SerializedName("user_id")
     val user_id: String,
     val email: String,
     val username: String,
