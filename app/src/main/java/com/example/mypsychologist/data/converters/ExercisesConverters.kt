@@ -21,22 +21,24 @@ fun CBTDiaryModel.toEntity() =
         autoThought,
         proofs,
         refutations,
-        alternativeThought,
+        "alternativeThought",
         newMood,
         newLevel
     )
 
 fun ThoughtDiaryEntity.toModel() =
     CBTDiaryModel(
+        "string",
         situation,
         mood,
         level,
         autoThought,
         proofs,
         refutations,
-        alternativeThought,
+     //   alternativeThought,
         newMood,
-        newLevel
+        newLevel,
+        behaviour
     )
 
 fun ProblemModel.toEntity() =

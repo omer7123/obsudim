@@ -17,11 +17,8 @@ import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.presentation.exercises.ThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.ThoughtDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.FragmentEditField
-import com.example.mypsychologist.ui.psychologist.ExercisesFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

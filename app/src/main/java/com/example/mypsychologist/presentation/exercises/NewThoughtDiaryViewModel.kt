@@ -32,6 +32,10 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
         diary = diary.copy(situation = it)
     }
 
+    private fun setBehaviour(it: String) {
+        diary = diary.copy(behaviour = it)
+    }
+
     private fun setMood(it: String) {
         diary = diary.copy(mood = it)
     }
@@ -113,6 +117,14 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
                 R.string.situation_helper,
                 R.string.situation_help,
                 ::setSituation
+            )
+        ),
+        ThoughtDiaryDelegateItem(
+            ThoughtDiaryItemEntity(
+                R.string.behaviour,
+                R.string.behaviour_helper,
+                R.string.behaviour_help,
+                ::setBehaviour
             )
         ),
         ThoughtDiaryDelegateItem(

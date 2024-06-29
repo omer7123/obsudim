@@ -12,7 +12,8 @@ data class ThoughtDiaryEntity(
     val refutations: String = "",
     val alternativeThought: String = "",
     val newMood: String = "",
-    val newLevel: Int = 0
+    val newLevel: Int = 0,
+    val behaviour: String = ""
 )
 
 fun ThoughtDiaryEntity.getMapOfMembers() =
@@ -25,7 +26,8 @@ fun ThoughtDiaryEntity.getMapOfMembers() =
         ::refutations.name to refutations,
         ::alternativeThought.name to alternativeThought,
         ::newMood.name to newMood,
-        ::newLevel.name to newLevel.toString()
+        ::newLevel.name to newLevel.toString(),
+        ::behaviour.name to behaviour
     )
 
 

@@ -25,20 +25,7 @@ class CbtRepositoryImpl @Inject constructor(
     CbtRepository {
 
     override suspend fun getThoughtDiaries(): HashMap<String, String> =
-        suspendCoroutine { continuation ->
-
-            reference.child(THOUGHT_DIARIES_LIST).get()
-                .addOnSuccessListener {
-                    continuation.resume(
-                        it.getValue(object : GenericTypeIndicator<HashMap<String, String>>() {})
-                            ?: HashMap()
-                    )
-                }
-                .addOnFailureListener {
-                    continuation.resumeWithException(it)
-                }
-
-        }
+        HashMap()
 
     override suspend fun getFreeDiaries(): HashMap<String, String> =
         suspendCoroutine { continuation ->

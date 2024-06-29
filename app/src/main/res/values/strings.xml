@@ -57,6 +57,7 @@
     <string name="free_diary">Вольный дневник</string>
     <string name="thought_diary_signature">Способ зафиксировать и изучить важные события своей жизни</string>
     <string name="situation">Ситуация</string>
+    <string name="behaviour">Поведение</string>
     <string name="mood">Настроение</string>
     <string name="auto_thought">Автоматическая мысль</string>
     <string name="proofs">Доказательства</string>
@@ -67,6 +68,7 @@
     <string name="new_level">Новый уровень</string>
     <string name="mood_with_level">%1$s %2$s%%</string>
     <string name="situation_helper">Кратко опишите проблемную ситуацию</string>
+    <string name="behaviour_helper">Что вы делали из-за этого?</string>
     <string name="mood_helper">Какое настроение вызвала у вас эта ситуация?</string>
     <string name="auto_thought_helper">О чем вы думали в момент, когда это почувствовали?</string>
     <string name="proofs_helper">Аргументы в пользу автоматической мысли</string>
@@ -78,6 +80,7 @@
     <string name="success">Успех!</string>
     <string name="necessary_to_fill">Необходимо заполнить</string>
     <string name="situation_help">Опишите любые текущие события или собственные мысли. Это может быть ситуация, в которой вы оказались, триггер из внешнего мира, стимул или, возможно, воспоминания или мысли о прошлом опыте, которые вызвали у вас сильные эмоциональные переживания.</string>
+    <string name="behaviour_help">.</string>
     <string name="mood_help"> Опишите свои чувства и эмоции в тот момент, когда с вами произошла стрессовая ситуация. Постарайтесь не просто перечислить, а описать свои чувства и эмоции подробно и детально.
 С помощью слайдера, вы можете оценить уровень вашего настроения. Это показатель того, как сильно влияли на вас в тот момент эмоции. Будьте честны с собой, нет правильных и неправильных эмоций.</string>
     <string name="auto_thought_help">Опишите как можно подробно основные мысли, которые пришли вам в голову в момент стрессовой ситуации. Это могут быть оскорбительные насмешки, угрызения совести, жизненные убеждения, установки и т.д.</string>

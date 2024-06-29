@@ -88,12 +88,12 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
             override fun onAvailable(network: Network) {
                 isConnection = true
 
-                if (!firstFlag)
+            /*    if (!firstFlag)
                     Toast.makeText(
                         this@MainActivity,
                         getString(R.string.connect),
                         Toast.LENGTH_LONG
-                    ).show()
+                    ).show() */
 
                 firstFlag = false
             }

@@ -1,14 +1,14 @@
 package com.example.mypsychologist.data.model
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
 
 data class TaskModel(
     val text: String,
-    @Json(name = "user_id")
+    @SerialName("user_id")
     val userId: String,
-    @Json(name = "test_title")
+    @SerialName("test_title")
     val testTitle: String,
-    @Json(name = "text_id")
+    @SerialName("text_id")
     val testId: String,
     val isCompleted: Boolean
 )

@@ -1,6 +1,6 @@
 package com.example.mypsychologist.data.model
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,6 +10,6 @@ data class ManagerModel(
     val city: String = "",
     val company: String,
     val gender: String = "",
-    @Json(name = "birth_date")
+    @SerialName("birth_date")
     val birthDate: String = ""
 )
