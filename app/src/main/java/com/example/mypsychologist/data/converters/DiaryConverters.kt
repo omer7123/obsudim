@@ -7,7 +7,7 @@ import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 
 fun FreeDiaryModel.toFreeDiaryEntity(): FreeDiaryEntity {
     return FreeDiaryEntity(
-        id = this.free_diary_id,
+        id = this.freeDiaryId,
         text = this.text
     )
 }

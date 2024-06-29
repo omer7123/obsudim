@@ -26,7 +26,10 @@ class FreeDiariesViewModel @Inject constructor(
         _screenState.value = ThoughtDiariesScreenState.Loading
         viewModelScope.launch {
             when (val result = getFreeDiaryListUseCase()) {
-                is Resource.Error -> _screenState.value = ThoughtDiariesScreenState.Error
+                is Resource.Error -> {
+                    Log.d("FreeDiary", result.msg.toString())
+                    _screenState.value = ThoughtDiariesScreenState.Error
+                }
                 Resource.Loading -> {}
                 is Resource.Success -> {
                     _screenState.value = ThoughtDiariesScreenState.Data(convertListToHashMap(result.data))
