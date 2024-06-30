@@ -6,17 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
-import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
+import com.example.mypsychologist.domain.entity.InputItemEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
-import com.example.mypsychologist.domain.entity.getMapOfFilledMembers
 import com.example.mypsychologist.domain.entity.getMapOfMembers
-import com.example.mypsychologist.domain.useCase.ChangeCurrentProblem
 import com.example.mypsychologist.domain.useCase.GetBeliefVerificationUseCase
-import com.example.mypsychologist.domain.useCase.GetProblemAnalysisUseCase
-import com.example.mypsychologist.domain.useCase.GetProblemsUseCase
 import com.example.mypsychologist.domain.useCase.SaveBeliefVerificationUseCase
-import com.example.mypsychologist.ui.DelegateItem
-import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegateItem
+import com.example.mypsychologist.ui.exercises.cbt.InputDelegateItem
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -24,7 +19,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class BeliefVerificationViewModel @AssistedInject constructor(
     private val saveBeliefVerificationUseCase: SaveBeliefVerificationUseCase,
@@ -55,7 +49,7 @@ class BeliefVerificationViewModel @AssistedInject constructor(
                     beliefsVerification.getMapOfMembers().forEach { (key, value) ->
 
                         _items = items.map {
-                            if (it.content().fieldName == key) ThoughtDiaryDelegateItem(
+                            if (it.content().fieldName == key) InputDelegateItem(
                                 it.content().copy(text = value)
                             ) else it
                         }.toMutableList()
@@ -109,7 +103,7 @@ class BeliefVerificationViewModel @AssistedInject constructor(
         viewModelScope.launch {
             _items = items.map { item ->
                 if (item.content().titleId == beliefsVerification.mapOfTitles()[member])
-                    ThoughtDiaryDelegateItem(item.content().copy(isNotCorrect = true))
+                    InputDelegateItem(item.content().copy(isNotCorrect = true))
                 else
                     item
             }
@@ -129,8 +123,8 @@ class BeliefVerificationViewModel @AssistedInject constructor(
     }
 
     private var _items = listOf(
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.truthfulness,
                 R.string.truthfulness_hint,
                 0,
@@ -138,8 +132,8 @@ class BeliefVerificationViewModel @AssistedInject constructor(
                 BeliefVerificationEntity::truthfulness.name
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.consistency,
                 R.string.consistency_hint,
                 0,
@@ -147,8 +141,8 @@ class BeliefVerificationViewModel @AssistedInject constructor(
                 BeliefVerificationEntity::consistency.name
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.benefit,
                 R.string.benefit_hint,
                 0,

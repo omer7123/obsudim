@@ -4,7 +4,7 @@ data class ClientInfoEntity(
         val name: String = "",
         val birthday: String = "",
         val gender: String = "",
-        val request: List<RequestEntity> = listOf(),
+        val request: List<TagEntity> = listOf(),
         val city: String = ""
 )
 

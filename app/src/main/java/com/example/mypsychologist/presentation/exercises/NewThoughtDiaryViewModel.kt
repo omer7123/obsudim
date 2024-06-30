@@ -4,13 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
+import com.example.mypsychologist.domain.entity.InputItemEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
 import com.example.mypsychologist.domain.entity.getMapOfMembers
 import com.example.mypsychologist.domain.useCase.SaveThoughtDiaryUseCase
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.IntDelegateItem
-import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegateItem
+import com.example.mypsychologist.ui.exercises.cbt.InputDelegateItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -100,10 +101,10 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
     private fun markAsNotCorrect(member: String) {
         viewModelScope.launch {
             items = items.map { item ->
-                if (item is ThoughtDiaryDelegateItem &&
+                if (item is InputDelegateItem &&
                     item.content().titleId == diary.mapOfTitles()[member]
                 )
-                    ThoughtDiaryDelegateItem(item.content().copy(isNotCorrect = true))
+                    InputDelegateItem(item.content().copy(isNotCorrect = true))
                 else
                     item
             }
@@ -111,24 +112,24 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
     }
 
     var items = listOf<DelegateItem>(
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.situation,
                 R.string.situation_helper,
                 R.string.situation_help,
                 ::setSituation
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.behaviour,
                 R.string.behaviour_helper,
                 R.string.behaviour_help,
                 ::setBehaviour
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.mood,
                 R.string.mood_helper,
                 R.string.mood_help,
@@ -136,40 +137,40 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
             )
         ),
         IntDelegateItem(R.string.level),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.auto_thought,
                 R.string.auto_thought_helper,
                 R.string.auto_thought_help,
                 ::setAutoThought
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.proofs,
                 R.string.proofs_helper,
                 R.string.proofs_help,
                 ::setProofs
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.refutations,
                 R.string.refutations_helper,
                 R.string.refutations_help,
                 ::setRefutations
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.alternative_thought,
                 R.string.alternative_thought_helper,
                 R.string.alternative_thought_help,
                 ::setAlternativeThought
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.new_mood,
                 R.string.new_mood_helper,
                 R.string.new_mood_help,

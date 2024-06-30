@@ -6,12 +6,12 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.IncludeEditTextBinding
-import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
+import com.example.mypsychologist.domain.entity.InputItemEntity
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
-class ThoughtDiaryDelegate(
-    private val onHelpClick: (Int, Int) -> Unit
+class InputDelegate(
+    private val onHelpClick: ((Int, Int) -> Unit)? = null
 ) : AdapterDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
@@ -24,21 +24,28 @@ class ThoughtDiaryDelegate(
         item: DelegateItem,
         position: Int
     ) {
-        (holder as ViewHolder).bind((item as ThoughtDiaryDelegateItem).content())
+        (holder as ViewHolder).bind((item as InputDelegateItem).content())
     }
 
-    override fun isOfViewType(item: DelegateItem) = item is ThoughtDiaryDelegateItem
+    override fun isOfViewType(item: DelegateItem) = item is InputDelegateItem
 
     class ViewHolder(
         private val binding: IncludeEditTextBinding,
-        private val onHelpClick: (Int, Int) -> Unit
+        private val onHelpClick: ((Int, Int) -> Unit)?
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ThoughtDiaryItemEntity) {
+        fun bind(item: InputItemEntity) {
             binding.apply {
                 itemView.context.apply {
                     inputLayout.hint = getString(item.titleId)
-                    inputLayout.helperText = getString(item.hintId)
+
+                    item.hintId?.let { hintIdNotNull ->
+                        inputLayout.helperText = getString(hintIdNotNull)
+                        inputLayout.setEndIconOnClickListener {
+                            onHelpClick!!(item.titleId, hintIdNotNull)
+                        }
+                    }
+
 
                     if (item.isNotCorrect)
                         inputLayout.error = getString(R.string.necessary_to_fill)
@@ -50,10 +57,6 @@ class ThoughtDiaryDelegate(
                 }
 
                 field.setText(item.text)
-
-                inputLayout.setEndIconOnClickListener {
-                    onHelpClick(item.titleId, item.helperId)
-                }
             }
         }
     }

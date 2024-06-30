@@ -5,13 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.BeliefAnalysisEntity
-import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
+import com.example.mypsychologist.domain.entity.InputItemEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
 import com.example.mypsychologist.domain.entity.getMapOfMembers
 import com.example.mypsychologist.domain.useCase.GetBeliefAnalysisUseCase
 import com.example.mypsychologist.domain.useCase.SaveBeliefAnalysisUseCase
-import com.example.mypsychologist.domain.useCase.SaveBeliefVerificationUseCase
-import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegateItem
+import com.example.mypsychologist.ui.exercises.cbt.InputDelegateItem
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class BeliefAnalysisViewModel @AssistedInject constructor(
     private val saveBeliefAnalysisUseCase: SaveBeliefAnalysisUseCase,
@@ -48,7 +46,7 @@ class BeliefAnalysisViewModel @AssistedInject constructor(
 
             _items = items.map {
                 if (it.content().fieldName == key)
-                    ThoughtDiaryDelegateItem(
+                    InputDelegateItem(
                         it.content().copy(text = value)
                     )
                 else it
@@ -93,7 +91,7 @@ class BeliefAnalysisViewModel @AssistedInject constructor(
         viewModelScope.launch {
             _items = items.map { item ->
                 if (item.content().titleId == beliefAnalysisEntity.mapOfTitles()[member])
-                    ThoughtDiaryDelegateItem(item.content().copy(isNotCorrect = true))
+                    InputDelegateItem(item.content().copy(isNotCorrect = true))
                 else
                     item
             }
@@ -101,8 +99,8 @@ class BeliefAnalysisViewModel @AssistedInject constructor(
     }
 
     private var _items = listOf(
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.fillings_and_actions,
                 R.string.fillings_and_actions_hint,
                 0,
@@ -110,8 +108,8 @@ class BeliefAnalysisViewModel @AssistedInject constructor(
                 BeliefAnalysisEntity::feelingsAndActions.name
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.motivation,
                 R.string.motivation_hint,
                 0,
@@ -119,8 +117,8 @@ class BeliefAnalysisViewModel @AssistedInject constructor(
                 BeliefAnalysisEntity::motivation.name
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.interferences,
                 R.string.interferences_hint,
                 0,
@@ -128,8 +126,8 @@ class BeliefAnalysisViewModel @AssistedInject constructor(
                 BeliefAnalysisEntity::interferences.name
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.dependent,
                 R.string.dependent_hint,
                 0,
@@ -137,8 +135,8 @@ class BeliefAnalysisViewModel @AssistedInject constructor(
                 BeliefAnalysisEntity::dependent.name
             )
         ),
-        ThoughtDiaryDelegateItem(
-            ThoughtDiaryItemEntity(
+        InputDelegateItem(
+            InputItemEntity(
                 R.string.results,
                 R.string.results_hint,
                 0,

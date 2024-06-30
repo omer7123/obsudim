@@ -15,14 +15,12 @@ import com.example.mypsychologist.*
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentNewThoughtDiaryBinding
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryViewModel
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -72,7 +70,7 @@ class FragmentNewCBTDiary : Fragment() {
     private fun setupAdapter(items: List<DelegateItem>) {
         mainAdapter = MainAdapter().apply {
             addDelegate(
-                ThoughtDiaryDelegate(::showHint)
+                InputDelegate(::showHint)
             )
             addDelegate(
                 SeekBarDelegate(viewModel::setLevel)

@@ -100,7 +100,7 @@ class ClientInfoFragment : Fragment() {
             age.text = info.birthday
             gender.text = getString(R.string.gender_pattern, info.gender)
         }
-        setupChips(info.request.map { it.title })
+        setupChips(info.request.map { it.text })
     }
 
     private fun setupChips(list: List<String>) {

@@ -61,7 +61,7 @@ class TagsFragment : BottomSheetDialogFragment() {
             is TagsScreenState.Data -> {
                 setupChips(state.items)
             }
-            is TagsScreenState.Error -> { Log.d("Tags Error", "aaaaaaa")}
+            is TagsScreenState.Error -> { Log.d("Tags Error", "")}
             is TagsScreenState.Init -> Unit
         }
     }

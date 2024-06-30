@@ -23,7 +23,7 @@ import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
-import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegate
+import com.example.mypsychologist.ui.exercises.cbt.InputDelegate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -73,7 +73,7 @@ class RebtAlternativeThoughtFragment : Fragment() {
     private fun setupAdapter() {
         mainAdapter = MainAdapter().apply {
             addDelegate(
-                ThoughtDiaryDelegate(::showHint)
+                InputDelegate(::showHint)
             )
 
             submitList(viewModel.alternativeThought)

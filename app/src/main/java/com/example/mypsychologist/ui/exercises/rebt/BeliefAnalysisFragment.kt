@@ -26,8 +26,7 @@ import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.cbt.ThoughtDiaryDelegate
-import com.google.android.material.snackbar.Snackbar
+import com.example.mypsychologist.ui.exercises.cbt.InputDelegate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -88,7 +87,7 @@ class BeliefAnalysisFragment : Fragment() {
     private fun setupAdapter(items: List<DelegateItem>) {
         mainAdapter = MainAdapter().apply {
             addDelegate(
-                ThoughtDiaryDelegate(::showHint)
+                InputDelegate(::showHint)
             )
             submitList(items)
         }
