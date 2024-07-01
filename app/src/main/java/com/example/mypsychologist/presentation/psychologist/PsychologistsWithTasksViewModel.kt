@@ -8,9 +8,7 @@ import com.example.mypsychologist.domain.useCase.GetTasksUseCase
 import com.example.mypsychologist.domain.useCase.MarkTaskUseCase
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.ui.DelegateItem
-import com.example.mypsychologist.ui.main.toDelegateItem
 import com.example.mypsychologist.ui.psychologist.OwnPsychologistDelegateItem
-import com.example.mypsychologist.ui.psychologist.toDelegateItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,9 +30,16 @@ class PsychologistsWithTasksViewModel(
         _screenState.value = ListScreenState.Loading
 
         viewModelScope.launch(Dispatchers.IO) {
-            _screenState.value = ListScreenState.Data(
-                getOwnPsychologistsUseCase().toDelegateItem().concatenate()
-            )
+//            _screenState.value = ListScreenState.Data(
+//                getOwnPsychologistsUseCase().toDelegateItem().concatenate()
+//            )
+        }
+    }
+
+    fun getPsych() {
+        viewModelScope.launch {
+            val res = getOwnPsychologistsUseCase()
+
         }
     }
 
@@ -44,14 +49,14 @@ class PsychologistsWithTasksViewModel(
         forEach { psychologist ->
 
             psychologistsWithTasks.add(psychologist)
-            psychologistsWithTasks.addAll(getTasksUseCase(psychologist.content().first).toDelegateItem())
+//            psychologistsWithTasks.addAll(getTasksUseCase(psychologist.content().first).toDelegateItem())
         }
 
         return psychologistsWithTasks
     }
 
     fun markTask(taskId: String, psychologistId: String, isChecked: Boolean) {
-        markTaskUseCase(taskId, psychologistId, isChecked)
+//        markTaskUseCase(taskId, psychologistId, isChecked)
     }
 
     class Factory @Inject constructor(

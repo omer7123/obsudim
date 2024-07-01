@@ -34,7 +34,7 @@ abstract class BaseDataSource {
                     ErrorResponse("Unknown error")
                 }
 
-                return Resource.Error(errorResponse?.detail, null)
+                return Resource.Error(errorResponse.detail, null)
             }
         } catch (e: Exception) {
             return Resource.Error(e.message ?: e.toString(), null)

@@ -25,7 +25,7 @@ class PsychologistCabinetViewModel(private val getClientRequestsUseCase: GetClie
 
     fun getRequests() {
         viewModelScope.launch {
-            _screenState.value = PsychologistCabinetScreenState.Data(getClientRequestsUseCase())
+//            _screenState.value = PsychologistCabinetScreenState.Data(getClientRequestsUseCase())
         }
     }
 
