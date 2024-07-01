@@ -32,14 +32,14 @@ class RebtRepositoryImpl @Inject constructor(
 
     override suspend fun getREBTProblemProgress(problemId: String): RebtProblemProgressEntity? =
         suspendCoroutine { continuation ->
-            TODO()
-            reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId).get()
-                .addOnSuccessListener { snapshot ->
-                    continuation.resume(snapshot.getTypedValue())
-                }
-                .addOnFailureListener {
-                    continuation.resumeWithException(it)
-                }
+            //TODO
+//            reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId).get()
+//                .addOnSuccessListener { snapshot ->
+//                    continuation.resume(snapshot.getTypedValue())
+//                }
+//                .addOnFailureListener {
+//                    continuation.resumeWithException(it)
+//                }
         }
 
     override suspend fun getCurrentREBTProblemProgress(): RebtProblemProgressEntity? =
@@ -54,7 +54,7 @@ class RebtRepositoryImpl @Inject constructor(
 
     private suspend fun getCurrentProblemId(): String? =
         suspendCoroutine { continuation ->
-            TODO()
+//            TODO
             reference.child(CURRENT_REBT_PROBLEM).get()
                 .addOnSuccessListener {
                     continuation.resume(it.getTypedValue())
@@ -66,7 +66,7 @@ class RebtRepositoryImpl @Inject constructor(
 
     override suspend fun getREBTProblems(): HashMap<String, ProblemEntity> =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            TODO()
+            //TODO()
             val currentProblem = getCurrentProblemId()
             HashMap(
                 loadProblems().map {
@@ -77,7 +77,7 @@ class RebtRepositoryImpl @Inject constructor(
 
     private suspend fun loadProblems(): HashMap<String, ProblemEntity> =
         suspendCoroutine { continuation ->
-            TODO()
+//            TODO
             reference.child(ProblemEntity::class.simpleName!!).get()
                 .addOnSuccessListener { snapshot ->
                     continuation.resume(snapshot.getTypedValue() ?: HashMap())

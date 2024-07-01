@@ -89,7 +89,4 @@ class FragmentTests : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
-
-
-
 }
