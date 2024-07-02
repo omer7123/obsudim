@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentEditBinding
 import com.example.mypsychologist.domain.entity.TagEntity
 import com.example.mypsychologist.extensions.getAppComponent
@@ -84,7 +85,7 @@ class EditFragment : Fragment() {
             }
 
             is EditScreenState.Response -> {
-                requireContext().showToast(state.result.toString())
+                render(state.result)
             }
 
             is EditScreenState.ValidationError -> {
@@ -92,6 +93,19 @@ class EditFragment : Fragment() {
             }
 
             is EditScreenState.Init -> Unit
+        }
+    }
+
+    private fun render(resource: Resource<String>) {
+        when (resource) {
+            is Resource.Success -> {
+                requireContext().showToast(resource.data)
+                findNavController().popBackStack()
+            }
+            is Resource.Error -> {
+                requireContext().showToast(resource.msg.toString())
+            }
+            is Resource.Loading -> { }
         }
     }
 
@@ -152,5 +166,6 @@ class EditFragment : Fragment() {
         private const val EDIT_GENDER = "edit gender"
         private const val EDIT_DIAGNOSIS = "edit diagnosis"
         private const val EDIT_REQUEST = "edit request"
+        private const val SUCCESS = "Successfully"
     }
 }

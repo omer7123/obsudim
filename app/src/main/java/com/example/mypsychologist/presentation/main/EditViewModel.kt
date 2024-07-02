@@ -1,9 +1,12 @@
 package com.example.mypsychologist.presentation.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
+import com.example.mypsychologist.data.converters.toModel
+import com.example.mypsychologist.data.model.UserInfoModel
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.InputItemEntity
 import com.example.mypsychologist.domain.entity.TagEntity
@@ -17,6 +20,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class EditViewModel(
@@ -54,13 +59,13 @@ class EditViewModel(
     }
 
     fun tryToSaveInfo() {
+        Log.d("Json info", Json.encodeToString<UserInfoModel>(info.toModel()))
         viewModelScope.launch(Dispatchers.IO) {
             if (fieldsAreCorrect())
                 _screenState.value =
                     EditScreenState.Response(saveClientInfoUseCase(info))
         }
     }
-
 
     private fun fieldsAreCorrect(): Boolean {
         var containErrors = false
@@ -78,7 +83,6 @@ class EditViewModel(
 
         return !containErrors
     }
-
 
     private fun markAsNotCorrect(member: String) {
         viewModelScope.launch {
@@ -106,7 +110,6 @@ class EditViewModel(
                 saveFunction = ::setBirthday
             )
         ),
-        IntDelegateItem(R.string.level),
         InputDelegateItem(
             InputItemEntity(
                 R.string.gender,
@@ -128,7 +131,6 @@ class EditViewModel(
             ::gender.name to R.string.gender,
             ::city.name to R.string.city
         )
-
 
     class Factory @Inject constructor(
         private val saveClientInfoUseCase: SaveClientInfoUseCase,

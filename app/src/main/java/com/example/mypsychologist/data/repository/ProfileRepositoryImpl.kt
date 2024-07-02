@@ -1,8 +1,10 @@
 package com.example.mypsychologist.data.repository
 
 import android.net.Uri
+import android.util.Log
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toEntity
+import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.data.remote.profile.UserDataSource
@@ -15,19 +17,24 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class ProfileRepositoryImpl @Inject constructor(
-    private val dataSource: UserDataSource,
-    private val localDataSource: AuthenticationSharedPrefDataSource
+    private val dataSource: UserDataSource
 ) :
     ProfileRepository {
 
-    override suspend fun saveClient(info: ClientInfoEntity): Resource<String> =
-        dataSource.updateUser(info.toEntity(), Token(localDataSource.getToken()))
+    override suspend fun saveClient(info: ClientInfoEntity): Resource<String> = run {
+        dataSource.updateUser(info.toModel())
+    }
+
+    override suspend fun getOwnInfo(): Resource<ClientInfoEntity> {
+        TODO()
+    }
 
 
 

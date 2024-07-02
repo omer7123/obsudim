@@ -5,7 +5,7 @@ import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.data.model.UserInfoModel
 
 interface UserDataSource {
-    suspend fun updateUser(info: UserInfoModel, token: Token): Resource<String>
+    suspend fun updateUser(info: UserInfoModel): Resource<String>
 
     //   suspend fun getUserData(token: Token): Resource<UserInfo>
 }

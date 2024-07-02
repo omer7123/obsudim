@@ -3,7 +3,7 @@ package com.example.mypsychologist.data.converters
 import com.example.mypsychologist.data.model.UserInfoModel
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
 
-fun ClientInfoEntity.toEntity() =
+fun ClientInfoEntity.toModel() =
     UserInfoModel(
         birthDate = birthday,
         gender = gender,
