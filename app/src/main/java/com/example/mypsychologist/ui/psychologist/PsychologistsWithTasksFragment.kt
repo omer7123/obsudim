@@ -62,11 +62,11 @@ class PsychologistsWithTasksFragment : Fragment() {
             findNavController().navigate(R.id.fragment_psychologists)
         }
 
-        viewModel.screenState
-            .flowWithLifecycle(lifecycle)
-            .onEach { render(it) }
-            .launchIn(lifecycleScope)
-
+//        viewModel.screenState
+//            .flowWithLifecycle(lifecycle)
+//            .onEach { render(it) }
+//            .launchIn(lifecycleScope)
+        viewModel.getPsych()
         return binding.root
     }
 

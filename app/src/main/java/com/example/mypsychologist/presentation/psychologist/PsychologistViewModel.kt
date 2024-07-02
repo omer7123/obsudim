@@ -26,7 +26,7 @@ class PsychologistViewModel @AssistedInject constructor(
         _screenState.value = PsychologistScreenState.Loading
 
         viewModelScope.launch {
-            _screenState.value = PsychologistScreenState.Data(getPsychologistUseCase(id))
+//            _screenState.value = PsychologistScreenState.Data(getPsychologistUseCase(id))
         }
     }
 

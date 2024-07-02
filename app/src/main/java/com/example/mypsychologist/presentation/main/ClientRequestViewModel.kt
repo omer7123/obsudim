@@ -23,8 +23,8 @@ class ClientRequestViewModel(private val sendAnswerToRequestUseCase: SendAnswerT
         _screenState.value = AnswerScreenState.Loading
 
         viewModelScope.launch {
-            _screenState.value =
-                AnswerScreenState.Response(sendAnswerToRequestUseCase(accept, clientId))
+//            _screenState.value =
+//                AnswerScreenState.Response(sendAnswerToRequestUseCase(accept, clientId))
         }
     }
 

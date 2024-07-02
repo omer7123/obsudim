@@ -21,17 +21,17 @@ class RequestToPsychologistViewModel(
         get() = _screenState.asStateFlow()
 
     fun tryToSendRequest(text: String, psychologistId: String) {
-        if (text.isEmpty())
-            _screenState.value = FeedbackScreenState.ValidationError
-        else
-            viewModelScope.launch {
-                _screenState.value = FeedbackScreenState.Response(
-                    sendRequestToPsychologistUseCase(
-                        psychologistId,
-                        text
-                    )
-                )
-            }
+//        if (text.isEmpty())
+//            _screenState.value = FeedbackScreenState.ValidationError
+//        else
+//            viewModelScope.launch {
+//                _screenState.value = FeedbackScreenState.Response(
+//                    sendRequestToPsychologistUseCase(
+//                        psychologistId,
+//                        text
+//                    )
+//                )
+//            }
 
     }
 
