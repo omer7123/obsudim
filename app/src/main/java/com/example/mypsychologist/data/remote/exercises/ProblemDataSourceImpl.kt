@@ -10,4 +10,8 @@ class ProblemDataSourceImpl @Inject constructor(private val api: ProblemService)
         api.saveNewProblem(problem)
     }
 
+    override suspend fun getProblems(userId: String): Resource<List<ProblemModel>> = getResult {
+        api.getProblems(userId)
+    }
+
 }

@@ -5,4 +5,6 @@ import com.example.mypsychologist.data.model.ProblemModel
 
 interface ProblemDataSource {
     suspend fun save(problem: ProblemModel): Resource<String>
+
+    suspend fun getProblems(userId: String): Resource<List<ProblemModel>>
 }

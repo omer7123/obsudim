@@ -11,16 +11,14 @@ import javax.inject.Inject
 
 class DiaryDataSourceImpl @Inject constructor(private val api: DiaryService) : DiaryDataSource, BaseDataSource() {
     override suspend fun save(diary: CBTDiaryModel): Resource<String> = getResult {
-        val result = api.saveCBTDiary(diary)
-        val moshi: Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
-        val jsonAdapter: JsonAdapter<CBTDiaryModel> = moshi.adapter(CBTDiaryModel::class.java)
-
-        val json: String = jsonAdapter.toJson(diary)
-        Log.d("AAAAAAA", json)
-        result
+        api.saveCBTDiary(diary)
     }
 
     override suspend fun getCBTDiaryRecord(id: String): Resource<CBTDiaryModel> = getResult {
         api.getCBTDiaryRecord(id)
+    }
+
+    override suspend fun getCBTDiary(userId: String): Resource<List<CBTDiaryModel>> = getResult {
+        api.getCBTDiary(userId)
     }
 }

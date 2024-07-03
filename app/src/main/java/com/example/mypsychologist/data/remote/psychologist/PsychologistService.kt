@@ -9,13 +9,13 @@ import retrofit2.http.POST
 
 interface PsychologistService {
 
-    @GET("/client/get_list_get_psycholog")
+    @GET("/manager/get_all_manager")
     suspend fun getManagersList(): Response<List<ManagerModel>>
 
     @POST("/client/get_list_get_psycholog")
     suspend fun getManager(@Body user_id: String): Response<ManagerModel>
 
-    @POST("/client/get_tasks")
+    @GET("/client/get_tasks")
     suspend fun getTasks(): Response<List<TaskModel>>
 
     @POST("/client/complete_task")
@@ -23,4 +23,6 @@ interface PsychologistService {
 
     @POST("/client/unfulfilled_task")
     suspend fun markTaskAsUnfulfilled(@Body task_id: String): Response<String>
+
+
 }
