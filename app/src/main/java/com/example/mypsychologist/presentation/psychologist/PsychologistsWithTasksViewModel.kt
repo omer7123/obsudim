@@ -3,7 +3,9 @@ package com.example.mypsychologist.presentation.psychologist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.domain.useCase.GetOwnPsychologistsUseCase
+import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetOwnPsychologistsUseCase
 import com.example.mypsychologist.domain.useCase.GetTasksUseCase
 import com.example.mypsychologist.domain.useCase.MarkTaskUseCase
 import com.example.mypsychologist.presentation.ListScreenState
@@ -30,16 +32,17 @@ class PsychologistsWithTasksViewModel(
         _screenState.value = ListScreenState.Loading
 
         viewModelScope.launch(Dispatchers.IO) {
-//            _screenState.value = ListScreenState.Data(
-//                getOwnPsychologistsUseCase().toDelegateItem().concatenate()
-//            )
+            when(val res = getOwnPsychologistsUseCase()){
+                is Resource.Error -> _screenState.value = ListScreenState.Error
+                Resource.Loading -> {}
+                is Resource.Success -> _screenState.value = ListScreenState.Data(convertListToDelegateItems(res.data))
+            }
         }
     }
 
-    fun getPsych() {
-        viewModelScope.launch {
-            val res = getOwnPsychologistsUseCase()
-
+    private fun convertListToDelegateItems(managers: List<ManagerEntity>): List<DelegateItem> {
+        return managers.map { manager ->
+            OwnPsychologistDelegateItem(manager)
         }
     }
 
