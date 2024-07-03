@@ -109,7 +109,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun renderError(msg: String) {
-        Log.e("Error: ", msg)
         binding.content.isVisible = true
         binding.progressCircular.isVisible = false
         requireContext().showToast(msg)

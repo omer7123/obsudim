@@ -14,7 +14,7 @@ import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationU
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.GetTokenUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.RegisterUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveTokenUseCase
-import com.example.mypsychologist.presentation.main.mainFragment.MainScreenState
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveUserIdUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +24,7 @@ class RegisterViewModel @Inject constructor(
     private val saveTokenUseCase: SaveTokenUseCase,
     private val authByTokenUseCase: AuthByTokenUseCase,
     private val getTokenUseCase: GetTokenUseCase,
+    private val saveUserIdUseCase: SaveUserIdUseCase
 ) : ViewModel() {
 
     private val _stateScreen: MutableLiveData<RegisterState> =
@@ -40,13 +41,14 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch(handler) {
             _stateScreen.value = RegisterState.Loading
             saveTokenUseCase(result.data.token)
+//            saveUserIdUseCase(result.data.user_id)
             _stateScreen.value = RegisterState.Success
         }
     }
 
     fun register(register: OldRegister) {
         if (register.email.isNotEmpty() && register.password.isNotEmpty() && register.confirm_password.isNotEmpty() && register.password == register.confirm_password) {
-            viewModelScope.launch {
+            viewModelScope.launch(handler) {
                 _stateScreen.value = RegisterState.Loading
                 when (val result = registerUseCase(register)) {
                     is Resource.Error -> _stateScreen.value =
@@ -68,7 +70,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun authByToken() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             _stateScreen.value = RegisterState.Loading
             val token = getTokenUseCase.invoke()
             if (token == "")
@@ -80,14 +82,12 @@ class RegisterViewModel @Inject constructor(
 
                     Resource.Loading -> _stateScreen.value = RegisterState.Loading
                     is Resource.Success -> {
-                        Log.e("Cookie", CookieStorage.getCookies().toString())
                         saveTokenUseCase(result.data.token)
+//                        saveUserIdUseCase(result.data.user_id)
                         _stateScreen.value = RegisterState.Success
                     }
                 }
-
             }
         }
     }
-
 }

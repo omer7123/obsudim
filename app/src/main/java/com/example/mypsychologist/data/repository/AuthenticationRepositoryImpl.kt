@@ -29,6 +29,14 @@ class AuthenticationRepositoryImpl @Inject constructor(
        return dataSource.authByToken(token)
     }
 
+    override suspend fun saveUserId(userId: String) {
+        localDataSource.saveUserId(userId)
+    }
+
+    override suspend fun getUserId(): String {
+        return localDataSource.getUserId()
+    }
+
     override suspend fun saveToken(token: String) {
         localDataSource.saveToken(token)
     }
