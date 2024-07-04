@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.psychologist
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,11 +63,11 @@ class PsychologistsWithTasksFragment : Fragment() {
             findNavController().navigate(R.id.fragment_psychologists)
         }
 
-//        viewModel.screenState
-//            .flowWithLifecycle(lifecycle)
-//            .onEach { render(it) }
-//            .launchIn(lifecycleScope)
-        viewModel.getPsych()
+        viewModel.screenState
+            .flowWithLifecycle(lifecycle)
+            .onEach { render(it) }
+            .launchIn(lifecycleScope)
+//        viewModel.getPsych()
         return binding.root
     }
 
@@ -100,15 +101,17 @@ class PsychologistsWithTasksFragment : Fragment() {
 
     private fun setupAdapter(items: List<DelegateItem>) {
         binding.psychologistsRw.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(context)
 
             adapter = MainAdapter().apply {
                 addDelegate(OwnPsychologistDelegate { psychologistId ->
-
+                    val bundle = Bundle()
+                    bundle.putString(RequestToPsychologistFragment.PSYCHOLOGIST_ID, psychologistId)
+                    findNavController().navigate(R.id.fragment_request_to_psychologist, bundle)
                 })
-                addDelegate(TaskDelegate { taskId, psychologistId, isChecked ->
-                    viewModel.markTask(taskId, psychologistId, isChecked)
-                })
+//                addDelegate(TaskDelegate { taskId, psychologistId, isChecked ->
+//                    viewModel.markTask(taskId, psychologistId, isChecked)
+//                })
 
                 submitList(items)
             }

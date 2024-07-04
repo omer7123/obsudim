@@ -1,6 +1,6 @@
 package com.example.mypsychologist.domain.useCase
 
-import com.example.mypsychologist.domain.repository.PsychologistRepository
+import com.example.mypsychologist.domain.repository.retrofit.PsychologistRepository
 import javax.inject.Inject
 
 class SendRequestToPsychologistUseCase @Inject constructor(private val repository: PsychologistRepository) {

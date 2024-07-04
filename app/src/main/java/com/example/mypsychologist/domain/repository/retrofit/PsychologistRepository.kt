@@ -1,8 +1,9 @@
-package com.example.mypsychologist.domain.repository
+package com.example.mypsychologist.domain.repository.retrofit
 
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.*
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
+import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
 
 interface PsychologistRepository {
 //    suspend fun getPsychologists(): HashMap<String, PsychologistCard>
@@ -16,4 +17,5 @@ interface PsychologistRepository {
 //    fun markTaskAsNotCompleted(taskId: String, psychologistId: String): Boolean
 
     suspend fun getOwnPsychologists(): Resource<List<ManagerEntity>>
+    suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String>
 }

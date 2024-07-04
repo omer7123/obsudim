@@ -1,9 +1,8 @@
-package com.example.mypsychologist.domain.useCase
+package com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases
 
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.domain.entity.PsychologistWithTaskCount
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
-import com.example.mypsychologist.domain.repository.PsychologistRepository
+import com.example.mypsychologist.domain.repository.retrofit.PsychologistRepository
 import javax.inject.Inject
 
 class GetOwnPsychologistsUseCase @Inject constructor(private val repository: PsychologistRepository) {

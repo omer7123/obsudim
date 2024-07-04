@@ -2,24 +2,14 @@ package com.example.mypsychologist.data.repository
 
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toEntity
+import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.remote.psychologist.PsychologistDataSource
-import com.example.mypsychologist.di.AppModule
-import com.example.mypsychologist.domain.entity.*
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
-import com.example.mypsychologist.domain.repository.PsychologistRepository
-import com.example.mypsychologist.extensions.getTypedValue
-import com.example.mypsychologist.extensions.pmap
+import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
+import com.example.mypsychologist.domain.repository.retrofit.PsychologistRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 class PsychologistRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
@@ -249,6 +239,14 @@ class PsychologistRepositoryImpl @Inject constructor(
                 val listEntity = result.data.map { it.toEntity() }
                 Resource.Success(listEntity)
             }
+        }
+    }
+
+    override suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String> {
+        return when(val result = dataSource.sendRequestToManager(sendRequestToPsychologistEntity.toModel())){
+            is Resource.Error -> Resource.Error(result.msg, null)
+            Resource.Loading -> Resource.Loading
+            is Resource.Success -> Resource.Success(result.data)
         }
     }
 

@@ -6,18 +6,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
-import com.example.mypsychologist.data.model.Token
-import com.example.mypsychologist.domain.entity.authenticationEntity.Auth
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.AuthWithDataUserUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveTokenUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveUserIdUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AuthViewModel @Inject constructor(
     private val authWithDataUserUseCase: AuthWithDataUserUseCase,
-    private val saveTokenUseCase: SaveTokenUseCase
+    private val saveTokenUseCase: SaveTokenUseCase,
+    private val saveUserIdUseCase: SaveUserIdUseCase
 ) : ViewModel() {
 
     private val _stateScreen: MutableLiveData<AuthState> = MutableLiveData(AuthState.Initial)
@@ -47,8 +47,9 @@ class AuthViewModel @Inject constructor(
     }
 
     private suspend fun saveToken(result: User) {
-            _stateScreen.value = AuthState.Loading
-            saveTokenUseCase(result.token)
-            _stateScreen.value = AuthState.Success
+        _stateScreen.value = AuthState.Loading
+        saveTokenUseCase(result.token)
+        saveUserIdUseCase(result.user_id)
+        _stateScreen.value = AuthState.Success
     }
 }

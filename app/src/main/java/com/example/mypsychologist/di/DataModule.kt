@@ -13,7 +13,13 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import javax.inject.Singleton
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 
 @Module
@@ -29,16 +35,43 @@ class DataModule {
     @Provides
     fun provideApiUrl(impl: ApiUrlProviderImpl): ApiUrlProvider = impl
 
-    @Reusable
+//    @Reusable
+//    @Provides
+//    fun provideOkHttpClient(): OkHttpClient {
+//        val loggingInterceptor = HttpLoggingInterceptor().apply {
+//            level = HttpLoggingInterceptor.Level.BODY
+//        }
+//        return OkHttpClient.Builder()
+//            .addInterceptor(loggingInterceptor)
+//            .addInterceptor(ReceivedCookiesInterceptor())
+//            .addInterceptor(AddCookiesInterceptor())
+//            .build()
+//    }
+
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    @Reusable
+    fun provideUnsafeOkHttpClient(): OkHttpClient {
+        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+            override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+            override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+            override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+        })
+
+        val sslContext = SSLContext.getInstance("SSL").apply {
+            init(null, trustAllCerts, SecureRandom())
+        }
+
+        val sslSocketFactory = sslContext.socketFactory
+
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
         return OkHttpClient.Builder()
+            .sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(ReceivedCookiesInterceptor())
             .addInterceptor(AddCookiesInterceptor())
+            .hostnameVerifier(HostnameVerifier { _, _ -> true })
             .build()
     }
 

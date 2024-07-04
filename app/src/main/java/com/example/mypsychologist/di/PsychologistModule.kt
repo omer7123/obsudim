@@ -4,8 +4,7 @@ import com.example.mypsychologist.data.remote.psychologist.PsychologistDataSourc
 import com.example.mypsychologist.data.remote.psychologist.PsychologistDataSourceImpl
 import com.example.mypsychologist.data.remote.psychologist.PsychologistService
 import com.example.mypsychologist.data.repository.PsychologistRepositoryImpl
-import com.example.mypsychologist.domain.repository.PsychologistRepository
-import dagger.Binds
+import com.example.mypsychologist.domain.repository.retrofit.PsychologistRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
