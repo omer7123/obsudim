@@ -2,8 +2,11 @@ package com.example.mypsychologist.data.repository
 
 import android.util.Log
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.converters.toEntities
 import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
+import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
+import com.example.mypsychologist.data.model.ProblemModel
 import com.example.mypsychologist.data.remote.exercises.BeliefsDataSource
 import com.example.mypsychologist.data.remote.exercises.ProblemDataSource
 import com.example.mypsychologist.domain.entity.AutoDialogMessageEntity
@@ -26,6 +29,7 @@ import kotlin.coroutines.suspendCoroutine
 class RebtRepositoryImpl @Inject constructor(
     private val beliefsDataSource: BeliefsDataSource,
     private val problemDataSource: ProblemDataSource,
+    private val localDataSource: AuthenticationSharedPrefDataSource,
     private val reference: DatabaseReference
 ) :
     RebtRepository {
@@ -64,28 +68,17 @@ class RebtRepositoryImpl @Inject constructor(
                 }
         }
 
-    override suspend fun getREBTProblems(): HashMap<String, ProblemEntity> =
-        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            //TODO()
-            val currentProblem = getCurrentProblemId()
-            HashMap(
-                loadProblems().map {
-                    Pair(it.key, it.value.copy(actual = it.key == currentProblem))
-                }.toMap()
-            )
+    override suspend fun getREBTProblems(): Resource<List<ProblemEntity>> =
+        when(val result = problemDataSource.getProblems(localDataSource.getUserId())) {
+            is Resource.Error -> {
+                Log.d("Problem Error", result.msg.toString())
+                Resource.Error(result.msg.toString(), null)
+            }
+            is Resource.Loading -> Resource.Loading
+            is Resource.Success ->
+                Resource.Success(result.data.toEntities())
         }
 
-    private suspend fun loadProblems(): HashMap<String, ProblemEntity> =
-        suspendCoroutine { continuation ->
-//            TODO
-            reference.child(ProblemEntity::class.simpleName!!).get()
-                .addOnSuccessListener { snapshot ->
-                    continuation.resume(snapshot.getTypedValue() ?: HashMap())
-                }
-                .addOnFailureListener {
-                    continuation.resumeWithException(it)
-                }
-        }
 
     override suspend fun saveProblem(problemEntity: ProblemEntity) =
         problemDataSource.save(problemEntity.toModel())

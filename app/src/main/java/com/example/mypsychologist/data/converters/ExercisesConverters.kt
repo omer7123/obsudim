@@ -44,5 +44,8 @@ fun ThoughtDiaryEntity.toModel() =
 fun ProblemModel.toEntity() =
     ProblemEntity(title = description, goal = goal)
 
+fun List<ProblemModel>.toEntities()=
+    this.map { it.toEntity() }
+
 fun ProblemEntity.toModel() =
     ProblemModel(title, goal)

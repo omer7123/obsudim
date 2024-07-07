@@ -27,43 +27,13 @@ class CbtRepositoryImpl @Inject constructor(
     override suspend fun getThoughtDiaries(): HashMap<String, String> =
         HashMap()
 
-    override suspend fun getFreeDiaries(): HashMap<String, String> =
-        suspendCoroutine { continuation ->
 
-            reference.child(FREE_DIARIES_LIST).get()
-                .addOnSuccessListener {
-                    continuation.resume(
-                        it.getValue(object : GenericTypeIndicator<HashMap<String, String>>() {})
-                            ?: HashMap()
-                    )
-                }
-                .addOnFailureListener {
-                    continuation.resumeWithException(it)
-                }
-
-        }
 
     override suspend fun getThoughtDiariesFor(clientId: String): HashMap<String, String> =
         suspendCoroutine { continuation ->
 
             Firebase.database(AppModule.URL).reference
                 .child(clientId).child(THOUGHT_DIARIES_LIST).get()
-                .addOnSuccessListener {
-                    continuation.resume(
-                        it.getValue(object : GenericTypeIndicator<HashMap<String, String>>() {})
-                            ?: HashMap()
-                    )
-                }
-                .addOnFailureListener {
-                    continuation.resumeWithException(it)
-                }
-        }
-
-    override suspend fun getFreeDiariesFor(clientId: String): HashMap<String, String> =
-        suspendCoroutine { continuation ->
-
-            Firebase.database(AppModule.URL).reference
-                .child(clientId).child(FREE_DIARIES_LIST).get()
                 .addOnSuccessListener {
                     continuation.resume(
                         it.getValue(object : GenericTypeIndicator<HashMap<String, String>>() {})
@@ -114,20 +84,6 @@ class CbtRepositoryImpl @Inject constructor(
             is Resource.Loading -> Resource.Loading
             is Resource.Success ->
                 Resource.Success(result.data)
-        }
-
-    override fun saveFreeDiary(it: NewFreeDiaryEntity): Boolean =
-        try {
-//            val ref = reference.child(FreeDiaryEntity::class.simpleName!!)
-//            val key = ref.push().key
-//
-//            ref.child(key!!).setValue(it)
-//
-//            reference.child(FREE_DIARIES_LIST).child(key).setValue(it.text)
-
-            true
-        } catch (t: Throwable) {
-            false
         }
 
     override fun editAutoThought(diaryId: String, newText: String): Boolean =

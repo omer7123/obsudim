@@ -1,6 +1,7 @@
 package com.example.mypsychologist.domain.repository
 
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.model.ProblemModel
 import com.example.mypsychologist.domain.entity.AutoDialogMessageEntity
 import com.example.mypsychologist.domain.entity.BeliefAnalysisEntity
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
@@ -11,7 +12,7 @@ import com.example.mypsychologist.domain.entity.RebtProblemProgressEntity
 interface RebtRepository {
     suspend fun getREBTProblemProgress(problemId: String): RebtProblemProgressEntity?
     suspend fun getCurrentREBTProblemProgress(): RebtProblemProgressEntity?
-    suspend fun getREBTProblems(): HashMap<String,ProblemEntity>
+    suspend fun getREBTProblems(): Resource<List<ProblemEntity>>
     suspend fun saveProblem(problemEntity: ProblemEntity): Resource<String>
     suspend fun saveCurrentProblem(id: String): Boolean
     suspend fun saveAnalysis(rebtAnalysisEntity: ProblemAnalysisEntity): Boolean

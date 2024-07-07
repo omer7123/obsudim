@@ -7,9 +7,6 @@ import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 interface CbtRepository {
     suspend fun getThoughtDiaries(): HashMap<String, String>
     suspend fun getThoughtDiariesFor(clientId: String): HashMap<String, String>
-    suspend fun getFreeDiariesFor(id: String): HashMap<String, String>
-    suspend fun getFreeDiaries(): HashMap<String, String>
-
 
     suspend fun getThoughtDiary(id: String): Resource<ThoughtDiaryEntity>
 
@@ -18,7 +15,5 @@ interface CbtRepository {
     fun editAutoThought(diaryId: String, newText: String): Boolean
     fun editAlternativeThought(diaryId: String, newText: String): Boolean
     suspend fun getThoughtDiaryFor(clientId: String, id: String): ThoughtDiaryEntity
-    fun saveFreeDiary(it: NewFreeDiaryEntity): Boolean
-
 
 }

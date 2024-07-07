@@ -24,7 +24,7 @@ class REBTViewModel(
         get() = _screenState.asStateFlow()
 
     init {
-        _screenState.value = REBTScreenState.Loading
+     /*   _screenState.value = REBTScreenState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             val currentProblem = getCurrentREBTProblemProgressUseCase()
             _screenState.value =
@@ -32,7 +32,7 @@ class REBTViewModel(
                     REBTScreenState.Data(currentProblem)
                 else
                     REBTScreenState.Empty
-        }
+        } */
     }
 
     fun getProblemProgress(problemId: String) {

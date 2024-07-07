@@ -47,10 +47,10 @@ class FragmentExercises : Fragment() {
     ): View {
         binding = FragmentExercisesBinding.inflate(inflater, container, false)
 
-        viewModel.screenState
+   /*     viewModel.screenState
             .flowWithLifecycle(lifecycle)
             .onEach { render(it) }
-            .launchIn(lifecycleScope)
+            .launchIn(lifecycleScope) */
 
         binding.include.toolbar.apply {
             title = getString(R.string.practice)
@@ -59,17 +59,18 @@ class FragmentExercises : Fragment() {
 
 
         setupCards()
+        setupCardsForREBT()
         initListener()
 
         return binding.root
     }
 
-    private fun render(it: REBTScreenState) {
+  /*  private fun render(it: REBTScreenState) {
         when (it) {
             is REBTScreenState.Data -> {
                 binding.networkPlaceholder.layout.isVisible = false
                 binding.sectionPlaceholder.isVisible = false
-                binding.sectionProblem.isVisible = true
+                binding.containerTaskProblem.isVisible = true
                 setupData(it)
             }
 
@@ -77,21 +78,21 @@ class FragmentExercises : Fragment() {
                 if (!isNetworkConnect()) {
                     binding.networkPlaceholder.layout.isVisible = true
                     binding.sectionPlaceholder.isVisible = false
-                    binding.sectionProblem.isVisible = false
+                    binding.containerTaskProblem.isVisible = false
                 }
             }
 
             is REBTScreenState.Empty -> {
                 binding.networkPlaceholder.layout.isVisible = false
                 binding.sectionPlaceholder.isVisible = true
-                binding.sectionProblem.isVisible = false
+                binding.containerTaskProblem.isVisible = false
 
             }
 
             is REBTScreenState.Error -> {
                 binding.networkPlaceholder.layout.isVisible = false
                 binding.sectionPlaceholder.isVisible = false
-                binding.sectionProblem.isVisible = false
+                binding.containerTaskProblem.isVisible = false
                 requireContext().showToast(getString(R.string.db_error))
             }
 
@@ -136,7 +137,7 @@ class FragmentExercises : Fragment() {
                 binding.dialog.card.background =
                     primaryCard
         }
-    }
+    } */
 
 
     private fun initListener() {
@@ -154,26 +155,37 @@ class FragmentExercises : Fragment() {
                 findNavController().navigate(R.id.freeDiaryFragment)
             }
 
-            binding.changeButton.setOnClickListener {
+          /*  binding.changeButton.setOnClickListener {
                 setupChangeProblemFragment()
             }
 
             binding.beginButton.setOnClickListener {
                 setupChangeProblemFragment()
-            }
+            } */
 
-            binding.problemAnalysis.root.setOnClickListener {
-                findNavController().navigate(R.id.fragment_rebt_harmful_thought)
+            problemAnalysis.root.setOnClickListener {
+              //  findNavController().navigate(R.id.fragment_rebt_harmful_thought)
+                setupChangeProblemFragment(R.id.fragment_rebt_harmful_thought)
+            }
+            beliefsCheck.root.setOnClickListener {
+                setupChangeProblemFragment(R.id.fragment_beliefs_verification)
+            }
+            beliefsAnalysis.root.setOnClickListener {
+                setupChangeProblemFragment(R.id.fragment_beliefs_analysis)
+            }
+            dialog.root.setOnClickListener {
+                setupChangeProblemFragment(R.id.autoDialogFragment)
             }
         }
     }
 
-    private fun setupChangeProblemFragment() {
+    private fun setupChangeProblemFragment(fragmentId: Int) {
         childFragmentManager.setFragmentResultListener(
             ProblemsFragment.PROBLEM,
             viewLifecycleOwner
         ) { _, bundle ->
-            viewModel.getProblemProgress(bundle.getString(ProblemsFragment.PROBLEM)!!)
+            findNavController().navigate(fragmentId, bundle)
+            //viewModel.getProblemProgress(bundle.getString(ProblemsFragment.PROBLEM)!!)
         }
 
         ProblemsFragment().show(childFragmentManager, TAG)
