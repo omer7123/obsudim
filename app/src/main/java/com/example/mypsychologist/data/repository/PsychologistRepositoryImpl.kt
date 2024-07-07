@@ -3,9 +3,11 @@ package com.example.mypsychologist.data.repository
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
+import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.remote.psychologist.PsychologistDataSource
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
 import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
+import com.example.mypsychologist.domain.entity.psychologistsEntity.TaskEntity
 import com.example.mypsychologist.domain.repository.retrofit.PsychologistRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -14,8 +16,20 @@ import javax.inject.Inject
 class PsychologistRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val reference: DatabaseReference,
-    private val dataSource: PsychologistDataSource
+    private val dataSource: PsychologistDataSource,
+    private val localDataSource: AuthenticationSharedPrefDataSource
 ) : PsychologistRepository {
+
+    override suspend fun getTasks(): Resource<List<TaskEntity>> {
+        return when(val result = dataSource.getTasks()){
+            is Resource.Error -> Resource.Error(result.msg.toString(), null)
+            Resource.Loading -> Resource.Loading
+            is Resource.Success -> {
+                val listEntity = result.data.map { it.toEntity() }
+                Resource.Success(listEntity)
+            }
+        }
+    }
 
 //    override suspend fun getPsychologists(): HashMap<String, PsychologistCard> =
 //        suspendCoroutine { continuation ->
@@ -246,9 +260,16 @@ class PsychologistRepositoryImpl @Inject constructor(
         return when(val result = dataSource.sendRequestToManager(sendRequestToPsychologistEntity.toModel())){
             is Resource.Error -> Resource.Error(result.msg, null)
             Resource.Loading -> Resource.Loading
-            is Resource.Success -> Resource.Success(result.data)
+            is Resource.Success -> {
+                localDataSource.saveStatusRequestToManager()
+                Resource.Success(result.data)
+            }
         }
     }
+
+    override suspend fun getStatusToRequestManager(): Boolean =
+        localDataSource.getStatusRequestToManager()
+
 
     companion object {
         private const val REQUESTS = "requests"

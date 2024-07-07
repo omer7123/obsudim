@@ -56,7 +56,8 @@ class PsychologistsWithTasksFragment : Fragment() {
         }
 
         binding.findPsychologistButton.setOnClickListener {
-            findNavController().navigate(R.id.fragment_psychologists)
+//            findNavController().navigate(R.id.fragment_psychologists)
+
         }
 
 //        binding.toAllButton.setOnClickListener {
@@ -67,7 +68,8 @@ class PsychologistsWithTasksFragment : Fragment() {
             .flowWithLifecycle(lifecycle)
             .onEach { render(it) }
             .launchIn(lifecycleScope)
-//        viewModel.getPsych()
+
+        viewModel.initial()
         return binding.root
     }
 
@@ -79,6 +81,7 @@ class PsychologistsWithTasksFragment : Fragment() {
                 else
                     requireContext().showToast(getString(R.string.network_error))
             }
+
             is ListScreenState.Data -> {
 
                 binding.progressBar.isVisible = false
@@ -86,15 +89,16 @@ class PsychologistsWithTasksFragment : Fragment() {
                 if (state.items.isEmpty()) {
                     binding.placeholder.isVisible = true
 //                    binding.toAllButton.isVisible = false
-                }
-                else {
+                } else {
                     binding.placeholder.isVisible = false
                     setupAdapter(state.items)
                 }
             }
+
             is ListScreenState.Error -> {
                 requireContext().showToast(getString(R.string.db_error))
             }
+
             is ListScreenState.Init -> Unit
         }
     }

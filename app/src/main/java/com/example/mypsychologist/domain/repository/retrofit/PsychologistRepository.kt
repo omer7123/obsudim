@@ -1,9 +1,9 @@
 package com.example.mypsychologist.domain.repository.retrofit
 
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.domain.entity.*
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
 import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
+import com.example.mypsychologist.domain.entity.psychologistsEntity.TaskEntity
 
 interface PsychologistRepository {
 //    suspend fun getPsychologists(): HashMap<String, PsychologistCard>
@@ -12,10 +12,11 @@ interface PsychologistRepository {
 //    fun sendRequestTo(psychologistId: String, text: String): Boolean
 //    suspend fun getClientsRequests(): List<ClientRequestEntity>
 //    suspend fun sendAnswerToRequest(accept: Boolean, clientId: String): Boolean
-//    suspend fun getTasks(psychologistId: String): HashMap<String, TaskEntity>
+    suspend fun getTasks(): Resource<List<TaskEntity>>
 //    fun markTaskAsCompleted(taskId: String, psychologistId: String): Boolean
 //    fun markTaskAsNotCompleted(taskId: String, psychologistId: String): Boolean
 
     suspend fun getOwnPsychologists(): Resource<List<ManagerEntity>>
     suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String>
+    suspend fun getStatusToRequestManager(): Boolean
 }

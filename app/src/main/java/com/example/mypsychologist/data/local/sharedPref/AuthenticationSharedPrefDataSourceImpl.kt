@@ -42,9 +42,20 @@ class AuthenticationSharedPrefDataSourceImpl @Inject constructor(context: Contex
         }
     }
 
+    override suspend fun saveStatusRequestToManager() {
+        withContext(Dispatchers.IO){
+            sharedPref.edit().putBoolean(REQUEST_TO_MANAGER_STATUS, true).apply()
+        }
+    }
+
+    override suspend fun getStatusRequestToManager(): Boolean {
+        return sharedPref.getBoolean(REQUEST_TO_MANAGER_STATUS, false)
+    }
+
     companion object {
         private const val TOKEN = "token"
         private const val FILE_NAME = "auth_pref"
         private const val USER_ID = "user_id"
+        private const val REQUEST_TO_MANAGER_STATUS = "status"
     }
 }

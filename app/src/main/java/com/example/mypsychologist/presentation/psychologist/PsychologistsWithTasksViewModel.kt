@@ -5,9 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetOwnPsychologistsUseCase
-import com.example.mypsychologist.domain.useCase.GetTasksUseCase
 import com.example.mypsychologist.domain.useCase.MarkTaskUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetOwnPsychologistsUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetStatusRequestToManagerUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetTasksUseCase
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.psychologist.OwnPsychologistDelegateItem
@@ -20,6 +21,7 @@ import javax.inject.Inject
 
 class PsychologistsWithTasksViewModel(
     private val getOwnPsychologistsUseCase: GetOwnPsychologistsUseCase,
+    private val getStatusRequestToManagerUseCase: GetStatusRequestToManagerUseCase,
     private val getTasksUseCase: GetTasksUseCase,
     private val markTaskUseCase: MarkTaskUseCase
 ) : ViewModel() {
@@ -28,15 +30,35 @@ class PsychologistsWithTasksViewModel(
     val screenState: StateFlow<ListScreenState>
         get() = _screenState.asStateFlow()
 
-    init {
-        _screenState.value = ListScreenState.Loading
 
+    fun initial() {
+        _screenState.value = ListScreenState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            when(val res = getOwnPsychologistsUseCase()){
-                is Resource.Error -> _screenState.value = ListScreenState.Error
-                Resource.Loading -> {}
-                is Resource.Success -> _screenState.value = ListScreenState.Data(convertListToDelegateItems(res.data))
+            when (getStatusRequestToManagerUseCase()) {
+                true -> getTasks()
+                false -> getPsychologists()
             }
+        }
+    }
+
+    private suspend fun getTasks() {
+        when (val result = getTasksUseCase()) {
+            is Resource.Error -> _screenState.value = ListScreenState.Error
+            Resource.Loading -> ListScreenState.Loading
+            is Resource.Success ->{
+                if (result.data.isEmpty()) _screenState.value = ListScreenState.Data(emptyList())
+//                else
+//                ListScreenState.Data()
+            }
+        }
+    }
+
+    private suspend fun getPsychologists() {
+        when (val res = getOwnPsychologistsUseCase()) {
+            is Resource.Error -> _screenState.value = ListScreenState.Error
+            Resource.Loading -> {}
+            is Resource.Success -> _screenState.value =
+                ListScreenState.Data(convertListToDelegateItems(res.data))
         }
     }
 
@@ -64,6 +86,7 @@ class PsychologistsWithTasksViewModel(
 
     class Factory @Inject constructor(
         private val getOwnPsychologistsUseCase: GetOwnPsychologistsUseCase,
+        private val getStatusRequestToManagerUseCase: GetStatusRequestToManagerUseCase,
         private val getTasksUseCase: GetTasksUseCase,
         private val markTaskUseCase: MarkTaskUseCase
     ) :
@@ -72,6 +95,7 @@ class PsychologistsWithTasksViewModel(
             @Suppress("UNCHECKED_CAST")
             return PsychologistsWithTasksViewModel(
                 getOwnPsychologistsUseCase,
+                getStatusRequestToManagerUseCase,
                 getTasksUseCase,
                 markTaskUseCase
             ) as T

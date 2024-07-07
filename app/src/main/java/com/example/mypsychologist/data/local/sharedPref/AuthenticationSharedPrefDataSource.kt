@@ -5,4 +5,6 @@ interface AuthenticationSharedPrefDataSource {
     suspend fun getToken(): String
     suspend fun getUserId(): String
     suspend fun saveUserId(userId: String)
+    suspend fun saveStatusRequestToManager()
+    suspend fun getStatusRequestToManager(): Boolean
 }

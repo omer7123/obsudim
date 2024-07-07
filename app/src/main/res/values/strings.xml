@@ -270,7 +270,8 @@
 
     <string name="nobody">Никого нет</string>
     <string name="no_psychologist_in_app">Вы еще не связались с психологом через наше приложение :(</string>
-    <string name="find_specialist">Подобрать специалиста</string>
+    <string name="request_in_verify">Ваш запрос психологу на рассмотрении, пожалуйста, ожидайте</string>
+    <string name="find_specialist">Выбрать другого специалиста</string>
     <string name="my_psychologists">Мои психологи</string>
     <string name="show_all">Показать всех</string>
 

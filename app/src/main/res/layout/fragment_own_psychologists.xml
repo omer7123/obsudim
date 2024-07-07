@@ -79,7 +79,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="@string/no_psychologist_in_app" />
+                android:text="@string/request_in_verify" />
 
             <Button
                 android:id="@+id/find_psychologist_button"

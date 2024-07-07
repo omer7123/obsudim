@@ -2,8 +2,10 @@ package com.example.mypsychologist.data.converters
 
 import com.example.mypsychologist.data.model.ManagerModel
 import com.example.mypsychologist.data.model.SendRequestToPsychologistModel
+import com.example.mypsychologist.data.model.TaskModel
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
 import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
+import com.example.mypsychologist.domain.entity.psychologistsEntity.TaskEntity
 
 fun ManagerModel.toEntity() =
     ManagerEntity(
@@ -22,6 +24,8 @@ fun ManagerModel.toEntity() =
 
 fun SendRequestToPsychologistEntity.toModel() = SendRequestToPsychologistModel(id, text)
 
+fun TaskModel.toEntity() =
+    TaskEntity(text, userId, testTitle, testId, isCompleted)
 //fun ManagerEntity.toModel() =
 //    ManagerModel(username = username, company = company)
 //

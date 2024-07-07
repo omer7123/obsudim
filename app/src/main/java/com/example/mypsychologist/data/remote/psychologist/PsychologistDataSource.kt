@@ -10,6 +10,6 @@ interface PsychologistDataSource {
     suspend fun sendRequestToManager(sendRequestToPsychologistModel: SendRequestToPsychologistModel): Resource<String>
     suspend fun getManager(userId: String): Resource<ManagerModel>
     suspend fun getTasks(): Resource<List<TaskModel>>
-    suspend fun  markTaskAsCompleted(id: String): Resource<String>
+    suspend fun markTaskAsCompleted(id: String): Resource<String>
     suspend fun markTaskAsUnfulfilled(id: String): Resource<String>
 }
