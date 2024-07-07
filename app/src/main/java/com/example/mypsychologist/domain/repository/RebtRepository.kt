@@ -1,7 +1,6 @@
 package com.example.mypsychologist.domain.repository
 
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.data.model.ProblemModel
 import com.example.mypsychologist.domain.entity.AutoDialogMessageEntity
 import com.example.mypsychologist.domain.entity.BeliefAnalysisEntity
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity

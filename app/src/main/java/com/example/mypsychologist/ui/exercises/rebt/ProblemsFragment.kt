@@ -12,7 +12,9 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.ChangeProblemBottomSheetBinding
+import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.exercises.ProblemsScreenState
 import com.example.mypsychologist.presentation.exercises.ProblemsViewModel
@@ -56,8 +58,8 @@ class ProblemsFragment : BottomSheetDialogFragment() {
         binding.addButton.setOnClickListener {
             childFragmentManager.setFragmentResultListener(
                 NewProblemFragment.NEW_PROBLEM, viewLifecycleOwner
-            ) { _, bundle ->
-                viewModel.add(bundle.getString(NewProblemFragment.TITLE)!!, "", bundle.getString(NewProblemFragment.ID)!!)
+            ) { _, _ ->
+                viewModel.getProblems()
             }
 
             NewProblemFragment().show(childFragmentManager, TAG)
@@ -80,15 +82,17 @@ class ProblemsFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun render(it: ProblemsScreenState) {
-        when (it) {
-            is ProblemsScreenState.Data -> {
-                mainAdapter.submitList(it.problems.toDelegateItems())
+
+    private fun render(result: Resource<List<ProblemEntity>>) {
+        when (result) {
+            is Resource.Success -> {
+                mainAdapter.submitList(result.data.toDelegateItems())
             }
-            is ProblemsScreenState.Init -> {}
-            is ProblemsScreenState.Loading -> {}
-            is ProblemsScreenState.Error -> {
-                requireContext().showToast(getString(R.string.network_error))
+            is Resource.Error -> {
+                requireContext().showToast(result.msg.toString())
+            }
+            is Resource.Loading -> {
+
             }
         }
     }

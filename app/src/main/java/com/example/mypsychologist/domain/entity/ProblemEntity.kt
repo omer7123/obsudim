@@ -5,7 +5,8 @@ data class ProblemEntity (
     val moods: List<String> = listOf(),
     val completed: Boolean = false,
     val actual: Boolean = false,
-    val goal: String
+    val goal: String,
+    val id: String = ""
 )
 
 

@@ -15,5 +15,5 @@ class ProblemDelegateItem(
         (other as ProblemDelegateItem).content() == content()
 }
 
-fun Map<String, ProblemEntity>.toDelegateItems() =
-    map { ProblemDelegateItem(it.key, it.value) }
+fun List<ProblemEntity>.toDelegateItems() =
+    map { ProblemDelegateItem(it.id, it) }

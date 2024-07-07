@@ -33,7 +33,7 @@ class AuthenticationSharedPrefDataSourceImpl @Inject constructor(context: Contex
     }
 
     override suspend fun getUserId(): String {
-        return sharedPref.getString(TOKEN, "").toString()
+        return sharedPref.getString(USER_ID, "").toString()
     }
 
     override suspend fun saveUserId(userId: String) {

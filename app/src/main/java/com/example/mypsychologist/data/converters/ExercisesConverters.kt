@@ -2,7 +2,8 @@ package com.example.mypsychologist.data.converters
 
 import com.example.mypsychologist.data.model.BeliefCheckModel
 import com.example.mypsychologist.data.model.CBTDiaryModel
-import com.example.mypsychologist.data.model.ProblemModel
+import com.example.mypsychologist.data.model.GetProblemModel
+import com.example.mypsychologist.data.model.SaveProblemModel
 import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
 import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
@@ -41,11 +42,11 @@ fun ThoughtDiaryEntity.toModel() =
         behaviour
     )
 
-fun ProblemModel.toEntity() =
-    ProblemEntity(title = description, goal = goal)
+fun GetProblemModel.toEntity() =
+    ProblemEntity(title = description, goal = goal, id = userId)
 
-fun List<ProblemModel>.toEntities()=
+fun List<GetProblemModel>.toEntities()=
     this.map { it.toEntity() }
 
 fun ProblemEntity.toModel() =
-    ProblemModel(title, goal)
+    SaveProblemModel(title, goal)

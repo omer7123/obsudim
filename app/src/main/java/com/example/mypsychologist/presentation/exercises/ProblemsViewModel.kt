@@ -3,6 +3,7 @@ package com.example.mypsychologist.presentation.exercises
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.ProblemEntity
 import com.example.mypsychologist.domain.useCase.ChangeCurrentProblem
 import com.example.mypsychologist.domain.useCase.GetProblemsUseCase
@@ -15,16 +16,20 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProblemsViewModel(getProblemsUseCase: GetProblemsUseCase, private val changeCurrentProblem: ChangeCurrentProblem) : ViewModel() {
+class ProblemsViewModel(private val getProblemsUseCase: GetProblemsUseCase, private val changeCurrentProblem: ChangeCurrentProblem) : ViewModel() {
 
-    private val _screenState: MutableStateFlow<ProblemsScreenState> =
-        MutableStateFlow(ProblemsScreenState.Init)
-    val screenState: StateFlow<ProblemsScreenState>
+    private val _screenState: MutableStateFlow<Resource<List<ProblemEntity>>> =
+        MutableStateFlow(Resource.Loading)
+    val screenState: StateFlow<Resource<List<ProblemEntity>>>
         get() = _screenState.asStateFlow()
 
     init {
+        getProblems()
+    }
+
+    fun getProblems() {
         viewModelScope.launch(Dispatchers.IO) {
-            _screenState.value = ProblemsScreenState.Data(getProblemsUseCase())
+            _screenState.value = getProblemsUseCase()
         }
     }
 
@@ -34,11 +39,11 @@ class ProblemsViewModel(getProblemsUseCase: GetProblemsUseCase, private val chan
         }
     }
 
-    fun add(problem: String, goal: String, id: String) {
-        val newMap = HashMap((screenState.value as ProblemsScreenState.Data).problems)
-        newMap[id] = ProblemEntity(problem, goal = goal)
-        _screenState.value = ProblemsScreenState.Data(newMap)
-    }
+ /*   fun add(problem: String, goal: String, id: String) {
+        val newList = listOf((screenState.value as ProblemsScreenState.Data).problems)
+        newList[id] = ProblemEntity(problem, goal = goal)
+        _screenState.value = ProblemsScreenState.Data(newList)
+    } */
 
     class Factory @Inject constructor(private val getProblemsUseCase: GetProblemsUseCase, private val changeCurrentProblem: ChangeCurrentProblem) :
         ViewModelProvider.Factory {
