@@ -14,10 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentDiariesBinding
+import com.example.mypsychologist.domain.entity.DiaryRecordEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
-import com.example.mypsychologist.presentation.exercises.ThoughtDiariesScreenState
 import com.example.mypsychologist.presentation.exercises.ThoughtDiariesViewModel
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.MainAdapter
@@ -103,28 +104,27 @@ class FragmentDiaries : Fragment() {
         }
     }
 
-    private fun render(it: ThoughtDiariesScreenState) {
-        when (it) {
-            is ThoughtDiariesScreenState.Data -> {
+    private fun render(resource: Resource<List<DiaryRecordEntity>>) {
+        when (resource) {
+            is Resource.Success -> {
                 binding.progressBar.isVisible = false
                 binding.includePlaceholder.layout.isVisible = false
 
-                if (it.records.isNotEmpty())
-                    adapter.submitList(it.records.toDelegateItems())
+                if (resource.data.isNotEmpty())
+                    adapter.submitList(resource.data.toDelegateItems())
                 else {
                     showPlaceholderForEmptyList()
                 }
             }
-            is ThoughtDiariesScreenState.Init -> {}
-            is ThoughtDiariesScreenState.Loading -> {
+            is Resource.Loading -> {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
                     binding.includePlaceholder.layout.isVisible = true
             }
-            is ThoughtDiariesScreenState.Error -> {
+            is Resource.Error -> {
                 binding.progressBar.isVisible = false
-                requireContext().showToast(getString(R.string.network_error))
+                requireContext().showToast(resource.msg.toString())
             }
         }
     }

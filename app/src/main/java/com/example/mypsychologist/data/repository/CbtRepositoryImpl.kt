@@ -2,14 +2,15 @@ package com.example.mypsychologist.data.repository
 
 import android.util.Log
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.converters.toDiaryEntities
 import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
+import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.remote.exercises.DiaryDataSource
 import com.example.mypsychologist.di.AppModule
-import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
+import com.example.mypsychologist.domain.entity.DiaryRecordEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.repository.CbtRepository
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -20,12 +21,20 @@ import kotlin.coroutines.suspendCoroutine
 
 class CbtRepositoryImpl @Inject constructor(
     private val diaryDataSource: DiaryDataSource,
-    private val reference: DatabaseReference
-) :
-    CbtRepository {
+    private val localDataSource: AuthenticationSharedPrefDataSource
+) : CbtRepository {
 
-    override suspend fun getThoughtDiaries(): HashMap<String, String> =
-        HashMap()
+    override suspend fun getThoughtDiaries(): Resource<List<DiaryRecordEntity>> =
+        when(val result = diaryDataSource.getCBTDiary(localDataSource.getUserId())) {
+            is Resource.Error -> {
+                Log.d("Problem Error", result.msg.toString())
+                Resource.Error(result.msg.toString(), null)
+            }
+            is Resource.Loading -> Resource.Loading
+            is Resource.Success ->
+                Resource.Success(result.data.toDiaryEntities())
+        }
+
 
 
 
@@ -88,9 +97,7 @@ class CbtRepositoryImpl @Inject constructor(
 
     override fun editAutoThought(diaryId: String, newText: String): Boolean =
         try {
-            reference.child(ThoughtDiaryEntity::class.simpleName!!)
-                .child(diaryId)
-                .updateChildren(mapOf(AUTO_THOUGHT to newText))
+            TODO()
 
             true
         } catch (t: Throwable) {
@@ -99,9 +106,7 @@ class CbtRepositoryImpl @Inject constructor(
 
     override fun editAlternativeThought(diaryId: String, newText: String): Boolean =
         try {
-            reference.child(ThoughtDiaryEntity::class.simpleName!!)
-                .child(diaryId)
-                .updateChildren(mapOf(ALTERNATIVE_THOUGHT to newText))
+            TODO()
 
             true
         } catch (t: Throwable) {

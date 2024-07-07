@@ -3,6 +3,8 @@ package com.example.mypsychologist.presentation.exercises
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.domain.entity.DiaryRecordEntity
 import com.example.mypsychologist.domain.useCase.GetClientThoughtDiariesUseCase
 import com.example.mypsychologist.domain.useCase.GetThoughtDiariesUseCase
 import dagger.assisted.Assisted
@@ -20,21 +22,17 @@ class ThoughtDiariesViewModel @AssistedInject constructor(
 ) :
     ViewModel() {
 
-    private val _screenState: MutableStateFlow<ThoughtDiariesScreenState> =
-        MutableStateFlow(ThoughtDiariesScreenState.Init)
+    private val _screenState: MutableStateFlow<Resource<List<DiaryRecordEntity>>> =
+        MutableStateFlow(Resource.Loading)
 
-    val screenState: StateFlow<ThoughtDiariesScreenState>
+    val screenState: StateFlow<Resource<List<DiaryRecordEntity>>>
         get() = _screenState.asStateFlow()
 
     fun loadDiaries() {
-        _screenState.value = ThoughtDiariesScreenState.Loading
+        _screenState.value = Resource.Loading
 
         viewModelScope.launch {
-            _screenState.value =
-                if (clientId == OWN)
-                    ThoughtDiariesScreenState.Data(getThoughtDiariesUseCase())
-                else
-                    ThoughtDiariesScreenState.Data(getClientThoughtDiariesUseCase(clientId))
+            _screenState.value = getThoughtDiariesUseCase()
         }
     }
 

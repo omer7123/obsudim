@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CBTDiaryModel (
-    val deep_conviction_id: String,
     val situation: String,
     val mood: String,
     val level: Int,
@@ -13,10 +12,16 @@ data class CBTDiaryModel (
     val autoThought: String,
     val proofs: String,
     val refutations: String,
-  //  val alternativeThought: String,
+    val alternativeThought: String,
     @SerialName("new_mood")
     val newMood: String,
     @SerialName("new_level")
     val newLevel: Int,
     val behaviour: String
+)
+
+@Serializable
+data class CBTDiaryCardModel(
+    val id: String,
+    val situation: String
 )

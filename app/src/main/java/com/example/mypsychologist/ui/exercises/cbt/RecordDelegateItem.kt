@@ -15,5 +15,8 @@ class RecordDelegateItem(
 
 }
 
+fun List<DiaryRecordEntity>.toDelegateItems() =
+    map { RecordDelegateItem(it) }
+
 fun HashMap<String, String>.toDelegateItems() =
     map { RecordDelegateItem(DiaryRecordEntity(it.key, it.value)) }

@@ -1,5 +1,6 @@
 package com.example.mypsychologist.data.remote.exercises
 
+import com.example.mypsychologist.data.model.CBTDiaryCardModel
 import com.example.mypsychologist.data.model.CBTDiaryModel
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,5 +17,5 @@ interface DiaryService {
     suspend fun getCBTDiaryRecord(@Body think_diary_id: String): Response<CBTDiaryModel>
 
     @GET("/problem/get_all_think_diary/{user_id}")
-    suspend fun getCBTDiary(@Path(value = "user_id") userId: String): Response<List<CBTDiaryModel>>
+    suspend fun getCBTDiary(@Path("user_id") userId: String): Response<List<CBTDiaryCardModel>>
 }
