@@ -49,7 +49,7 @@ class PsychologistsWithTasksFragment : Fragment() {
         binding = FragmentOwnPsychologistsBinding.inflate(inflater, container, false)
 
         binding.includeToolbar.toolbar.apply {
-            title = getString(R.string.my_psychologists)
+            title = getString(R.string.psychologists)
             setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
@@ -59,9 +59,9 @@ class PsychologistsWithTasksFragment : Fragment() {
             findNavController().navigate(R.id.fragment_psychologists)
         }
 
-        binding.toAllButton.setOnClickListener {
-            findNavController().navigate(R.id.fragment_psychologists)
-        }
+//        binding.toAllButton.setOnClickListener {
+//            findNavController().navigate(R.id.fragment_psychologists)
+//        }
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
@@ -85,7 +85,7 @@ class PsychologistsWithTasksFragment : Fragment() {
 
                 if (state.items.isEmpty()) {
                     binding.placeholder.isVisible = true
-                    binding.toAllButton.isVisible = false
+//                    binding.toAllButton.isVisible = false
                 }
                 else {
                     binding.placeholder.isVisible = false
