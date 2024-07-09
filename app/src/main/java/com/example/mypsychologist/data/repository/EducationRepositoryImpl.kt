@@ -29,9 +29,10 @@ class EducationRepositoryImpl @Inject constructor(private val reference: Databas
         }
 
     override suspend fun getTopics(): List<EducationTopicEntity> =
-        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+        topics
+      /*  withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
             topics.pmap { it.copy(currentCard = getProgress(it.tag.toString())) }
-        }
+        } */
 
     override suspend fun saveProgress(topic: String, progress: Int) {
         reference.child(EDUCATION).child(topic).setValue(progress)
