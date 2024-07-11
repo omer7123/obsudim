@@ -9,5 +9,5 @@ sealed interface STAIScreenState {
 
     class Result(val result: STAIResultEntity) : STAIScreenState
 
-    object Error : STAIScreenState
+    data object Error : STAIScreenState
 }

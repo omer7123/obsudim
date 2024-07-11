@@ -113,75 +113,131 @@
     <string name="depression_beck_test_desc">Данный опросник составлен из 21 группы и четырех утверждений в группе. Внимательно прочтите каждую группу утверждений и выберите утверждение, которое наиболее точно отражает ваше самочувствие, образ мыслей или настроение на этой неделе, включая сегодняшний день.</string>
     <string name="depression_beck_test_desc_short">Данный опросник составлен из 21 группы и четырех утверждений в группе.</string>
     <!--Первый вопрос-->
-    <string name="not_sad">Мне не грустно</string>
-    <string name="sad">Мне грустно или тоскливо</string>
-    <string name="always_sad">Мне все время тоскливо или грустно и я ничего не могу с собой поделать</string>
-    <string name="strong_sad">Мне так грустно или печально, что я не могу этого вынести</string>
+    <string name="not_sad">Я не чувствую себя несчастным</string>
+    <string name="sad">Я чувствую себя несчастным</string>
+    <string name="always_sad">Я всё время несчастен и не могу освободиться от этого чувства.</string>
+    <string name="strong_sad">Я настолько несчастен и опечален, что не могу этого вынести</string>
     <!--Второй вопрос-->
-    <string name="future_good">Я смотрю в будущее без особого разочарования</string>
-    <string name="future_not_good">Я испытываю разочарование в будущем</string>
-    <string name="future_bad">Я чувствую, что мне нечего ждать впереди</string>
-    <string name="future_terrible">Я чувствую, что будущее безнадежно и поворота к лучшему быть не может</string>
+    <string name="future_good">Думая о будущем, я не чувствую себя особенно разочарованным</string>
+    <string name="future_not_good">Думая о будущем, я чувствую себя разочарованным</string>
+    <string name="future_bad">Я чувствую, что мне нечего ждать в будущем</string>
+    <string name="future_terrible">Я чувствую, что будущее безнадежно и ничто не изменится к лучшему</string>
     <!--3 вопрос-->
     <string name="not_looser">Я не чувствую себя неудачником</string>
     <string name="confuse_more_often">Я чувствую, что неудачи случались у меня чаще, чем у других людей</string>
-    <string name="only_confuses">Когда оглядываюсь на свою жизнь, я вижу лишь цепь неудач</string>
-    <string name="looser">Я чувствую, что потерпел неудачу как личность (родители)</string>
+    <string name="only_confuses">Когда я оглядываюсь на прожитую жизнь, всё, что я вижу, это череда неудач</string>
+    <string name="looser">Я чувствую себя полным неудачником</string>
     <!--4 вопрос-->
-    <string name="have_interest">У меня не потерян интерес к другим людям</string>
-    <string name="less_interest">Я меньше, чем бывало, интересуюсь другими людьми</string>
-    <string name="almost_not_interest">У меня потерян почти весь интерес к другим людям и почти нет никаких чувств к ним</string>
-    <string name="not_interest">У меня потерян всякий интерес к другим людям и они меня совершенно не заботят</string>
+    <string name="same_pleasure">Я получаю столько же удовольствия от жизни, как и раньше</string>
+    <string name="not_same_pleasure">Я не получаю столько же удовольствия от жизни, как раньше</string>
+    <string name="no_real_pleasure">Я не получаю настоящего удовлетворения от чего бы то ни было</string>
+    <string name="no_pleasure">Я всем не удовлетворен, и мне всё надоело</string>
     <!--5 вопрос-->
-    <string name="decision_easy">Я принимаю решения примерно так же легко, как всегда</string>
-    <string name="decision_latter">Я пытаюсь отсрочить принятые решения</string>
-    <string name="decision_hard">Принятие решений представляет для меня огромную трудность</string>
-    <string name="no_decisions">Я больше совсем не могу принимать решения</string>
+    <string name="no_guilt">Я не чувствую себя особенно виноватым</string>
+    <string name="often_feel_guilt">Довольно часто я чувствую себя виноватым</string>
+    <string name="almost_guilt">Почти всегда я чувствую себя виноватым</string>
+    <string name="total_guilt">Я чувствую себя виноватым всё время</string>
     <!--6 вопрос-->
-    <string name="look_normal">Я не чувствую, что выгляжу сколько-нибудь хуже, чем обычно</string>
-    <string name="look_not_good">Меня беспокоит то, что я выгляжу непривлекательно</string>
-    <string name="look_bad">Я чувствую, что в моем внешнем виде происходят постоянные изменения, делающие меня непривлекательным</string>
-    <string name="look_horrible">Я чувствую, что выгляжу гадко и отталкивающе</string>
+    <string name="no_punishment">Я не чувствую, что меня за что-то наказывают</string>
+    <string name="not_feel_punishment">Я чувствую, что могу быть наказан за что-то</string>
+    <string name="wait_for_punishment">Я ожидаю, что меня накажут</string>
+    <string name="feel_punishment">Я чувствую, что меня наказывают за что-то</string>
     <!--7 вопрос-->
-    <string name="no_dissatisfaction">Я не испытываю никакой особенной неудовлетворенности</string>
-    <string name="no_joy">Ничто не радует меня так, как раньше</string>
-    <string name="no_satisfaction">Ничто больше не дает мне удовлетворения</string>
-    <string name="total_dissatisfaction">Меня не удовлетворяет всё</string>
+    <string name="no_disappoint">Я не испытываю разочарования в себе</string>
+    <string name="disappoint">Я разочарован в себе</string>
+    <string name="disgust">У меня отвращение к себе</string>
+    <string name="hate_myself">Я ненавижу себя</string>
     <!--8 вопрос-->
+    <string name="not_worth">У меня нет чувства, что я в чем-то хуже других</string>
+    <string name="some_mistakes">Я самокритичен и признаю свои слабости и ошибки</string>
+    <string name="total_mistakes">Я всё время виню себя за свои ошибки</string>
+    <string name="total_guilty">Я виню себя за всё плохое, что происходит</string>
+
     <string name="no_fault">Я не чувствую никакой особенной вины</string>
     <string name="some_fault">Большую часть времени я чувствую себя скверным и ничтожным</string>
     <string name="fault">У меня довольно сильное чувство вины</string>
     <string name="total_fault">Я чувствую себя очень скверным и никчемным</string>
     <!--9 вопрос-->
-    <string name="good_working">Я могу работать примерно так же хорошо, как и раньше</string>
-    <string name="working_harder">Мне нужно делать дополнительные усилия, чтобы что-то сделать</string>
+    <string name="no_self_harm">У меня нет мыслей о том, чтобы покончить с собой</string>
+    <string name="thought_about_die">У меня есть мысли о том, чтобы покончить с собой, но я этого не сделаю</string>
+    <string name="want_die">Я хотел бы покончить жизнь самоубийством</string>
+    <string name="firstly_die">Я бы покончил с собой, если бы представился удобный случай</string>
+    <!--10 вопрос-->
+    <string name="no_cry">Я плачу не больше, чем обычно</string>
+    <string name="often_cry">Сейчас я плачу больше обычного</string>
+    <string name="all_time_cry">Я теперь всё время плачу</string>
+    <string name="can_t_cry">Раньше я еще мог плакать, но теперь не смогу, даже если захочу</string>
+    <!--11 вопрос-->
+    <string name="no_angry">Сейчас я не более раздражен, чем обычно</string>
+    <string name="often_angry">Я раздражаюсь легче, чем раньше, даже по пустякам</string>
+    <string name="all_time_angry">Сейчас я всё время раздражен</string>
+    <string name="can_t_angry">Меня уже ничто не раздражает, потому что всё стало безразлично</string>
+    <!--12 вопрос-->
+    <string name="have_interest">У меня не потерян интерес к другим людям</string>
+    <string name="less_interest">Я меньше, чем бывало, интересуюсь другими людьми</string>
+    <string name="almost_not_interest">Я почти утратил интерес к другим людям</string>
+    <string name="not_interest">Я потерял всякий интерес к другим людям</string>
+    <!--13 вопрос-->
+    <string name="decision_easy">Я способен принимать решения так же, как всегда</string>
+    <string name="decision_latter">Я откладываю принятие решений чаще, чем обычно</string>
+    <string name="decision_hard">Я испытываю больше трудностей в принятии решений, чем прежде</string>
+    <string name="no_decisions">Я больше совсем не могу принимать решения</string>
+    <!--14 вопрос-->
+    <string name="look_normal">Я не чувствую, что выгляжу сколько-нибудь хуже, чем обычно</string>
+    <string name="look_not_good">Я обеспокоен тем, что выгляжу постаревшим или непривлекательным</string>
+    <string name="look_bad">Я чувствую, что в моем внешнем виде происходят постоянные изменения, делающие меня непривлекательным</string>
+    <string name="look_horrible">Я уверен, что выгляжу безобразным</string>
+    <!--15 вопрос-->
+    <string name="good_working">Я могу работать так же, как и раньше</string>
+    <string name="working_harder">Мне нужно приложить дополнительные усилия, чтобы что-то сделать</string>
     <string name="working_hard">Я с трудом заставляю себя делать что-либо</string>
     <string name="no_working">Я не могу выполнять никакую работу</string>
-    <!--10 вопрос-->
-    <string name="no_disappoint">Я не испытываю разочарования в себе</string>
-    <string name="disappoint">Я разочарован в себе</string>
-    <string name="disgust">У меня отвращение к себе</string>
-    <string name="hate_myself">Я ненавижу себя</string>
-    <!--11 вопрос-->
-    <string name="no_self_harm">У меня нет никаких мыслей о самоповреждении</string>
-    <string name="better_die">Я чувствую, что мне было бы лучше умереть</string>
-    <string name="plan_die">У меня есть определенные планы совершения самоубийства</string>
-    <string name="firstly_die">Я покончу с собой при первой возможности</string>
-    <!--12 вопрос-->
+    <!--16 вопрос-->
+    <string name="good_sleep">Я могу спать так же хорошо, как и обычно</string>
+    <string name="not_good_sleep">Я сплю не так хорошо, как всегда</string>
+    <string name="wake_up_earlier">Я просыпаюсь на 1–2 часа раньше, чем обычно и с трудом могу заснуть снова</string>
+    <string name="can_t_sleep">Я просыпаюсь на несколько часов раньше обычного и не могу снова заснуть</string>
+    <!--17 вопрос-->
     <string name="no_fatigue">Я устаю ничуть не больше, чем обычно</string>
     <string name="fatigue_faster">Я устаю быстрее, чем раньше</string>
     <string name="fatigue">Я устаю от любого занятия</string>
     <string name="total_fatigue">Я устал чем бы то ни было заниматься</string>
-    <!--13 вопрос-->
+    <!--18 вопрос-->
     <string name="good_appetite">Мой аппетит не хуже, чем обычно</string>
-    <string name="not_good_appetite">Мой аппетит не так хорош, как бывало</string>
+    <string name="not_good_appetite">У меня не такой хороший аппетит, как был раньше</string>
     <string name="appetite_worse">Мой аппетит теперь гораздо хуже</string>
-    <string name="no_appetite">У меня совсем нет аппетита</string>
+    <string name="no_appetite">Я вообще потерял аппетит</string>
+    <!--19 вопрос-->
+    <string name="no_weight_loss">Если в последнее время я и потерял в весе, то очень немного</string>
+    <string name="loss_2_kg">Я потерял в весе более 2 кг</string>
+    <string name="loss_4_kg">Я потерял в весе более 4 кг</string>
+    <string name="loss_6_kg">Я потерял в весе более 6 кг</string>
+    <!--20 вопрос-->
+    <string name="no_health_anxiety">Я беспокоюсь о своем здоровье не больше, чем обычно</string>
+    <string name="some_health_troubles">Меня беспокоят такие проблемы, как различные боли, расстройства желудка, запоры</string>
+    <string name="health_anxiety">Я настолько обеспокоен своим здоровьем, что мне даже трудно думать о чем-нибудь другом</string>
+    <string name="total_health_anxiety">Я до такой степени обеспокоен своим здоровьем, что вообще ни о чем другом не могу думать</string>
+    <!--21 вопрос-->
+    <string name="good_sex">Я не замечал каких-либо изменений в моих сексуальных интересах</string>
+    <string name="less_sex">Я меньше, чем обычно интересуюсь сексом</string>
+    <string name="very_less_sex">Сейчас я намного меньше интересуюсь сексом</string>
+    <string name="no_sex">Я совершенно утратил интерес к сексу</string>
 
-    <string name="no_depression">Удовлетворительное эмоциональное состояние</string>
+    <string name="no_depression">Отсутствие депрессивных симптомов</string>
     <string name="light_depression">Легкая депрессия</string>
-    <string name="middle_depression">Умеренная депрессия</string>
+    <string name="moderate_depression">Умеренная депрессия</string>
+    <string name="middle_depression">Выраженная депрессия (средней тяжести)</string>
     <string name="heave_depression">Тяжелая депрессия</string>
+
+    <string name="cognitive_depression">Когнитивно-аффективная субшкала</string>
+    <string name="no_cognitive_impairment">Когнитивные искажения не выражены</string>
+    <string name="middle_cognitive_impairment">Cредняя выраженность когнитивных искажений</string>
+    <string name="strong_cognitive_impairment">Cильная выраженность когнитивных искажений</string>
+
+    <string name="somatic_depression">Субшкала соматических проявлений депрессии</string>
+    <string name="no_physical_symptoms">Физические симптомы не выражены</string>
+    <string name="middle_physical_symptoms">Средняя выраженность физических симптомов</string>
+    <string name="strong_physical_symptoms">Cильная выраженность физических симптомов</string>
 
     <string name="show_result">Показать результат</string>
     <string name="save_after_connect">Если не закрывать приложение, данные сохранятся после подключения к сети</string>

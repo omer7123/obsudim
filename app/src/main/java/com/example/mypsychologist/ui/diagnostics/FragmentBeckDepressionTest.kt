@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestBinding
+import com.example.mypsychologist.domain.entity.BeckDepressionResultEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.diagnostics.BeckDepressionScreenState
@@ -75,7 +76,7 @@ class FragmentBeckDepressionTest : Fragment() {
                 ).show(childFragmentManager, TAG)
             }
             is BeckDepressionScreenState.Result -> {
-                viewModel.saveResult(state.score, getString(state.conclusionId))
+                viewModel.saveResult(state.result)
 
                 if (!isNetworkConnect()) {
                     Snackbar.make(
@@ -96,13 +97,19 @@ class FragmentBeckDepressionTest : Fragment() {
     }
 
     private fun showResult(it: BeckDepressionScreenState.Result) {
-        TestResultDialogFragment.newInstance(
-            it.score,
-            getString(it.conclusionId),
-            R.string.depression_beck_test
+        TestScalesResultFragment.newInstance(
+            R.string.depression_beck_test,
+            it.result.toHashMap()
         )
             .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
+
+    private fun BeckDepressionResultEntity.toHashMap() =
+        hashMapOf(
+            R.string.depression to depressionScore,
+            R.string.cognitive_depression to cognitiveDepression,
+            R.string.somatic_depression to somaticDepression
+            )
 
     private fun setFragmentResultListeners() {
         childFragmentManager.setFragmentResultListener(

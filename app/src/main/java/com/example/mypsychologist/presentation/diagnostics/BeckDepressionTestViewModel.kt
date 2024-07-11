@@ -3,6 +3,7 @@ package com.example.mypsychologist.presentation.diagnostics
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.mypsychologist.domain.entity.BeckDepressionResultEntity
 import com.example.mypsychologist.domain.useCase.BeckDepressionTestConclusionUseCase
 import com.example.mypsychologist.domain.useCase.GetDepressionBeckTestQuestionsUseCase
 import com.example.mypsychologist.domain.useCase.SaveDepressionBeckResultUseCase
@@ -54,19 +55,17 @@ class BeckDepressionTestViewModel(
                         questions.size
                     )
                 } else {
-                    val result = answers.sum()
                     BeckDepressionScreenState.Result(
-                        result,
-                        beckDepressionTestConclusionUseCase(result)
+                        beckDepressionTestConclusionUseCase(answers)
                     )
                 }
         }
     }
 
-    fun saveResult(result: Int, conclusion: String) = run {
-        if (!saveDepressionBeckResultUseCase(result, conclusion)) {
+    fun saveResult(result: BeckDepressionResultEntity) = run {
+    /*    if (!saveDepressionBeckResultUseCase(result, conclusion)) {
             _screenState.value = BeckDepressionScreenState.Error
-        }
+        } */
     }
 
     fun previousQuestion() {

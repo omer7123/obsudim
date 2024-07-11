@@ -6,12 +6,12 @@ import javax.inject.Inject
 
 class STAIConclusionUseCase @Inject constructor() {
 
-    operator fun invoke(answers: List<Int>): STAIResultEntity = run {
+    operator fun invoke(answers: List<Int>): STAIResultEntity =
         STAIResultEntity(
             personalAnxiety = PersonalAnxiety(answers).calculate(),
             situationalAnxiety = SituationalAnxiety(answers).calculate()
         )
-    }
+
 
     class PersonalAnxiety(answers: List<Int>) : Scale(answers) {
         override fun items() =
