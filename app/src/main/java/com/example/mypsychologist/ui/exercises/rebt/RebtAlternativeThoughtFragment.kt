@@ -104,25 +104,16 @@ class RebtAlternativeThoughtFragment : Fragment() {
                 binding.progressBar.isVisible = false
                 mainAdapter.submitList(state.saved.second)
             }
+
             is ThoughtAnalysisScreenState.ValidationError -> {
                 mainAdapter.submitList(state.listWithErrors)
             }
 
             is ThoughtAnalysisScreenState.RequestResult -> {
                 binding.progressBar.isVisible = false
-                requireContext().showToast(
-                    getString(
-                        if (isNetworkConnect())
-                            if (state.success) {
-                                findNavController().navigate(R.id.fragment_exercises)
-                                R.string.success
-                            }
-                            else
-                                R.string.db_error
-                        else
-                            R.string.network_error
-                    )
-                )
+                state.result.forEach {
+                    requireContext().showToast(it.toString())
+                }
             }
 
             is ThoughtAnalysisScreenState.Init -> Unit

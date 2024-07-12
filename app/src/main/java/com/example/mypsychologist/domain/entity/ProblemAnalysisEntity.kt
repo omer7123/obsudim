@@ -2,6 +2,7 @@ package com.example.mypsychologist.domain.entity
 
 
 data class ProblemAnalysisEntity(
+    val problemId: String = "",
     val dogmaticRequirement: String = "",
     val dramatization: String = "",
     val lft: String = "",

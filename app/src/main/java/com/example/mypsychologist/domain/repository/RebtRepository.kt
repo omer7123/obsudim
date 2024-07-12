@@ -14,7 +14,7 @@ interface RebtRepository {
     suspend fun getREBTProblems(): Resource<List<ProblemEntity>>
     suspend fun saveProblem(problemEntity: ProblemEntity): Resource<String>
     suspend fun saveCurrentProblem(id: String): Boolean
-    suspend fun saveAnalysis(rebtAnalysisEntity: ProblemAnalysisEntity): Boolean
+    suspend fun saveAnalysis(rebtAnalysisEntity: ProblemAnalysisEntity): List<Resource<String>>
     suspend fun getProblemAnalysis(): ProblemAnalysisEntity
     suspend fun saveBeliefVerification(it: BeliefVerificationEntity, type: String): Resource<String>
     suspend fun getBeliefVerification(problemId: String): Resource<BeliefVerificationEntity>

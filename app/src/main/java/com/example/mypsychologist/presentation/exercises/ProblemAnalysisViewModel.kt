@@ -31,7 +31,7 @@ class ProblemAnalysisViewModel(
     init {
         _screenState.value = ThoughtAnalysisScreenState.Loading
         viewModelScope.launch {
-            getSavedAnalysis()
+         //   getSavedAnalysis()
         }
     }
 

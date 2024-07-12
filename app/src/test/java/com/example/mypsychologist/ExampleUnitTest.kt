@@ -1,6 +1,10 @@
 package com.example.mypsychologist
 
+import com.example.mypsychologist.data.converters.toModels
+import com.example.mypsychologist.data.model.ProblemAnalysisModel
+import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
 import com.example.mypsychologist.domain.useCase.DASSConclusionUseCase
+import com.example.mypsychologist.extensions.containsKeys
 import com.example.mypsychologist.extensions.sum
 import org.junit.Test
 
@@ -26,5 +30,37 @@ class ExampleUnitTest {
         val actual = DASSConclusionUseCase.Anxiety(listOf(1,1,0,0,2,1,1,0,1,0,1,2,1,1,0,0,1,0,2,0,0)).score()
 
         assertEquals(5, actual)
+    }
+
+    @Test
+    fun problem_analysis_converter_isCorrect(){
+        val actual = ProblemAnalysisEntity(
+            problemId = "1",
+            dogmaticRequirement = "мяу",
+            flexiblePreference = "гав",
+            lft = "мур",
+            hft = "гав-гав"
+            ).toModels()
+        val expected = listOf(
+            ProblemAnalysisModel("1", "мяу", "гав"),
+            ProblemAnalysisModel("1", "мур", "гав-гав"),
+        )
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun contains_keys_isCorrect() {
+        val map = mapOf(Pair("a", "b"), Pair("c", "d"))
+        val actual = map.containsKeys("a", "c")
+
+        assertTrue(actual)
+    }
+
+    @Test
+    fun not_contains_keys_isCorrect() {
+        val map = mapOf(Pair("a", "b"), Pair("c", "d"))
+        val actual = map.containsKeys("a", "d")
+
+        assertFalse(actual)
     }
 }

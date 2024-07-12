@@ -16,7 +16,7 @@ interface ProblemService {
     @GET("/problem/get_all_problems/{user_id}")
     suspend fun getProblems(@Path("user_id") userId: String): Response<List<GetProblemModel>>
 
-    @POST("/problem/save_problem_analysis")
+    @POST("/belief/create_deep_conviction")
     suspend fun saveProblemAnalysisItem(@Body model: ProblemAnalysisModel): Response<String>
 
     @GET("/problem/get_analysis/{problem_id}")

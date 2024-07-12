@@ -5,6 +5,7 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toEntities
 import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
+import com.example.mypsychologist.data.converters.toModels
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.remote.exercises.BeliefsDataSource
 import com.example.mypsychologist.data.remote.exercises.ProblemDataSource
@@ -35,13 +36,6 @@ class RebtRepositoryImpl @Inject constructor(
     override suspend fun getREBTProblemProgress(problemId: String): RebtProblemProgressEntity? =
         suspendCoroutine { continuation ->
             //TODO
-//            reference.child(RebtProblemProgressEntity::class.simpleName!!).child(problemId).get()
-//                .addOnSuccessListener { snapshot ->
-//                    continuation.resume(snapshot.getTypedValue())
-//                }
-//                .addOnFailureListener {
-//                    continuation.resumeWithException(it)
-//                }
         }
 
     override suspend fun getCurrentREBTProblemProgress(): RebtProblemProgressEntity? =
@@ -84,17 +78,15 @@ class RebtRepositoryImpl @Inject constructor(
 
 
     override suspend fun saveAnalysis(
-        rebtAnalysisEntity: ProblemAnalysisEntity
-    ): Boolean =
-        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-            val problemId = getCurrentProblemId()!!
-            try {
-
-                true
-            } catch (t: Throwable) {
-                false
-            }
+        problemAnalysis: ProblemAnalysisEntity
+    ): List<Resource<String>> = run {
+        val results = mutableListOf<Resource<String>>()
+        problemAnalysis.toModels().forEach {item ->
+            results.add(problemDataSource.saveProblemAnalysisItem(item))
         }
+
+        results
+    }
 
     override suspend fun getProblemAnalysis(): ProblemAnalysisEntity =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {

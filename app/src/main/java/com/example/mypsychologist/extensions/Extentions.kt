@@ -36,4 +36,9 @@ suspend fun <A, B> List<A>.pmap(transform: suspend (A) -> B): List<B> = coroutin
     map { async { transform(it) } }.awaitAll()
 }
 
+fun <A, B> Map<A, B>.containsKeys(vararg keys: A): Boolean = run {
+    var contains = true
+    keys.forEach { contains = contains.and(containsKey(it)) }
 
+    contains
+}
