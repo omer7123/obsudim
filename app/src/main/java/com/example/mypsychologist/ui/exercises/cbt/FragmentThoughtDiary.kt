@@ -89,40 +89,40 @@ class FragmentThoughtDiary : Fragment() {
             findNavController().popBackStack()
         }
 
-    /*    binding.includeAutoThought.cardImage.setOnClickListener {
+        /*    binding.includeAutoThought.cardImage.setOnClickListener {
 
-            childFragmentManager.setFragmentResultListener(
-                EDIT_AUTO_THOUGHT, viewLifecycleOwner
-            ) { _, bundle ->
+                childFragmentManager.setFragmentResultListener(
+                    EDIT_AUTO_THOUGHT, viewLifecycleOwner
+                ) { _, bundle ->
 
-                bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
-                    viewModel.editAutoThought(newText)
-                    binding.includeAutoThought.cardDescription.text = newText
+                    bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
+                        viewModel.editAutoThought(newText)
+                        binding.includeAutoThought.cardDescription.text = newText
+                    }
                 }
+
+                FragmentEditField.newInstance(
+                    binding.includeAutoThought.cardTitle.text.toString(),
+                    binding.includeAutoThought.cardDescription.text.toString()
+                ).show(childFragmentManager, EDIT_AUTO_THOUGHT)
             }
 
-            FragmentEditField.newInstance(
-                binding.includeAutoThought.cardTitle.text.toString(),
-                binding.includeAutoThought.cardDescription.text.toString()
-            ).show(childFragmentManager, EDIT_AUTO_THOUGHT)
-        }
+            binding.includeAlternativeThought.cardImage.setOnClickListener {
+                childFragmentManager.setFragmentResultListener(
+                    EDIT_ALTERNATIVE_THOUGHT, viewLifecycleOwner
+                ) { _, bundle ->
 
-        binding.includeAlternativeThought.cardImage.setOnClickListener {
-            childFragmentManager.setFragmentResultListener(
-                EDIT_ALTERNATIVE_THOUGHT, viewLifecycleOwner
-            ) { _, bundle ->
-
-                bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
-                    viewModel.editAlternativeThought(newText)
-                    binding.includeAlternativeThought.cardDescription.text = newText
+                    bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
+                        viewModel.editAlternativeThought(newText)
+                        binding.includeAlternativeThought.cardDescription.text = newText
+                    }
                 }
-            }
 
-            FragmentEditField.newInstance(
-                binding.includeAlternativeThought.cardTitle.text.toString(),
-                binding.includeAlternativeThought.cardDescription.text.toString()
-            ).show(childFragmentManager, EDIT_ALTERNATIVE_THOUGHT)
-        } */
+                FragmentEditField.newInstance(
+                    binding.includeAlternativeThought.cardTitle.text.toString(),
+                    binding.includeAlternativeThought.cardDescription.text.toString()
+                ).show(childFragmentManager, EDIT_ALTERNATIVE_THOUGHT)
+            } */
     }
 
     private fun render(it: Resource<ThoughtDiaryEntity>) {
@@ -130,18 +130,18 @@ class FragmentThoughtDiary : Fragment() {
             is Resource.Success -> {
                 setupRecords(it.data)
             }
+
             is Resource.Error -> {
-                if (!isNetworkConnect()) {
-                    requireContext().showToast(it.msg.toString())
-                }
+                requireContext().showToast(it.msg.toString())
             }
+
             is Resource.Loading -> {}
-        /*    is ThoughtDiaryScreenState.EditingSuccess -> {
-                if (isNetworkConnect())
-                    requireContext().showToast(getString(R.string.success))
-                else
-                    requireContext().showToast(getString(R.string.network_error))
-            } */
+            /*    is ThoughtDiaryScreenState.EditingSuccess -> {
+                    if (isNetworkConnect())
+                        requireContext().showToast(getString(R.string.success))
+                    else
+                        requireContext().showToast(getString(R.string.network_error))
+                } */
         }
     }
 

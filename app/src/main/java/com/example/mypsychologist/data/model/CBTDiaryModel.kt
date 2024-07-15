@@ -12,12 +12,12 @@ data class CBTDiaryModel (
     val autoThought: String,
     val proofs: String,
     val refutations: String,
-    val alternativeThought: String,
+ //   val alternativeThought: String,
     @SerialName("new_mood")
     val newMood: String,
     @SerialName("new_level")
     val newLevel: Int,
-    val behaviour: String
+    val behavioral: String
 )
 
 @Serializable

@@ -41,7 +41,7 @@ fun ThoughtDiaryEntity.toModel() =
         autoThought,
         proofs,
         refutations,
-        alternativeThought,
+   //     alternativeThought,
         newMood,
         newLevel,
         behaviour

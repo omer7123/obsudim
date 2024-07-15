@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GetTokenUseCase @Inject constructor(private val repository: AuthenticationRepository) {
 
-    suspend operator fun invoke()=
+    suspend operator fun invoke(): String =
         repository.getToken()
 }
