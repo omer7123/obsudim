@@ -26,13 +26,17 @@ data class ManagerModel(
 
 @Serializable
 data class TaskModel(
+    val id: String,
     val text: String,
-    @SerialName("user_id")
+    @SerialName("client_id")
     val userId: String,
     @SerialName("test_title")
     val testTitle: String,
-    @SerialName("text_id")
+    @SerialName("psychologist_id")
+    val psychologistId: String,
+    @SerialName("test_id")
     val testId: String,
+    @SerialName("is_complete")
     val isCompleted: Boolean
 )
 

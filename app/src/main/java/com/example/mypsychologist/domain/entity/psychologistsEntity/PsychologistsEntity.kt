@@ -15,6 +15,7 @@ data class ManagerEntity(
 )
 
 data class TaskEntity(
+    val id: String,
     val text: String,
     val userId: String,
     val testTitle: String,

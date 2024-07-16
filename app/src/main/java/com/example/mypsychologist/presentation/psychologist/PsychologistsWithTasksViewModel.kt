@@ -1,10 +1,12 @@
 package com.example.mypsychologist.presentation.psychologist
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
+import com.example.mypsychologist.domain.entity.psychologistsEntity.TaskEntity
 import com.example.mypsychologist.domain.useCase.MarkTaskUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetOwnPsychologistsUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetStatusRequestToManagerUseCase
@@ -12,6 +14,7 @@ import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUs
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.psychologist.OwnPsychologistDelegateItem
+import com.example.mypsychologist.ui.psychologist.TaskFromPsychologistDelegateItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,7 +37,9 @@ class PsychologistsWithTasksViewModel(
     fun initial() {
         _screenState.value = ListScreenState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            when (getStatusRequestToManagerUseCase()) {
+            val status = getStatusRequestToManagerUseCase()
+            Log.e("Status: ", status.toString())
+            when (status) {
                 true -> getTasks()
                 false -> getPsychologists()
             }
@@ -45,26 +50,38 @@ class PsychologistsWithTasksViewModel(
         when (val result = getTasksUseCase()) {
             is Resource.Error -> _screenState.value = ListScreenState.Error
             Resource.Loading -> ListScreenState.Loading
-            is Resource.Success ->{
-                if (result.data.isEmpty()) _screenState.value = ListScreenState.Data(emptyList())
-//                else
-//                ListScreenState.Data()
+            is Resource.Success -> {
+                Log.e("TASK", result.data.toString())
+                if (result.data.isEmpty()) _screenState.value =
+                    ListScreenState.Data(convertTaskListToDelegateItems(result.data))
+                else
+                    _screenState.value =
+                        ListScreenState.Data(convertTaskListToDelegateItems(result.data))
             }
         }
     }
 
     private suspend fun getPsychologists() {
+
         when (val res = getOwnPsychologistsUseCase()) {
             is Resource.Error -> _screenState.value = ListScreenState.Error
             Resource.Loading -> {}
-            is Resource.Success -> _screenState.value =
-                ListScreenState.Data(convertListToDelegateItems(res.data))
+            is Resource.Success -> {
+                _screenState.value =
+                    ListScreenState.Data(convertListToDelegateItems(res.data))
+            }
         }
     }
 
     private fun convertListToDelegateItems(managers: List<ManagerEntity>): List<DelegateItem> {
         return managers.map { manager ->
             OwnPsychologistDelegateItem(manager)
+        }
+    }
+
+    private fun convertTaskListToDelegateItems(tasks: List<TaskEntity>): List<DelegateItem> {
+        return tasks.map { task ->
+            TaskFromPsychologistDelegateItem(task)
         }
     }
 

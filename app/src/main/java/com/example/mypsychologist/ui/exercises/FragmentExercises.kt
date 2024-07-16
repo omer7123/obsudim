@@ -27,7 +27,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class FragmentExercises : Fragment() {
+class
+FragmentExercises : Fragment() {
 
     private var binding: FragmentExercisesBinding by autoCleared()
 
@@ -185,7 +186,7 @@ class FragmentExercises : Fragment() {
             viewLifecycleOwner
         ) { _, bundle ->
             findNavController().navigate(fragmentId, bundle)
-            //viewModel.getProblemProgress(bundle.getString(ProblemsFragment.PROBLEM)!!)
+            viewModel.getProblemProgress(bundle.getString(ProblemsFragment.PROBLEM)!!)
         }
 
         ProblemsFragment().show(childFragmentManager, TAG)

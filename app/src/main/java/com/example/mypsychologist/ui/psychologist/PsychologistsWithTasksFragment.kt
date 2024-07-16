@@ -107,15 +107,16 @@ class PsychologistsWithTasksFragment : Fragment() {
         binding.psychologistsRw.apply {
             layoutManager = LinearLayoutManager(context)
 
+
             adapter = MainAdapter().apply {
                 addDelegate(OwnPsychologistDelegate { psychologistId ->
                     val bundle = Bundle()
                     bundle.putString(RequestToPsychologistFragment.PSYCHOLOGIST_ID, psychologistId)
                     findNavController().navigate(R.id.fragment_request_to_psychologist, bundle)
                 })
-//                addDelegate(TaskDelegate { taskId, psychologistId, isChecked ->
+                addDelegate(TaskDelegate { taskId, psychologistId, isChecked ->
 //                    viewModel.markTask(taskId, psychologistId, isChecked)
-//                })
+                })
 
                 submitList(items)
             }
