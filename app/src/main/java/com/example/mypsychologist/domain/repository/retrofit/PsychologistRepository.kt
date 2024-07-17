@@ -13,8 +13,8 @@ interface PsychologistRepository {
 //    suspend fun getClientsRequests(): List<ClientRequestEntity>
 //    suspend fun sendAnswerToRequest(accept: Boolean, clientId: String): Boolean
     suspend fun getTasks(): Resource<List<TaskEntity>>
-//    fun markTaskAsCompleted(taskId: String, psychologistId: String): Boolean
-//    fun markTaskAsNotCompleted(taskId: String, psychologistId: String): Boolean
+    suspend fun markTaskAsCompleted(taskId: String): Resource<String>
+    suspend fun markTaskAsNotCompleted(taskId: String): Resource<String>
 
     suspend fun getOwnPsychologists(): Resource<List<ManagerEntity>>
     suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String>

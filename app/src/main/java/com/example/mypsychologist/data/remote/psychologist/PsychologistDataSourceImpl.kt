@@ -4,6 +4,7 @@ import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.ManagerModel
 import com.example.mypsychologist.data.model.SendRequestToPsychologistModel
+import com.example.mypsychologist.data.model.TaskIdModel
 import com.example.mypsychologist.data.model.TaskModel
 import javax.inject.Inject
 
@@ -26,10 +27,10 @@ class PsychologistDataSourceImpl @Inject constructor(private val api: Psychologi
     }
 
     override suspend fun markTaskAsCompleted(id: String): Resource<String> = getResult {
-        api.markTaskAsCompleted(id)
+        api.markTaskAsCompleted(TaskIdModel(id))
     }
 
     override suspend fun markTaskAsUnfulfilled(id: String): Resource<String> = getResult {
-        api.markTaskAsUnfulfilled(id)
+        api.markTaskAsUnfulfilled(TaskIdModel(id))
     }
 }

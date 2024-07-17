@@ -37,12 +37,13 @@ class PsychologistsWithTasksViewModel(
     fun initial() {
         _screenState.value = ListScreenState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            val status = getStatusRequestToManagerUseCase()
-            Log.e("Status: ", status.toString())
-            when (status) {
-                true -> getTasks()
-                false -> getPsychologists()
-            }
+            /*        val status = getStatusRequestToManagerUseCase()
+                    Log.e("Status: ", status.toString())
+                    when (status) {
+                        true -> */
+            getTasks()
+
+            //    false -> getPsychologists() }
         }
     }
 
@@ -52,23 +53,23 @@ class PsychologistsWithTasksViewModel(
             Resource.Loading -> ListScreenState.Loading
             is Resource.Success -> {
                 Log.e("TASK", result.data.toString())
-                if (result.data.isEmpty()) _screenState.value =
+
+                _screenState.value =
                     ListScreenState.Data(convertTaskListToDelegateItems(result.data))
-                else
-                    _screenState.value =
-                        ListScreenState.Data(convertTaskListToDelegateItems(result.data))
             }
         }
     }
 
-    private suspend fun getPsychologists() {
+    fun getPsychologists() {
+        viewModelScope.launch(Dispatchers.IO) {
 
-        when (val res = getOwnPsychologistsUseCase()) {
-            is Resource.Error -> _screenState.value = ListScreenState.Error
-            Resource.Loading -> {}
-            is Resource.Success -> {
-                _screenState.value =
-                    ListScreenState.Data(convertListToDelegateItems(res.data))
+            when (val res = getOwnPsychologistsUseCase()) {
+                is Resource.Error -> _screenState.value = ListScreenState.Error
+                Resource.Loading -> {}
+                is Resource.Success -> {
+                    _screenState.value =
+                        ListScreenState.Data(convertListToDelegateItems(res.data))
+                }
             }
         }
     }
@@ -97,8 +98,10 @@ class PsychologistsWithTasksViewModel(
         return psychologistsWithTasks
     }
 
-    fun markTask(taskId: String, psychologistId: String, isChecked: Boolean) {
-//        markTaskUseCase(taskId, psychologistId, isChecked)
+    fun markTask(taskId: String, isChecked: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            markTaskUseCase(taskId, isChecked)
+        }
     }
 
     class Factory @Inject constructor(

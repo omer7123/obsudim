@@ -15,7 +15,6 @@ import javax.inject.Inject
 
 class PsychologistRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
-    private val reference: DatabaseReference,
     private val dataSource: PsychologistDataSource,
     private val localDataSource: AuthenticationSharedPrefDataSource
 ) : PsychologistRepository {
@@ -225,25 +224,11 @@ class PsychologistRepositoryImpl @Inject constructor(
 //                }
 //        }
 //
-//    override fun markTaskAsCompleted(taskId: String, psychologistId: String) =
-//        try {
-//            reference.child(TASKS).child(psychologistId).child(taskId)
-//                .child(TaskEntity::completed.name).setValue(true)
-//
-//            true
-//        } catch (t: Throwable) {
-//            false
-//        }
-//
-//    override fun markTaskAsNotCompleted(taskId: String, psychologistId: String) =
-//        try {
-//            reference.child(TASKS).child(psychologistId).child(taskId)
-//                .child(TaskEntity::completed.name).setValue(false)
-//
-//            true
-//        } catch (t: Throwable) {
-//            false
-//        }
+    override suspend fun markTaskAsCompleted(taskId: String) =
+        dataSource.markTaskAsCompleted(taskId)
+
+    override suspend fun markTaskAsNotCompleted(taskId: String) =
+        dataSource.markTaskAsUnfulfilled(taskId)
 
     override suspend fun getOwnPsychologists(): Resource<List<ManagerEntity>> {
         return when(val result = dataSource.getManagersList()){
