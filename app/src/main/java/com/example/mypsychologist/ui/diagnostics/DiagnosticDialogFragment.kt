@@ -57,10 +57,10 @@ class DiagnosticDialogFragment : DialogFragment() {
     }
 
     private fun navigateToTest() {
-        val titleId = requireArguments().getInt(TITLE_ID)
+        val testId = requireArguments().getString(TEST_ID)
 
-        viewModel.getScreenIdFor(titleId)?.let { screenId ->
-            findNavController().navigate(screenId)
+        viewModel.getScreenIdFor(testId.toString()).let { screenId ->
+            findNavController().navigate(screenId!!)
         }
     }
 
