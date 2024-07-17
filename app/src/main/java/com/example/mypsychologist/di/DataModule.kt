@@ -3,6 +3,7 @@ package com.example.mypsychologist.di
 import com.example.mypsychologist.core.AddCookiesInterceptor
 import com.example.mypsychologist.core.ReceivedCookiesInterceptor
 import com.example.mypsychologist.data.remote.authentication.AuthenticationService
+import com.example.mypsychologist.data.remote.diagnostic.TestsDiagnosticService
 import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -97,6 +98,12 @@ class DataModule {
     @Singleton
     fun provideFreeDiaryService(retrofit: Retrofit): FreeDiaryService {
         return retrofit.create(FreeDiaryService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTestsDiagnosticService(retrofit: Retrofit): TestsDiagnosticService {
+        return retrofit.create(TestsDiagnosticService::class.java)
     }
 
 //    @Provides

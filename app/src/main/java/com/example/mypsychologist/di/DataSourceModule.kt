@@ -4,6 +4,8 @@ import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPref
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSourceImpl
 import com.example.mypsychologist.data.remote.authentication.AuthenticationDataSource
 import com.example.mypsychologist.data.remote.authentication.AuthenticationDataSourceImpl
+import com.example.mypsychologist.data.remote.diagnostic.TestsDiagnosticDataSource
+import com.example.mypsychologist.data.remote.diagnostic.TestsDiagnosticDataSourceImpl
 import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryDataSource
 import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryDataSourceImpl
 import dagger.Binds
@@ -24,4 +26,8 @@ interface DataSourceModule {
     @Binds
     @Singleton
     fun bindFreeDiaryDataSource(impl: FreeDiaryDataSourceImpl): FreeDiaryDataSource
+
+    @Binds
+    @Singleton
+    fun bindTestsDiagnosticDataSource(impl: TestsDiagnosticDataSourceImpl): TestsDiagnosticDataSource
 }

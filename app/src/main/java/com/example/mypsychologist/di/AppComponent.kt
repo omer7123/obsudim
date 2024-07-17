@@ -21,6 +21,7 @@ interface AppComponent {
     fun feedComponent(): FeedComponent.Factory
     fun educationComponent(): EducationComponent.Factory
     fun authenticationComponent(): AuthenticationComponent.Factory
+
     fun tagsComponent(): TagsComponent.Factory
 
     @Component.Factory

@@ -35,8 +35,8 @@ class DiagnosticDialogFragment : DialogFragment() {
 
     private fun setupTitleAndText() {
         binding.apply {
-            title.text = getString(requireArguments().getInt(TITLE_ID))
-            text.text = getString(requireArguments().getInt(DESCRIPTION_ID))
+            title.text = requireArguments().getString(TITLE_ID)
+            text.text = requireArguments().getString(DESCRIPTION_ID)
         }
     }
 
@@ -70,12 +70,12 @@ class DiagnosticDialogFragment : DialogFragment() {
         }
 
     companion object {
-        fun newInstance(titleId: Int, descriptionId: Int, clientId: String) =
+        fun newInstance(testId: String, titleId: String, descriptionId: String) =
             DiagnosticDialogFragment().apply {
                 arguments = bundleOf(
                     TITLE_ID to titleId,
                     DESCRIPTION_ID to descriptionId,
-                    CLIENT_ID to clientId
+                    TEST_ID to testId
                 )
             }
 
@@ -83,5 +83,6 @@ class DiagnosticDialogFragment : DialogFragment() {
         private const val TITLE_ID = "title"
         private const val CLIENT_ID = "client id"
         private const val DESCRIPTION_ID = "description"
+        private const val TEST_ID = "test_id"
     }
 }

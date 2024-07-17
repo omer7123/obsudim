@@ -14,14 +14,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestsBinding
-import com.example.mypsychologist.domain.entity.TestGroupEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.diagnostics.TestsViewModel
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.diagnostics.FragmentTestHistory
 import com.example.mypsychologist.ui.diagnostics.TestDelegate
-import com.example.mypsychologist.ui.diagnostics.TestGroupDelegate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -54,7 +52,9 @@ class FragmentClientTests : Fragment() {
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
-            .onEach { mainAdapter.submitList(it) }
+            .onEach {
+//                mainAdapter.submitList(it)
+                              }
             .launchIn(lifecycleScope)
 
         return binding.root
@@ -62,15 +62,15 @@ class FragmentClientTests : Fragment() {
 
     private fun setupAdapter() {
 
-        val onTestGroupClick: (TestGroupEntity, Boolean) -> Unit = { category, isChecked ->
-            if (isChecked) {
-                viewModel.setupTestsFor(category)
-            } else {
-                viewModel.hintTestsFor(category.titleId)
-            }
-        }
+//        val onTestGroupClick: (TestGroupEntity, Boolean) -> Unit = { category, isChecked ->
+//            if (isChecked) {
+//                viewModel.setupTestsFor(category)
+//            } else {
+//                viewModel.hintTestsFor(category.titleId)
+//            }
+//        }
 
-        val onTestClick: (Int, Int) -> Unit = { titleId, _ ->
+        val onTestClick: (String, String) -> Unit = { titleId, _ ->
             findNavController().navigate(
                 R.id.fragment_test_history, bundleOf(
                     FragmentTestHistory.TEST_TITLE_ID to titleId,
@@ -80,8 +80,8 @@ class FragmentClientTests : Fragment() {
         }
 
         mainAdapter = MainAdapter().apply {
-            addDelegate(TestGroupDelegate(onTestGroupClick))
-            addDelegate(TestDelegate(onTestClick))
+//            addDelegate(TestGroupDelegate(onTestGroupClick))
+//            addDelegate(TestDelegate(onTestClick))
         }
 
         binding.testsRw.apply {
