@@ -2,10 +2,10 @@ package com.example.mypsychologist.ui.diagnostics
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.databinding.FragmentTestsBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
 import com.example.mypsychologist.presentation.diagnostics.TestsScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestsViewModel
 import com.example.mypsychologist.ui.DelegateItem
@@ -75,9 +74,16 @@ class FragmentTests : Fragment() {
     private fun renderState(state: TestsScreenState) {
         when (state) {
             is TestsScreenState.Content -> setupAdapter(state.data)
-            is TestsScreenState.Error -> requireContext().showToast(state.msg)
+            is TestsScreenState.Error -> {
+                binding.progressCircular.isVisible = false
+                binding.testsRw.isVisible = false
+                requireContext().showToast(state.msg)
+            }
             TestsScreenState.Initial -> {}
-            TestsScreenState.Loading -> {}
+            TestsScreenState.Loading -> {
+                binding.testsRw.isVisible = false
+                binding.progressCircular.isVisible = true
+            }
         }
     }
 
@@ -91,7 +97,8 @@ class FragmentTests : Fragment() {
 //            }
 //        }
 
-
+        binding.progressCircular.isVisible = false
+        binding.testsRw.isVisible = true
 
         val onTestClick: (String, String, String) -> Unit = { testId, description, testTitle ->
             DiagnosticDialogFragment.newInstance(testId, testTitle, description)
