@@ -76,6 +76,7 @@
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/container_task_problem"
+        android:visibility="gone"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"

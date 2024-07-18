@@ -273,7 +273,7 @@
     <string name="man">Мужской</string>
     <string name="woman">Женский</string>
     <string name="other">Другое</string>
-    <string name="birthday">Дата рождения</string>
+    <string name="birthday">Дата рождения (ГГГГ-ММ-ДД)</string>
 
     <string name="gender_and_age">%1$s, %2$s</string>
 

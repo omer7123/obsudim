@@ -5,6 +5,7 @@ import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.CBTDiaryCardModel
 import com.example.mypsychologist.data.model.CBTDiaryModel
+import com.example.mypsychologist.data.model.CBTInputDiaryModel
 import com.example.mypsychologist.data.model.DiaryIdModel
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ class DiaryDataSourceImpl @Inject constructor(private val api: DiaryService) : D
         api.saveCBTDiary(diary)
     }
 
-    override suspend fun getCBTDiaryRecord(id: String): Resource<CBTDiaryModel> = getResult {
+    override suspend fun getCBTDiaryRecord(id: String): Resource<CBTInputDiaryModel> = getResult {
         api.getCBTDiaryRecord(DiaryIdModel( id))
     }
 

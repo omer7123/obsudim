@@ -5,26 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentExercisesBinding
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.setupSmallCard
-import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.presentation.exercises.REBTScreenState
 import com.example.mypsychologist.presentation.exercises.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
 import com.example.mypsychologist.ui.exercises.rebt.ProblemsFragment
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class
