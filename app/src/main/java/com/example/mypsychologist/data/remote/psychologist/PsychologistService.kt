@@ -2,6 +2,7 @@ package com.example.mypsychologist.data.remote.psychologist
 
 import com.example.mypsychologist.data.model.ManagerModel
 import com.example.mypsychologist.data.model.SendRequestToPsychologistModel
+import com.example.mypsychologist.data.model.TaskIdModel
 import com.example.mypsychologist.data.model.TaskModel
 import retrofit2.Response
 import retrofit2.http.Body
@@ -23,10 +24,10 @@ interface PsychologistService {
     suspend fun getTasks(): Response<List<TaskModel>>
 
     @POST("/client/complete_task")
-    suspend fun markTaskAsCompleted(@Body task_id: String): Response<String>
+    suspend fun markTaskAsCompleted(@Body taskId: TaskIdModel): Response<String>
 
     @POST("/client/unfulfilled_task")
-    suspend fun markTaskAsUnfulfilled(@Body task_id: String): Response<String>
+    suspend fun markTaskAsUnfulfilled(@Body taskId: TaskIdModel): Response<String>
 
 
 }

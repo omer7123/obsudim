@@ -56,6 +56,7 @@ class PsychologistsWithTasksFragment : Fragment() {
         }
 
         binding.findPsychologistButton.setOnClickListener {
+            viewModel.getPsychologists()
 //            findNavController().navigate(R.id.fragment_psychologists)
 
         }
@@ -114,8 +115,8 @@ class PsychologistsWithTasksFragment : Fragment() {
                     bundle.putString(RequestToPsychologistFragment.PSYCHOLOGIST_ID, psychologistId)
                     findNavController().navigate(R.id.fragment_request_to_psychologist, bundle)
                 })
-                addDelegate(TaskDelegate { taskId, psychologistId, isChecked ->
-//                    viewModel.markTask(taskId, psychologistId, isChecked)
+                addDelegate(TaskDelegate { taskId, isChecked ->
+                    viewModel.markTask(taskId, isChecked)
                 })
 
                 submitList(items)
