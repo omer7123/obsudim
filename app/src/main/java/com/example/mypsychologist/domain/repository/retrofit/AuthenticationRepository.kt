@@ -4,7 +4,6 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
 import com.example.mypsychologist.data.model.OldRegister
 import com.example.mypsychologist.data.model.Token
-import com.example.mypsychologist.domain.entity.authenticationEntity.Register
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
 
 interface AuthenticationRepository {
@@ -13,6 +12,7 @@ interface AuthenticationRepository {
     suspend fun authOld(authModel: AuthModel): Resource<User>
     suspend fun saveToken(token: String)
     suspend fun getToken(): String
+    suspend fun deleteToken()
     suspend fun authByToken(token: Token): Resource<User>
     suspend fun saveUserId(userId: String)
     suspend fun getUserId(): String

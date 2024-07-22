@@ -32,6 +32,15 @@ class AuthenticationSharedPrefDataSourceImpl @Inject constructor(context: Contex
         return sharedPref.getString(TOKEN, "").toString()
     }
 
+    override suspend fun deleteToken() {
+        withContext(Dispatchers.IO){
+            sharedPref.edit().apply {
+                putString(TOKEN, "")
+                apply()
+            }
+        }
+    }
+
     override suspend fun getUserId(): String {
         return sharedPref.getString(USER_ID, "").toString()
     }

@@ -45,4 +45,8 @@ class AuthenticationRepositoryImpl @Inject constructor(
         return localDataSource.getToken()
     }
 
+    override suspend fun deleteToken() {
+        localDataSource.deleteToken()
+    }
+
 }
