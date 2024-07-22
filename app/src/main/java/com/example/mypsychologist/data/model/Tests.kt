@@ -25,3 +25,14 @@ data class ScaleResultModel(
     val scaleId: String,
     val score: Int
 )
+
+@Serializable
+data class TestResultsGetModel(
+    @SerialName("test_id")
+    val testId: String,
+    @SerialName("test_result_id")
+    val testResultId: String,
+    val datetime: String,
+    @SerialName("scale_results")
+    val scaleResults: List<ScaleResultModel>
+)

@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.TestHistoryItemBinding
-import com.example.mypsychologist.domain.entity.TestResultEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
 import com.example.mypsychologist.extensions.toDateString
 import java.util.*
 
-class TestHistoryAdapter(private val items: List<TestResultEntity>) :
+class TestHistoryAdapter(private val items: List<TestResultsGetEntity>) :
     RecyclerView.Adapter<TestHistoryAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -24,11 +24,12 @@ class TestHistoryAdapter(private val items: List<TestResultEntity>) :
     class ViewHolder(private val binding: TestHistoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: TestResultEntity) {
+        fun bind(item: TestResultsGetEntity) {
             binding.apply {
-                conclusion.text = item.conclusion
-                date.text = Date(item.timestamp).toDateString()
-                score.text = item.score.toString()
+                date.text = item.datetime
+//                conclusion.text = item.conclusion
+//                date.text = Date(item.timestamp).toDateString()
+//                score.text = item.score.toString()
             }
         }
     }

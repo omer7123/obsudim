@@ -16,3 +16,10 @@ data class ScaleResultEntity(
     val scaleId: String,
     val score: Int
 )
+
+data class TestResultsGetEntity(
+    val testId: String,
+    val testResultId: String,
+    val datetime: String,
+    val scaleResults: List<ScaleResultEntity>
+)

@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.diagnostics
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestHistoryBinding
-import com.example.mypsychologist.domain.entity.TestResultEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenState
@@ -31,13 +32,7 @@ class FragmentTestHistory : Fragment() {
 
     @Inject
     lateinit var vmFactory: TestHistoryViewModel.Factory
-    private val viewModel: TestHistoryViewModel by viewModels {
-        TestHistoryViewModel.provideFactory(
-            vmFactory,
-            requireArguments().getInt(TEST_TITLE_ID),
-            requireArguments().getString(CLIENT_ID)!!
-        )
-    }
+    private val viewModel: TestHistoryViewModel by viewModels { vmFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -51,7 +46,7 @@ class FragmentTestHistory : Fragment() {
     ): View {
         binding = FragmentTestHistoryBinding.inflate(inflater, container, false)
 
-        binding.title.text = getString(requireArguments().getInt(TEST_TITLE_ID))
+        binding.title.text = requireArguments().getString(TEST_TITLE)
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -62,6 +57,12 @@ class FragmentTestHistory : Fragment() {
             .launchIn(lifecycleScope)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.e("ID", requireArguments().getString(TEST_ID).toString())
+        viewModel.loadHistory(requireArguments().getString(TEST_ID).toString())
     }
 
     private fun render(state: TestHistoryScreenState) {
@@ -89,7 +90,7 @@ class FragmentTestHistory : Fragment() {
         }
     }
 
-    private fun setupAdapter(list: List<TestResultEntity>) {
+    private fun setupAdapter(list: List<TestResultsGetEntity>) {
 
         binding.resultsRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -108,7 +109,7 @@ class FragmentTestHistory : Fragment() {
     }
 
     companion object {
-        const val TEST_TITLE_ID = "test title id"
-        const val CLIENT_ID = "client id"
+        const val TEST_ID = "test_id"
+        const val TEST_TITLE = "test_title"
     }
 }
