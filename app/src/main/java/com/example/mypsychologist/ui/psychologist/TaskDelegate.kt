@@ -8,12 +8,16 @@ import com.example.mypsychologist.domain.entity.psychologistsEntity.TaskEntity
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
-class TaskDelegate(private val check: (String, Boolean) -> Unit) : AdapterDelegate {
+class TaskDelegate(
+    private val check: (String, Boolean) -> Unit,
+    private val onItemClickListener: (String, String, String) -> Unit
+) :
+    AdapterDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup) =
         ViewHolder(
-            ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-            check
+            ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         )
 
     override fun onBindViewHolder(
@@ -26,9 +30,8 @@ class TaskDelegate(private val check: (String, Boolean) -> Unit) : AdapterDelega
 
     override fun isOfViewType(item: DelegateItem) = item is TaskFromPsychologistDelegateItem
 
-    class ViewHolder(
+    inner class ViewHolder(
         private val binding: ItemTaskBinding,
-        private val check: (String, Boolean) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: TaskEntity) {
@@ -43,7 +46,11 @@ class TaskDelegate(private val check: (String, Boolean) -> Unit) : AdapterDelega
             }
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 check(item.id, isChecked)
-           }
+            }
+
+            binding.root.setOnClickListener {
+                onItemClickListener(item.testId, item.testTitle, item.testTitle)
+            }
         }
     }
 }
