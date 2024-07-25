@@ -38,7 +38,7 @@ class EditViewModel(
 
     private var info = ClientInfoEntity()
 
-    private fun setBirthday(date: String) {
+    fun setBirthday(date: String) {
         info = info.copy(birthday = date)
     }
 
@@ -102,12 +102,6 @@ class EditViewModel(
             InputItemEntity(
                 R.string.name,
                 saveFunction = ::setName
-            )
-        ),
-        InputDelegateItem(
-            InputItemEntity(
-                R.string.birthday,
-                saveFunction = ::setBirthday
             )
         ),
         InputDelegateItem(

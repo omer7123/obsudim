@@ -1,7 +1,8 @@
 package com.example.mypsychologist.ui.main
 
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
-import android.content.res.TypedArray
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,7 +20,6 @@ import com.example.mypsychologist.databinding.FragmentEditBinding
 import com.example.mypsychologist.domain.entity.TagEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
-import com.example.mypsychologist.extensions.parcelable
 import com.example.mypsychologist.extensions.parcelableArray
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.main.EditScreenState
@@ -31,7 +31,11 @@ import com.example.mypsychologist.ui.exercises.cbt.InputDelegate
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
+
 
 class EditFragment : Fragment() {
 
@@ -47,6 +51,8 @@ class EditFragment : Fragment() {
         super.onAttach(context)
         requireContext().getAppComponent().profileComponent().create().inject(this)
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,6 +78,7 @@ class EditFragment : Fragment() {
 
         return binding.root
     }
+
 
     private fun render(state: EditScreenState) {
         when (state) {
@@ -129,10 +136,33 @@ class EditFragment : Fragment() {
                 TagsFragment.newInstance().show(childFragmentManager, EDIT_REQUEST)
             }
 
+            changeBirthdayButton.setOnClickListener {
+                setupDatePicker()
+            }
+
             saveButton.setOnClickListener {
                 viewModel.tryToSaveInfo()
             }
         }
+    }
+
+    private fun setupDatePicker() {
+        val date: Calendar = Calendar.getInstance()
+
+        val dateListener =
+            OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                date[Calendar.YEAR] = year
+                date[Calendar.MONTH] = monthOfYear
+                date[Calendar.DAY_OF_MONTH] = dayOfMonth
+
+                viewModel.setBirthday(SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(date.timeInMillis))
+            }
+
+        DatePickerDialog(requireContext(), dateListener,
+            date.get(Calendar.YEAR),
+            date.get(Calendar.MONTH),
+            date.get(Calendar.DAY_OF_MONTH))
+            .show();
     }
 
     private fun setupAdapter(items: List<DelegateItem>) {
@@ -162,6 +192,7 @@ class EditFragment : Fragment() {
     }
 
     companion object {
+        private var DATE_PATTERN = "yyyy-MM-dd"
         private const val EDIT_NAME = "edit name"
         private const val EDIT_GENDER = "edit gender"
         private const val EDIT_DIAGNOSIS = "edit diagnosis"
