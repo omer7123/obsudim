@@ -43,6 +43,7 @@ class MBITestViewModel(
     val screenState: StateFlow<MBIScreenState>
         get() = _screenState
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun saveAnswerAndGoToNext(score: Int) {
         if (questionNumber == 5)
             answers[questionNumber] = 6 - score
