@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiagnosticDialogBinding
-import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
 import com.example.mypsychologist.extensions.serializable
 import com.example.mypsychologist.ui.autoCleared
 
@@ -45,13 +44,13 @@ class TestResultDialogFragment : DialogFragment() {
             findNavController().navigate(R.id.main_fragment)
         }
         binding.historyButton.setOnClickListener {
-//            findNavController().navigate(
-//                R.id.fragment_test_history,
-//                bundleOf(
-//                    FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID),
-//                    FragmentTestHistory.CLIENT_ID to TestHistoryViewModel.OWN
-//                )
-//            )
+            findNavController().navigate(
+                R.id.fragment_test_history, bundleOf(
+                    FragmentTestHistory.TEST_ID to requireArguments().getString(TEST_ID),
+                    FragmentTestHistory.TEST_TITLE to requireArguments().getString(TITLE_ID)
+//                    FragmentTestHistory.CLIENT_ID to requireArguments().getString(CLIENT_ID)
+                )
+            )
         }
     }
 
@@ -76,14 +75,17 @@ class TestResultDialogFragment : DialogFragment() {
             score: Int,
             conclusion: String,
             titleId: Int,
-            scales: HashMap<Int, Int>? = null
+            testId: String,
+            scales: HashMap<Int, Int>? = null,
+
         ) =
             TestResultDialogFragment().apply {
                 arguments = bundleOf(
                     SCORE to score,
                     CONCLUSION to conclusion,
                     TITLE_ID to titleId,
-                    SCALES to scales
+                    SCALES to scales,
+                    TEST_ID to testId
                 )
             }
 
@@ -92,5 +94,6 @@ class TestResultDialogFragment : DialogFragment() {
         const val SCORE = "score"
         const val CONCLUSION = "conclusion"
         const val SCALES = "scales"
+        const val TEST_ID = "test_id"
     }
 }

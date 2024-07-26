@@ -98,7 +98,8 @@ class SMQTestFragment : Fragment() {
         TestResultDialogFragment.newInstance(
             it.result.score,
             getString(it.result.conclusion),
-            R.string.cmq
+            R.string.cmq,
+            "d4c551a7-f5ea-4688-bbae-5b1cac3bb394"
         )
             .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
