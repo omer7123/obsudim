@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 data class TestModel(
     val title: String,
     val description: String,
+    @SerialName("short_desc")
+    val shortDesc: String,
     @SerialName("test_id")
     val testId: String
 )

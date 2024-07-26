@@ -10,7 +10,7 @@ import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
 
 fun TestModel.toEntity() =
-    TestEntity(title, description, testId)
+    TestEntity(title, description, shortDesc, testId)
 
 fun SaveTestResultEntity.toModel() =
     SaveTestResultModel(date, results.map { it.toModel() }, testId)
