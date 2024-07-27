@@ -18,7 +18,8 @@ fun SaveTestResultEntity.toModel() =
 private fun ScaleResultEntity.toModel() =
     ScaleResultModel(scaleId, score)
 
-private fun ScaleResultModel.toEntity() =
+private fun ScaleResultModel.toEntity(): ScaleResultEntity =
     ScaleResultEntity(scaleId, score)
+
 fun TestResultsGetModel.toEntity()=
     TestResultsGetEntity(testId, testResultId, datetime, scaleResults.map { it.toEntity() })

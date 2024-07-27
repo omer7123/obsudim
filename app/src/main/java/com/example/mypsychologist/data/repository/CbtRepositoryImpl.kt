@@ -65,7 +65,6 @@ class CbtRepositoryImpl @Inject constructor(
                 Resource.Success(result.data.toEntity())
         }
 
-
     override suspend fun getThoughtDiaryFor(clientId: String, id: String): ThoughtDiaryEntity =
         suspendCoroutine { continuation ->
 

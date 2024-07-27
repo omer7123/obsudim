@@ -3,7 +3,6 @@ package com.example.mypsychologist.data.converters
 import com.example.mypsychologist.data.model.BeliefCheckModel
 import com.example.mypsychologist.data.model.CBTDiaryCardModel
 import com.example.mypsychologist.data.model.CBTDiaryModel
-import com.example.mypsychologist.data.model.CBTInputDiaryModel
 import com.example.mypsychologist.data.model.GetProblemModel
 import com.example.mypsychologist.data.model.ProblemAnalysisModel
 import com.example.mypsychologist.data.model.SaveProblemModel
@@ -21,7 +20,7 @@ fun BeliefCheckModel.toEntity() =
 fun BeliefVerificationEntity.toModel() =
     BeliefCheckModel(truthfulness, consistency, benefit, beliefId)
 
-fun CBTInputDiaryModel.toEntity() =
+fun CBTDiaryModel.toEntity() =
     ThoughtDiaryEntity(
         situation,
         mood,
@@ -33,6 +32,7 @@ fun CBTInputDiaryModel.toEntity() =
         newMood,
         newLevel
     )
+
 
 fun ThoughtDiaryEntity.toModel() =
     CBTDiaryModel(
