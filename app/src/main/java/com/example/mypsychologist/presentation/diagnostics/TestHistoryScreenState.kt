@@ -1,10 +1,10 @@
 package com.example.mypsychologist.presentation.diagnostics
 
-import com.example.mypsychologist.domain.entity.TestResultEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
 
 sealed interface TestHistoryScreenState {
-    object Init: TestHistoryScreenState
-    object Error: TestHistoryScreenState
-    object Loading: TestHistoryScreenState
-    class Data(val results: List<TestResultEntity>): TestHistoryScreenState
+    data object Init: TestHistoryScreenState
+    data object Error: TestHistoryScreenState
+    data object Loading: TestHistoryScreenState
+    class Data(val results: List<TestResultsGetEntity>): TestHistoryScreenState
 }

@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 data class TestModel(
     val title: String,
     val description: String,
+    @SerialName("short_desc")
+    val shortDesc: String,
     @SerialName("test_id")
     val testId: String
 )
@@ -24,4 +26,15 @@ data class ScaleResultModel(
     @SerialName("scale_id")
     val scaleId: String,
     val score: Int
+)
+
+@Serializable
+data class TestResultsGetModel(
+    @SerialName("test_id")
+    val testId: String,
+    @SerialName("test_result_id")
+    val testResultId: String,
+    val datetime: String,
+    @SerialName("scale_results")
+    val scaleResults: List<ScaleResultModel>
 )

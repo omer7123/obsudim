@@ -44,8 +44,9 @@ class DiagnosticDialogFragment : DialogFragment() {
         binding.historyButton.setOnClickListener {
             findNavController().navigate(
                 R.id.fragment_test_history, bundleOf(
-                    FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID),
-                    FragmentTestHistory.CLIENT_ID to requireArguments().getString(CLIENT_ID)
+                    FragmentTestHistory.TEST_ID to requireArguments().getString(TEST_ID),
+                    FragmentTestHistory.TEST_TITLE to requireArguments().getString(TITLE_ID)
+//                    FragmentTestHistory.CLIENT_ID to requireArguments().getString(CLIENT_ID)
                 )
             )
         }

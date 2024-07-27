@@ -44,13 +44,13 @@ class TestScalesResultFragment : DialogFragment() {
             findNavController().navigate(R.id.main_fragment)
         }
         binding.historyButton.setOnClickListener {
-            findNavController().navigate(
-                R.id.fragment_test_history,
-                bundleOf(
-                    FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID),
-                    FragmentTestHistory.CLIENT_ID to TestHistoryViewModel.OWN
-                )
-            )
+//            findNavController().navigate(
+//                R.id.fragment_test_history,
+//                bundleOf(
+//                    FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID),
+//                    FragmentTestHistory.CLIENT_ID to TestHistoryViewModel.OWN
+//                )
+//            )
         }
     }
 

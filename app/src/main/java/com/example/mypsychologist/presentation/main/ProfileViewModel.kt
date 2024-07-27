@@ -4,14 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.domain.useCase.DeleteAccountUseCase
-import com.google.firebase.auth.FirebaseAuth
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.DeleteTokenUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProfileViewModel(private val deleteAccountUseCase: DeleteAccountUseCase) : ViewModel() {
+class ProfileViewModel(
+    private val deleteAccountUseCase: DeleteAccountUseCase,
+    private val deleteTokenUseCase: DeleteTokenUseCase
+) : ViewModel() {
 
     private val _goToAuthorization: MutableStateFlow<Boolean> =
         MutableStateFlow(false)
@@ -19,8 +22,13 @@ class ProfileViewModel(private val deleteAccountUseCase: DeleteAccountUseCase) :
         get() = _goToAuthorization.asStateFlow()
 
     fun signOut() {
-        FirebaseAuth.getInstance().signOut()
-        _goToAuthorization.value = true
+
+        viewModelScope.launch {
+            deleteTokenUseCase()
+            _goToAuthorization.value = true
+        }
+//        FirebaseAuth.getInstance().signOut()
+
     }
 
     fun deleteAccount() {
@@ -29,12 +37,15 @@ class ProfileViewModel(private val deleteAccountUseCase: DeleteAccountUseCase) :
         }
     }
 
-    class Factory @Inject constructor(private val deleteAccountUseCase: DeleteAccountUseCase) :
+    class Factory @Inject constructor(
+        private val deleteAccountUseCase: DeleteAccountUseCase,
+        private val deleteTokenUseCase: DeleteTokenUseCase
+    ) :
         ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return ProfileViewModel(deleteAccountUseCase) as T
+            return ProfileViewModel(deleteAccountUseCase, deleteTokenUseCase) as T
         }
     }
 }

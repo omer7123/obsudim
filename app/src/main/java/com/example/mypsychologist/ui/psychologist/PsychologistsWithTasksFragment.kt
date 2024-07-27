@@ -2,7 +2,6 @@ package com.example.mypsychologist.ui.psychologist
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +16,13 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentOwnPsychologistsBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.presentation.psychologist.PsychologistsWithTasksViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.diagnostics.DiagnosticDialogFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -115,9 +115,13 @@ class PsychologistsWithTasksFragment : Fragment() {
                     bundle.putString(RequestToPsychologistFragment.PSYCHOLOGIST_ID, psychologistId)
                     findNavController().navigate(R.id.fragment_request_to_psychologist, bundle)
                 })
-                addDelegate(TaskDelegate { taskId, isChecked ->
+                addDelegate(TaskDelegate(check = { taskId, isChecked ->
                     viewModel.markTask(taskId, isChecked)
-                })
+                }, onItemClickListener = { testId, testTitle, desc ->
+                    DiagnosticDialogFragment.newInstance(testId, testTitle, desc)
+                        .show(childFragmentManager, DiagnosticDialogFragment.TAG)
+                }
+                ))
 
                 submitList(items)
             }

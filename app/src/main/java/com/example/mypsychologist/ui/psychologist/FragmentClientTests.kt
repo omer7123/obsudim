@@ -71,12 +71,12 @@ class FragmentClientTests : Fragment() {
 //        }
 
         val onTestClick: (String, String) -> Unit = { titleId, _ ->
-            findNavController().navigate(
-                R.id.fragment_test_history, bundleOf(
-                    FragmentTestHistory.TEST_TITLE_ID to titleId,
-                    FragmentTestHistory.CLIENT_ID to requireArguments().getString(CLIENT_ID)
-                )
-            )
+//            findNavController().navigate(
+//                R.id.fragment_test_history, bundleOf(
+//                    FragmentTestHistory.TEST_TITLE_ID to titleId,
+//                    FragmentTestHistory.CLIENT_ID to requireArguments().getString(CLIENT_ID)
+//                )
+//            )
         }
 
         mainAdapter = MainAdapter().apply {
