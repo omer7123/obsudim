@@ -4,10 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.domain.useCase.GetCMQTestUseCase
-import com.example.mypsychologist.domain.useCase.GetDepressionBeckTestQuestionsUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.GetTestInfoUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.GetTestResultsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +14,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TestHistoryViewModel(
-    private val getTestResultsUseCase: GetTestResultsUseCase
+    private val getTestResultsUseCase: GetTestResultsUseCase,
+    private val getTestInfoUseCase: GetTestInfoUseCase,
 ) : ViewModel() {
 
     private val _screenState: MutableStateFlow<TestHistoryScreenState> =
@@ -34,7 +33,7 @@ class TestHistoryViewModel(
         _screenState.value = TestHistoryScreenState.Loading
 
         viewModelScope.launch {
-            Log.e("DATQA", getTestResultsUseCase(testId).toString())
+            Log.e("sdasda", getTestInfoUseCase(testId).toString())
             when (val result = getTestResultsUseCase(testId)) {
                 is Resource.Error -> _screenState.value = TestHistoryScreenState.Error
                 Resource.Loading -> {}
@@ -52,12 +51,14 @@ class TestHistoryViewModel(
     }
 
     class Factory @Inject constructor(
-        private val getTestResultsUseCase: GetTestResultsUseCase
-    ) : ViewModelProvider.Factory {
+        private val getTestResultsUseCase: GetTestResultsUseCase,
+        private val getTestInfoUseCase: GetTestInfoUseCase,
+
+        ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return TestHistoryViewModel(
-                getTestResultsUseCase
+                getTestResultsUseCase, getTestInfoUseCase
             ) as T
         }
     }

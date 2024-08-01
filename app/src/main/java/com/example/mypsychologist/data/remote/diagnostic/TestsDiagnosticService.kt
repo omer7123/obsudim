@@ -1,6 +1,7 @@
 package com.example.mypsychologist.data.remote.diagnostic
 
 import com.example.mypsychologist.data.model.SaveTestResultModel
+import com.example.mypsychologist.data.model.TestInfoModel
 import com.example.mypsychologist.data.model.TestModel
 import com.example.mypsychologist.data.model.TestResultsGetModel
 import retrofit2.Response
@@ -23,4 +24,9 @@ interface TestsDiagnosticService {
         @Path("test_id") testId: String,
         @Query("user_id") userId: String
     ): Response<List<TestResultsGetModel>>
+
+    @GET("/test/get_test_info/{id}")
+    suspend fun getTestInfo(
+        @Path("id") testId: String
+    ): Response<TestInfoModel>
 }

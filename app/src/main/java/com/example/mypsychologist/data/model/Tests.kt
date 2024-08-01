@@ -38,3 +38,34 @@ data class TestResultsGetModel(
     @SerialName("scale_results")
     val scaleResults: List<ScaleResultModel>
 )
+
+@Serializable
+data class BorderOfTestModel(
+    val color: String,
+    @SerialName("left_border")
+    val leftBorder: Int,
+    @SerialName("right_border")
+    val rightBorder: Int,
+    val title: String
+)
+
+@Serializable
+data class ScalesOfTestInfoModel(
+    val borders: List<BorderOfTestModel>,
+    val max: Int,
+    val min: Int,
+    @SerialName("scale_id")
+    val scaleId: String,
+    val title: String,
+)
+
+@Serializable
+data class TestInfoModel(
+    val title: String,
+    val description: String,
+    @SerialName("short_desc")
+    val shortDesc: String,
+    @SerialName("test_id")
+    val testId: String,
+    val scales: List<ScalesOfTestInfoModel>,
+)

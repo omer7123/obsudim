@@ -4,6 +4,7 @@ import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.model.SaveTestResultModel
+import com.example.mypsychologist.data.model.TestInfoModel
 import com.example.mypsychologist.data.model.TestModel
 import com.example.mypsychologist.data.model.TestResultsGetModel
 import javax.inject.Inject
@@ -25,5 +26,9 @@ class TestsDiagnosticDataSourceImpl @Inject constructor(
     override suspend fun getTestResults(testId: String): Resource<List<TestResultsGetModel>> {
         val userID = userDataSource.getUserId()
         return getResult { api.getTestResults(testId, userID) }
+    }
+
+    override suspend fun getInfoAboutTest(testId: String): Resource<TestInfoModel> = getResult{
+        api.getTestInfo(testId)
     }
 }
