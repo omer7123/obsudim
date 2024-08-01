@@ -67,4 +67,6 @@
     <color name="md_theme_dark_scrim">#000000</color>
     <color name="md_theme_dark_onPrimaryIcon">#9BCBFA</color>
     <color name="md_theme_dark_onSecondPrimaryIcon">#2e628c</color>
+    
+    <color name="md_theme_dark_onSecondPrimaryIcon_with_alpha">#992E628C</color>
 </resources>
