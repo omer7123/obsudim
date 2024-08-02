@@ -23,7 +23,7 @@ class DiagnosticDialogViewModel : ViewModel() {
             "d4c551a7-f5ea-4688-bbae-5b1cac3bb394" -> R.string.cmq
             "0923a7a8-510c-41d7-a273-3c7bd5481ba3" -> R.string.jas
             "d00d0df9-afc4-4c28-bc4e-963d9a643986" -> R.string.depression_beck_test
-            "be28c8c4-18e9-4c2b-a3de-3b73dc50d929" -> R.string.mbi
+            "d26b9394-3413-4831-908c-de95b781a3c4" -> R.string.mbi
             else -> {
                 R.string.dass21
             }

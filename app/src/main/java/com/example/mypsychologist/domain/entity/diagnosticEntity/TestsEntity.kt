@@ -28,6 +28,13 @@ data class ScaleResultWithTitileEntity(
     val score: Int
 )
 
+data class TestResultsScalesWithTitleEntity(
+    val testId: String,
+    val testResultId: String,
+    val datetime: String,
+    val scaleResults: List<ScaleResultWithTitileEntity>
+)
+
 data class TestResultsGetEntity(
     val testId: String,
     val testResultId: String,

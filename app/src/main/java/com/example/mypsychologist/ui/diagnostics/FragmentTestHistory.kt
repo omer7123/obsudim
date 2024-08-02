@@ -12,10 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestHistoryBinding
-import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsScalesWithTitleEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenState
@@ -92,7 +91,7 @@ class FragmentTestHistory : Fragment() {
         }
     }
 
-    private fun setupAdapter(list: List<TestResultsGetEntity>) {
+    private fun setupAdapter(list: List<TestResultsScalesWithTitleEntity>) {
         binding.radar.isVisible = true
 //        val listScale: List<Te>
         for (elem in list){
