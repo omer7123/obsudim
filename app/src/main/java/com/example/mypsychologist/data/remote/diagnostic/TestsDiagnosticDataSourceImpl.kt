@@ -3,6 +3,7 @@ package com.example.mypsychologist.data.remote.diagnostic
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
+import com.example.mypsychologist.data.model.ConclusionOfTestModel
 import com.example.mypsychologist.data.model.QuestionOfTestModel
 import com.example.mypsychologist.data.model.SaveTestResultModel
 import com.example.mypsychologist.data.model.TestInfoModel
@@ -19,7 +20,7 @@ class TestsDiagnosticDataSourceImpl @Inject constructor(
         api.getAllTests()
     }
 
-    override suspend fun saveTestResult(testResultModel: SaveTestResultModel): Resource<String> =
+    override suspend fun saveTestResult(testResultModel: SaveTestResultModel): Resource<List<ConclusionOfTestModel>> =
         getResult {
             api.saveTestResult(testResultModel)
         }

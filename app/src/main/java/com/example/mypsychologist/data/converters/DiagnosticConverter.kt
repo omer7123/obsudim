@@ -2,6 +2,7 @@ package com.example.mypsychologist.data.converters
 
 import com.example.mypsychologist.data.model.AnswersOfQuestionsModel
 import com.example.mypsychologist.data.model.BorderOfTestModel
+import com.example.mypsychologist.data.model.ConclusionOfTestModel
 import com.example.mypsychologist.data.model.QuestionOfTestModel
 import com.example.mypsychologist.data.model.SaveTestResultModel
 import com.example.mypsychologist.data.model.ScaleResultModel
@@ -11,6 +12,7 @@ import com.example.mypsychologist.data.model.TestModel
 import com.example.mypsychologist.data.model.TestResultsGetModel
 import com.example.mypsychologist.domain.entity.diagnosticEntity.AnswersOfQuestionsEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.BorderOfTestEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.ConclusionOfTestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.SaveTestResultEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ScaleResultEntity
@@ -23,10 +25,7 @@ fun TestModel.toEntity() =
     TestEntity(title, description, shortDesc, testId)
 
 fun SaveTestResultEntity.toModel() =
-    SaveTestResultModel(date, results.map { it.toModel() }, testId)
-
-private fun ScaleResultEntity.toModel() =
-    ScaleResultModel(scaleId, score)
+    SaveTestResultModel(testId, date, results)
 
 private fun ScaleResultModel.toEntity(): ScaleResultEntity =
     ScaleResultEntity(scaleId, score)
@@ -52,3 +51,6 @@ fun QuestionOfTestModel.toEntity(): QuestionOfTestEntity {
 private fun AnswersOfQuestionsModel.toEntity(): AnswersOfQuestionsEntity {
     return AnswersOfQuestionsEntity(id, text, score)
 }
+
+fun ConclusionOfTestModel.toEntity(): ConclusionOfTestEntity =
+    ConclusionOfTestEntity(color, conclusion, scaleId, scaleTitle, score)

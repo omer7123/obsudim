@@ -1,5 +1,6 @@
 package com.example.mypsychologist.data.remote.diagnostic
 
+import com.example.mypsychologist.data.model.ConclusionOfTestModel
 import com.example.mypsychologist.data.model.QuestionOfTestModel
 import com.example.mypsychologist.data.model.SaveTestResultModel
 import com.example.mypsychologist.data.model.TestInfoModel
@@ -18,7 +19,7 @@ interface TestsDiagnosticService {
     suspend fun getAllTests(): Response<List<TestModel>>
 
     @POST("/test/save_test_result")
-    suspend fun saveTestResult(@Body saveTestResultModel: SaveTestResultModel): Response<String>
+    suspend fun saveTestResult(@Body saveTestResultModel: SaveTestResultModel): Response<List<ConclusionOfTestModel>>
 
     @GET("/test/get_test_results/{test_id}")
     suspend fun getTestResults(

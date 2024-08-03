@@ -68,13 +68,13 @@ class DASSTestViewModel(
                     )
                 } else {
                     val res = DASSConclusionUseCase(answers)
-                    saveResultTestUseCase(
-                        SaveTestResultEntity(
-                            getCurrentTimeInISO8601(),
-                            conclusionWithScaleId(res),
-                            "7921dc6c-0933-45b3-a97c-aeb5ef76c865"
-                        )
-                    )
+//                    saveResultTestUseCase(
+//                        SaveTestResultEntity(
+//                            getCurrentTimeInISO8601(),
+//                            conclusionWithScaleId(res),
+//                            "7921dc6c-0933-45b3-a97c-aeb5ef76c865"
+//                        )
+//                    )
                     DASSScreenState.Result(DASSConclusionUseCase(answers))
                 }
         }

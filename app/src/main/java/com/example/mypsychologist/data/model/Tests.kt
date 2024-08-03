@@ -15,16 +15,27 @@ data class TestModel(
 
 @Serializable
 data class SaveTestResultModel(
-    val date: String,
-    val results: List<ScaleResultModel>,
     @SerialName("test_id")
-    val testId: String
+    val testId: String,
+    val date: String,
+    val results: List<Int>,
 )
 
 @Serializable
 data class ScaleResultModel(
     @SerialName("scale_id")
     val scaleId: String,
+    val score: Int
+)
+
+@Serializable
+data class ConclusionOfTestModel(
+    val color: String,
+    val conclusion: String,
+    @SerialName("scale_id")
+    val scaleId: String,
+    @SerialName("scale_title")
+    val scaleTitle: String,
     val score: Int
 )
 

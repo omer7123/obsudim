@@ -72,13 +72,13 @@ class MBITestViewModel(
                     )
                 } else {
                     val res = mbiConclusionUseCase(answers)
-                    saveResultTestUseCase(
-                        SaveTestResultEntity(
-                            getCurrentTimeInISO8601(),
-                            conclusionWithScaleId(res),
-                            "be28c8c4-18e9-4c2b-a3de-3b73dc50d929"
-                        )
-                    )
+//                    saveResultTestUseCase(
+//                        SaveTestResultEntity(
+//                            getCurrentTimeInISO8601(),
+//                            conclusionWithScaleId(res),
+//                            "be28c8c4-18e9-4c2b-a3de-3b73dc50d929"
+//                        )
+//                    )
                     MBIScreenState.Result(mbiConclusionUseCase(answers))
                 }
         }

@@ -9,9 +9,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.SaveTestResultEntity
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.GetQuestionsOfTestByIdUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.SaveResultTestUseCase
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class PassingTestViewModel @Inject constructor(
@@ -52,9 +56,9 @@ class PassingTestViewModel @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun saveAnswerAndGoToNext(score: Int) {
+    fun saveAnswerAndGoToNext(score: Int, testId: String?) {
         scoresForTest[questionNumber] = score
-        nextQuestion()
+        nextQuestion(testId!!)
     }
 
     fun previousQuestion() {
@@ -73,7 +77,7 @@ class PassingTestViewModel @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun nextQuestion() {
+    private fun nextQuestion(testId: String) {
         questionNumber += 1
 
         for (i in scoresForTest) Log.e("Score", i.toString())
@@ -88,17 +92,27 @@ class PassingTestViewModel @Inject constructor(
                         questions.size
                     )
                 } else {
-                    PassingTestScreenState.Initial
-//                    val res = mbiConclusionUseCase(answers)
-//                    saveResultTestUseCase(
-//                        SaveTestResultEntity(
-//                            getCurrentTimeInISO8601(),
-//                            conclusionWithScaleId(res),
-//                            "be28c8c4-18e9-4c2b-a3de-3b73dc50d929"
-//                        )
-//                    )
-//                    MBIScreenState.Result(mbiConclusionUseCase(answers))
+                    val res =
+                        saveResultTestUseCase(
+                            SaveTestResultEntity(
+                                testId,
+                                getCurrentTimeInISO8601(),
+                                scoresForTest.asList()
+                            )
+                        )
+                    when(res){
+                        is Resource.Error -> PassingTestScreenState.Error(res.msg.toString())
+                        Resource.Loading -> PassingTestScreenState.Loading
+                        is Resource.Success -> PassingTestScreenState.Result(res.data)
+                    }
                 }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getCurrentTimeInISO8601(): String {
+        val currentTime = Instant.now()
+        val formatter = DateTimeFormatter.ISO_INSTANT.withZone(ZoneOffset.UTC)
+        return formatter.format(currentTime)
     }
 }

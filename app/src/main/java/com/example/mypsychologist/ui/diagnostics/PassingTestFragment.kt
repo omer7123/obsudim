@@ -55,6 +55,7 @@ class PassingTestFragment : Fragment() {
                 requireContext().showToast(state.msg)
                 Log.e("FDFD", state.msg)
             }
+
             PassingTestScreenState.Initial -> {}
             PassingTestScreenState.Loading -> {}
             is PassingTestScreenState.Question -> {
@@ -65,7 +66,9 @@ class PassingTestFragment : Fragment() {
                 ).show(childFragmentManager, PassingTestFragment.TAG)
             }
 
-            is PassingTestScreenState.Result -> {}
+            is PassingTestScreenState.Result -> {
+                Log.e("RESULT OF TEST", state.result.toString())
+            }
         }
     }
 
@@ -91,7 +94,10 @@ class PassingTestFragment : Fragment() {
             FragmentTestQuestion.ANSWER,
             viewLifecycleOwner
         ) { _, bundle ->
-            viewModel.saveAnswerAndGoToNext(bundle.getInt(FragmentTestQuestion.SCORE))
+            viewModel.saveAnswerAndGoToNext(
+                bundle.getInt(FragmentTestQuestion.SCORE),
+                requireArguments().getString(TEST_ID)
+            )
         }
 
         childFragmentManager.setFragmentResultListener(
