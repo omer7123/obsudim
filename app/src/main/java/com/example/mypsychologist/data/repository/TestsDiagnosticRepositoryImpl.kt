@@ -4,6 +4,7 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.remote.diagnostic.TestsDiagnosticDataSource
+import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.SaveTestResultEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestInfoEntity
@@ -44,6 +45,14 @@ class TestsDiagnosticRepositoryImpl @Inject constructor(
             is Resource.Error -> Resource.Error(result.msg.toString(), null)
             Resource.Loading -> Resource.Loading
             is Resource.Success -> Resource.Success(result.data.toEntity())
+        }
+    }
+
+    override suspend fun getQuestionsOfTest(testId: String): Resource<List<QuestionOfTestEntity>> {
+        return when(val res = dataSource.getQuestionsOfTest(testId)){
+            is Resource.Error -> Resource.Error(res.msg, null)
+            Resource.Loading -> Resource.Loading
+            is Resource.Success -> Resource.Success(res.data.map { it.toEntity() })
         }
     }
 }

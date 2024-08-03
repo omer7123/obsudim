@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiagnosticDialogBinding
+import com.example.mypsychologist.databinding.FragmentPassingTestBinding
 import com.example.mypsychologist.presentation.diagnostics.DiagnosticDialogViewModel
 import com.example.mypsychologist.ui.autoCleared
 
@@ -60,9 +61,13 @@ class DiagnosticDialogFragment : DialogFragment() {
     private fun navigateToTest() {
         val testId = requireArguments().getString(TEST_ID)
 
-        viewModel.getScreenIdFor(testId.toString()).let { screenId ->
-            findNavController().navigate(screenId!!)
-        }
+        findNavController().navigate(
+            R.id.passingTestFragment, bundleOf(
+                PassingTestFragment.TEST_ID to testId,
+                PassingTestFragment.TITLE to requireArguments().getString(TITLE_ID),
+                PassingTestFragment.DESCRIPTION to requireArguments().getString(DESCRIPTION_ID)
+            )
+        )
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =

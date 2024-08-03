@@ -69,3 +69,15 @@ data class ScalesOfTestInfoEntity(
     val scaleId: String,
     val title: String,
 )
+
+data class QuestionOfTestEntity(
+    val number: Int,
+    val text: String,
+    val answerOptions: List<AnswersOfQuestionsEntity>
+)
+
+data class AnswersOfQuestionsEntity(
+    val id: Int,
+    val text: String,
+    val score: Int
+)

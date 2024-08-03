@@ -69,3 +69,18 @@ data class TestInfoModel(
     val testId: String,
     val scales: List<ScalesOfTestInfoModel>,
 )
+
+@Serializable
+data class QuestionOfTestModel(
+    val number: Int,
+    val text: String,
+    @SerialName("answer_options")
+    val answerOptions: List<AnswersOfQuestionsModel>
+)
+
+@Serializable
+data class AnswersOfQuestionsModel(
+    val id: Int,
+    val text: String,
+    val score: Int
+)

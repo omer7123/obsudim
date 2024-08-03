@@ -1,5 +1,6 @@
 package com.example.mypsychologist.data.remote.diagnostic
 
+import com.example.mypsychologist.data.model.QuestionOfTestModel
 import com.example.mypsychologist.data.model.SaveTestResultModel
 import com.example.mypsychologist.data.model.TestInfoModel
 import com.example.mypsychologist.data.model.TestModel
@@ -29,4 +30,9 @@ interface TestsDiagnosticService {
     suspend fun getTestInfo(
         @Path("id") testId: String
     ): Response<TestInfoModel>
+
+    @GET("/test/get_test_questions/{test_id}")
+    suspend fun getQuestionsOfTest(
+        @Path("test_id") testId: String
+    ): Response<List<QuestionOfTestModel>>
 }
