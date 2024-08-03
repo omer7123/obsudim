@@ -2,10 +2,10 @@ package com.example.mypsychologist.ui.diagnostics
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -97,11 +97,11 @@ class JASTestFragment : Fragment() {
     }
 
     private fun showResult(it: JASScreenState.Result) {
-        TestScalesResultFragment.newInstance(
-            R.string.jas,
-            it.result.toHashMap()
-        )
-            .show(childFragmentManager, TestResultDialogFragment.TAG)
+//        TestScalesResultFragment.newInstance(
+//            R.string.jas,
+//            it.result.toHashMap()
+//        )
+//            .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
 
     private fun JASResultEntity.toHashMap() =

@@ -214,5 +214,11 @@
         android:id="@+id/passingTestFragment"
         android:name="com.example.mypsychologist.ui.diagnostics.PassingTestFragment"
         android:label="fragment_passing_test"
-        tools:layout="@layout/fragment_passing_test" />
+        tools:layout="@layout/fragment_passing_test" >
+        <action
+            app:popUpTo="@id/passingTestFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_passingTestFragment_to_fragment_test_history"
+            app:destination="@id/fragment_test_history" />
+    </fragment>
 </navigation>

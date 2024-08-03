@@ -93,11 +93,11 @@ class MBITestFragment : Fragment() {
     }
 
     private fun showResult(it: MBIScreenState.Result) {
-        TestScalesResultFragment.newInstance(
-            R.string.mbi,
-            it.result.toHashMap()
-        )
-            .show(childFragmentManager, TestResultDialogFragment.TAG)
+//        TestScalesResultFragment.newInstance(
+//            R.string.mbi,
+//            it.result.toHashMap()
+//        )
+//            .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
 
     private fun MBIResultEntity.toHashMap() =

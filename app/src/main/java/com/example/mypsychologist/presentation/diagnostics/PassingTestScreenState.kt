@@ -1,6 +1,5 @@
 package com.example.mypsychologist.presentation.diagnostics
 
-import com.example.mypsychologist.domain.entity.MBIResultEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ConclusionOfTestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 

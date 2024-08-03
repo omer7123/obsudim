@@ -21,13 +21,14 @@ data class ScaleResultEntity(
     val score: Int
 )
 
+@Parcelize
 data class ConclusionOfTestEntity(
     val color: String,
     val conclusion: String,
     val scaleId: String,
     val scaleTitle: String,
     val score: Int,
-)
+) : Parcelable
 
 
 data class ScaleResultWithTitileEntity(

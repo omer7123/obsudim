@@ -95,11 +95,11 @@ class CSITestFragment : Fragment() {
     }
 
     private fun showResult(it: CSIScreenState.Result) {
-        TestScalesResultFragment.newInstance(
-            R.string.CSI,
-            it.result.toHashMap()
-        )
-            .show(childFragmentManager, TestResultDialogFragment.TAG)
+//        TestScalesResultFragment.newInstance(
+//            R.string.CSI,
+//            it.result.toHashMap()
+//        )
+//            .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
 
     private fun CSIResultEntity.toHashMap() =

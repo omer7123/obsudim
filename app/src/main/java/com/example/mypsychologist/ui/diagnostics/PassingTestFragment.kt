@@ -12,12 +12,16 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentPassingTestBinding
+import com.example.mypsychologist.domain.entity.diagnosticEntity.ConclusionOfTestEntity
 import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.diagnostics.PassingTestScreenState
 import com.example.mypsychologist.presentation.diagnostics.PassingTestViewModel
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 
@@ -67,11 +71,30 @@ class PassingTestFragment : Fragment() {
             }
 
             is PassingTestScreenState.Result -> {
-                Log.e("RESULT OF TEST", state.result.toString())
+                if (!isNetworkConnect()) {
+                    Snackbar.make(
+                        binding.coordinator,
+                        R.string.save_after_connect,
+                        Snackbar.LENGTH_LONG
+                    ).setAction(R.string.show_result) {
+                        showResult(state.result)
+                    }.show()
+                } else {
+                    showResult(state.result)
+                }
             }
         }
     }
 
+    private fun showResult(conclusions: List<ConclusionOfTestEntity>) {
+        Log.e("RESULT IN PassingTestFragment", conclusions.toString())
+        TestScalesResultFragment.newInstance(
+            requireArguments().getString(TITLE).toString(),
+            requireArguments().getString(TEST_ID).toString(),
+            conclusions,
+        )
+            .show(childFragmentManager, TestResultDialogFragment.TAG)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

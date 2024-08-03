@@ -15,9 +15,9 @@ import com.example.mypsychologist.databinding.FragmentTestBinding
 import com.example.mypsychologist.domain.entity.DASSResultEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.diagnostics.DASSScreenState
 import com.example.mypsychologist.presentation.diagnostics.DASSTestViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -98,11 +98,11 @@ class DASSTestFragment : Fragment() {
     }
 
     private fun showResult(it: DASSScreenState.Result) {
-        TestScalesResultFragment.newInstance(
-            R.string.dass21,
-            it.result.toHashMap()
-        )
-            .show(childFragmentManager, TestResultDialogFragment.TAG)
+//        TestScalesResultFragment.newInstance(
+//            R.string.dass21,
+//            it.result.toHashMap()
+//        )
+//            .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
 
     private fun DASSResultEntity.toHashMap() =
