@@ -63,11 +63,11 @@ class MBITestFragment : Fragment() {
     private fun render(state: MBIScreenState) {
         when (state) {
             is MBIScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, MBITestFragment.TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, MBITestFragment.TAG)
             }
 
             is MBIScreenState.Result -> {

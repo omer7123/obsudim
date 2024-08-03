@@ -68,11 +68,11 @@ class DASSTestFragment : Fragment() {
     private fun render(state: DASSScreenState) {
         when (state) {
             is DASSScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, TAG)
             }
 
             is DASSScreenState.Result -> {

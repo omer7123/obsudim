@@ -1,6 +1,8 @@
 package com.example.mypsychologist.domain.entity.diagnosticEntity
 
+import android.os.Parcelable
 import com.example.mypsychologist.data.model.ScalesOfTestInfoModel
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -12,9 +14,9 @@ data class TestEntity(
 )
 
 data class SaveTestResultEntity(
+    val testId: String,
     val date: String,
-    val results: List<ScaleResultEntity>,
-    val testId: String
+    val results: List<Int>,
 )
 
 data class ScaleResultEntity(
@@ -70,14 +72,16 @@ data class ScalesOfTestInfoEntity(
     val title: String,
 )
 
+@Parcelize
 data class QuestionOfTestEntity(
     val number: Int,
     val text: String,
     val answerOptions: List<AnswersOfQuestionsEntity>
-)
+) : Parcelable
 
+@Parcelize
 data class AnswersOfQuestionsEntity(
-    val id: Int,
+    val id: String,
     val text: String,
     val score: Int
-)
+) : Parcelable

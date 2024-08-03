@@ -69,11 +69,11 @@ class FragmentBeckDepressionTest : Fragment() {
     private fun render(state: BeckDepressionScreenState) {
         when (state) {
             is BeckDepressionScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, TAG)
             }
             is BeckDepressionScreenState.Result -> {
                 viewModel.saveResult(state.result)

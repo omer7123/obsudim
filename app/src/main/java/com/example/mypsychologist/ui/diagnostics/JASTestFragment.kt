@@ -67,11 +67,11 @@ class JASTestFragment : Fragment() {
     private fun render(state: JASScreenState) {
         when (state) {
             is JASScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, TAG)
             }
 
             is JASScreenState.Result -> {

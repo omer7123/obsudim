@@ -1,5 +1,8 @@
 package com.example.mypsychologist.presentation.diagnostics
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +27,10 @@ class PassingTestViewModel @Inject constructor(
 
     private var questionNumber = 0
 
+    private val scoresForTest: IntArray by lazy {
+        IntArray(questions.size)
+    }
+
     fun getQuestions(testId: String) {
         viewModelScope.launch {
             when (val questionsRequest = getQuestionsOfTestByIdUseCase(testId)) {
@@ -41,6 +48,57 @@ class PassingTestViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun saveAnswerAndGoToNext(score: Int) {
+        scoresForTest[questionNumber] = score
+        nextQuestion()
+    }
+
+    fun previousQuestion() {
+        if (questionNumber > 0) {
+            questionNumber -= 1
+
+            viewModelScope.launch {
+                _screenState.value =
+                    PassingTestScreenState.Question(
+                        questions[questionNumber],
+                        questionNumber + 1,
+                        questions.size
+                    )
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun nextQuestion() {
+        questionNumber += 1
+
+        for (i in scoresForTest) Log.e("Score", i.toString())
+
+        viewModelScope.launch {
+
+            _screenState.value =
+                if (questionNumber < questions.size) {
+                    PassingTestScreenState.Question(
+                        questions[questionNumber],
+                        questionNumber + 1,
+                        questions.size
+                    )
+                } else {
+                    PassingTestScreenState.Initial
+//                    val res = mbiConclusionUseCase(answers)
+//                    saveResultTestUseCase(
+//                        SaveTestResultEntity(
+//                            getCurrentTimeInISO8601(),
+//                            conclusionWithScaleId(res),
+//                            "be28c8c4-18e9-4c2b-a3de-3b73dc50d929"
+//                        )
+//                    )
+//                    MBIScreenState.Result(mbiConclusionUseCase(answers))
+                }
         }
     }
 }

@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.AnswerVariantItemBinding
 import com.example.mypsychologist.domain.entity.TestAnswerVariantEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.AnswersOfQuestionsEntity
 
 class AnswersAdapter(
-    private val items: List<TestAnswerVariantEntity>,
+    private val items: List<AnswersOfQuestionsEntity>,
     private val onClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<AnswersAdapter.ViewHolder>() {
@@ -28,8 +29,8 @@ class AnswersAdapter(
         private val onClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: TestAnswerVariantEntity) {
-            binding.text.text = itemView.context.getString(item.answerId)
+        fun bind(item: AnswersOfQuestionsEntity) {
+            binding.text.text = item.text
 
             itemView.setOnClickListener { onClick(item.score) }
         }

@@ -69,11 +69,11 @@ class STAITestFragment : Fragment() {
     private fun render(state: STAIScreenState) {
         when (state) {
             is STAIScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, TAG)
             }
 
             is STAIScreenState.Result -> {

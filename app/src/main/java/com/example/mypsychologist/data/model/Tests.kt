@@ -80,7 +80,7 @@ data class QuestionOfTestModel(
 
 @Serializable
 data class AnswersOfQuestionsModel(
-    val id: Int,
+    val id: String,
     val text: String,
     val score: Int
 )

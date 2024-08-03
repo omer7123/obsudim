@@ -65,11 +65,11 @@ class CSITestFragment : Fragment() {
     private fun render(state: CSIScreenState) {
         when (state) {
             is CSIScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, CSITestFragment.TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, CSITestFragment.TAG)
             }
 
             is CSIScreenState.Result -> {
