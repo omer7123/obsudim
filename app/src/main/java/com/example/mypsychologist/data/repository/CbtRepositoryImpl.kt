@@ -35,9 +35,6 @@ class CbtRepositoryImpl @Inject constructor(
                 Resource.Success(result.data.toDiaryEntities())
         }
 
-
-
-
     override suspend fun getThoughtDiariesFor(clientId: String): HashMap<String, String> =
         suspendCoroutine { continuation ->
 

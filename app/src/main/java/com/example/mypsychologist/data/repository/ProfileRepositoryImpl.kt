@@ -8,6 +8,7 @@ import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.data.remote.profile.UserDataSource
+import com.example.mypsychologist.data.remote.tags.TagsDataSource
 import com.example.mypsychologist.di.AppModule
 import com.example.mypsychologist.domain.entity.*
 import com.example.mypsychologist.domain.repository.ProfileRepository
@@ -32,9 +33,16 @@ class ProfileRepositoryImpl @Inject constructor(
         dataSource.updateUser(info.toModel())
     }
 
-    override suspend fun getOwnInfo(): Resource<ClientInfoEntity> {
-        TODO()
-    }
+    override suspend fun getOwnInfo(): Resource<ClientInfoEntity> =
+        when (val result = dataSource.getOwnData()) {
+            is Resource.Error -> {
+                Log.d("Info error", result.msg.toString())
+                Resource.Error(result.msg.toString(), null)
+            }
+            is Resource.Loading -> Resource.Loading
+            is Resource.Success ->
+                Resource.Success(result.data.toEntity())                // поправить
+        }
 
 
 
@@ -96,7 +104,7 @@ class ProfileRepositoryImpl @Inject constructor(
             listOf()
         }
 
-    override suspend fun getClientInfo(clientId: String) = ClientInfoEntity() 
+    override suspend fun getClientInfo(clientId: String) = ClientInfoEntity()
 
 
     private suspend fun getOwnPsychologistId(): String =

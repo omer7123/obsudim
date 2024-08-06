@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.R
@@ -44,6 +45,8 @@ class InputDelegate(
                         inputLayout.setEndIconOnClickListener {
                             onHelpClick!!(item.titleId, hintIdNotNull)
                         }
+                        inputLayout.endIconDrawable =
+                            AppCompatResources.getDrawable(itemView.context, R.drawable.ic_help)
                     }
 
 

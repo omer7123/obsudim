@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.*
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentEditBinding
+import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.TagEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
@@ -35,6 +37,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.math.log
 
 
 class EditFragment : Fragment() {
@@ -51,8 +54,6 @@ class EditFragment : Fragment() {
         super.onAttach(context)
         requireContext().getAppComponent().profileComponent().create().inject(this)
     }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,16 +84,22 @@ class EditFragment : Fragment() {
     private fun render(state: EditScreenState) {
         when (state) {
             is EditScreenState.CurrentData -> {
-
+                binding.progressBar.isVisible = false
+                binding.birthdayData.text = state.birthday
+                mainAdapter.submitList(state.list)
             }
 
             is EditScreenState.Loading -> {
-                if (!isNetworkConnect())
-                    requireContext().showToast(getString(R.string.network_error))
+                binding.progressBar.isVisible = true
             }
 
             is EditScreenState.Response -> {
+                binding.progressBar.isVisible = false
                 render(state.result)
+            }
+
+            is EditScreenState.Error -> {
+                binding.progressBar.isVisible = false
             }
 
             is EditScreenState.ValidationError -> {

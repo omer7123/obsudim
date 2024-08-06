@@ -12,4 +12,8 @@ class UserDataSourceImpl @Inject constructor(private val api: UserService) :
             api.updateUser(info)
         }
 
+    override suspend fun getOwnData(): Resource<UserInfoModel> = getResult {
+        api.getOwnData()
+    }
+
 }

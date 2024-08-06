@@ -7,7 +7,6 @@ import com.example.mypsychologist.domain.entity.*
 interface ProfileRepository {
     suspend fun saveClient(info: ClientInfoEntity): Resource<String>
     suspend fun getOwnInfo(): Resource<ClientInfoEntity>
-
     suspend fun deleteAccount(): Boolean
     suspend fun sendFeedback(text: String): Boolean
     suspend fun savePsychologist(info: PsychologistInfo): Boolean

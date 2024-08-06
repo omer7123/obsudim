@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
+import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.model.UserInfoModel
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
@@ -12,9 +13,11 @@ import com.example.mypsychologist.domain.entity.InputItemEntity
 import com.example.mypsychologist.domain.entity.TagEntity
 import com.example.mypsychologist.domain.entity.getMapOfMembers
 import com.example.mypsychologist.domain.useCase.*
+import com.example.mypsychologist.domain.useCase.profile.GetOwnDataUseCase
+import com.example.mypsychologist.domain.useCase.profile.SaveClientInfoUseCase
+import com.example.mypsychologist.presentation.exercises.BeliefVerificationScreenState
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.InputDelegateItem
-import com.example.mypsychologist.ui.exercises.cbt.IntDelegateItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,8 +30,7 @@ import javax.inject.Inject
 class EditViewModel(
     private val saveClientInfoUseCase: SaveClientInfoUseCase,
     private val changePasswordUseCase: ChangePasswordUseCase,
-    private val changePhoneUseCase: ChangePhoneUseCase,
-    private val getClientDataUseCase: GetClientDataUseCase
+    private val getOwnDataUseCase: GetOwnDataUseCase
 ) : ViewModel() {
 
     private val _screenState: MutableStateFlow<EditScreenState> =
@@ -37,6 +39,47 @@ class EditViewModel(
         get() = _screenState.asStateFlow()
 
     private var info = ClientInfoEntity()
+
+    init {
+        _screenState.value = EditScreenState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            getSavedInfo()
+        }
+    }
+
+    private suspend fun getSavedInfo() {
+        _screenState.value =
+            when (val result = getOwnDataUseCase()) {
+                is Resource.Success -> {
+                    info = result.data
+
+                    info.getMapOfMembers().forEach { (key, value) ->
+
+                        _items = items.map {
+                            if (it.content().fieldName == key) {
+
+                                InputDelegateItem(
+                                    it.content().copy(text = value)
+                                )
+
+                            }
+                            else
+                                it
+                        }.toMutableList()
+                    }
+
+                    EditScreenState.CurrentData(items, result.data.birthday, result.data.request)
+                }
+
+                is Resource.Loading -> {
+                    EditScreenState.Loading
+                }
+
+                is Resource.Error -> {
+                    EditScreenState.Error(result.msg.toString())
+                }
+            }
+    }
 
     fun setBirthday(date: String) {
         info = info.copy(birthday = date)
@@ -59,7 +102,6 @@ class EditViewModel(
     }
 
     fun tryToSaveInfo() {
-        Log.d("Json info", Json.encodeToString<UserInfoModel>(info.toModel()))
         viewModelScope.launch(Dispatchers.IO) {
             if (fieldsAreCorrect())
                 _screenState.value =
@@ -79,17 +121,15 @@ class EditViewModel(
         }
 
         if (containErrors)
-            _screenState.value =  EditScreenState.ValidationError(items)
+            _screenState.value = EditScreenState.ValidationError(items)
 
         return !containErrors
     }
 
     private fun markAsNotCorrect(member: String) {
         viewModelScope.launch {
-            items = items.map { item ->
-                if (item is InputDelegateItem &&
-                    item.content().titleId == info.mapOfTitles()[member]
-                )
+            _items = items.map { item ->
+                if (item.content().titleId == info.mapOfTitles()[member])
                     InputDelegateItem(item.content().copy(isNotCorrect = true))
                 else
                     item
@@ -97,26 +137,32 @@ class EditViewModel(
         }
     }
 
-    var items = listOf<DelegateItem>(
+    private var _items = listOf(
         InputDelegateItem(
             InputItemEntity(
                 R.string.name,
-                saveFunction = ::setName
+                saveFunction = ::setName,
+                fieldName = ClientInfoEntity::name.name
             )
         ),
         InputDelegateItem(
             InputItemEntity(
                 R.string.gender,
-                saveFunction = ::setGender
+                saveFunction = ::setGender,
+                fieldName = ClientInfoEntity::gender.name
             )
         ),
         InputDelegateItem(
             InputItemEntity(
                 R.string.city,
-                saveFunction = ::setCity
+                saveFunction = ::setCity,
+                fieldName = ClientInfoEntity::city.name
             )
         )
     )
+
+    val items
+        get() = _items
 
     private fun ClientInfoEntity.mapOfTitles() =
         mapOf(
@@ -129,14 +175,13 @@ class EditViewModel(
     class Factory @Inject constructor(
         private val saveClientInfoUseCase: SaveClientInfoUseCase,
         private val changePasswordUseCase: ChangePasswordUseCase,
-        private val changePhoneUseCase: ChangePhoneUseCase,
-        private val getClientDataUseCase: GetClientDataUseCase
+        private val getOwnDataUseCase: GetOwnDataUseCase
     ) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return EditViewModel(
-                saveClientInfoUseCase, changePasswordUseCase, changePhoneUseCase, getClientDataUseCase
+                saveClientInfoUseCase, changePasswordUseCase, getOwnDataUseCase
             ) as T
         }
     }

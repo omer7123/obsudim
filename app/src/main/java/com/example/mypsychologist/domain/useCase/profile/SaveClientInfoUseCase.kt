@@ -1,4 +1,4 @@
-package com.example.mypsychologist.domain.useCase
+package com.example.mypsychologist.domain.useCase.profile
 
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.repository.ProfileRepository
