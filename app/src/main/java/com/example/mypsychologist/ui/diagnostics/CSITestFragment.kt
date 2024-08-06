@@ -65,11 +65,11 @@ class CSITestFragment : Fragment() {
     private fun render(state: CSIScreenState) {
         when (state) {
             is CSIScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, CSITestFragment.TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, CSITestFragment.TAG)
             }
 
             is CSIScreenState.Result -> {
@@ -95,11 +95,11 @@ class CSITestFragment : Fragment() {
     }
 
     private fun showResult(it: CSIScreenState.Result) {
-        TestScalesResultFragment.newInstance(
-            R.string.CSI,
-            it.result.toHashMap()
-        )
-            .show(childFragmentManager, TestResultDialogFragment.TAG)
+//        TestScalesResultFragment.newInstance(
+//            R.string.CSI,
+//            it.result.toHashMap()
+//        )
+//            .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
 
     private fun CSIResultEntity.toHashMap() =

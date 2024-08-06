@@ -15,9 +15,9 @@ import com.example.mypsychologist.databinding.FragmentTestBinding
 import com.example.mypsychologist.domain.entity.BeckDepressionResultEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.diagnostics.BeckDepressionScreenState
 import com.example.mypsychologist.presentation.diagnostics.BeckDepressionTestViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -69,11 +69,11 @@ class FragmentBeckDepressionTest : Fragment() {
     private fun render(state: BeckDepressionScreenState) {
         when (state) {
             is BeckDepressionScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, TAG)
             }
             is BeckDepressionScreenState.Result -> {
                 viewModel.saveResult(state.result)
@@ -97,11 +97,11 @@ class FragmentBeckDepressionTest : Fragment() {
     }
 
     private fun showResult(it: BeckDepressionScreenState.Result) {
-        TestScalesResultFragment.newInstance(
-            R.string.depression_beck_test,
-            it.result.toHashMap()
-        )
-            .show(childFragmentManager, TestResultDialogFragment.TAG)
+//        TestScalesResultFragment.newInstance(
+//            R.string.depression_beck_test,
+//            it.result.toHashMap()
+//        )
+//            .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
 
     private fun BeckDepressionResultEntity.toHashMap() =

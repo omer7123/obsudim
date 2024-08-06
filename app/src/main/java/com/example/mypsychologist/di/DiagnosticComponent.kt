@@ -7,6 +7,7 @@ import com.example.mypsychologist.ui.diagnostics.FragmentTestHistory
 import com.example.mypsychologist.ui.diagnostics.FragmentTests
 import com.example.mypsychologist.ui.diagnostics.JASTestFragment
 import com.example.mypsychologist.ui.diagnostics.MBITestFragment
+import com.example.mypsychologist.ui.diagnostics.PassingTestFragment
 import com.example.mypsychologist.ui.diagnostics.SMQTestFragment
 import com.example.mypsychologist.ui.diagnostics.STAITestFragment
 import com.example.mypsychologist.ui.psychologist.FragmentClientTests
@@ -25,6 +26,7 @@ interface DiagnosticComponent {
     fun inject(fragment: JASTestFragment)
     fun inject(fragment: MBITestFragment)
     fun inject(fragment: CSITestFragment)
+    fun inject(fragment: PassingTestFragment)
 
     @Subcomponent.Factory
     interface Factory {

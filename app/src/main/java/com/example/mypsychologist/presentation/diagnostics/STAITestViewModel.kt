@@ -70,11 +70,11 @@ class STAITestViewModel(
                     )
                 } else {
                     val res = staiConclusionUseCase(answers)
-                    saveResultTestUseCase(SaveTestResultEntity(
-                        getCurrentTimeInISO8601(),
-                        conclusionWithScaleId(res),
-                        "7bdebf8d-dfc5-417a-b583-d8364baed8d5"
-                    ))
+//                    saveResultTestUseCase(SaveTestResultEntity(
+//                        getCurrentTimeInISO8601(),
+//                        conclusionWithScaleId(res),
+//                        "7bdebf8d-dfc5-417a-b583-d8364baed8d5"
+//                    ))
                     STAIScreenState.Result(staiConclusionUseCase(answers))
                 }
         }

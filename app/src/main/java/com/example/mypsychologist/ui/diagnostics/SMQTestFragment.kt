@@ -67,11 +67,11 @@ class SMQTestFragment : Fragment() {
     private fun render(state: CMQScreenState) {
         when (state) {
             is CMQScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, TAG)
             }
             is CMQScreenState.Result -> {
                 viewModel.saveResult(state.result.score, getString(state.result.conclusion))

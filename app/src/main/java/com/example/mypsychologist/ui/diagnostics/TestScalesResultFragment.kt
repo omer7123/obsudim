@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.diagnostics
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiagnosticScalesDialogBinding
-import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
-import com.example.mypsychologist.extensions.serializable
+import com.example.mypsychologist.domain.entity.diagnosticEntity.ConclusionOfTestEntity
+import com.example.mypsychologist.extensions.parcelableArray
 import com.example.mypsychologist.ui.autoCleared
 
 class TestScalesResultFragment : DialogFragment() {
@@ -27,13 +28,17 @@ class TestScalesResultFragment : DialogFragment() {
     ): View {
         binding = FragmentDiagnosticScalesDialogBinding.inflate(inflater, container, false)
 
+        val results: List<ConclusionOfTestEntity>? =
+            requireArguments().parcelableArray<ConclusionOfTestEntity>(key = SCALES)?.toList()
+
         binding.apply {
             goButton.text = getString(R.string.main)
-
-            requireArguments().serializable<HashMap<Int, Pair<Int, Int>>>(SCALES)
-                ?.let { setupAdapter(it) }
         }
 
+        Log.e("RESULTS", results.toString())
+        if (results != null) {
+            setupAdapter(results)
+        }
         setupListeners()
 
         return binding.root
@@ -43,22 +48,23 @@ class TestScalesResultFragment : DialogFragment() {
         binding.goButton.setOnClickListener {
             findNavController().navigate(R.id.main_fragment)
         }
+
         binding.historyButton.setOnClickListener {
-//            findNavController().navigate(
-//                R.id.fragment_test_history,
-//                bundleOf(
-//                    FragmentTestHistory.TEST_TITLE_ID to requireArguments().getInt(TITLE_ID),
-//                    FragmentTestHistory.CLIENT_ID to TestHistoryViewModel.OWN
-//                )
-//            )
+            findNavController().navigate(
+                R.id.action_passingTestFragment_to_fragment_test_history,
+                bundleOf(
+                    FragmentTestHistory.TEST_ID to requireArguments().getString(TEST_ID),
+                    FragmentTestHistory.TEST_TITLE to requireArguments().getString(TITLE)
+                )
+            )
         }
     }
 
-    private fun setupAdapter(scales: Map<Int, Pair<Int, Int>>) {
+    private fun setupAdapter(scales: List<ConclusionOfTestEntity>) {
         scales.let { items ->
             binding.scalesRw.apply {
                 layoutManager = LinearLayoutManager(requireContext())
-                adapter = ScalesAdapter(items.toList())
+                adapter = ScalesAdapter(scales)
                 setHasFixedSize(true)
                 isVisible = true
             }
@@ -72,18 +78,21 @@ class TestScalesResultFragment : DialogFragment() {
 
     companion object {
         fun newInstance(
-            titleId: Int,
-            scales: HashMap<Int, Pair<Int, Int>>
+            titleId: String,
+            testId: String,
+            scales: List<ConclusionOfTestEntity>
         ) =
             TestScalesResultFragment().apply {
                 arguments = bundleOf(
-                    TITLE_ID to titleId,
-                    SCALES to scales
+                    TITLE to titleId,
+                    TEST_ID to testId,
+                    SCALES to scales.toTypedArray(),
                 )
             }
 
         const val TAG = "test_scales_dialog"
-        const val TITLE_ID = "title id"
+        const val TITLE = "title"
+        const val TEST_ID = "test_id"
         const val SCALES = "scales"
     }
 }

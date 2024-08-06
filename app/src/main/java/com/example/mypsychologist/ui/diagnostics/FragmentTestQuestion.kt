@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.TestBottomSheetBinding
-import com.example.mypsychologist.domain.entity.TestQuestionEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.extensions.parcelable
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -20,7 +20,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
 
     private var binding: TestBottomSheetBinding by autoCleared()
 
-    private lateinit var question: TestQuestionEntity
+    private lateinit var question: QuestionOfTestEntity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,9 +37,9 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
             requireArguments().getInt(COUNT).toString()
         )
 
-        if (question.question != 0) {
+        if (question.number != 0) {
             binding.question.apply {
-                text = getString(question.question)
+                text = question.text
                 isVisible = true
             }
         }
@@ -68,7 +68,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
         binding.answerVariantsRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
 
-            adapter = AnswersAdapter(question.variants) { score ->
+            adapter = AnswersAdapter(question.answerOptions) { score ->
                 setFragmentResult(ANSWER, bundleOf(SCORE to score))
                 dismiss()
             }
@@ -86,7 +86,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
         private const val NUMBER = "number"
         private const val COUNT = "count"
 
-        fun newInstance(question: TestQuestionEntity, number: Int, count: Int) =
+        fun newInstance(question: QuestionOfTestEntity, number: Int, count: Int) =
             FragmentTestQuestion().apply {
                 arguments = bundleOf(
                     ANSWER_VARIANTS to question,

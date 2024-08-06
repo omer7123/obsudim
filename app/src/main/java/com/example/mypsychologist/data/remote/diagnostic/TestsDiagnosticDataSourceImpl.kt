@@ -3,7 +3,10 @@ package com.example.mypsychologist.data.remote.diagnostic
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
+import com.example.mypsychologist.data.model.ConclusionOfTestModel
+import com.example.mypsychologist.data.model.QuestionOfTestModel
 import com.example.mypsychologist.data.model.SaveTestResultModel
+import com.example.mypsychologist.data.model.TestInfoModel
 import com.example.mypsychologist.data.model.TestModel
 import com.example.mypsychologist.data.model.TestResultsGetModel
 import javax.inject.Inject
@@ -17,7 +20,7 @@ class TestsDiagnosticDataSourceImpl @Inject constructor(
         api.getAllTests()
     }
 
-    override suspend fun saveTestResult(testResultModel: SaveTestResultModel): Resource<String> =
+    override suspend fun saveTestResult(testResultModel: SaveTestResultModel): Resource<List<ConclusionOfTestModel>> =
         getResult {
             api.saveTestResult(testResultModel)
         }
@@ -26,4 +29,13 @@ class TestsDiagnosticDataSourceImpl @Inject constructor(
         val userID = userDataSource.getUserId()
         return getResult { api.getTestResults(testId, userID) }
     }
+
+    override suspend fun getInfoAboutTest(testId: String): Resource<TestInfoModel> = getResult {
+        api.getTestInfo(testId)
+    }
+
+    override suspend fun getQuestionsOfTest(testId: String): Resource<List<QuestionOfTestModel>> =
+        getResult {
+            api.getQuestionsOfTest(testId)
+        }
 }

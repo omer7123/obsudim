@@ -63,11 +63,11 @@ class MBITestFragment : Fragment() {
     private fun render(state: MBIScreenState) {
         when (state) {
             is MBIScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, MBITestFragment.TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, MBITestFragment.TAG)
             }
 
             is MBIScreenState.Result -> {
@@ -93,11 +93,11 @@ class MBITestFragment : Fragment() {
     }
 
     private fun showResult(it: MBIScreenState.Result) {
-        TestScalesResultFragment.newInstance(
-            R.string.mbi,
-            it.result.toHashMap()
-        )
-            .show(childFragmentManager, TestResultDialogFragment.TAG)
+//        TestScalesResultFragment.newInstance(
+//            R.string.mbi,
+//            it.result.toHashMap()
+//        )
+//            .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
 
     private fun MBIResultEntity.toHashMap() =

@@ -15,9 +15,9 @@ import com.example.mypsychologist.databinding.FragmentTestBinding
 import com.example.mypsychologist.domain.entity.STAIResultEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.diagnostics.STAIScreenState
 import com.example.mypsychologist.presentation.diagnostics.STAITestViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -69,11 +69,11 @@ class STAITestFragment : Fragment() {
     private fun render(state: STAIScreenState) {
         when (state) {
             is STAIScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number + 1,
-                    state.count
-                ).show(childFragmentManager, TAG)
+//                FragmentTestQuestion.newInstance(
+//                    state.answerVariants,
+//                    state.number + 1,
+//                    state.count
+//                ).show(childFragmentManager, TAG)
             }
 
             is STAIScreenState.Result -> {
@@ -99,11 +99,11 @@ class STAITestFragment : Fragment() {
     }
 
     private fun showResult(it: STAIScreenState.Result) {
-        TestScalesResultFragment.newInstance(
-            R.string.stai,
-            it.result.toHashMap()
-        )
-            .show(childFragmentManager, TestResultDialogFragment.TAG)
+//        TestScalesResultFragment.newInstance(
+//            R.string.stai,
+//            it.result.toHashMap()
+//        )
+//            .show(childFragmentManager, TestResultDialogFragment.TAG)
     }
 
     private fun STAIResultEntity.toHashMap() =

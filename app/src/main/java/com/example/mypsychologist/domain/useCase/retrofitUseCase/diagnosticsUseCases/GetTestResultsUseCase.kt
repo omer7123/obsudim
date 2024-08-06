@@ -7,5 +7,6 @@ import javax.inject.Inject
 
 class GetTestResultsUseCase @Inject constructor(private val repository: TestsDiagnosticRepository) {
 
-    suspend operator fun invoke(testId: String): Resource<List<TestResultsGetEntity>> = repository.getTestResults(testId)
+    suspend operator fun invoke(testId: String): Resource<List<TestResultsGetEntity>> =
+        repository.getTestResults(testId)
 }

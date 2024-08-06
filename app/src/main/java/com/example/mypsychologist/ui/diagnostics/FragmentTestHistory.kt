@@ -12,16 +12,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestHistoryBinding
-import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsScalesWithTitleEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
+import com.github.mikephil.charting.data.RadarEntry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -68,9 +68,10 @@ class FragmentTestHistory : Fragment() {
     private fun render(state: TestHistoryScreenState) {
         when (state) {
             is TestHistoryScreenState.Loading -> {
-                if (isNetworkConnect())
+                if (isNetworkConnect()) {
+                    binding.radar.isVisible = false
                     binding.progressBar.isVisible = true
-                else {
+                }else {
                     binding.includePlaceholder.layout.isVisible = true
                 }
             }
@@ -90,13 +91,26 @@ class FragmentTestHistory : Fragment() {
         }
     }
 
-    private fun setupAdapter(list: List<TestResultsGetEntity>) {
+    private fun setupAdapter(list: List<TestResultsScalesWithTitleEntity>) {
+        binding.radar.isVisible = true
+//        val listScale: List<Te>
+        for (elem in list){
 
-        binding.resultsRw.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
-            adapter = TestHistoryAdapter(list)
         }
+        val entries1 = listOf(
+            RadarEntry(54f), // Тревога
+            RadarEntry(60f), // Выгорание
+            RadarEntry(65f), // РПП
+            RadarEntry(65f), // РПП
+        )
+        val labels = listOf("Сила", "Ловкость", "Скорость", "Ум")
+        binding.radar.updateData(entries1, labels, 78f)
+
+//        binding.resultsRw.apply {
+//            layoutManager = LinearLayoutManager(requireContext())
+//            setHasFixedSize(true)
+//            adapter = TestHistoryAdapter(list)
+//        }
     }
 
     private fun showPlaceholderForEmptyList() {

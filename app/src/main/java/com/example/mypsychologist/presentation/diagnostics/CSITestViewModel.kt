@@ -70,13 +70,13 @@ class CSITestViewModel(
                     )
                 } else {
                     val res = csiConclusionUseCase(answers)
-                    saveResultTestUseCase(
-                        SaveTestResultEntity(
-                            getCurrentTimeInISO8601(),
-                            conclusionWithScaleId(res),
-                            "9a1a674f-246f-4e80-96c6-e0cc5f5d148a"
-                        )
-                    )
+//                    saveResultTestUseCase(
+//                        SaveTestResultEntity(
+//                            getCurrentTimeInISO8601(),
+//                            conclusionWithScaleId(res),
+//                            "9a1a674f-246f-4e80-96c6-e0cc5f5d148a"
+//                        )
+//                    )
                     CSIScreenState.Result(csiConclusionUseCase(answers))
                 }
         }

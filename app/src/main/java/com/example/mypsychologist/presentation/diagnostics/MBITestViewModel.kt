@@ -72,13 +72,13 @@ class MBITestViewModel(
                     )
                 } else {
                     val res = mbiConclusionUseCase(answers)
-                    saveResultTestUseCase(
-                        SaveTestResultEntity(
-                            getCurrentTimeInISO8601(),
-                            conclusionWithScaleId(res),
-                            "be28c8c4-18e9-4c2b-a3de-3b73dc50d929"
-                        )
-                    )
+//                    saveResultTestUseCase(
+//                        SaveTestResultEntity(
+//                            getCurrentTimeInISO8601(),
+//                            conclusionWithScaleId(res),
+//                            "be28c8c4-18e9-4c2b-a3de-3b73dc50d929"
+//                        )
+//                    )
                     MBIScreenState.Result(mbiConclusionUseCase(answers))
                 }
         }
@@ -86,9 +86,9 @@ class MBITestViewModel(
 
     private fun conclusionWithScaleId(res: MBIResultEntity): List<ScaleResultEntity> {
         return listOf(
-            ScaleResultEntity("5b91710f-5eb1-4ccc-bb38-5c639fa0d4ad", res.emotionalExhaustion.first),
-            ScaleResultEntity("85799862-db67-4894-8e78-00d13180c3df", res.depersonalization.first),
-            ScaleResultEntity("213333b7-3408-42e5-bd83-5d41e1444738", res.reductionOfPersonalAchievements.first),
+            ScaleResultEntity("212f8d30-b7d5-485f-ad35-c75d33db719c", res.emotionalExhaustion.first),
+            ScaleResultEntity("d92268c7-ee10-4fbb-a32b-b6d02518f37e", res.depersonalization.first),
+            ScaleResultEntity("fc09cb2f-b981-409b-a256-f205fbabcd73", res.reductionOfPersonalAchievements.first),
         )
     }
 
