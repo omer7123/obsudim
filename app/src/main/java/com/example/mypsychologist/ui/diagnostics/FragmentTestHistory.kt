@@ -14,17 +14,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestHistoryBinding
-import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsScalesWithTitleEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import com.github.mikephil.charting.data.RadarEntry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+import kotlin.math.max
+
 
 class FragmentTestHistory : Fragment() {
 
@@ -71,41 +73,56 @@ class FragmentTestHistory : Fragment() {
                 if (isNetworkConnect()) {
                     binding.radar.isVisible = false
                     binding.progressBar.isVisible = true
-                }else {
+                } else {
                     binding.includePlaceholder.layout.isVisible = true
                 }
             }
+
             is TestHistoryScreenState.Data -> {
                 binding.progressBar.isVisible = false
                 binding.includePlaceholder.layout.isVisible = false
-                if(state.results.isNotEmpty())
+                if (state.results.isNotEmpty())
                     setupAdapter(state.results)
                 else
                     showPlaceholderForEmptyList()
             }
+
             is TestHistoryScreenState.Error -> {
                 binding.progressBar.isVisible = false
                 requireContext().showToast(getString(R.string.db_error))
             }
+
             is TestHistoryScreenState.Init -> {}
         }
     }
 
-    private fun setupAdapter(list: List<TestResultsScalesWithTitleEntity>) {
+    private fun setupAdapter(list: List<TestResultsGetEntity>) {
         binding.radar.isVisible = true
-//        val listScale: List<Te>
-        for (elem in list){
+        val mapScore = mutableMapOf<String, Float>()
 
+        var maxValue = 0f
+        val listScale: ArrayList<ArrayList<RadarEntry>> = ArrayList()
+        val labelsScale: ArrayList<String> = ArrayList()
+
+        val listRes: ArrayList<RadarEntry> = ArrayList()
+
+        for (test in list) {
+            for (scale in test.scaleResults) {
+                mapScore[scale.scaleTitle] =
+                    mapScore.getOrDefault(scale.scaleTitle, 0f) + scale.score
+                maxValue = max(maxValue, scale.maxScore.toFloat())
+            }
         }
-        val entries1 = listOf(
-            RadarEntry(54f), // Тревога
-            RadarEntry(60f), // Выгорание
-            RadarEntry(65f), // РПП
-            RadarEntry(65f), // РПП
-        )
-        val labels = listOf("Сила", "Ловкость", "Скорость", "Ум")
-        binding.radar.updateData(entries1, labels, 78f)
 
+        Log.e("MAP:", mapScore.toString())
+        for ((k, v) in mapScore) {
+            listRes.add(RadarEntry(v / list.size))
+            labelsScale.add(k)
+        }
+        listScale.add(listRes)
+        Log.e("MAP:", listScale.toString())
+
+        binding.radar.updateData(listScale, labelsScale, maxValue)
 //        binding.resultsRw.apply {
 //            layoutManager = LinearLayoutManager(requireContext())
 //            setHasFixedSize(true)

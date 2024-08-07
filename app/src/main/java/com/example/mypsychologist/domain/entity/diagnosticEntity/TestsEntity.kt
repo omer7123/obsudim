@@ -21,6 +21,15 @@ data class ScaleResultEntity(
     val score: Int
 )
 
+data class ScaleResultForHistoryEntity(
+    val scaleId: String,
+    val score: Int,
+    val scaleTitle: String,
+    val maxScore: Int,
+    val conclusion: String,
+    val color: String
+)
+
 @Parcelize
 data class ConclusionOfTestEntity(
     val color: String,
@@ -48,7 +57,7 @@ data class TestResultsGetEntity(
     val testId: String,
     val testResultId: String,
     val datetime: String,
-    val scaleResults: List<ScaleResultEntity>
+    val scaleResults: List<ScaleResultForHistoryEntity>
 )
 
 data class TestInfoEntity(

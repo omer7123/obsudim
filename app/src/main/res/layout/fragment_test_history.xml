@@ -48,6 +48,7 @@
     <com.example.mypsychologist.ui.diagnostics.CustomRadarChart
         android:id="@+id/radar"
         app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_height="400dp"
         android:layout_width="match_parent"
         />

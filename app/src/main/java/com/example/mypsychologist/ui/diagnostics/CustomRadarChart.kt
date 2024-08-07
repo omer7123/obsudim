@@ -8,11 +8,11 @@ import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import com.example.mypsychologist.R
 import com.github.mikephil.charting.charts.RadarChart
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet
 
 class CustomRadarChart(context: Context, attrs: AttributeSet?) : RadarChart(context, attrs) {
 
@@ -30,18 +30,6 @@ class CustomRadarChart(context: Context, attrs: AttributeSet?) : RadarChart(cont
             ) // Цвет заливки окружностей
         style = Paint.Style.STROKE
         alpha = 100 // Прозрачность заливки (0-255)
-    }
-
-    private val dataSet: RadarDataSet = RadarDataSet(emptyList(), "Результаты").apply {
-        color = ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon) // Цвет линии
-        fillColor = ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon_with_alpha) // Цвет заливки
-        setDrawFilled(true) // Заполнение области
-        lineWidth = 4f // Толщина линии
-        valueTextColor = ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon) // Цвет текста значений
-        valueTextSize = 14f // Размер текста значений
-        setDrawHighlightCircleEnabled(true) // Включение кружков на вершинах
-        setDrawHighlightIndicators(false) // Отключение индикаторов выделения
-        setDrawValues(false) // Отключение значений на графике
     }
 
     init {
@@ -80,19 +68,39 @@ class CustomRadarChart(context: Context, attrs: AttributeSet?) : RadarChart(cont
         rotationAngle = 30f
         description.isEnabled = false
         legend.isEnabled = false
+        animateY(1000)
 
         invalidate() // Перерисовываем график
     }
 
     // Метод для обновления данных
-    fun updateData(entries: List<Entry>, labels: List<String>, maxValue: Float) {
-        dataSet.values = entries as MutableList<RadarEntry>?
-        val radarData = RadarData(dataSet)
+    fun updateData(entriesList: List<List<RadarEntry>>, labels: List<String>, maxValue: Float) {
+        val dataSets = ArrayList<RadarDataSet>()
+
+        for ((index, entries) in entriesList.withIndex()) {
+            val dataSet = RadarDataSet(entries, "Dataset $index").apply {
+                color =  ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon) // Цвет линии
+                fillColor = ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon_with_alpha) // Цвет заливки
+                setDrawFilled(true)
+                lineWidth = 4f
+                valueTextColor = ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon)
+                valueTextSize = 14f
+                setDrawHighlightCircleEnabled(true)
+                setDrawHighlightIndicators(false)
+                setDrawValues(false)
+            }
+            dataSets.add(dataSet)
+        }
+
+        val radarData = RadarData(dataSets as List<IRadarDataSet>?)
         this.data = radarData
-        if (labels.size == 3) rotationAngle = 30f
-        if (labels.size == 4) rotationAngle = 45f
-        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+
+//        if (labels.size == 3) rotationAngle = 30f
+//        if (labels.size == 4) rotationAngle = 45f
+//        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         yAxis.axisMaximum = maxValue
+
+        animateY(1000)
 
         invalidate() // Перерисовываем график для отображения новых данных
     }

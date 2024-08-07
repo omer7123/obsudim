@@ -47,7 +47,20 @@ data class TestResultsGetModel(
     val testResultId: String,
     val datetime: String,
     @SerialName("scale_results")
-    val scaleResults: List<ScaleResultModel>
+    val scaleResults: List<ScaleResultForHistoryModel>
+)
+
+@Serializable
+data class ScaleResultForHistoryModel(
+    @SerialName("scale_id")
+    val scaleId: String,
+    val score: Int,
+    @SerialName("scale_title")
+    val scaleTitle: String,
+    @SerialName("max_score")
+    val maxScore: Int,
+    val conclusion: String,
+    val color: String
 )
 
 @Serializable
