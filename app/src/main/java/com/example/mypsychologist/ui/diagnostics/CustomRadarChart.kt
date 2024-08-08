@@ -95,8 +95,8 @@ class CustomRadarChart(context: Context, attrs: AttributeSet?) : RadarChart(cont
         val radarData = RadarData(dataSets as List<IRadarDataSet>?)
         this.data = radarData
 
-//        if (labels.size == 3) rotationAngle = 30f
-//        if (labels.size == 4) rotationAngle = 45f
+        if (labels.size == 3) rotationAngle = 30f
+        if (labels.size == 4) rotationAngle = 45f
 //        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         yAxis.axisMaximum = maxValue
 

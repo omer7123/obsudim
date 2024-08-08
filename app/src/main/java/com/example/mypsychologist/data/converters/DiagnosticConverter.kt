@@ -6,7 +6,6 @@ import com.example.mypsychologist.data.model.ConclusionOfTestModel
 import com.example.mypsychologist.data.model.QuestionOfTestModel
 import com.example.mypsychologist.data.model.SaveTestResultModel
 import com.example.mypsychologist.data.model.ScaleResultForHistoryModel
-import com.example.mypsychologist.data.model.ScaleResultModel
 import com.example.mypsychologist.data.model.ScalesOfTestInfoModel
 import com.example.mypsychologist.data.model.TestInfoModel
 import com.example.mypsychologist.data.model.TestModel
@@ -16,7 +15,6 @@ import com.example.mypsychologist.domain.entity.diagnosticEntity.BorderOfTestEnt
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ConclusionOfTestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.SaveTestResultEntity
-import com.example.mypsychologist.domain.entity.diagnosticEntity.ScaleResultEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ScaleResultForHistoryEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ScalesOfTestInfoEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
@@ -29,8 +27,6 @@ fun TestModel.toEntity() =
 fun SaveTestResultEntity.toModel() =
     SaveTestResultModel(testId, date, results)
 
-private fun ScaleResultModel.toEntity(): ScaleResultEntity =
-    ScaleResultEntity(scaleId, score)
 
 fun TestResultsGetModel.toEntity() =
     TestResultsGetEntity(testId, testResultId, datetime, scaleResults.map { it.toEntity() })

@@ -16,11 +16,6 @@ data class SaveTestResultEntity(
     val results: List<Int>,
 )
 
-data class ScaleResultEntity(
-    val scaleId: String,
-    val score: Int
-)
-
 data class ScaleResultForHistoryEntity(
     val scaleId: String,
     val score: Int,
@@ -36,22 +31,8 @@ data class ConclusionOfTestEntity(
     val conclusion: String,
     val scaleId: String,
     val scaleTitle: String,
-    val score: Int,
+    val score: Float,
 ) : Parcelable
-
-
-data class ScaleResultWithTitileEntity(
-    val name: String,
-    val scaleId: String,
-    val score: Int
-)
-
-data class TestResultsScalesWithTitleEntity(
-    val testId: String,
-    val testResultId: String,
-    val datetime: String,
-    val scaleResults: List<ScaleResultWithTitileEntity>
-)
 
 data class TestResultsGetEntity(
     val testId: String,

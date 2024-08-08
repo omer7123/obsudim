@@ -22,13 +22,6 @@ data class SaveTestResultModel(
 )
 
 @Serializable
-data class ScaleResultModel(
-    @SerialName("scale_id")
-    val scaleId: String,
-    val score: Int
-)
-
-@Serializable
 data class ConclusionOfTestModel(
     val color: String,
     val conclusion: String,
@@ -36,7 +29,7 @@ data class ConclusionOfTestModel(
     val scaleId: String,
     @SerialName("scale_title")
     val scaleTitle: String,
-    val score: Int
+    val score: Float,
 )
 
 @Serializable
