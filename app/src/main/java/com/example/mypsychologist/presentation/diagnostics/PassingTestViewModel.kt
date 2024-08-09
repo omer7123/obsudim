@@ -14,7 +14,6 @@ import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseC
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.SaveResultTestUseCase
 import kotlinx.coroutines.launch
 import java.time.Instant
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
@@ -100,7 +99,7 @@ class PassingTestViewModel @Inject constructor(
                                 scoresForTest.asList()
                             )
                         )
-                    when(res){
+                    when (res) {
                         is Resource.Error -> PassingTestScreenState.Error(res.msg.toString())
                         Resource.Loading -> PassingTestScreenState.Loading
                         is Resource.Success -> PassingTestScreenState.Result(res.data)
@@ -112,7 +111,7 @@ class PassingTestViewModel @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getCurrentTimeInISO8601(): String {
         val currentTime = Instant.now()
-        val formatter = DateTimeFormatter.ISO_INSTANT.withZone(ZoneOffset.UTC)
+        val formatter = DateTimeFormatter.ISO_INSTANT
         return formatter.format(currentTime)
     }
 }

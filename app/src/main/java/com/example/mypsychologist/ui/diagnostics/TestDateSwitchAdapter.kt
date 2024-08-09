@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.ItemTestDateSwitchBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -48,17 +49,19 @@ class TestDateSwitchAdapter(
 
         @SuppressLint("NewApi")
         private fun convertToDate(date: String): String {
-            val dateTime =
-                LocalDateTime.parse(date, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            val utcDateTime = LocalDateTime.parse(date, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
+            val zoneId = ZoneId.systemDefault()
+            val utcZonedDateTime = utcDateTime.atZone(ZoneId.of("UTC"))
+            val localZonedDateTime = utcZonedDateTime.withZoneSameInstant(zoneId)
 
             val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("ru"))
             val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-            val formattedDate = dateTime.format(dateFormatter)
-            val formattedTime = dateTime.format(timeFormatter)
+            val formattedDate = localZonedDateTime.format(dateFormatter)
+            val formattedTime = localZonedDateTime.format(timeFormatter)
 
             return "$formattedDate, $formattedTime"
-
         }
     }
 }
