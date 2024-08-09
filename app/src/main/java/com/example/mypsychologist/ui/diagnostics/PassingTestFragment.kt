@@ -14,13 +14,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentPassingTestBinding
-import com.example.mypsychologist.domain.entity.diagnosticEntity.ConclusionOfTestEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.ResultAfterSaveEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.diagnostics.PassingTestScreenState
 import com.example.mypsychologist.presentation.diagnostics.PassingTestViewModel
+import com.example.mypsychologist.presentation.diagnostics.TestResultViewModel
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -86,20 +87,18 @@ class PassingTestFragment : Fragment() {
         }
     }
 
-    private fun showResult(conclusions: List<ConclusionOfTestEntity>) {
-        Log.e("RESULT IN PassingTestFragment", conclusions.toString())
-        TestScalesResultFragment.newInstance(
-            requireArguments().getString(TITLE).toString(),
-            requireArguments().getString(TEST_ID).toString(),
-            conclusions,
+    private fun showResult(conclusions: ResultAfterSaveEntity) {
+        findNavController().navigate(
+            R.id.action_passingTestFragment_to_testResultFragment, bundleOf(
+                TestResultFragment.TEST_TITLE to binding.title.text,
+                TestResultViewModel.TEST_RESULT_ID to conclusions.testResultId
+            )
         )
-            .show(childFragmentManager, TestResultDialogFragment.TAG)
+
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
-
     }
 
     private fun initView() {

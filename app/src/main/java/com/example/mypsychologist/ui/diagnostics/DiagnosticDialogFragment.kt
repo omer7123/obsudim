@@ -7,17 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDiagnosticDialogBinding
-import com.example.mypsychologist.databinding.FragmentPassingTestBinding
-import com.example.mypsychologist.presentation.diagnostics.DiagnosticDialogViewModel
 import com.example.mypsychologist.ui.autoCleared
 
 class DiagnosticDialogFragment : DialogFragment() {
 
-    private val viewModel: DiagnosticDialogViewModel by viewModels()
+
     private var binding: FragmentDiagnosticDialogBinding by autoCleared()
 
     override fun onCreateView(
@@ -47,7 +44,6 @@ class DiagnosticDialogFragment : DialogFragment() {
                 R.id.fragment_test_history, bundleOf(
                     FragmentTestHistory.TEST_ID to requireArguments().getString(TEST_ID),
                     FragmentTestHistory.TEST_TITLE to requireArguments().getString(TITLE_ID)
-//                    FragmentTestHistory.CLIENT_ID to requireArguments().getString(CLIENT_ID)
                 )
             )
         }
@@ -87,7 +83,6 @@ class DiagnosticDialogFragment : DialogFragment() {
 
         const val TAG = "test_dialog"
         private const val TITLE_ID = "title"
-        private const val CLIENT_ID = "client id"
         private const val DESCRIPTION_ID = "description"
         private const val TEST_ID = "test_id"
     }

@@ -88,8 +88,7 @@ class FragmentTestHistory : Fragment() {
                 if (state.results.isNotEmpty()) {
                     setupRadar(state.results)
                     setupAdapter(state.results)
-                }
-                else
+                } else
                     showPlaceholderForEmptyList()
             }
 
@@ -120,13 +119,11 @@ class FragmentTestHistory : Fragment() {
             }
         }
 
-        Log.e("MAP:", mapScore.toString())
         for ((k, v) in mapScore) {
             listRes.add(RadarEntry(v / list.size))
             labelsScale.add(k)
         }
         listScale.add(listRes)
-        Log.e("MAP:", listScale.toString())
 
         binding.radar.updateData(listScale, labelsScale, maxValue)
 
@@ -137,12 +134,16 @@ class FragmentTestHistory : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = TestDateSwitchAdapter(
-                list, { testResultId, isChecked -> },
+                list, { testResultId, isChecked ->
+
+                },
                 { testResultId ->
-                    findNavController().navigate(R.id.testResultFragment, bundleOf(
-                        TestResultFragment.TEST_TITLE to binding.title.text,
-                        TestResultViewModel.TEST_RESULT_ID to testResultId
-                    ))
+                    findNavController().navigate(
+                        R.id.testResultFragment, bundleOf(
+                            TestResultFragment.TEST_TITLE to binding.title.text,
+                            TestResultViewModel.TEST_RESULT_ID to testResultId
+                        )
+                    )
                 }
             )
         }

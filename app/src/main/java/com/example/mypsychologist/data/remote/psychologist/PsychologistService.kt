@@ -29,5 +29,8 @@ interface PsychologistService {
     @POST("/client/unfulfilled_task")
     suspend fun markTaskAsUnfulfilled(@Body taskId: TaskIdModel): Response<String>
 
+//    @GET("/client/get_your_psychologist")
+//    suspend fun getMyPsychologists(): Response
+
 
 }

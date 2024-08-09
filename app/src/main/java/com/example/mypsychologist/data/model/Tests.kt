@@ -22,6 +22,13 @@ data class SaveTestResultModel(
 )
 
 @Serializable
+data class ResultAfterSaveModel(
+    @SerialName("test_result_id")
+    val testResultId: String,
+    val result: List<ConclusionOfTestModel>
+)
+
+@Serializable
 data class ConclusionOfTestModel(
     val color: String,
     val conclusion: String,

@@ -35,11 +35,7 @@
         android:name="com.example.mypsychologist.ui.diagnostics.FragmentTests"
         android:label="FragmentTests"
         tools:layout="@layout/fragment_tests" />
-    <fragment
-        android:id="@+id/fragment_beck_depression_test"
-        android:name="com.example.mypsychologist.ui.diagnostics.FragmentBeckDepressionTest"
-        android:label="FragmentBeckDepressionTest"
-        tools:layout="@layout/fragment_test" />
+
     <fragment
         android:id="@+id/fragment_test_history"
         android:name="com.example.mypsychologist.ui.diagnostics.FragmentTestHistory"
@@ -145,31 +141,6 @@
         android:name="com.example.mypsychologist.ui.exercises.rebt.AutoDialogFragment"
         android:label="AutoDialogFragment" />
     <fragment
-        android:id="@+id/SMQ_test_fragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.SMQTestFragment"
-        android:label="SMQTestFragment" />
-    <fragment
-        android:id="@+id/DASS_test_fragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.DASSTestFragment"
-        android:label="DASSTestFragment" />
-    <fragment
-        android:id="@+id/STAI_test_fragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.STAITestFragment"
-        android:label="STAITestFragment" />
-    <fragment
-        android:id="@+id/JASTestFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.JASTestFragment"
-        android:label="fragment_j_a_s_test"
-        tools:layout="@layout/fragment_j_a_s_test" />
-    <fragment
-        android:id="@+id/MBITestFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.MBITestFragment"
-        android:label="MBITestFragment" />
-    <fragment
-        android:id="@+id/CSITestFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.CSITestFragment"
-        android:label="CSITestFragment" />
-    <fragment
         android:id="@+id/freeDiaryFragment"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FreeDiaryFragment"
         android:label="FreeDiaryFragment" />
@@ -214,12 +185,17 @@
         android:id="@+id/passingTestFragment"
         android:name="com.example.mypsychologist.ui.diagnostics.PassingTestFragment"
         android:label="fragment_passing_test"
-        tools:layout="@layout/fragment_passing_test" >
+        tools:layout="@layout/fragment_passing_test">
         <action
-            app:popUpTo="@id/passingTestFragment"
-            app:popUpToInclusive="true"
             android:id="@+id/action_passingTestFragment_to_fragment_test_history"
-            app:destination="@id/fragment_test_history" />
+            app:destination="@id/fragment_test_history"
+            app:popUpTo="@id/passingTestFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_passingTestFragment_to_testResultFragment"
+            app:destination="@id/testResultFragment"
+            app:popUpTo="@id/passingTestFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

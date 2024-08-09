@@ -25,14 +25,18 @@ data class ScaleResultForHistoryEntity(
     val color: String
 )
 
-@Parcelize
+data class ResultAfterSaveEntity(
+    val testResultId: String,
+    val result: List<ConclusionOfTestEntity>
+)
+
 data class ConclusionOfTestEntity(
     val color: String,
     val conclusion: String,
     val scaleId: String,
     val scaleTitle: String,
     val score: Float,
-) : Parcelable
+)
 
 data class TestResultsGetEntity(
     val testId: String,
