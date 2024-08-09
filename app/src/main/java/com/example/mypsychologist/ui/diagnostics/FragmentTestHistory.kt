@@ -6,12 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestHistoryBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
@@ -20,6 +23,7 @@ import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
+import com.example.mypsychologist.presentation.diagnostics.TestResultViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.github.mikephil.charting.data.RadarEntry
 import kotlinx.coroutines.flow.launchIn
@@ -81,8 +85,10 @@ class FragmentTestHistory : Fragment() {
             is TestHistoryScreenState.Data -> {
                 binding.progressBar.isVisible = false
                 binding.includePlaceholder.layout.isVisible = false
-                if (state.results.isNotEmpty())
+                if (state.results.isNotEmpty()) {
+                    setupRadar(state.results)
                     setupAdapter(state.results)
+                }
                 else
                     showPlaceholderForEmptyList()
             }
@@ -96,7 +102,7 @@ class FragmentTestHistory : Fragment() {
         }
     }
 
-    private fun setupAdapter(list: List<TestResultsGetEntity>) {
+    private fun setupRadar(list: List<TestResultsGetEntity>) {
         binding.radar.isVisible = true
         val mapScore = mutableMapOf<String, Float>()
 
@@ -123,11 +129,23 @@ class FragmentTestHistory : Fragment() {
         Log.e("MAP:", listScale.toString())
 
         binding.radar.updateData(listScale, labelsScale, maxValue)
-//        binding.resultsRw.apply {
-//            layoutManager = LinearLayoutManager(requireContext())
-//            setHasFixedSize(true)
-//            adapter = TestHistoryAdapter(list)
-//        }
+
+    }
+
+    private fun setupAdapter(list: List<TestResultsGetEntity>) {
+        binding.testDatesSwitchesRw.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = TestDateSwitchAdapter(
+                list, { testResultId, isChecked -> },
+                { testResultId ->
+                    findNavController().navigate(R.id.testResultFragment, bundleOf(
+                        TestResultFragment.TEST_TITLE to binding.title.text,
+                        TestResultViewModel.TEST_RESULT_ID to testResultId
+                    ))
+                }
+            )
+        }
     }
 
     private fun showPlaceholderForEmptyList() {

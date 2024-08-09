@@ -57,4 +57,11 @@ class TestsDiagnosticRepositoryImpl @Inject constructor(
             is Resource.Success -> Resource.Success(res.data.map { it.toEntity() })
         }
     }
+
+    override suspend fun getTestResult(testResultId: String): Resource<TestResultsGetEntity> =
+        when (val result = dataSource.getTestResult(testResultId)) {
+            is Resource.Error -> Resource.Error(result.msg, null)
+            is Resource.Loading -> Resource.Loading
+            is Resource.Success -> Resource.Success(result.data.toEntity())
+        }
 }

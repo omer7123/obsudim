@@ -221,4 +221,10 @@
             android:id="@+id/action_passingTestFragment_to_fragment_test_history"
             app:destination="@id/fragment_test_history" />
     </fragment>
+
+    <fragment
+        android:id="@+id/testResultFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.TestResultFragment"
+        android:label="fragment_test_result"
+        tools:layout="@layout/fragment_test_result" />
 </navigation>

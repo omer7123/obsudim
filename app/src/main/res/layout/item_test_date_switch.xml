@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center">
+
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switch_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+/>
+
+    <TextView
+        android:id="@+id/date"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_marginStart="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginVertical="16dp"
+        tools:text="TextView" />
+
+    <Button
+        android:id="@+id/go_to_button"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:text="@string/go_to" />
+</LinearLayout>

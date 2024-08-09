@@ -38,4 +38,9 @@ class TestsDiagnosticDataSourceImpl @Inject constructor(
         getResult {
             api.getQuestionsOfTest(testId)
         }
+
+    override suspend fun getTestResult(testResultId: String): Resource<TestResultsGetModel> =
+        getResult {
+            api.getTestResult(testResultId)
+        }
 }

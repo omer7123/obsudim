@@ -42,3 +42,6 @@ fun <A, B> Map<A, B>.containsKeys(vararg keys: A): Boolean = run {
 
     contains
 }
+
+fun Int.toPercent(maxValue: Int) =
+    this * 100 / maxValue

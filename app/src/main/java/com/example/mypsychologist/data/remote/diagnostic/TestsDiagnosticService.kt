@@ -36,4 +36,9 @@ interface TestsDiagnosticService {
     suspend fun getQuestionsOfTest(
         @Path("test_id") testId: String
     ): Response<List<QuestionOfTestModel>>
+
+    @GET("/test/get_test_result/{test_result_id}")
+    suspend fun getTestResult(
+        @Path("test_result_id") testResultId: String
+    ): Response<TestResultsGetModel>
 }

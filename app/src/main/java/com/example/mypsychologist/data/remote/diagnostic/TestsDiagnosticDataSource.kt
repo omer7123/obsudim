@@ -15,4 +15,6 @@ interface TestsDiagnosticDataSource{
     suspend fun getTestResults(testId: String): Resource<List<TestResultsGetModel>>
     suspend fun getInfoAboutTest(testId: String): Resource<TestInfoModel>
     suspend fun getQuestionsOfTest(testId: String): Resource<List<QuestionOfTestModel>>
+
+    suspend fun getTestResult(testResultId: String): Resource<TestResultsGetModel>
 }

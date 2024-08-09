@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/scale_title"
+        style="@style/TextAppearance.Material3.TitleMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="?attr/colorPrimary"
+        tools:text="Шкала" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/score_indicator"
+            app:trackThickness="6dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            app:trackStopIndicatorSize="0dp"
+            app:trackCornerRadius="3dp"/>
+
+        <TextView
+            android:id="@+id/result_score"
+            android:layout_marginStart="16dp"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="3" />
+
+    </LinearLayout>
+</LinearLayout>

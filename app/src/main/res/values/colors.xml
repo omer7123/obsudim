@@ -69,4 +69,8 @@
     <color name="md_theme_dark_onSecondPrimaryIcon">#2e628c</color>
     
     <color name="md_theme_dark_onSecondPrimaryIcon_with_alpha">#992E628C</color>
+
+    <color name="green">#368C2E</color>
+    <color name="yellow">#E1B92A</color>
+    <color name="red">#BA1A1A</color>
 </resources>

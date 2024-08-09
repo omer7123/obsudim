@@ -16,4 +16,5 @@ interface TestsDiagnosticRepository {
     suspend fun getTestResults(testId: String): Resource<List<TestResultsGetEntity>>
     suspend fun getInfoAboutTest(testId: String): Resource<TestInfoEntity>
     suspend fun getQuestionsOfTest(testId: String): Resource<List<QuestionOfTestEntity>>
+    suspend fun getTestResult(testResultId: String): Resource<TestResultsGetEntity>
 }
