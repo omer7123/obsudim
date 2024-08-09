@@ -86,7 +86,8 @@ class FragmentTestHistory : Fragment() {
                 binding.progressBar.isVisible = false
                 binding.includePlaceholder.layout.isVisible = false
                 if (state.results.isNotEmpty()) {
-                    setupRadar(state.results)
+                    if(state.checkedTests.isEmpty())
+                        setupRadar(state.results)
                     setupAdapter(state.results)
                 } else
                     showPlaceholderForEmptyList()
@@ -135,7 +136,7 @@ class FragmentTestHistory : Fragment() {
             setHasFixedSize(true)
             adapter = TestDateSwitchAdapter(
                 list, { testResultId, isChecked ->
-
+                    viewModel.getResultTestById(testResultId, isChecked)
                 },
                 { testResultId ->
                     findNavController().navigate(

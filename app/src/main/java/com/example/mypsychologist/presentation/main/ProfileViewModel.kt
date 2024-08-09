@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.domain.useCase.DeleteAccountUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.DeleteTokenUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.DeleteUserIdUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 class ProfileViewModel(
     private val deleteAccountUseCase: DeleteAccountUseCase,
-    private val deleteTokenUseCase: DeleteTokenUseCase
+    private val deleteTokenUseCase: DeleteTokenUseCase,
+    private val deleteUserIdUseCase: DeleteUserIdUseCase
 ) : ViewModel() {
 
     private val _goToAuthorization: MutableStateFlow<Boolean> =
@@ -25,6 +27,7 @@ class ProfileViewModel(
 
         viewModelScope.launch {
             deleteTokenUseCase()
+            deleteUserIdUseCase()
             _goToAuthorization.value = true
         }
 //        FirebaseAuth.getInstance().signOut()
@@ -39,13 +42,19 @@ class ProfileViewModel(
 
     class Factory @Inject constructor(
         private val deleteAccountUseCase: DeleteAccountUseCase,
-        private val deleteTokenUseCase: DeleteTokenUseCase
+        private val deleteTokenUseCase: DeleteTokenUseCase,
+        private val deleteUserIdUseCase: DeleteUserIdUseCase
+
     ) :
         ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return ProfileViewModel(deleteAccountUseCase, deleteTokenUseCase) as T
+            return ProfileViewModel(
+                deleteAccountUseCase,
+                deleteTokenUseCase,
+                deleteUserIdUseCase
+            ) as T
         }
     }
 }

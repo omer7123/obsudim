@@ -6,5 +6,5 @@ sealed interface TestHistoryScreenState {
     data object Init: TestHistoryScreenState
     data object Error: TestHistoryScreenState
     data object Loading: TestHistoryScreenState
-    class Data(val results: List<TestResultsGetEntity>): TestHistoryScreenState
+    class Data(val results: List<TestResultsGetEntity>, val checkedTests: List<TestResultsGetEntity>): TestHistoryScreenState
 }

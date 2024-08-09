@@ -13,6 +13,7 @@ interface AuthenticationRepository {
     suspend fun saveToken(token: String)
     suspend fun getToken(): String
     suspend fun deleteToken()
+    suspend fun deleteUserId()
     suspend fun authByToken(token: Token): Resource<User>
     suspend fun saveUserId(userId: String)
     suspend fun getUserId(): String
