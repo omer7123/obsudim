@@ -139,7 +139,7 @@ class FragmentTestHistory : Fragment() {
             }
             listScale.add(listRes)
         }
-        Log.e("REs", listScale.toString())
+
         binding.radar.updateData(listScale, labelsScale, maxValue)
     }
 
