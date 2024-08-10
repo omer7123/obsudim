@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
@@ -39,6 +38,20 @@ class FragmentTestHistory : Fragment() {
     @Inject
     lateinit var vmFactory: TestHistoryViewModel.Factory
     private val viewModel: TestHistoryViewModel by viewModels { vmFactory }
+
+    private var adapter = TestDateSwitchAdapter(this::onSwitch, this::clickListener)
+    private fun onSwitch(testResultId: String, checked: Boolean) {
+        viewModel.getResultTestById(testResultId, checked)
+    }
+
+    private fun clickListener(testResultId: String) {
+        findNavController().navigate(
+            R.id.testResultFragment, bundleOf(
+                TestResultFragment.TEST_TITLE to binding.title.text,
+                TestResultViewModel.TEST_RESULT_ID to testResultId
+            )
+        )
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -67,8 +80,8 @@ class FragmentTestHistory : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("ID", requireArguments().getString(TEST_ID).toString())
-        viewModel.loadHistory(requireArguments().getString(TEST_ID).toString())
+        if (viewModel.screenState.value == TestHistoryScreenState.Init)
+            viewModel.loadHistory(requireArguments().getString(TEST_ID).toString())
     }
 
     private fun render(state: TestHistoryScreenState) {
@@ -85,10 +98,15 @@ class FragmentTestHistory : Fragment() {
             is TestHistoryScreenState.Data -> {
                 binding.progressBar.isVisible = false
                 binding.includePlaceholder.layout.isVisible = false
+                Log.e("Cheched Test", state.checkedTests.toString())
                 if (state.results.isNotEmpty()) {
-                    if(state.checkedTests.isEmpty())
+                    if (binding.testDatesSwitchesRw.adapter == null || adapter.currentList != state.results)
+                        setupAdapter(state.results, state.checkedTests.map { it.testResultId })
+                    if (state.checkedTests.isEmpty()) {
                         setupRadar(state.results)
-                    setupAdapter(state.results)
+                    } else {
+                        setupRadarWitDifferentTestResult(state.checkedTests)
+                    }
                 } else
                     showPlaceholderForEmptyList()
             }
@@ -100,6 +118,29 @@ class FragmentTestHistory : Fragment() {
 
             is TestHistoryScreenState.Init -> {}
         }
+    }
+
+    private fun setupRadarWitDifferentTestResult(checkedTests: Set<TestResultsGetEntity>) {
+        val list = checkedTests.toList()
+
+        val listScale: ArrayList<ArrayList<RadarEntry>> = ArrayList()
+
+        val labelsScale: ArrayList<String> = ArrayList()
+        var maxValue = 0f
+
+        for (scale in list[0].scaleResults) {
+            labelsScale.add(scale.scaleTitle)
+        }
+        for (res in list) {
+            val listRes: ArrayList<RadarEntry> = ArrayList()
+            for (scale in res.scaleResults) {
+                listRes.add(RadarEntry(scale.score.toFloat()))
+                maxValue = max(scale.maxScore.toFloat(), maxValue)
+            }
+            listScale.add(listRes)
+        }
+        Log.e("REs", listScale.toString())
+        binding.radar.updateData(listScale, labelsScale, maxValue)
     }
 
     private fun setupRadar(list: List<TestResultsGetEntity>) {
@@ -127,27 +168,17 @@ class FragmentTestHistory : Fragment() {
         listScale.add(listRes)
 
         binding.radar.updateData(listScale, labelsScale, maxValue)
-
     }
 
-    private fun setupAdapter(list: List<TestResultsGetEntity>) {
+    private fun setupAdapter(list: List<TestResultsGetEntity>, selectedItems: List<String>) {
+        adapter = TestDateSwitchAdapter(this::onSwitch, this::clickListener, selectedItems.toList())
+
         binding.testDatesSwitchesRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
-            adapter = TestDateSwitchAdapter(
-                list, { testResultId, isChecked ->
-                    viewModel.getResultTestById(testResultId, isChecked)
-                },
-                { testResultId ->
-                    findNavController().navigate(
-                        R.id.testResultFragment, bundleOf(
-                            TestResultFragment.TEST_TITLE to binding.title.text,
-                            TestResultViewModel.TEST_RESULT_ID to testResultId
-                        )
-                    )
-                }
-            )
         }
+        binding.testDatesSwitchesRw.adapter = adapter
+
+        adapter.submitList(list)
     }
 
     private fun showPlaceholderForEmptyList() {

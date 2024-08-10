@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.GetTestResultsUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,13 +29,32 @@ class TestHistoryViewModel(
             when (val res = getTestResultsUseCase(testId)) {
                 is Resource.Error -> _screenState.value = TestHistoryScreenState.Error
                 Resource.Loading -> _screenState.value = TestHistoryScreenState.Loading
-                is Resource.Success -> _screenState.value = TestHistoryScreenState.Data(res.data, emptyList())
+                is Resource.Success -> _screenState.value =
+                    TestHistoryScreenState.Data(res.data, emptySet())
             }
         }
     }
 
     fun getResultTestById(testResultId: String, checked: Boolean) {
 
+        viewModelScope.launch(Dispatchers.IO) {
+            if (_screenState.value is TestHistoryScreenState.Data) {
+                val currentState = _screenState.value as TestHistoryScreenState.Data
+
+                val allResults = currentState.results
+                val checkedTests = currentState.checkedTests.toMutableSet()
+
+                val selectedTest = allResults.find { it.testResultId == testResultId }
+
+                if (checked) {
+                    checkedTests.add(selectedTest!!)
+                } else {
+                    checkedTests.remove(selectedTest)
+                }
+
+                _screenState.value = currentState.copy(checkedTests = checkedTests)
+            }
+        }
     }
 
     class Factory @Inject constructor(

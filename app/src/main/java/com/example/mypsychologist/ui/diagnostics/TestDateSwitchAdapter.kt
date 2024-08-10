@@ -3,6 +3,8 @@ package com.example.mypsychologist.ui.diagnostics
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.ItemTestDateSwitchBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
@@ -12,20 +14,18 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class TestDateSwitchAdapter(
-    private val items: List<TestResultsGetEntity>,
-    private val onSwitch: (testResultId: String, isChecked: Boolean) -> Unit,
-    private val onGoButtonClick: (testResultId: String) -> Unit
-) : RecyclerView.Adapter<TestDateSwitchAdapter.ViewHolder>() {
+    val onSwitch: (testResultId: String, isChecked: Boolean) -> Unit,
+    val onGoButtonClick: (testResultId: String) -> Unit,
+    private val selectedItems: List<String> = emptyList(),
+) : ListAdapter<TestResultsGetEntity, TestDateSwitchAdapter.ViewHolder>(TestResultDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(
             ItemTestDateSwitchBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         )
 
-    override fun getItemCount(): Int = items.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
 
     inner class ViewHolder(
@@ -37,6 +37,7 @@ class TestDateSwitchAdapter(
             binding.apply {
                 date.text = convertToDate(item.datetime)
 
+                switchTest.isChecked = selectedItems.contains(item.testResultId)
                 switchTest.setOnCheckedChangeListener { _, isChecked ->
                     onSwitch(item.testResultId, isChecked)
                 }
@@ -64,4 +65,21 @@ class TestDateSwitchAdapter(
             return "$formattedDate, $formattedTime"
         }
     }
+}
+
+class TestResultDiffCallback : DiffUtil.ItemCallback<TestResultsGetEntity>() {
+    override fun areItemsTheSame(
+        oldItem: TestResultsGetEntity,
+        newItem: TestResultsGetEntity
+    ): Boolean {
+        return oldItem.testResultId == newItem.testResultId
+    }
+
+    override fun areContentsTheSame(
+        oldItem: TestResultsGetEntity,
+        newItem: TestResultsGetEntity
+    ): Boolean {
+        return oldItem == newItem
+    }
+
 }
