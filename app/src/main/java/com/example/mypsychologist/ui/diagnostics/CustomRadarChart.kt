@@ -56,7 +56,10 @@ class CustomRadarChart(context: Context, attrs: AttributeSet?) : RadarChart(cont
 
         // Убираем фоновую сетку и оси координат
         webLineWidth = 1f // Убираем линии сетки
-        webColor = ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon) // Делаем линии сетки прозрачными
+        webColor = ContextCompat.getColor(
+            context,
+            R.color.md_theme_dark_onSecondPrimaryIcon
+        ) // Делаем линии сетки прозрачными
         webColorInner = ContextCompat.getColor(
             context,
             R.color.md_theme_dark_onSecondPrimaryIcon
@@ -74,18 +77,34 @@ class CustomRadarChart(context: Context, attrs: AttributeSet?) : RadarChart(cont
     }
 
     // Метод для обновления данных
-    fun updateData(entriesList: List<List<RadarEntry>>, labels: List<String>, maxValue: Float) {
+    fun updateData(
+        entriesList: List<List<RadarEntry>>,
+        labels: List<String>,
+        maxValue: Float,
+        circleByCorner: Boolean = true
+    ) {
         val dataSets = ArrayList<RadarDataSet>()
 
         for ((index, entries) in entriesList.withIndex()) {
             val dataSet = RadarDataSet(entries, "Dataset $index").apply {
-                color =  ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon) // Цвет линии
-                fillColor = ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon_with_alpha) // Цвет заливки
+                color = ContextCompat.getColor(
+                    context,
+                    R.color.md_theme_dark_onSecondPrimaryIcon
+                ) // Цвет линии
+                fillColor = ContextCompat.getColor(
+                    context,
+                    R.color.md_theme_dark_onSecondPrimaryIcon_with_alpha
+                ) // Цвет заливки
                 setDrawFilled(true)
                 lineWidth = 4f
-                valueTextColor = ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon)
+                valueTextColor =
+                    ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon)
                 valueTextSize = 14f
-                setDrawHighlightCircleEnabled(true)
+                setDrawHighlightCircleEnabled(circleByCorner)
+                highlightCircleFillColor =
+                    ContextCompat.getColor(context, R.color.md_theme_dark_onSecondPrimaryIcon)
+                highlightCircleInnerRadius = 0f
+                highlightCircleOuterRadius = 5f
                 setDrawHighlightIndicators(false)
                 setDrawValues(false)
             }

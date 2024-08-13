@@ -2,7 +2,6 @@ package com.example.mypsychologist.ui.diagnostics
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +23,7 @@ import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenStat
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
 import com.example.mypsychologist.presentation.diagnostics.TestResultViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.RadarEntry
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -121,6 +121,8 @@ class FragmentTestHistory : Fragment() {
 
     private fun setupRadarWitDifferentTestResult(checkedTests: Set<TestResultsGetEntity>) {
         val list = checkedTests.toList()
+        binding.radar.setTouchEnabled(false)
+        binding.radar.marker = null
 
         val listScale: ArrayList<ArrayList<RadarEntry>> = ArrayList()
 
@@ -155,32 +157,39 @@ class FragmentTestHistory : Fragment() {
             }
         }
 
-        binding.radar.updateData(listScale, labelsScale, maxValue)
+        binding.radar.updateData(listScale, labelsScale, maxValue, false)
+        binding.radar.marker = null
     }
 
     private fun setupRadar(list: List<TestResultsGetEntity>) {
         binding.radar.isVisible = true
+        binding.radar.setTouchEnabled(true)
         val mapScore = mutableMapOf<String, Float>()
 
         var maxValue = 0f
+        val maxValues: ArrayList<Int> = ArrayList()
         val listScale: ArrayList<ArrayList<RadarEntry>> = ArrayList()
         val labelsScale: ArrayList<String> = ArrayList()
 
         val listRes: ArrayList<RadarEntry> = ArrayList()
+        val labelsForMarkerView: ArrayList<String> = ArrayList()
 
         for (test in list) {
             for (scale in test.scaleResults) {
                 mapScore[scale.scaleTitle] =
                     mapScore.getOrDefault(scale.scaleTitle, 0f) + scale.score
                 maxValue = max(maxValue, scale.maxScore.toFloat())
+                maxValues.add(scale.maxScore)
             }
         }
 
         for ((k, v) in mapScore) {
             listRes.add(RadarEntry(v / list.size))
             labelsScale.add(k)
+            labelsForMarkerView.add(k)
         }
         listScale.add(listRes)
+
 
         for ((i, v) in labelsScale.withIndex()) {
             val words = v.split(" ").filter { it.isNotEmpty() }
@@ -197,9 +206,12 @@ class FragmentTestHistory : Fragment() {
                 }
                 labelsScale[i] = strBuilder.toString()
             }
-            Log.e("LabelsScale", labelsScale.toString())
         }
         binding.radar.updateData(listScale, labelsScale, maxValue)
+        val mv: MarkerView =
+            CustomMarkerView(requireContext(), R.layout.custom_marker_view, labelsForMarkerView, maxValues)
+        mv.chartView = binding.radar // For bounds control
+        binding.radar.marker = mv // Set the marker to the chart
     }
 
     private fun setupAdapter(list: List<TestResultsGetEntity>, selectedItems: List<String>) {
