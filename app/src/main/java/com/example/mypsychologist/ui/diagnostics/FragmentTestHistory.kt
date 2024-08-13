@@ -98,7 +98,6 @@ class FragmentTestHistory : Fragment() {
             is TestHistoryScreenState.Data -> {
                 binding.progressBar.isVisible = false
                 binding.includePlaceholder.layout.isVisible = false
-                Log.e("Cheched Test", state.checkedTests.toString())
                 if (state.results.isNotEmpty()) {
                     if (binding.testDatesSwitchesRw.adapter == null || adapter.currentList != state.results)
                         setupAdapter(state.results, state.checkedTests.map { it.testResultId })
@@ -139,6 +138,22 @@ class FragmentTestHistory : Fragment() {
             }
             listScale.add(listRes)
         }
+        for ((i, v) in labelsScale.withIndex()) {
+            val words = v.split(" ").filter { it.isNotEmpty() }
+            if (words.size > 1) {
+                labelsScale[i] = words.joinToString(separator = "") { it[0].uppercase() }
+            }
+            if (words.size == 1 && v.length > 10) {
+                val strBuilder = StringBuilder()
+                for ((indexOfSimvol, sim) in v.withIndex()) {
+                    if (indexOfSimvol <= 5)
+                        strBuilder.append(sim)
+                    else if (indexOfSimvol == 6) strBuilder.append("-")
+                    else if (indexOfSimvol >= v.length - 3) strBuilder.append(sim)
+                }
+                labelsScale[i] = strBuilder.toString()
+            }
+        }
 
         binding.radar.updateData(listScale, labelsScale, maxValue)
     }
@@ -167,6 +182,23 @@ class FragmentTestHistory : Fragment() {
         }
         listScale.add(listRes)
 
+        for ((i, v) in labelsScale.withIndex()) {
+            val words = v.split(" ").filter { it.isNotEmpty() }
+            if (words.size > 1) {
+                labelsScale[i] = words.joinToString(separator = "") { it[0].uppercase() }
+            }
+            if (words.size == 1 && v.length > 10) {
+                val strBuilder = StringBuilder()
+                for ((indexOfSimvol, sim) in v.withIndex()) {
+                    if (indexOfSimvol <= 5)
+                        strBuilder.append(sim)
+                    else if (indexOfSimvol == 6) strBuilder.append("-")
+                    else if (indexOfSimvol >= v.length - 3) strBuilder.append(sim)
+                }
+                labelsScale[i] = strBuilder.toString()
+            }
+            Log.e("LabelsScale", labelsScale.toString())
+        }
         binding.radar.updateData(listScale, labelsScale, maxValue)
     }
 

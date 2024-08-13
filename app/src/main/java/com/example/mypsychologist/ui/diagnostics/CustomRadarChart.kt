@@ -97,7 +97,7 @@ class CustomRadarChart(context: Context, attrs: AttributeSet?) : RadarChart(cont
 
         if (labels.size == 3) rotationAngle = 30f
         if (labels.size == 4) rotationAngle = 45f
-//        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         yAxis.axisMaximum = maxValue
 
         animateY(1000)
@@ -109,7 +109,7 @@ class CustomRadarChart(context: Context, attrs: AttributeSet?) : RadarChart(cont
 
         canvas.let { canvasNotNull ->
             val count = 4
-            val radiusStep = radius / count
+            val radiusStep = 340f / count
             for (i in 1..count) {
 
                 fillPaint.strokeWidth = radiusStep * (i + 1) - radiusStep * i
