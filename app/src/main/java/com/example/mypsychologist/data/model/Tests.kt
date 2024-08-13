@@ -54,7 +54,7 @@ data class TestResultsGetModel(
 data class ScaleResultForHistoryModel(
     @SerialName("scale_id")
     val scaleId: String,
-    val score: Int,
+    val score: Float,
     @SerialName("scale_title")
     val scaleTitle: String,
     @SerialName("max_score")

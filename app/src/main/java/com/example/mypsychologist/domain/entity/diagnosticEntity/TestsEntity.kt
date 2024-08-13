@@ -18,7 +18,7 @@ data class SaveTestResultEntity(
 
 data class ScaleResultForHistoryEntity(
     val scaleId: String,
-    val score: Int,
+    val score: Float,
     val scaleTitle: String,
     val maxScore: Int,
     val conclusion: String,
