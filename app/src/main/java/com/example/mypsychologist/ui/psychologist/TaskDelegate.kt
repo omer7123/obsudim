@@ -49,7 +49,7 @@ class TaskDelegate(
             }
 
             binding.root.setOnClickListener {
-                onItemClickListener(item.testId, item.testTitle, item.testTitle)
+                onItemClickListener(item.testId, item.testTitle, item.testDescription)
             }
         }
     }

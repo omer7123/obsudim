@@ -17,10 +17,12 @@ data class ManagerEntity(
 data class TaskEntity(
     val id: String,
     val text: String,
-    val userId: String,
+    val clientId: String,
+    val psychologistId: String,
     val testTitle: String,
     val testId: String,
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
+    val testDescription: String,
 )
 
 data class SendRequestToPsychologistEntity(

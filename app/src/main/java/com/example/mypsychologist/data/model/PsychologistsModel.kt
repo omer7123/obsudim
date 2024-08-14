@@ -37,7 +37,9 @@ data class TaskModel(
     @SerialName("test_id")
     val testId: String,
     @SerialName("is_complete")
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
+    @SerialName("test description")
+    val testDescription: String,
 )
 
 @Serializable

@@ -10,7 +10,6 @@ import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestT
 import com.example.mypsychologist.domain.entity.psychologistsEntity.TaskEntity
 import com.example.mypsychologist.domain.repository.retrofit.PsychologistRepository
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import javax.inject.Inject
 
 class PsychologistRepositoryImpl @Inject constructor(

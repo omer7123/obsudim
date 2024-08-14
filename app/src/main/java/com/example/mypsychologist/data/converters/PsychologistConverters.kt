@@ -25,7 +25,8 @@ fun ManagerModel.toEntity() =
 fun SendRequestToPsychologistEntity.toModel() = SendRequestToPsychologistModel(id, text)
 
 fun TaskModel.toEntity() =
-    TaskEntity(id, text, userId, testTitle, testId, isCompleted)
+    TaskEntity(id, text, userId, psychologistId, testTitle, testId, isCompleted, testDescription)
+
 //fun ManagerEntity.toModel() =
 //    ManagerModel(username = username, company = company)
 //
