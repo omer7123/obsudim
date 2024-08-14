@@ -87,9 +87,6 @@ class ProfileFragment : Fragment() {
                 signOut()
             }
 
-            deleteAccountButton.setOnClickListener {
-                deleteAccount()
-            }
         }
     }
 

@@ -67,7 +67,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rules" />
 
-    <Button
+   <!-- <Button
         android:id="@+id/delete_account_button"
         style="@style/Widget.Material3.Button.TextButton"
         android:textColor="?attr/colorError"
@@ -79,7 +79,7 @@
         android:text="@string/delete_account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />-->
 
     <Button
         android:id="@+id/exit_button"
@@ -88,9 +88,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginEnd="28dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/exit"
-        app:layout_constraintBottom_toTopOf="@+id/delete_account_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

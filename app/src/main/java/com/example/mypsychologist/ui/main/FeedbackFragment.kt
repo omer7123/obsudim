@@ -56,9 +56,6 @@ class FeedbackFragment : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
-        binding.sendButton.setOnClickListener {
-            viewModel.tryToSendFeedback(binding.field.text.toString())
-        }
 
         return binding.root
     }
@@ -81,7 +78,6 @@ class FeedbackFragment : Fragment() {
                 }
             }
             is FeedbackScreenState.ValidationError -> {
-                binding.inputLayout.error = getString(R.string.necessary_to_fill)
             }
             is FeedbackScreenState.Init -> Unit
         }

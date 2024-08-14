@@ -37,7 +37,7 @@ class TestDelegate(private val onClick: (String, String, String) -> Unit) : Adap
 //            binding.title.text = itemView.context.getString(test.titleId)
 //            binding.description.text = itemView.context.getString(test.shortDescriptionId)
 
-            binding.root.setOnClickListener {
+            binding.layout.setOnClickListener {
                 onClick(test.testId, test.description, test.title)
             }
 //            itemView.setOnClickListener { onClick(test.titleId, test.longDescriptionId) }

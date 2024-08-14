@@ -254,7 +254,7 @@
     <string name="confirm_exit">Вы действительно хотите выйти из аккаунта?</string>
     <string name="confirm_delete">Вы действительно хотите безвозвратно удалить аккаунт?</string>
 
-    <string name="feedback_text">Если вы обнаружили ошибку в приложении или у вас есть предложения для создателей, пожалуйста заполните и отправьте эту форму. При необходимости укажите контакты для связи.</string>
+    <string name="feedback_text">Если вы обнаружили ошибку в приложении или у вас есть предложения для создателей, пожалуйста, напишите на e-mail tim.sim4@yandex.ru или в Telegram @desman4.</string>
     <string name="offer">Предложение</string>
     <string name="send">Отправить</string>
 
