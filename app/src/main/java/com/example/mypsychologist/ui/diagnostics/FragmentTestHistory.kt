@@ -19,6 +19,7 @@ import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetE
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.extensions.toPercent
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
 import com.example.mypsychologist.presentation.diagnostics.TestResultViewModel
@@ -125,6 +126,7 @@ class FragmentTestHistory : Fragment() {
         binding.radar.marker = null
 
         val listScale: ArrayList<ArrayList<RadarEntry>> = ArrayList()
+        val listScaleNormalize: ArrayList<ArrayList<RadarEntry>> = ArrayList()
 
         val labelsScale: ArrayList<String> = ArrayList()
         var maxValue = 0f
@@ -134,11 +136,14 @@ class FragmentTestHistory : Fragment() {
         }
         for (res in list) {
             val listRes: ArrayList<RadarEntry> = ArrayList()
+            val listResNormalize: ArrayList<RadarEntry> = ArrayList()
             for (scale in res.scaleResults) {
                 listRes.add(RadarEntry(scale.score.toFloat()))
+                listResNormalize.add(RadarEntry(scale.score.toPercent(scale.maxScore)))
                 maxValue = max(scale.maxScore.toFloat(), maxValue)
             }
             listScale.add(listRes)
+            listScaleNormalize.add(listResNormalize)
         }
         for ((i, v) in labelsScale.withIndex()) {
             val words = v.split(" ").filter { it.isNotEmpty() }
@@ -157,7 +162,7 @@ class FragmentTestHistory : Fragment() {
             }
         }
 
-        binding.radar.updateData(listScale, labelsScale, maxValue, false)
+        binding.radar.updateData(listScaleNormalize, labelsScale, 100f, false)
         binding.radar.marker = null
     }
 
@@ -169,8 +174,10 @@ class FragmentTestHistory : Fragment() {
         var maxValue = 0f
         val maxValues: ArrayList<Int> = ArrayList()
         val listScale: ArrayList<ArrayList<RadarEntry>> = ArrayList()
+        val listScaleNormalize: ArrayList<ArrayList<RadarEntry>> = ArrayList()
         val labelsScale: ArrayList<String> = ArrayList()
 
+        val listResNormalize: ArrayList<RadarEntry> = ArrayList()
         val listRes: ArrayList<RadarEntry> = ArrayList()
         val labelsForMarkerView: ArrayList<String> = ArrayList()
 
@@ -183,18 +190,22 @@ class FragmentTestHistory : Fragment() {
             }
         }
 
+        var i = 0
         for ((k, v) in mapScore) {
-            listRes.add(RadarEntry(v / list.size))
+            listResNormalize.add(RadarEntry((v / list.size).toPercent(maxValues[i])))
+            listRes.add(RadarEntry((v / list.size)))
             labelsScale.add(k)
             labelsForMarkerView.add(k)
+            i++
         }
         listScale.add(listRes)
+        listScaleNormalize.add(listResNormalize)
 
 
-        for ((i, v) in labelsScale.withIndex()) {
+        for ((index, v) in labelsScale.withIndex()) {
             val words = v.split(" ").filter { it.isNotEmpty() }
             if (words.size > 1) {
-                labelsScale[i] = words.joinToString(separator = "") { it[0].uppercase() }
+                labelsScale[index] = words.joinToString(separator = "") { it[0].uppercase() }
             }
             if (words.size == 1 && v.length > 10) {
                 val strBuilder = StringBuilder()
@@ -204,12 +215,12 @@ class FragmentTestHistory : Fragment() {
                     else if (indexOfSimvol == 6) strBuilder.append("-")
                     else if (indexOfSimvol >= v.length - 3) strBuilder.append(sim)
                 }
-                labelsScale[i] = strBuilder.toString()
+                labelsScale[index] = strBuilder.toString()
             }
         }
-        binding.radar.updateData(listScale, labelsScale, maxValue)
+        binding.radar.updateData(listScaleNormalize, labelsScale, 100f)
         val mv: MarkerView =
-            CustomMarkerView(requireContext(), R.layout.custom_marker_view, labelsForMarkerView, maxValues)
+            CustomMarkerView(requireContext(), R.layout.custom_marker_view, labelsForMarkerView, maxValues, listScale)
         mv.chartView = binding.radar // For bounds control
         binding.radar.marker = mv // Set the marker to the chart
     }

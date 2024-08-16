@@ -13,7 +13,8 @@ class CustomMarkerView(
     context: Context,
     layoutResource: Int,
     private val labels: List<String>,
-    private val maxValues: ArrayList<Int>
+    private val maxValues: ArrayList<Int>,
+    private val entriesList: List<List<RadarEntry>>
 ) :
     MarkerView(context, layoutResource) {
 
@@ -31,14 +32,14 @@ class CustomMarkerView(
             val chart = chartView as? CustomRadarChart
             chart?.data?.let { data ->
 
-                val value1 = data.getDataSetByIndex(0).getEntryForIndex(index).y
+//                val value1 = data.getDataSetByIndex(0).getEntryForIndex(index).y
 //                val value2 = data.getDataSetByIndex(1).getEntryForIndex(index).y
 
 //                val maxValues = data.dataSets.map { dataSet ->
 //                    dataSet.yMax
 //                }
 //                val maxValue = maxValues.maxOrNull() ?: 0f
-
+                val value1 = entriesList[0][index].value
                 // Update the TextViews with the retrieved values
                 val label = labels.getOrNull(index) ?: ""
 
