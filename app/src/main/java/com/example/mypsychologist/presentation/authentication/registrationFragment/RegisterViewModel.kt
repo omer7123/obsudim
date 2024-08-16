@@ -1,11 +1,9 @@
 package com.example.mypsychologist.presentation.authentication.registrationFragment
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.core.CookieStorage
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.OldRegister
 import com.example.mypsychologist.data.model.Token
@@ -41,7 +39,7 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch(handler) {
             _stateScreen.value = RegisterState.Loading
             saveTokenUseCase(result.data.token)
-//            saveUserIdUseCase(result.data.user_id)
+            saveUserIdUseCase(result.data.user_id)
             _stateScreen.value = RegisterState.Success
         }
     }
