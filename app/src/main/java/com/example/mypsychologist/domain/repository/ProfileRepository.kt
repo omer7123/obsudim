@@ -3,6 +3,7 @@ package com.example.mypsychologist.domain.repository
 import android.net.Uri
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.*
+import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
 
 interface ProfileRepository {
     suspend fun saveClient(info: ClientInfoEntity): Resource<String>
@@ -17,7 +18,7 @@ interface ProfileRepository {
     suspend fun changePassword(it: String): Boolean
     suspend fun checkIfPsychologist(): Boolean
     suspend fun getClients(): List<ClientCardEntity>
-
+    suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String>
     suspend fun getClientInfo(clientId: String): ClientInfoEntity
     suspend fun getClientTasks(clientId: String): HashMap<String, TaskEntity>
     suspend fun newTask(task: String, clientId: String): String

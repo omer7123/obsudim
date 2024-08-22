@@ -7,7 +7,6 @@ import com.example.mypsychologist.data.model.TaskModel
 
 interface PsychologistDataSource {
     suspend fun getManagersList(): Resource<List<ManagerModel>>
-    suspend fun sendRequestToManager(sendRequestToPsychologistModel: SendRequestToPsychologistModel): Resource<String>
     suspend fun getManager(userId: String): Resource<ManagerModel>
     suspend fun getTasks(): Resource<List<TaskModel>>
     suspend fun markTaskAsCompleted(id: String): Resource<String>

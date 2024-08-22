@@ -12,7 +12,6 @@ data class ManagerModel(
     val birthDate: String,
     val email: String,
     val description: String,
-    val password: String,
     @SerialName("role_id")
     val roleId: Int,
     val city: String,
@@ -28,8 +27,6 @@ data class ManagerModel(
 data class TaskModel(
     val id: String,
     val text: String,
-    @SerialName("client_id")
-    val userId: String,
     @SerialName("test_title")
     val testTitle: String,
     @SerialName("psychologist_id")
@@ -38,7 +35,7 @@ data class TaskModel(
     val testId: String,
     @SerialName("is_complete")
     val isCompleted: Boolean,
-    @SerialName("test description")
+    @SerialName("test_description")
     val testDescription: String,
 )
 

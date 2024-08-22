@@ -1,5 +1,6 @@
 package com.example.mypsychologist.data.repository
 
+import android.util.Log
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
@@ -231,7 +232,10 @@ class PsychologistRepositoryImpl @Inject constructor(
 
     override suspend fun getOwnPsychologists(): Resource<List<ManagerEntity>> {
         return when(val result = dataSource.getManagersList()){
-            is Resource.Error -> Resource.Error(result.msg.toString(), null)
+            is Resource.Error -> {
+                Log.d("Psychologists error", result.msg.toString())
+                Resource.Error(result.msg.toString(), null)
+            }
             Resource.Loading -> Resource.Loading
             is Resource.Success -> {
                 val listEntity = result.data.map { it.toEntity() }
@@ -240,16 +244,7 @@ class PsychologistRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String> {
-        return when(val result = dataSource.sendRequestToManager(sendRequestToPsychologistEntity.toModel())){
-            is Resource.Error -> Resource.Error(result.msg, null)
-            Resource.Loading -> Resource.Loading
-            is Resource.Success -> {
-                localDataSource.saveStatusRequestToManager()
-                Resource.Success(result.data)
-            }
-        }
-    }
+
 
     override suspend fun getStatusToRequestManager(): Boolean =
         localDataSource.getStatusRequestToManager()

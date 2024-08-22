@@ -14,10 +14,6 @@ class PsychologistDataSourceImpl @Inject constructor(private val api: Psychologi
         api.getManagersList()
     }
 
-    override suspend fun sendRequestToManager(sendRequestToPsychologistModel: SendRequestToPsychologistModel): Resource<String> = getResult{
-        api.sendRequestToManager(sendRequestToPsychologistModel)
-    }
-
     override suspend fun getManager(userId: String): Resource<ManagerModel> = getResult  {
         api.getManager(userId)
     }

@@ -77,6 +77,9 @@ class FeedbackFragment : Fragment() {
                     requireContext().showToast(getString(R.string.db_error))
                 }
             }
+            is FeedbackScreenState.UserNameSaved -> {
+
+            }
             is FeedbackScreenState.ValidationError -> {
             }
             is FeedbackScreenState.Init -> Unit

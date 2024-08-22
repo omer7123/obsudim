@@ -17,6 +17,6 @@ interface PsychologistRepository {
     suspend fun markTaskAsNotCompleted(taskId: String): Resource<String>
 
     suspend fun getOwnPsychologists(): Resource<List<ManagerEntity>>
-    suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String>
+
     suspend fun getStatusToRequestManager(): Boolean
 }

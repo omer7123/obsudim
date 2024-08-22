@@ -10,7 +10,6 @@ interface PsychologistComponent {
 
     fun inject(fragment: PsychologistsFragment)
     fun inject(fragment: PsychologistFragment)
-    fun inject(fragment: RequestToPsychologistFragment)
     fun inject(fragment: PsychologistCabinetFragment)
     fun inject(fragment: ClientRequestFragment)
     fun inject(fragment: PsychologistsWithTasksFragment)

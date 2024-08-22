@@ -50,7 +50,7 @@ class PsychologistsWithTasksViewModel(
     private suspend fun getTasks() {
         when (val result = getTasksUseCase()) {
             is Resource.Error -> {
-
+                Log.e("TASK error", result.msg.toString())
                 _screenState.value = ListScreenState.Error
             }
             Resource.Loading -> ListScreenState.Loading

@@ -33,8 +33,9 @@ class OwnPsychologistDelegate(private val onMessageClick: (String) -> Unit) : Ad
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ManagerEntity) {
-//            binding.liter.text = item.username.uppercase()
+            binding.liter.text = item.username[0].uppercase()
             binding.name.text = item.username
+            binding.company.text = item.company
 //            item.second.apply {
 //                binding.liter.text = psychologistCard.name[0].uppercase()
 //                binding.name.text = psychologistCard.name

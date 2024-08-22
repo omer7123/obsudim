@@ -1,6 +1,7 @@
 package com.example.mypsychologist.di
 
 import com.example.mypsychologist.ui.main.*
+import com.example.mypsychologist.ui.psychologist.RequestToPsychologistFragment
 import dagger.Subcomponent
 
 @FragmentScope
@@ -15,6 +16,7 @@ interface ProfileComponent {
     fun inject(fragment: ClientInfoFragment)
     fun inject(clientsFragment: ClientsFragment)
     fun inject(tasksFragment: ClientTasksFragment)
+    fun inject(fragment: RequestToPsychologistFragment)
 
     @Subcomponent.Factory
     interface Factory {

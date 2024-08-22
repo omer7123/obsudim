@@ -11,6 +11,7 @@ import com.example.mypsychologist.data.remote.profile.UserDataSource
 import com.example.mypsychologist.data.remote.tags.TagsDataSource
 import com.example.mypsychologist.di.AppModule
 import com.example.mypsychologist.domain.entity.*
+import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
 import com.example.mypsychologist.domain.repository.ProfileRepository
 import com.example.mypsychologist.extensions.getTypedValue
 import com.google.firebase.database.ktx.database
@@ -25,7 +26,8 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class ProfileRepositoryImpl @Inject constructor(
-    private val dataSource: UserDataSource
+    private val dataSource: UserDataSource,
+    private val localDataSource: AuthenticationSharedPrefDataSource
 ) :
     ProfileRepository {
 
@@ -44,7 +46,16 @@ class ProfileRepositoryImpl @Inject constructor(
                 Resource.Success(result.data.toEntity())                // поправить
         }
 
-
+    override suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String> {
+        return when(val result = dataSource.sendRequestToManager(sendRequestToPsychologistEntity.toModel())){
+            is Resource.Error -> Resource.Error(result.msg, null)
+            Resource.Loading -> Resource.Loading
+            is Resource.Success -> {
+                localDataSource.saveStatusRequestToManager()
+                Resource.Success(result.data)
+            }
+        }
+    }
 
     override suspend fun deleteAccount(): Boolean =
         suspendCoroutine { continuation ->

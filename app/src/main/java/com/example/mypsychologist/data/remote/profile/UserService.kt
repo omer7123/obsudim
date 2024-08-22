@@ -1,5 +1,6 @@
 package com.example.mypsychologist.data.remote.profile
 
+import com.example.mypsychologist.data.model.SendRequestToPsychologistModel
 import com.example.mypsychologist.data.model.UserInfoModel
 import retrofit2.Response
 import retrofit2.http.Body
@@ -12,4 +13,7 @@ interface UserService {
 
     @GET("/users/user_data")
     suspend fun getOwnData(): Response<UserInfoModel>
+
+    @POST("/client/send_application")
+    suspend fun sendRequestToManager(@Body requestToPsychologist: SendRequestToPsychologistModel): Response<String>
 }

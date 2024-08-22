@@ -14,8 +14,6 @@ interface PsychologistService {
     @GET("/manager/get_all_manager")
     suspend fun getManagersList(): Response<List<ManagerModel>>
 
-    @POST("/client/send_application")
-    suspend fun sendRequestToManager(@Body requestToPsychologist: SendRequestToPsychologistModel): Response<String>
 
     @POST("/client/get_list_get_psycholog")
     suspend fun getManager(@Body user_id: String): Response<ManagerModel>

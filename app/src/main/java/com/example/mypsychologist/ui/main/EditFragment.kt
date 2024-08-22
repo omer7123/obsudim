@@ -43,6 +43,7 @@ import kotlin.math.log
 class EditFragment : Fragment() {
 
     private var binding: FragmentEditBinding by autoCleared()
+    private var navbarHider: NavbarHider? = null
 
     @Inject
     lateinit var vmFactory: EditViewModel.Factory
@@ -53,6 +54,11 @@ class EditFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireContext().getAppComponent().profileComponent().create().inject(this)
+
+        if (context is NavbarHider) {
+            navbarHider = context
+            navbarHider!!.setNavbarVisibility(false)
+        }
     }
 
     override fun onCreateView(
@@ -196,6 +202,12 @@ class EditFragment : Fragment() {
                 }
             )
         }
+    }
+
+    override fun onDetach() {
+        navbarHider?.setNavbarVisibility(true)
+        navbarHider = null
+        super.onDetach()
     }
 
     companion object {

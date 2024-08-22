@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentRequestToPsychologistBinding
 import com.example.mypsychologist.extensions.getAppComponent
@@ -27,6 +28,7 @@ import javax.inject.Inject
 class RequestToPsychologistFragment : Fragment() {
 
     private var binding: FragmentRequestToPsychologistBinding by autoCleared()
+    private var navbarHider: NavbarHider? = null
 
     @Inject
     lateinit var vmFactory: RequestToPsychologistViewModel.Factory
@@ -34,7 +36,12 @@ class RequestToPsychologistFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        requireContext().getAppComponent().psychologistComponent().create().inject(this)
+        requireContext().getAppComponent().profileComponent().create().inject(this)
+
+        if (context is NavbarHider) {
+            navbarHider = context
+            navbarHider!!.setNavbarVisibility(false)
+        }
     }
 
     override fun onCreateView(
@@ -54,6 +61,10 @@ class RequestToPsychologistFragment : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+        binding.goToProfileButton.setOnClickListener {
+            findNavController().navigate(R.id.fragment_edit)
+        }
+
         binding.sendButton.setOnClickListener {
             viewModel.tryToSendRequest(
                 binding.field.text.toString(),
@@ -68,6 +79,11 @@ class RequestToPsychologistFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.getUserData()
+    }
+
     private fun render(state: FeedbackScreenState) {
         when (state) {
             is FeedbackScreenState.Loading -> {
@@ -75,6 +91,13 @@ class RequestToPsychologistFragment : Fragment() {
                     binding.progressBar.isVisible = true
                 else
                     requireContext().showToast(getString(R.string.network_error))
+            }
+            is FeedbackScreenState.UserNameSaved -> {
+                binding.progressBar.isVisible = false
+                if (!state.result) {
+                    binding.groupPlaceholder.isVisible = true
+                    binding.groupContent.isVisible = false
+                }
             }
             is FeedbackScreenState.Response -> {
                 binding.progressBar.isVisible = false
@@ -90,6 +113,12 @@ class RequestToPsychologistFragment : Fragment() {
             }
             is FeedbackScreenState.Init -> Unit
         }
+    }
+
+    override fun onDetach() {
+        navbarHider?.setNavbarVisibility(true)
+        navbarHider = null
+        super.onDetach()
     }
 
     companion object {
