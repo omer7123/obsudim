@@ -3,7 +3,7 @@ package com.example.mypsychologist.data.remote.psychologist
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.ManagerModel
-import com.example.mypsychologist.data.model.SendRequestToPsychologistModel
+import com.example.mypsychologist.data.model.MyPsychologistModel
 import com.example.mypsychologist.data.model.TaskIdModel
 import com.example.mypsychologist.data.model.TaskModel
 import javax.inject.Inject
@@ -14,7 +14,11 @@ class PsychologistDataSourceImpl @Inject constructor(private val api: Psychologi
         api.getManagersList()
     }
 
-    override suspend fun getManager(userId: String): Resource<ManagerModel> = getResult  {
+    override suspend fun getOwnPsychologists(): Resource<List<MyPsychologistModel>> = getResult {
+        api.getYourPsychologist()
+    }
+
+    override suspend fun getManager(userId: String): Resource<ManagerModel> = getResult {
         api.getManager(userId)
     }
 

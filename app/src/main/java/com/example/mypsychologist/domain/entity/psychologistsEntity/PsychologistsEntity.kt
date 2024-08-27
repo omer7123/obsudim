@@ -28,3 +28,11 @@ data class SendRequestToPsychologistEntity(
     val id: String,
     val text: String,
 )
+
+data class MyPsychologistEntity(
+    val id: String,
+    val isActive: Boolean,
+    val request: List<String>,
+    val role: Int,
+    val username: String
+)

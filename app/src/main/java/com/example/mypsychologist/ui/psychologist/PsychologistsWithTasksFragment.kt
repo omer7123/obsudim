@@ -17,8 +17,8 @@ import com.example.mypsychologist.databinding.FragmentOwnPsychologistsBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.presentation.ListScreenState
-import com.example.mypsychologist.presentation.psychologist.PsychologistsWithTasksViewModel
+import com.example.mypsychologist.presentation.psychologist.psychologistWithTaskFragment.PsychologistWithTaskScreenState
+import com.example.mypsychologist.presentation.psychologist.psychologistWithTaskFragment.PsychologistsWithTasksViewModel
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
@@ -74,33 +74,41 @@ class PsychologistsWithTasksFragment : Fragment() {
         return binding.root
     }
 
-    private fun render(state: ListScreenState) {
+    private fun render(state: PsychologistWithTaskScreenState) {
         when (state) {
-            is ListScreenState.Loading -> {
+            is PsychologistWithTaskScreenState.Loading -> {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
                     requireContext().showToast(getString(R.string.network_error))
             }
 
-            is ListScreenState.Data -> {
-
+            is PsychologistWithTaskScreenState.Content -> {
                 binding.progressBar.isVisible = false
-
-                if (state.items.isEmpty()) {
-                    binding.placeholder.isVisible = true
-//                    binding.toAllButton.isVisible = false
-                } else {
-                    binding.placeholder.isVisible = false
-                    setupAdapter(state.items)
-                }
+                binding.placeholder.isVisible = false
+                setupAdapter(state.items)
             }
 
-            is ListScreenState.Error -> {
-                requireContext().showToast(getString(R.string.db_error))
+            is PsychologistWithTaskScreenState.Error -> {
+                requireContext().showToast(state.msg)
             }
 
-            is ListScreenState.Init -> Unit
+            is PsychologistWithTaskScreenState.Init -> Unit
+
+            PsychologistWithTaskScreenState.PlaceHolderTaskState -> {
+                binding.progressBar.isVisible = false
+                binding.placeholder.isVisible = true
+                binding.findPsychologistButton.isVisible = false
+                binding.text.text = getString(R.string.tasks_not_require)
+            }
+
+            PsychologistWithTaskScreenState.PlaceHolderPsychologistsState -> {
+                binding.progressBar.isVisible = false
+                binding.placeholder.isVisible = true
+                binding.title.text = getString(R.string.specialist_not_found)
+                binding.text.text =
+                    getString(R.string.you_have_not_manager)
+            }
         }
     }
 

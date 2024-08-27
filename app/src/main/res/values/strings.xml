@@ -331,7 +331,7 @@
     <string name="nobody">Никого нет</string>
     <string name="no_psychologist_in_app">Вы еще не связались с психологом через наше приложение :(</string>
     <string name="request_in_verify">Менеджер еще не принял ваш запрос или пока не назначил задания</string>
-    <string name="find_specialist">Выбрать другого специалиста</string>
+    <string name="find_specialist">Выбрать специалиста</string>
     <string name="my_psychologists">Мои психологи</string>
     <string name="show_all">Показать всех</string>
     <string name="no_tasks">Заданий нет</string>
@@ -705,5 +705,8 @@
     <string name="forgot_your_password">Забыли пароль?</string>
     <string name="not_registered_yet">Еще не зарегистрированы?</string>
     <string name="how_was_your_day">Как прошел твой день?</string>
+    <string name="tasks_not_require">Менеджер еще не назначил вам задания</string>
+    <string name="you_have_not_manager">Вы еще не выбрали ни одного специалиста или ваш запрос пока на рассмотрении</string>
+    <string name="specialist_not_found">Специалист не найден</string>
 
 </resources>

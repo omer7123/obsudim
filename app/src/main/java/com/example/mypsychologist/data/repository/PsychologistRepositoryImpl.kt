@@ -3,18 +3,15 @@ package com.example.mypsychologist.data.repository
 import android.util.Log
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toEntity
-import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.remote.psychologist.PsychologistDataSource
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
-import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
+import com.example.mypsychologist.domain.entity.psychologistsEntity.MyPsychologistEntity
 import com.example.mypsychologist.domain.entity.psychologistsEntity.TaskEntity
 import com.example.mypsychologist.domain.repository.retrofit.PsychologistRepository
-import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
 class PsychologistRepositoryImpl @Inject constructor(
-    private val auth: FirebaseAuth,
     private val dataSource: PsychologistDataSource,
     private val localDataSource: AuthenticationSharedPrefDataSource
 ) : PsychologistRepository {
@@ -30,7 +27,15 @@ class PsychologistRepositoryImpl @Inject constructor(
         }
     }
 
-//    override suspend fun getPsychologists(): HashMap<String, PsychologistCard> =
+    override suspend fun getYourPsychologists(): Resource<List<MyPsychologistEntity>> {
+        return when(val result = dataSource.getOwnPsychologists()){
+            is Resource.Error -> Resource.Error(result.msg.toString(), null)
+            Resource.Loading -> Resource.Loading
+            is Resource.Success -> Resource.Success(result.data.map { it.toEntity() })
+        }
+    }
+
+    //    override suspend fun getPsychologists(): HashMap<String, PsychologistCard> =
 //        suspendCoroutine { continuation ->
 //
 //            Firebase.database(AppModule.URL).reference

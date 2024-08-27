@@ -1,4 +1,4 @@
-package com.example.mypsychologist.presentation.psychologist
+package com.example.mypsychologist.presentation.psychologist.psychologistWithTaskFragment
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -11,6 +11,7 @@ import com.example.mypsychologist.domain.useCase.MarkTaskUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetOwnPsychologistsUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetStatusRequestToManagerUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetTasksUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetYourPsychologistsUseCase
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.psychologist.OwnPsychologistDelegateItem
@@ -24,41 +25,51 @@ import javax.inject.Inject
 
 class PsychologistsWithTasksViewModel(
     private val getOwnPsychologistsUseCase: GetOwnPsychologistsUseCase,
+    private val getYourPsychologistsUseCase: GetYourPsychologistsUseCase,
     private val getStatusRequestToManagerUseCase: GetStatusRequestToManagerUseCase,
     private val getTasksUseCase: GetTasksUseCase,
     private val markTaskUseCase: MarkTaskUseCase
 ) : ViewModel() {
-    private val _screenState: MutableStateFlow<ListScreenState> =
-        MutableStateFlow(ListScreenState.Init)
-    val screenState: StateFlow<ListScreenState>
+    private val _screenState: MutableStateFlow<PsychologistWithTaskScreenState> =
+        MutableStateFlow(PsychologistWithTaskScreenState.Init)
+    val screenState: StateFlow<PsychologistWithTaskScreenState>
         get() = _screenState.asStateFlow()
 
 
     fun initial() {
-        _screenState.value = ListScreenState.Loading
+        _screenState.value = PsychologistWithTaskScreenState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            /*        val status = getStatusRequestToManagerUseCase()
-                    Log.e("Status: ", status.toString())
-                    when (status) {
-                        true -> */
-            getTasks()
+            getOwnPsychologists()
+        }
+    }
 
-            //    false -> getPsychologists() }
+    private suspend fun getOwnPsychologists() {
+        when (val result = getYourPsychologistsUseCase()) {
+            is Resource.Error -> _screenState.value =
+                PsychologistWithTaskScreenState.Error(result.msg.toString())
+
+            Resource.Loading -> _screenState.value = PsychologistWithTaskScreenState.Loading
+            is Resource.Success -> {
+                if (result.data.isEmpty()) _screenState.value =
+                    PsychologistWithTaskScreenState.PlaceHolderPsychologistsState
+                else getTasks()
+            }
         }
     }
 
     private suspend fun getTasks() {
         when (val result = getTasksUseCase()) {
             is Resource.Error -> {
-                Log.e("TASK error", result.msg.toString())
-                _screenState.value = ListScreenState.Error
+                _screenState.value = PsychologistWithTaskScreenState.Error(result.msg.toString())
             }
+
             Resource.Loading -> ListScreenState.Loading
             is Resource.Success -> {
-                Log.e("TASK", result.data.toString())
-
-                _screenState.value =
-                    ListScreenState.Data(convertTaskListToDelegateItems(result.data))
+                if (result.data.isEmpty())
+                    _screenState.value =
+                        PsychologistWithTaskScreenState.PlaceHolderTaskState
+                else _screenState.value =
+                    PsychologistWithTaskScreenState.Content(convertTaskListToDelegateItems(result.data))
             }
         }
     }
@@ -67,11 +78,15 @@ class PsychologistsWithTasksViewModel(
         viewModelScope.launch(Dispatchers.IO) {
 
             when (val res = getOwnPsychologistsUseCase()) {
-                is Resource.Error -> _screenState.value = ListScreenState.Error
+                is Resource.Error -> {
+                    Log.e("Erroe", res.msg.toString())
+                    _screenState.value = PsychologistWithTaskScreenState.Error(res.msg.toString())
+                }
+
                 Resource.Loading -> {}
                 is Resource.Success -> {
                     _screenState.value =
-                        ListScreenState.Data(convertListToDelegateItems(res.data))
+                        PsychologistWithTaskScreenState.Content(convertListToDelegateItems(res.data))
                 }
             }
         }
@@ -109,6 +124,7 @@ class PsychologistsWithTasksViewModel(
 
     class Factory @Inject constructor(
         private val getOwnPsychologistsUseCase: GetOwnPsychologistsUseCase,
+        private val getYourPsychologistsUseCase: GetYourPsychologistsUseCase,
         private val getStatusRequestToManagerUseCase: GetStatusRequestToManagerUseCase,
         private val getTasksUseCase: GetTasksUseCase,
         private val markTaskUseCase: MarkTaskUseCase
@@ -118,6 +134,7 @@ class PsychologistsWithTasksViewModel(
             @Suppress("UNCHECKED_CAST")
             return PsychologistsWithTasksViewModel(
                 getOwnPsychologistsUseCase,
+                getYourPsychologistsUseCase,
                 getStatusRequestToManagerUseCase,
                 getTasksUseCase,
                 markTaskUseCase

@@ -45,3 +45,13 @@ data class SendRequestToPsychologistModel(
     val id: String,
     val text: String,
 )
+
+@Serializable
+data class MyPsychologistModel(
+    val id: String,
+    @SerialName("is_active")
+    val isActive: Boolean,
+    val request: List<String>,
+    val role: Int,
+    val username: String
+)
