@@ -37,6 +37,8 @@ data class ConclusionOfTestModel(
     @SerialName("scale_title")
     val scaleTitle: String,
     val score: Float,
+    @SerialName("user_recommendation")
+    val userRecommendation: String,
 )
 
 @Serializable
@@ -60,7 +62,9 @@ data class ScaleResultForHistoryModel(
     @SerialName("max_score")
     val maxScore: Int,
     val conclusion: String,
-    val color: String
+    val color: String,
+    @SerialName("user_recommendation")
+    val userRecommendation: String,
 )
 
 @Serializable

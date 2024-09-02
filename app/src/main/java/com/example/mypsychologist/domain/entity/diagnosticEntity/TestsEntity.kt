@@ -22,7 +22,8 @@ data class ScaleResultForHistoryEntity(
     val scaleTitle: String,
     val maxScore: Int,
     val conclusion: String,
-    val color: String
+    val color: String,
+    val userRecommendation: String
 )
 
 data class ResultAfterSaveEntity(
@@ -36,6 +37,7 @@ data class ConclusionOfTestEntity(
     val scaleId: String,
     val scaleTitle: String,
     val score: Float,
+    val userRecommendation: String,
 )
 
 data class TestResultsGetEntity(

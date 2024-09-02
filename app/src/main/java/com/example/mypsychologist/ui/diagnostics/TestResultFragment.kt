@@ -21,7 +21,6 @@ import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.diagnostics.TestResultViewModel
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.cbt.InputDelegate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -31,6 +30,7 @@ class TestResultFragment : Fragment() {
     private var binding: FragmentTestResultBinding by autoCleared()
 
     private lateinit var mainAdapter: MainAdapter
+    private lateinit var recoAdapter: MainAdapter
 
     @Inject
     lateinit var vmFactory: TestResultViewModel.Factory
@@ -78,7 +78,10 @@ class TestResultFragment : Fragment() {
             is Resource.Success -> {
                 binding.progressBar.isVisible = false
                 binding.title.text = requireArguments().getString(TEST_TITLE, "")
+
                 mainAdapter.submitList(resource.data.toDelegateItems())
+                recoAdapter.submitList(resource.data.toDelegateItems())
+
             }
             is Resource.Error -> {
                 requireContext().showToast(resource.msg.toString())
@@ -93,9 +96,19 @@ class TestResultFragment : Fragment() {
             )
         }
 
+        recoAdapter = MainAdapter().apply {
+            addDelegate(
+                DescScaleResultDelegate()
+            )
+        }
+
         binding.scalesRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mainAdapter
+        }
+        binding.recommendationRv.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = recoAdapter
         }
     }
 

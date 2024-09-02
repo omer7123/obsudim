@@ -34,7 +34,7 @@ fun TestResultsGetModel.toEntity() =
     TestResultsGetEntity(testId, testResultId, datetime, scaleResults.map { it.toEntity() })
 
 fun ScaleResultForHistoryModel.toEntity()=
-    ScaleResultForHistoryEntity(scaleId, score, scaleTitle, maxScore, conclusion, color)
+    ScaleResultForHistoryEntity(scaleId, score, scaleTitle, maxScore, conclusion, color, userRecommendation)
 
 fun TestInfoModel.toEntity(): TestInfoEntity {
     return TestInfoEntity(title, description, shortDesc, testId, scales.map { it.toEntity() })
@@ -58,5 +58,5 @@ private fun AnswersOfQuestionsModel.toEntity(): AnswersOfQuestionsEntity {
 fun ResultAfterSaveModel.toEntity(): ResultAfterSaveEntity=
     ResultAfterSaveEntity(testResultId, result.map { it.toEntity() })
 private fun ConclusionOfTestModel.toEntity(): ConclusionOfTestEntity =
-    ConclusionOfTestEntity(color, conclusion, scaleId, scaleTitle, score)
+    ConclusionOfTestEntity(color, conclusion, scaleId, scaleTitle, score, userRecommendation)
 
