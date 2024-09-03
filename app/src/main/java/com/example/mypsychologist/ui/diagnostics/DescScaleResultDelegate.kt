@@ -26,7 +26,7 @@ class DescScaleResultDelegate : AdapterDelegate {
         (holder as ViewHolder).bind(item.content() as ScaleResultForHistoryEntity)
     }
 
-    override fun isOfViewType(item: DelegateItem): Boolean = item is TestScaleResultDelegateItem
+    override fun isOfViewType(item: DelegateItem): Boolean = item is TestScaleConclusionDelegateItem
 
     class ViewHolder(
         private val binding: ItemTestScaleRecommendationBinding
@@ -34,7 +34,8 @@ class DescScaleResultDelegate : AdapterDelegate {
 
         fun bind(scale: ScaleResultForHistoryEntity) {
             binding.apply {
-                titleTv.text = scale.userRecommendation
+                titleTv.text = scale.scaleTitle
+                recommendationTv.text = scale.userRecommendation
             }
         }
     }

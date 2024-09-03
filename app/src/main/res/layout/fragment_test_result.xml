@@ -34,15 +34,9 @@
             android:id="@+id/scales_rw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="20dp"
             tools:itemCount="4"
             tools:listitem="@layout/item_test_scale_result" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recommendation_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_test_scale_recommendation" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

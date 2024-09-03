@@ -30,7 +30,6 @@ class TestResultFragment : Fragment() {
     private var binding: FragmentTestResultBinding by autoCleared()
 
     private lateinit var mainAdapter: MainAdapter
-    private lateinit var recoAdapter: MainAdapter
 
     @Inject
     lateinit var vmFactory: TestResultViewModel.Factory
@@ -79,8 +78,7 @@ class TestResultFragment : Fragment() {
                 binding.progressBar.isVisible = false
                 binding.title.text = requireArguments().getString(TEST_TITLE, "")
 
-                mainAdapter.submitList(resource.data.toDelegateItems())
-                recoAdapter.submitList(resource.data.toDelegateItems())
+                mainAdapter.submitList(resource.data.toDelegateItems() + resource.data.toConclusionDelegateItems())
 
             }
             is Resource.Error -> {
@@ -94,9 +92,6 @@ class TestResultFragment : Fragment() {
             addDelegate(
                 TestScaleResultDelegate()
             )
-        }
-
-        recoAdapter = MainAdapter().apply {
             addDelegate(
                 DescScaleResultDelegate()
             )
@@ -105,10 +100,6 @@ class TestResultFragment : Fragment() {
         binding.scalesRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mainAdapter
-        }
-        binding.recommendationRv.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = recoAdapter
         }
     }
 

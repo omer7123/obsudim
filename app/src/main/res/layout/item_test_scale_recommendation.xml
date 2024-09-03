@@ -8,11 +8,19 @@
     <TextView
         android:id="@+id/title_tv"
         android:layout_marginHorizontal="16dp"
-        style="@style/TextAppearance.AppCompat.Body2"
+        style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textColor="?attr/colorPrimary"
+        tools:text="fdsfsdfdsfdsfdsfdsfsfsfsfsfsfds" />
+
+    <TextView
+        android:id="@+id/recommendation_tv"
+        android:layout_marginHorizontal="16dp"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         tools:text="fdsfsdfdsfdsfdsfdsfsfsfsfsfsfds" />
 
 </LinearLayout>
