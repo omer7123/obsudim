@@ -14,3 +14,19 @@ data class FreeDiaryModel(
 data class NewFreeDiaryModel (
     val text: String
 )
+
+@Serializable
+data class SaveMoodModel(
+    val score: Int,
+    @SerialName("free_diary_id")
+    val freeDiaryId: String = "",
+    @SerialName("think_diary_id")
+    val thinkDiaryId: String = "",
+    val diaryType: Int = 0
+)
+
+@Serializable
+data class MoodTrackerRespModel(
+    @SerialName("mood_tracker_id")
+    val moodTrackerId: String
+)
