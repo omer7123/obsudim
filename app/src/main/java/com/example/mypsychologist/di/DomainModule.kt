@@ -12,7 +12,7 @@ import com.example.mypsychologist.presentation.authentication.registrationFragme
 import com.example.mypsychologist.presentation.diagnostics.PassingTestViewModel
 import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryViewModel
-import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
+import com.example.mypsychologist.presentation.exercises.trackerMoodFragment.TrackerMoodViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.ClassKey
@@ -53,5 +53,9 @@ interface DomainModule {
     @Binds
     @[IntoMap ClassKey(PassingTestViewModel::class)]
     fun providePassingTestViewModel(passingTestViewModel: PassingTestViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ClassKey(TrackerMoodViewModel::class)]
+    fun provideTrackerMoodViewModel(trackerMoodViewModel: TrackerMoodViewModel): ViewModel
 
 }
