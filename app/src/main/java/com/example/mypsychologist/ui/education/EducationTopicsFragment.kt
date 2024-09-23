@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,9 +16,9 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentEducationTopicsBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.presentation.education.EducationTopicsViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
@@ -68,11 +67,11 @@ class EducationTopicsFragment : Fragment() {
     private fun setupAdapter() {
         mainAdapter = MainAdapter().apply {
             addDelegate(TopicsDelegate { topic ->
-                findNavController().navigate(R.id.fragment_education, bundleOf(
-                    EducationFragment.TOPIC_TAG to topic.tag,
-                    EducationFragment.TITLE_ID to topic.titleId,
-                    EducationFragment.CURRENT to topic.currentCard
-                ))
+//                findNavController().navigate(R.id.fragment_education, bundleOf(
+//                    EducationFragment.TOPIC_TAG to topic.tag,
+//                    EducationFragment.TITLE_ID to topic.titleId,
+//                    EducationFragment.CURRENT to topic.currentCard
+//                ))
             })
         }
         binding.topicsRw.apply {

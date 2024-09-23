@@ -1,8 +1,9 @@
 package com.example.mypsychologist.di
 
 import com.example.mypsychologist.ui.education.EducationFragment
-import com.example.mypsychologist.ui.education.EducationTopicsFragment
 import com.example.mypsychologist.ui.education.EducationItemFragment
+import com.example.mypsychologist.ui.education.EducationTopicsFragment
+import dagger.Module
 import dagger.Subcomponent
 
 @FragmentScope
@@ -17,4 +18,9 @@ interface EducationComponent {
     interface Factory {
         fun create(): EducationComponent
     }
+}
+
+@Module
+interface EducationModule {
+
 }

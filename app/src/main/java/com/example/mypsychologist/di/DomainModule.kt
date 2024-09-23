@@ -2,8 +2,10 @@ package com.example.mypsychologist.di
 
 import androidx.lifecycle.ViewModel
 import com.example.mypsychologist.data.repository.AuthenticationRepositoryImpl
+import com.example.mypsychologist.data.repository.EducationRepositoryImpl
 import com.example.mypsychologist.data.repository.FreeDiaryRepositoryImpl
 import com.example.mypsychologist.data.repository.TestsDiagnosticRepositoryImpl
+import com.example.mypsychologist.domain.repository.EducationRepository
 import com.example.mypsychologist.domain.repository.retrofit.AuthenticationRepository
 import com.example.mypsychologist.domain.repository.retrofit.FreeDiaryRepository
 import com.example.mypsychologist.domain.repository.retrofit.TestsDiagnosticRepository
@@ -33,6 +35,10 @@ interface DomainModule {
     @Binds
     @Singleton
     fun bindTestsDiagnosticRepository(impl: TestsDiagnosticRepositoryImpl): TestsDiagnosticRepository
+
+    @Binds
+    @Singleton
+    fun bindEducationRepository(impl: EducationRepositoryImpl): EducationRepository
 
     @Binds
     @[IntoMap ClassKey(RegisterViewModel::class)]

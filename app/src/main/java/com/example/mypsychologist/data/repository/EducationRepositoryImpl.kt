@@ -1,21 +1,29 @@
 package com.example.mypsychologist.data.repository
 
 import com.example.mypsychologist.R
+import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.converters.toEntity
+import com.example.mypsychologist.data.remote.education.EducationDataSource
 import com.example.mypsychologist.domain.entity.EducationTopicEntity
+import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
 import com.example.mypsychologist.domain.repository.EducationRepository
 import com.example.mypsychologist.domain.useCase.GetEducationMaterialUseCase
-import com.example.mypsychologist.extensions.pmap
 import com.google.firebase.database.DatabaseReference
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class EducationRepositoryImpl @Inject constructor(private val reference: DatabaseReference) :
+class EducationRepositoryImpl @Inject constructor(private val reference: DatabaseReference, private val dataSource: EducationDataSource) :
     EducationRepository {
+    override suspend fun getAllTheme(): Resource<List<ThemeEntity>> {
+        return when(val res = dataSource.getAllTheme()){
+            is Resource.Error -> Resource.Error(res.msg.toString(), null)
+            Resource.Loading -> Resource.Loading
+            is Resource.Success -> Resource.Success(res.data.map { it.toEntity() })
+        }
+    }
+
     override suspend fun getProgress(topic: String): Int =
         suspendCoroutine { continuation ->
 
