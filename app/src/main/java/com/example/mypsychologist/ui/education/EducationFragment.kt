@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.databinding.FragmentEducationBinding
 import com.example.mypsychologist.domain.useCase.GetEducationMaterialUseCase
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.presentation.education.EducationViewModel
 import com.example.mypsychologist.extensions.serializable
+import com.example.mypsychologist.presentation.education.EducationViewModel
 import com.example.mypsychologist.ui.PagerAdapter
 import com.example.mypsychologist.ui.autoCleared
 import javax.inject.Inject
@@ -39,7 +39,7 @@ class EducationFragment : Fragment() {
         binding = FragmentEducationBinding.inflate(inflater, container, false)
 
         binding.includeToolbar.toolbar.apply {
-            title = getString(requireArguments().getInt(TITLE_ID))
+            title = requireArguments().getString(TOPIC_TAG)
 
             setNavigationOnClickListener {
                 findNavController().popBackStack()
@@ -64,7 +64,7 @@ class EducationFragment : Fragment() {
                 )
             )
         )
-        binding.educationVp.setCurrentItem(requireArguments().getInt(CURRENT), false)
+//        binding.educationVp.setCurrentItem(requireArguments().getInt(CURRENT), false)
     }
 
     private fun generateFragmentList(items: Array<String>): List<Fragment> {
@@ -77,8 +77,6 @@ class EducationFragment : Fragment() {
     }
 
     companion object {
-        const val TITLE_ID = "title id"
         const val TOPIC_TAG = "tag"
-        const val CURRENT = "current"
     }
 }

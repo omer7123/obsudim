@@ -41,8 +41,10 @@ class TopicsDelegate(private val onClick: (ThemeEntity) -> Unit) : AdapterDelega
 
 //            if (item.currentCard == item.cardCount)
 //                binding.card.setBackgroundResource(R.drawable.primary_card)
-
-            itemView.setOnClickListener {
+            binding.containerIv.setOnClickListener {
+                onClick(item)
+            }
+            binding.root.setOnClickListener {
                 onClick(item)
             }
         }

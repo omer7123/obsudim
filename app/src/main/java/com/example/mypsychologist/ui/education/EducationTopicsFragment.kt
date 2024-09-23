@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.education
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,10 +68,9 @@ class EducationTopicsFragment : Fragment() {
     private fun setupAdapter() {
         mainAdapter = MainAdapter().apply {
             addDelegate(TopicsDelegate { topic ->
+                Log.e("DataTopic", topic.toString())
 //                findNavController().navigate(R.id.fragment_education, bundleOf(
-//                    EducationFragment.TOPIC_TAG to topic.tag,
-//                    EducationFragment.TITLE_ID to topic.titleId,
-//                    EducationFragment.CURRENT to topic.currentCard
+//                    EducationFragment.TOPIC_TAG to topic.theme,
 //                ))
             })
         }

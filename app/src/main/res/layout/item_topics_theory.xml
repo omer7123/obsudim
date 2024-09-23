@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
@@ -23,9 +25,9 @@
 
         <ImageView
             android:id="@+id/back_iv"
-            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_theme" />
 
         <TextView
