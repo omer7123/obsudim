@@ -25,7 +25,7 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@drawable/ic_pencil"
         android:contentDescription="@string/add" />
 
     <include
@@ -50,8 +50,8 @@
         tools:listitem="@layout/record_item" />
 
     <include
-        layout="@layout/include_network_placeholder"
         android:id="@+id/include_placeholder"
+        layout="@layout/include_network_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

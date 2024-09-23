@@ -130,7 +130,7 @@ class FreeDiaryFragment : Fragment() {
 
     private fun showPlaceholderForEmptyList() {
         binding.includePlaceholder.apply {
-            image.setImageResource(R.drawable.ic_import_contacts)
+            image.setImageResource(R.drawable.placeholder_diary)
             title.text = getString(R.string.nothing)
             text.text = getString(R.string.no_diaries)
             layout.isVisible = true
