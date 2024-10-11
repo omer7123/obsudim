@@ -148,7 +148,13 @@
         android:id="@+id/newFreeDiaryFragment"
         android:name="com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment"
         android:label="fragment_new_free_diary"
-        tools:layout="@layout/fragment_new_free_diary" />
+        tools:layout="@layout/fragment_new_free_diary" >
+        <action
+            app:popUpTo="@id/main_fragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_newFreeDiaryFragment_to_main_fragment"
+            app:destination="@id/main_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/trackerMoodFragment"
         android:name="com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment"

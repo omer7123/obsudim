@@ -1,14 +1,17 @@
 package com.example.mypsychologist.ui.education
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.databinding.FragmentEducationBinding
+import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
 import com.example.mypsychologist.domain.useCase.GetEducationMaterialUseCase
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.serializable
@@ -31,6 +34,7 @@ class EducationFragment : Fragment() {
         requireContext().getAppComponent().educationComponent().create().inject(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,7 +43,7 @@ class EducationFragment : Fragment() {
         binding = FragmentEducationBinding.inflate(inflater, container, false)
 
         binding.includeToolbar.toolbar.apply {
-            title = requireArguments().getString(TOPIC_TAG)
+            title = requireArguments().serializable<ThemeEntity>(TOPIC_TAG)?.theme
 
             setNavigationOnClickListener {
                 findNavController().popBackStack()
@@ -55,15 +59,15 @@ class EducationFragment : Fragment() {
         val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
         binding.educationVp.adapter = pagerAdapter
 
-        pagerAdapter.update(
-            generateFragmentList(
-                resources.getStringArray(
-                    viewModel.getMaterial(
-                        requireArguments().serializable(TOPIC_TAG)!!
-                    )
-                )
-            )
-        )
+//        pagerAdapter.update(
+//            generateFragmentList(
+//                resources.getStringArray(
+//                    viewModel.getMaterial(
+//                        requireArguments().serializable(TOPIC_TAG)!!
+//                    )
+//                )
+//            )
+//        )
 //        binding.educationVp.setCurrentItem(requireArguments().getInt(CURRENT), false)
     }
 
