@@ -31,11 +31,10 @@
         <item name="android:statusBarColor">@color/md_theme_light_surface</item>
         <item name="android:windowLightStatusBar">true</item>
 
-
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog">
-        <item name="android:navigationBarColor">#FFFF</item>
+        <item name="android:navigationBarColor">#FFFFFF</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 

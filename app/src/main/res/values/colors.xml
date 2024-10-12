@@ -1,14 +1,15 @@
 
 <resources>
     <color name="seed">#4CA569</color>
-    <color name="md_theme_light_primary">#2F628C</color>
-    <color name="md_theme_light_onPrimary">#FFFFFF</color>
-    <color name="md_theme_light_primaryContainer">#CEE5FF</color>
-    <color name="md_theme_light_onPrimaryContainer">#00210D</color>
-    <color name="md_theme_light_secondary">#51606F</color>
-    <color name="md_theme_light_onSecondary">#FFFFFF</color>
-    <color name="md_theme_light_secondaryContainer">#D5E4F7</color>
-    <color name="md_theme_light_onSecondaryContainer">#0E1D2A</color>
+    <color name="md_theme_light_primary">#3555D4</color>
+    <color name="md_theme_light_onPrimary">#EBEFFF</color>
+    <color name="md_theme_light_primaryContainer">#3555D4</color>
+    <color name="md_theme_light_onPrimaryContainer">#06154F</color>
+    <color name="md_theme_light_secondary">#029872</color>
+    <color name="md_theme_light_onSecondary">#FAFFFE</color>
+    <color name="md_theme_light_secondaryContainer">#3555D4</color>
+    <color name="md_theme_light_onSecondaryContainer">#015641</color>
+
     <color name="md_theme_light_tertiary">#68587A</color>
     <color name="md_theme_light_onTertiary">#FFFFFF</color>
     <color name="md_theme_light_tertiaryContainer">#EEDBFF</color>
@@ -21,7 +22,7 @@
     <color name="md_theme_light_background">#F7F9FF</color>
     <color name="md_theme_light_onBackground">#181C20</color>
     <color name="md_theme_light_surface">#FFFFFF</color>
-    <color name="md_theme_light_onSurface">#181C20</color>
+    <color name="md_theme_light_onSurface">#0C2A9F</color>
     <color name="md_theme_light_surfaceVariant">#42474E</color>
     <color name="md_theme_light_onSurfaceVariant">#42474E</color>
     <color name="md_theme_light_inverseSurface">#2D3135</color>
@@ -73,4 +74,6 @@
     <color name="green">#368C2E</color>
     <color name="yellow">#E1B92A</color>
     <color name="red">#BA1A1A</color>
+    <color name="item_indicator_bottom_bar">#CDD7FF</color>
+    <color name="text_default_color">#1C1A1A</color>
 </resources>

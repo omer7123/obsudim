@@ -21,6 +21,9 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:itemIconTint="@color/md_theme_light_onSurface"
+        app:itemTextColor="@color/md_theme_light_onSurface"
+        app:itemActiveIndicatorStyle="@style/Theme.BottomNavigationView.ActiveIndicator"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/navigation_items"/>
 

@@ -62,12 +62,6 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     private fun render(state: MainScreenState) {
         when(state){
             is MainScreenState.Error -> {
@@ -158,7 +152,7 @@ class MainFragment : Fragment() {
 
     private fun setupListeners() {
         binding.apply {
-            profileIcon.setOnClickListener {
+            toolbar.profileIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_profile)
             }
             /*         cabinetCard.card.setOnClickListener {

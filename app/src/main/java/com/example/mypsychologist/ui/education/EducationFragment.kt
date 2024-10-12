@@ -59,15 +59,15 @@ class EducationFragment : Fragment() {
         val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
         binding.educationVp.adapter = pagerAdapter
 
-//        pagerAdapter.update(
-//            generateFragmentList(
-//                resources.getStringArray(
-//                    viewModel.getMaterial(
-//                        requireArguments().serializable(TOPIC_TAG)!!
-//                    )
-//                )
-//            )
-//        )
+        pagerAdapter.update(
+            generateFragmentList(
+                resources.getStringArray(
+                    viewModel.getMaterial(
+                        requireArguments().serializable(TOPIC_TAG)!!
+                    )
+                )
+            )
+        )
 //        binding.educationVp.setCurrentItem(requireArguments().getInt(CURRENT), false)
     }
 
