@@ -8,6 +8,8 @@
     <string name="connect">Соединение восстановлено</string>
     <string name="db_error">Ошибка базы данных</string>
     <string name="after_connection">При восстановлении соединения данные загрузятся автоматически</string>
+    <string name="diary_empty">Это место для заметок. Напиши, как прошёл день, как себя чувствуешь :)</string>
+
     <string name="nothing">Ничего нет :(</string>
     <string name="need_data">Необходимы данные.</string>
     <string name="need_user_data">Пожалуйста, укажите свои данные, чтобы HR-менеджер мог вас идентифицировать. Если вы не готовы к этому, укажите псевдоним.</string>
@@ -60,7 +62,7 @@
 
     <string name="cbt_diary">КПТ-дневник</string>
     <string name="cbt_diary_desc">Это способ самоанализа, который позволяет отслеживать эмоции и чувства, выявлять взаимосвязи между ситуациями и мыслями</string>
-    <string name="free_diary">Личный дневник</string>
+    <string name="free_diary">Заметки</string>
     <string name="thought_diary_signature">Способ зафиксировать и изучить важные события своей жизни</string>
     <string name="situation">Ситуация</string>
     <string name="behaviour">Поведение</string>

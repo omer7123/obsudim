@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="?attr/actionBarSize"
     tools:context=".ui.exercises.cbt.TrackerMoodFragment">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -47,6 +48,7 @@
         android:layout_marginTop="50dp"
         android:valueFrom="0.0"
         android:valueTo="100.0"
+        app:labelBehavior="gone"
         android:value="50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,11 +80,10 @@
     <Button
         android:id="@+id/specify_btn"
         style="@style/Widget.Material3.Button"
-        android:layout_width="0dp"
+        android:layout_width="182dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="60dp"
         android:text="@string/add_note"
         android:textAppearance="@style/BodyMBold"
         android:textColor="@color/md_theme_light_onError"
@@ -93,7 +94,7 @@
     <Button
         android:id="@+id/save_btn"
         style="@style/Widget.Material3.Button.TonalButton"
-        android:layout_width="0dp"
+        android:layout_width="182dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"

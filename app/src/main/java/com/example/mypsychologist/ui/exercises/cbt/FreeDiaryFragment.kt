@@ -3,13 +3,11 @@ package com.example.mypsychologist.ui.exercises.cbt
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,16 +18,11 @@ import com.example.mypsychologist.databinding.FragmentFreeDiaryBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.presentation.authentication.authFragment.AuthViewModel
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
 import com.example.mypsychologist.presentation.exercises.ThoughtDiariesScreenState
-import com.example.mypsychologist.presentation.exercises.ThoughtDiariesViewModel
-import com.example.mypsychologist.presentation.main.FeedbackViewModel
-import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.psychologist.ExercisesFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -108,9 +101,9 @@ class FreeDiaryFragment : Fragment() {
                 binding.includePlaceholder.layout.isVisible = false
 
                 Log.e("Diaries", it.records.toString())
-                if (it.records.isNotEmpty())
+                if (it.records.isNotEmpty()) {
                     adapter.submitList(it.records.toDelegateItems())
-                else {
+                }else {
                     showPlaceholderForEmptyList()
                 }
             }
@@ -130,9 +123,9 @@ class FreeDiaryFragment : Fragment() {
 
     private fun showPlaceholderForEmptyList() {
         binding.includePlaceholder.apply {
-            image.setImageResource(R.drawable.placeholder_diary)
-            title.text = getString(R.string.nothing)
-            text.text = getString(R.string.no_diaries)
+            image.setImageResource(R.drawable.ic_place)
+            title.text = ""
+            text.text = getString(R.string.diary_empty)
             layout.isVisible = true
         }
     }

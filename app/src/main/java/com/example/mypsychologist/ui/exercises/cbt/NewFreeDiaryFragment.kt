@@ -63,7 +63,11 @@ class NewFreeDiaryFragment : Fragment() {
         val sdf = SimpleDateFormat("d MMMM", Locale.getDefault())
         binding.includeToolbar.toolbar.title = sdf.format(Date())
         val stf = SimpleDateFormat("EEEE, H:mm", Locale.getDefault())
-        binding.dayTime.text = stf.format(Date())
+        val formattedDate = stf.format(Date())
+        val finalDate = formattedDate.replaceFirstChar {
+            it.titlecase(Locale.getDefault())
+        }
+        binding.dayTime.text = finalDate
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)

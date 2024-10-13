@@ -55,6 +55,7 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
                 binding.saveBtn.isClickable = true
                 binding.specifyBtn.isClickable = true
             }
+
             TrackerMoodScreenState.Initial -> {}
             TrackerMoodScreenState.Loading -> {
                 binding.progressBar.isVisible = true
