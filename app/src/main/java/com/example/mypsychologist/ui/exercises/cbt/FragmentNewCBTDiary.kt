@@ -73,7 +73,7 @@ class FragmentNewCBTDiary : Fragment() {
                 InputDelegate(::showHint)
             )
             addDelegate(
-                SeekBarDelegate(viewModel::setLevel)
+                SliderDelegate(viewModel::setLevel)
             )
 
             submitList(items)

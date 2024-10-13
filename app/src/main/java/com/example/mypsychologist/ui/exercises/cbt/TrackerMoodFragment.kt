@@ -76,7 +76,7 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
             findNavController().navigate(R.id.newFreeDiaryFragment)
         }
         binding.saveBtn.setOnClickListener {
-            viewModel.saveMood(binding.moodSb.progress)
+            viewModel.saveMood(binding.moodSb.value.toInt())
         }
     }
 }

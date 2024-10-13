@@ -28,6 +28,9 @@ import com.example.mypsychologist.ui.autoCleared
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 class NewFreeDiaryFragment : Fragment() {
@@ -56,7 +59,11 @@ class NewFreeDiaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNewFreeDiaryBinding.inflate(layoutInflater)
-        binding.includeToolbar.toolbar.title = getString(R.string.free_diary)
+
+        val sdf = SimpleDateFormat("d MMMM", Locale.getDefault())
+        binding.includeToolbar.toolbar.title = sdf.format(Date())
+        val stf = SimpleDateFormat("EEEE, H:mm", Locale.getDefault())
+        binding.dayTime.text = stf.format(Date())
 
         viewModel.screenState
             .flowWithLifecycle(lifecycle)
