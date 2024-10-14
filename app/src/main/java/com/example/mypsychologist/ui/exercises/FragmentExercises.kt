@@ -44,9 +44,14 @@ FragmentExercises : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope) */
 
-        binding.include.toolbar.apply {
-            title = getString(R.string.practice)
-            setNavigationOnClickListener { findNavController().popBackStack() }
+        binding.include.apply {
+            toolbar.title = getString(R.string.practice)
+            profileIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_profile)
+            }
+            psychologistsIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
+            }
         }
 
 

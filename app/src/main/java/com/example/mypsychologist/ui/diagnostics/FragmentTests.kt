@@ -12,6 +12,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestsBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
@@ -46,8 +47,14 @@ class FragmentTests : Fragment() {
     ): View {
         binding = FragmentTestsBinding.inflate(inflater, container, false)
 
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+        binding.include.apply {
+            toolbar.title = getString(R.string.diagnostics)
+            profileIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_profile)
+            }
+            psychologistsIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
+            }
         }
 
 

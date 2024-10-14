@@ -155,6 +155,9 @@ class MainFragment : Fragment() {
             toolbar.profileIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_profile)
             }
+            toolbar.psychologistsIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
+            }
             /*         cabinetCard.card.setOnClickListener {
                          findNavController().navigate(R.id.fragment_psychologist_cabinet)
                      } */

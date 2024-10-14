@@ -49,10 +49,13 @@ class EducationTopicsFragment : Fragment() {
     ): View {
         binding = FragmentEducationTopicsBinding.inflate(inflater, container, false)
 
-        binding.includeToolbar.toolbar.apply{
-            title = getString(R.string.psychoeducation)
-            setNavigationOnClickListener {
-                findNavController().popBackStack()
+        binding.include.apply{
+            toolbar.title = getString(R.string.psychoeducation)
+            profileIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_profile)
+            }
+            psychologistsIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
             }
         }
 

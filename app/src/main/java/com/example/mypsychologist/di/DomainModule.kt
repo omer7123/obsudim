@@ -43,10 +43,10 @@ interface DomainModule {
     @Binds
     @[IntoMap ClassKey(RegisterViewModel::class)]
     fun provideRegisterViewModel(registerViewModel: RegisterViewModel): ViewModel
-
     @Binds
     @[IntoMap ClassKey(AuthViewModel::class)]
     fun provideAuthViewModel(authViewModel: AuthViewModel): ViewModel
+
 
     @Binds
     @[IntoMap ClassKey(FreeDiariesViewModel::class)]

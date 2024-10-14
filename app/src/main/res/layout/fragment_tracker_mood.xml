@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="?attr/actionBarSize"
+    android:layout_height="wrap_content"
     tools:context=".ui.exercises.cbt.TrackerMoodFragment">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -80,13 +79,16 @@
     <Button
         android:id="@+id/specify_btn"
         style="@style/Widget.Material3.Button"
-        android:layout_width="182dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
+        android:layout_marginBottom="46dp"
         android:text="@string/add_note"
         android:textAppearance="@style/BodyMBold"
         android:textColor="@color/md_theme_light_onError"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/save_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mood_sb" />
@@ -94,7 +96,7 @@
     <Button
         android:id="@+id/save_btn"
         style="@style/Widget.Material3.Button.TonalButton"
-        android:layout_width="182dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -105,7 +107,6 @@
         app:layout_constraintBottom_toBottomOf="@id/specify_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/specify_btn"
-        app:layout_constraintTop_toTopOf="@id/specify_btn"
-         />
+        app:layout_constraintTop_toTopOf="@id/specify_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

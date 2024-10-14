@@ -15,8 +15,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="14dp"
         android:padding="10dp"
         android:src="@drawable/ic_profile" />
+
+    <ImageView
+        android:id="@+id/psychologists_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="24dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_message" />
 
 </com.google.android.material.appbar.MaterialToolbar>

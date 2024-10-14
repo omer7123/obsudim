@@ -4,15 +4,15 @@
         android:title="@string/plan"
         android:icon="@drawable/ic_plan"/>
 
+    <item android:id="@+id/theory_item"
+        android:title="@string/theory"
+        android:icon="@drawable/ic_theory"/>
+
     <item android:id="@+id/practice_item"
         android:title="@string/practice"
         android:icon="@drawable/ic_drop"/>
 
-    <item android:id="@+id/theory_item"
-        android:title="@string/theory"
-        android:icon="@drawable/ic_document"/>
-
-    <item android:id="@+id/psychologist_item"
-        android:title="@string/psychologist"
-        android:icon="@drawable/ic_message"/>
+    <item android:id="@+id/tests_item"
+        android:title="@string/tests"
+        android:icon="@drawable/ic_diagram"/>
 </menu>

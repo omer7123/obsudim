@@ -44,9 +44,7 @@ class FragmentClientTests : Fragment() {
     ): View {
         binding = FragmentTestsBinding.inflate(inflater, container, false)
 
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
+
 
         setupAdapter()
 
