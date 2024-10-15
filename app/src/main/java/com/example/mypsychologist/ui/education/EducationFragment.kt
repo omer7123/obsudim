@@ -3,6 +3,7 @@ package com.example.mypsychologist.ui.education
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,6 +81,7 @@ class EducationFragment : Fragment() {
         pagerAdapter.update(
             generateFragmentList(data)
         )
+        Log.e("item", requireArguments().serializable<ThemeEntity>(TOPIC_TAG).toString())
         binding.educationVp.setCurrentItem(
             requireArguments().serializable<ThemeEntity>(TOPIC_TAG)!!.score, false
         )
@@ -89,7 +91,7 @@ class EducationFragment : Fragment() {
 
         return items.mapIndexed { index, item ->
             EducationItemFragment.newInstance(
-                if (index == 0) 0 else index,
+                index,
                 items.size,
                 item.text,
                 item.id

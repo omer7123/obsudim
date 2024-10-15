@@ -24,6 +24,7 @@ data class EducationMaterialForSaveProgressModel(
     val educationMaterialId: String
 )
 
+@Serializable
 data class EduSaveResp(
     val status: String
 )
