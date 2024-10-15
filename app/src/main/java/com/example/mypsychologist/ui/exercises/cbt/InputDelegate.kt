@@ -30,6 +30,7 @@ class InputDelegate(
 
     override fun isOfViewType(item: DelegateItem) = item is InputDelegateItem
 
+
     class ViewHolder(
         private val binding: IncludeEditTextBinding,
         private val onHelpClick: ((Int, Int) -> Unit)?
@@ -37,7 +38,19 @@ class InputDelegate(
 
         fun bind(item: InputItemEntity) {
             binding.apply {
-                itemView.context.apply {
+                item.hintId?.let { id ->
+                    editText.hint = itemView.context.getString(id)
+                }
+                if (item.isNotCorrect)
+                    editText.hint = itemView.context.getString(R.string.necessary_to_fill)
+
+                editText.addTextChangedListener {
+                    item.saveFunction(it.toString())
+                }
+
+                editText.setText(item.text)
+
+             /*   itemView.context.apply {
                     inputLayout.hint = getString(item.titleId)
 
                     item.hintId?.let { hintIdNotNull ->
@@ -59,7 +72,7 @@ class InputDelegate(
                     inputLayout.error = null
                 }
 
-                field.setText(item.text)
+                field.setText(item.text)*/
             }
         }
     }

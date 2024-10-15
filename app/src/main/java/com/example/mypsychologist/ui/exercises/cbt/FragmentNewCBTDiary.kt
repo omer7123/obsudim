@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,16 +65,20 @@ class FragmentNewCBTDiary : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+
         return binding.root
     }
 
     private fun setupAdapter(items: List<DelegateItem>) {
         mainAdapter = MainAdapter().apply {
             addDelegate(
-                InputDelegate(::showHint)
+                InputDelegate()
             )
             addDelegate(
                 SliderDelegate(viewModel::setLevel)
+            )
+            addDelegate(
+                HintDelegate()
             )
 
             submitList(items)
@@ -90,12 +95,22 @@ class FragmentNewCBTDiary : Fragment() {
             findNavController().popBackStack()
         }
 
+        binding.hintsChip.setOnClickListener {
+            showHints()
+        }
+
         binding.saveButton.setOnClickListener { viewModel.tryToSaveDiary() }
     }
 
-    private fun showHint(titleId: Int, hintId: Int) {
-        FragmentHint.newInstance(titleId, hintId)
-            .show(childFragmentManager, "tag")
+    private fun showHints() {
+        val items = viewModel.items.map { it }.toMutableList()
+        viewModel.items.forEach {
+            if (it is InputDelegateItem) {
+                val position = items.indexOf(it)
+                items.add(position + 1, HintDelegateItem(it.content().helperId!!))
+            }
+            mainAdapter.submitList(items)
+        }
     }
 
     private fun render(state: NewThoughtDiaryScreenState) {
@@ -103,23 +118,27 @@ class FragmentNewCBTDiary : Fragment() {
             is NewThoughtDiaryScreenState.RequestResult -> {
                 renderRequest(state.resource)
             }
+
             is NewThoughtDiaryScreenState.ValidationError -> {
                 mainAdapter.submitList(state.listWithErrors)
             }
+
             is NewThoughtDiaryScreenState.Init -> {}
         }
     }
 
     private fun renderRequest(resource: Resource<String>) {
 
-        when(resource) {
+        when (resource) {
             is Resource.Error -> {
                 requireContext().showToast(resource.msg.toString())
             }
+
             is Resource.Success -> {
                 findNavController().popBackStack()
                 requireContext().showToast(getString(R.string.success))
             }
+
             is Resource.Loading -> Unit
         }
     }

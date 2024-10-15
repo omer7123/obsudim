@@ -46,7 +46,7 @@
                 layout="@layout/card_view_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="56dp" />
 
             <include
@@ -54,7 +54,7 @@
                 layout="@layout/card_view_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="20dp" />
 
             <include
@@ -62,7 +62,7 @@
                 layout="@layout/card_view_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="20dp" />
 
         </LinearLayout>

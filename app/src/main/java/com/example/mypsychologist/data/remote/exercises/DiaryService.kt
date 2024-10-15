@@ -3,6 +3,7 @@ package com.example.mypsychologist.data.remote.exercises
 import com.example.mypsychologist.data.model.CBTDiaryCardModel
 import com.example.mypsychologist.data.model.CBTDiaryModel
 import com.example.mypsychologist.data.model.DiaryIdModel
+import com.example.mypsychologist.data.model.ThinkDiaryIDModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -12,7 +13,7 @@ import retrofit2.http.Path
 interface DiaryService {
 
     @POST("/diary/writing_think_diary")
-    suspend fun saveCBTDiary(@Body diary: CBTDiaryModel): Response<String>
+    suspend fun saveCBTDiary(@Body diary: CBTDiaryModel): Response<ThinkDiaryIDModel>
 
     @POST("/diary/reading_think_diary")
     suspend fun getCBTDiaryRecord(@Body id: DiaryIdModel): Response<CBTDiaryModel>

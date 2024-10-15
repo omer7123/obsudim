@@ -6,10 +6,11 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.CBTDiaryCardModel
 import com.example.mypsychologist.data.model.CBTDiaryModel
 import com.example.mypsychologist.data.model.DiaryIdModel
+import com.example.mypsychologist.data.model.ThinkDiaryIDModel
 import javax.inject.Inject
 
 class DiaryDataSourceImpl @Inject constructor(private val api: DiaryService) : DiaryDataSource, BaseDataSource() {
-    override suspend fun save(diary: CBTDiaryModel): Resource<String> = getResult {
+    override suspend fun save(diary: CBTDiaryModel): Resource<ThinkDiaryIDModel> = getResult {
         api.saveCBTDiary(diary)
     }
 

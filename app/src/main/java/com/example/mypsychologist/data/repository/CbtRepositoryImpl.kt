@@ -88,7 +88,7 @@ class CbtRepositoryImpl @Inject constructor(
             }
             is Resource.Loading -> Resource.Loading
             is Resource.Success ->
-                Resource.Success(result.data)
+                Resource.Success(result.data.id)
         }
 
     override fun editAutoThought(diaryId: String, newText: String): Boolean =
