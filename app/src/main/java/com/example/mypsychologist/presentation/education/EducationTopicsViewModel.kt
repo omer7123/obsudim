@@ -23,7 +23,7 @@ class EducationTopicsViewModel(
     val screenState: StateFlow<ListScreenState>
         get() = _screenState.asStateFlow()
 
-    init {
+    fun getTopics(){
         viewModelScope.launch {
             _screenState.value = ListScreenState.Loading
             when(val res = getAllThemeUseCase()){

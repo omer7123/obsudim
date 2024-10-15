@@ -65,6 +65,7 @@ class EducationTopicsFragment : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+        viewModel.getTopics()
         return binding.root
     }
 
