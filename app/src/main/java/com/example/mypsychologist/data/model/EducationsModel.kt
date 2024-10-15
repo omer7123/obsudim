@@ -11,3 +11,19 @@ data class ThemeModel(
     @SerialName("max_score")
     val maxScore: Int,
 )
+
+@Serializable
+data class ItemMaterialModel(
+    val id: String,
+    val text: String
+)
+
+@Serializable
+data class EducationMaterialForSaveProgressModel(
+    @SerialName("education_material_id")
+    val educationMaterialId: String
+)
+
+data class EduSaveResp(
+    val status: String
+)

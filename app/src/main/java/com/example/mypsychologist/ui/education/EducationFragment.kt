@@ -11,10 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.databinding.FragmentEducationBinding
+import com.example.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
 import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
-import com.example.mypsychologist.domain.useCase.GetEducationMaterialUseCase
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.serializable
+import com.example.mypsychologist.presentation.education.EducationScreenState
 import com.example.mypsychologist.presentation.education.EducationViewModel
 import com.example.mypsychologist.ui.PagerAdapter
 import com.example.mypsychologist.ui.autoCleared
@@ -50,33 +51,49 @@ class EducationFragment : Fragment() {
             }
         }
 
-        setupViewPager()
+        viewModel.screenState.observe(viewLifecycleOwner) { state ->
+            render(state)
+        }
 
         return binding.root
     }
 
-    private fun setupViewPager() {
+    private fun render(state: EducationScreenState) {
+        when (state) {
+            is EducationScreenState.Content -> setupViewPager(state.data)
+            is EducationScreenState.Error -> {}
+            EducationScreenState.Initial -> {}
+            EducationScreenState.Loading -> {}
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val topic = requireArguments().serializable<ThemeEntity>(key = TOPIC_TAG)
+        viewModel.getMaterial(topic!!.id)
+    }
+
+    private fun setupViewPager(data: List<ItemMaterialEntity>) {
         val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
         binding.educationVp.adapter = pagerAdapter
 
         pagerAdapter.update(
-            generateFragmentList(
-                resources.getStringArray(
-                    viewModel.getMaterial(
-                        requireArguments().serializable(TOPIC_TAG)!!
-                    )
-                )
-            )
+            generateFragmentList(data)
         )
-//        binding.educationVp.setCurrentItem(requireArguments().getInt(CURRENT), false)
+        binding.educationVp.setCurrentItem(
+            requireArguments().serializable<ThemeEntity>(TOPIC_TAG)!!.score, false
+        )
     }
 
-    private fun generateFragmentList(items: Array<String>): List<Fragment> {
-        val topicTag: GetEducationMaterialUseCase.Topic =
-            requireArguments().serializable(TOPIC_TAG)!!
+    private fun generateFragmentList(items: List<ItemMaterialEntity>): List<Fragment> {
 
-        return items.mapIndexed { index, text ->
-            EducationItemFragment.newInstance(index, items.size, text, topicTag)
+        return items.mapIndexed { index, item ->
+            EducationItemFragment.newInstance(
+                if (index == 0) 0 else index,
+                items.size,
+                item.text,
+                item.id
+            )
         }
     }
 

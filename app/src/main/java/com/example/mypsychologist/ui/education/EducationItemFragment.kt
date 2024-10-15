@@ -12,10 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.ItemEducationBinding
-import com.example.mypsychologist.domain.useCase.GetEducationMaterialUseCase
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.education.EducationViewModel
-import com.example.mypsychologist.extensions.serializable
 import com.example.mypsychologist.ui.autoCleared
 import javax.inject.Inject
 
@@ -41,8 +39,7 @@ class EducationItemFragment : Fragment() {
         binding = ItemEducationBinding.inflate(inflater, container, false)
 
         viewModel.saveProgress(
-            requireArguments().getInt(CURRENT) + 1,
-            requireArguments().serializable<GetEducationMaterialUseCase.Topic>(TOPIC).toString()
+            requireArguments().getString(MATERIAL_ID).toString()
         )
 
         setupFields(
@@ -76,19 +73,19 @@ class EducationItemFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(current: Int, count: Int, text: String, topicTag: GetEducationMaterialUseCase.Topic) =
+        fun newInstance(current: Int, count: Int, text: String, id: String) =
             EducationItemFragment().apply {
                 arguments = bundleOf(
                     CURRENT to current,
                     COUNT to count,
                     TEXT to text,
-                    TOPIC to topicTag
+                    MATERIAL_ID to id
                 )
             }
 
         private const val CURRENT = "current"
         private const val COUNT = "count"
         private const val TEXT = "text"
-        private const val TOPIC = "topic"
+        private const val MATERIAL_ID = "id_material"
     }
 }

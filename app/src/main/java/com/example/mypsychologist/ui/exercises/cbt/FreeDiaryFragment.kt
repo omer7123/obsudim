@@ -2,7 +2,6 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +48,7 @@ class FreeDiaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFreeDiaryBinding.inflate(layoutInflater)
+
         setupToolbarAndFAB()
         setupAdapter()
 
@@ -100,7 +100,6 @@ class FreeDiaryFragment : Fragment() {
                 binding.progressBar.isVisible = false
                 binding.includePlaceholder.layout.isVisible = false
 
-                Log.e("Diaries", it.records.toString())
                 if (it.records.isNotEmpty()) {
                     adapter.submitList(it.records.toDelegateItems())
                 }else {
@@ -109,9 +108,10 @@ class FreeDiaryFragment : Fragment() {
             }
             is ThoughtDiariesScreenState.Init -> {}
             is ThoughtDiariesScreenState.Loading -> {
-                if (isNetworkConnect())
+                if (isNetworkConnect()) {
+                    binding.includePlaceholder.layout.isVisible = false
                     binding.progressBar.isVisible = true
-                else
+                }else
                     binding.includePlaceholder.layout.isVisible = true
             }
             is ThoughtDiariesScreenState.Error -> {
