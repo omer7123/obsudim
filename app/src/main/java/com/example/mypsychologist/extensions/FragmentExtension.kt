@@ -1,11 +1,11 @@
 package com.example.mypsychologist.extensions
 
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import com.example.mypsychologist.ConnectionChecker
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.CardViewGroupBinding
+import com.example.mypsychologist.databinding.LayoutCardPracticeBinding
 import com.example.mypsychologist.databinding.SmallCardViewGroupBinding
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
 import com.example.mypsychologist.ui.exercises.cbt.FragmentHint
@@ -59,5 +59,16 @@ fun Fragment.setupSmallCard(
     card.apply {
         cardTitle.text = getString(titleRes)
         imageRes?.let { cardImage.setImageResource(it) }
+    }
+}
+
+fun Fragment.setupCardPractice(
+    card: LayoutCardPracticeBinding,
+    titleRes: Int,
+    imageRes: Int,
+){
+    card.apply {
+        titleTv.text = getString(titleRes)
+        imageRes?.let { imageIv.setImageResource(it) }
     }
 }

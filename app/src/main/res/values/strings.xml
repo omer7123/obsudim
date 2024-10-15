@@ -39,7 +39,7 @@
     <string name="psychoeducation_signature">Познай психологию</string>
     <string name="diagnostics">Тестирование</string>
     <string name="diagnostics_signature">Познай себя</string>
-    <string name="daily_tasks">Ежедневные задания</string>
+    <string name="daily_tasks">На каждый день</string>
     <string name="problem_work">Проработка проблемы:</string>
 
     <string name="cbt">КПТ</string>
@@ -698,6 +698,8 @@
     <string name="what_do_you_want_to_share">Чем хочешь поделиться?</string>
     <string name="go_to_kpt_diary">Перейти в КПТ-дневник</string>
     <string name="tracker_mood">Как ты себя чувствуешь?</string>
+
+    <string name="tracker_mood_title">Трекер настроения</string>
     <string name="terrible">Ужасно</string>
     <string name="amazing">Потрясающе</string>
     <string name="specify">Уточнить</string>

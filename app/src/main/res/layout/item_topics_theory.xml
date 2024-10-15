@@ -30,7 +30,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_theme" />
 
-
     </androidx.cardview.widget.CardView>
 
     <TextView

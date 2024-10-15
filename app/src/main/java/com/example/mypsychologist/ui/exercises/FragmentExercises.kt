@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentExercisesBinding
 import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.setupCardPractice
 import com.example.mypsychologist.extensions.setupSmallCard
 import com.example.mypsychologist.presentation.exercises.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
@@ -148,9 +149,13 @@ FragmentExercises : Fragment() {
                 track.show(childFragmentManager, "fs")
             }
 
-            diaryNotesCard.root.setOnClickListener {
+            diaryFreeBtn.setOnClickListener {
                 findNavController().navigate(R.id.freeDiaryFragment)
             }
+
+//            diaryNotesCard.root.setOnClickListener {
+//                findNavController().navigate(R.id.freeDiaryFragment)
+//            }
 
           /*  binding.changeButton.setOnClickListener {
                 setupChangeProblemFragment()
@@ -190,21 +195,17 @@ FragmentExercises : Fragment() {
 
     private fun setupCards() {
         binding.apply {
-            setupSmallCard(
+            setupCardPractice(
                 trackerCard,
-                R.string.tracker_mood,
-                R.drawable.ic_like
+                R.string.tracker_mood_title,
+                R.drawable.ic_tracker_mood_practice
             )
-            setupSmallCard(
+            setupCardPractice(
                 diaryCard,
-                R.string.thought_diary,
-                R.drawable.ic_diary
+                R.string.cbt_diary,
+                R.drawable.ic_diary_practice
             )
-            setupSmallCard(
-                diaryNotesCard,
-                R.string.diary_notes,
-                R.drawable.ic_diary
-            )
+
         }
     }
 

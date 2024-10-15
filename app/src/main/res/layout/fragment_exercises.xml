@@ -14,7 +14,9 @@
 
     <TextView
         android:id="@+id/titleUp_tv"
-        style="@style/TextAppearance.Material3.TitleMedium"
+        style="@style/TitleXS"
+        android:textColor="@color/text_default_color"
+        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/daily_tasks"
@@ -23,26 +25,39 @@
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/container_task"
+        android:layout_marginTop="20dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="@id/end"
+        app:justifyContent="space_between"
         app:layout_constraintStart_toStartOf="@+id/start"
         app:layout_constraintTop_toBottomOf="@id/titleUp_tv">
 
         <include
             android:id="@+id/tracker_card"
-            layout="@layout/small_card_view_group" />
+            layout="@layout/layout_card_practice" />
 
         <include
             android:id="@+id/diary_card"
-            layout="@layout/small_card_view_group" />
-
-        <include
-            android:id="@+id/diary_notes_card"
-            layout="@layout/small_card_view_group" />
+            layout="@layout/layout_card_practice" />
 
     </com.google.android.flexbox.FlexboxLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/diary_free_btn"
+        app:cornerRadius="12dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/container_task"
+        app:layout_constraintStart_toStartOf="@id/container_task"
+        app:layout_constraintTop_toBottomOf="@id/container_task"
+        android:layout_width="0dp"
+        android:text="@string/free_diary"
+        android:textAlignment="textStart"
+        app:iconSize="34dp"
+        app:iconGravity="end"
+        app:icon="@drawable/ic_arrow_forward"
+        android:textAppearance="@style/BodyXLBold"
+        android:layout_height="60dp"/>
 
  <!--   <androidx.constraintlayout.widget.Group
         android:id="@+id/section_problem"
