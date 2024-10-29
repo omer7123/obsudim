@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TitleFragment" parent="TextAppearance.Material3.ActionBar.Title">
         <item name="android:titleTextColor">@color/md_theme_light_onSurface</item>
         <item name="fontFamily">@font/cygre_semi_bold</item>
@@ -11,15 +12,40 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="BodyM.Black">
+        <item name="android:textColor">@color/text_default_color</item>
+    </style>
+
+    <style name="BodyM.White">
+        <item name="android:textColor">@color/md_theme_light_onTertiary</item>
+    </style>
+
     <style name="BodyL">
         <item name="fontFamily">@font/inter_medium</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="BodyL.Black">
+        <item name="android:textColor">@color/text_default_color</item>
+    </style>
+
+    <style name="BodyL.White">
+        <item name="android:textColor">@color/md_theme_light_onTertiary</item>
     </style>
 
     <style name="BodyMBold">
         <item name="fontFamily">@font/inter_bold</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="BodyMBold.Black">
+        <item name="android:textColor">@color/text_default_color</item>
+    </style>
+
+    <style name="BodyMBold.White">
+        <item name="android:textColor">@color/md_theme_light_onTertiary</item>
+    </style>
+
 
     <style name="TitleXS">
         <item name="fontFamily">@font/inter_bold</item>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="weight_image_practice">170dp</dimen>
+    <dimen name="height_image_practice">155dp</dimen>
+</resources>

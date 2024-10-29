@@ -15,21 +15,22 @@
     <TextView
         android:id="@+id/titleUp_tv"
         style="@style/TitleXS"
-        android:textColor="@color/text_default_color"
-        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="@string/daily_tasks"
+        android:textColor="@color/text_default_color"
         app:layout_constraintStart_toStartOf="@+id/start"
         app:layout_constraintTop_toBottomOf="@id/include" />
 
+
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/container_task"
-        android:layout_marginTop="20dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/end"
+        android:layout_marginTop="20dp"
         app:justifyContent="space_between"
+        app:layout_constraintEnd_toEndOf="@id/end"
         app:layout_constraintStart_toStartOf="@+id/start"
         app:layout_constraintTop_toBottomOf="@id/titleUp_tv">
 
@@ -45,56 +46,56 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/diary_free_btn"
-        app:cornerRadius="12dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@id/container_task"
-        app:layout_constraintStart_toStartOf="@id/container_task"
-        app:layout_constraintTop_toBottomOf="@id/container_task"
         android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
         android:text="@string/free_diary"
         android:textAlignment="textStart"
-        app:iconSize="34dp"
-        app:iconGravity="end"
-        app:icon="@drawable/ic_arrow_forward"
         android:textAppearance="@style/BodyXLBold"
-        android:layout_height="60dp"/>
+        app:cornerRadius="12dp"
+        app:icon="@drawable/ic_arrow_forward"
+        app:iconGravity="end"
+        app:iconSize="34dp"
+        app:layout_constraintEnd_toEndOf="@id/container_task"
+        app:layout_constraintStart_toStartOf="@id/container_task"
+        app:layout_constraintTop_toBottomOf="@id/container_task" />
 
- <!--   <androidx.constraintlayout.widget.Group
-        android:id="@+id/section_problem"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:constraint_referenced_ids="problem_title, change_button, container_task_problem"/>
+    <!--   <androidx.constraintlayout.widget.Group
+           android:id="@+id/section_problem"
+           android:layout_width="0dp"
+           android:layout_height="0dp"
+           app:constraint_referenced_ids="problem_title, change_button, container_task_problem"/>
 
-    <TextView
-        android:id="@+id/problem_title"
-        style="@style/TextAppearance.Material3.TitleMedium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/problem_work"
-        app:layout_constraintEnd_toStartOf="@+id/change_button"
-        app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintTop_toBottomOf="@+id/container_task" />
+       <TextView
+           android:id="@+id/problem_title"
+           style="@style/TextAppearance.Material3.TitleMedium"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="24dp"
+           android:layout_marginEnd="16dp"
+           android:text="@string/problem_work"
+           app:layout_constraintEnd_toStartOf="@+id/change_button"
+           app:layout_constraintStart_toStartOf="@+id/start"
+           app:layout_constraintTop_toBottomOf="@+id/container_task" />
 
-    <Button
-        android:id="@+id/change_button"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/change"
-        app:layout_constraintBottom_toBottomOf="@+id/problem_title"
-        app:layout_constraintEnd_toStartOf="@+id/end"
-        app:layout_constraintTop_toTopOf="@+id/problem_title" /> -->
+       <Button
+           android:id="@+id/change_button"
+           style="@style/Widget.Material3.Button.TextButton"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/change"
+           app:layout_constraintBottom_toBottomOf="@+id/problem_title"
+           app:layout_constraintEnd_toStartOf="@+id/end"
+           app:layout_constraintTop_toTopOf="@+id/problem_title" /> -->
 
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/container_task_problem"
-        android:visibility="gone"
-
         android:layout_width="0dp"
+
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
         app:flexWrap="wrap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/start"
@@ -120,10 +121,10 @@
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/section_placeholder"
-        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:constraint_referenced_ids="placeholder_text, begin_button"/>
+        android:visibility="gone"
+        app:constraint_referenced_ids="placeholder_text, begin_button" />
 
     <TextView
         android:id="@+id/placeholder_text"
@@ -148,8 +149,9 @@
         app:layout_constraintStart_toStartOf="@+id/start"
         app:layout_constraintTop_toBottomOf="@+id/placeholder_text" />
 
-    <include layout="@layout/include_network_placeholder"
-        android:id="@+id/network_placeholder" />
+    <include
+        android:id="@+id/network_placeholder"
+        layout="@layout/include_network_placeholder" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/start"

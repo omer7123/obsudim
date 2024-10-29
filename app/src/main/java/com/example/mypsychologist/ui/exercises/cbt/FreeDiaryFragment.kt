@@ -122,6 +122,7 @@ class FreeDiaryFragment : Fragment() {
     }
 
     private fun showPlaceholderForEmptyList() {
+        binding.descTv.isVisible = false
         binding.includePlaceholder.apply {
             image.setImageResource(R.drawable.ic_place)
             title.text = ""

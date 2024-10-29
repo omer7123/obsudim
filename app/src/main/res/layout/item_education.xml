@@ -40,9 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/end"
-        android:textAppearance="@style/BodyMBold"
-        android:textColor="@color/md_theme_light_onError"
+        android:textAppearance="@style/BodyMBold.White"
         android:visibility="gone" />
-
 
 </LinearLayout>

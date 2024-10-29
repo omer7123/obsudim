@@ -3,12 +3,10 @@ package com.example.mypsychologist
 import com.example.mypsychologist.data.converters.toModels
 import com.example.mypsychologist.data.model.ProblemAnalysisModel
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
-import com.example.mypsychologist.domain.useCase.DASSConclusionUseCase
 import com.example.mypsychologist.extensions.containsKeys
 import com.example.mypsychologist.extensions.sum
-import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).

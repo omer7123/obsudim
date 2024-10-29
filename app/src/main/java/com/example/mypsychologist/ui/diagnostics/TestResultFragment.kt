@@ -53,12 +53,11 @@ class TestResultFragment : Fragment() {
         binding = FragmentTestResultBinding.inflate(inflater, container, false)
 
         binding.includeToolbar.toolbar.apply {
-            title = getString(R.string.results)
+            title = getString(R.string.result)
             setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
         }
-
         setupAdapter()
 
         viewModel.screenState
@@ -76,7 +75,7 @@ class TestResultFragment : Fragment() {
             }
             is Resource.Success -> {
                 binding.progressBar.isVisible = false
-                binding.title.text = requireArguments().getString(TEST_TITLE, "")
+//                binding.title.text = requireArguments().getString(TEST_TITLE, "")
 
                 mainAdapter.submitList(resource.data.toDelegateItems() + resource.data.toConclusionDelegateItems())
 
