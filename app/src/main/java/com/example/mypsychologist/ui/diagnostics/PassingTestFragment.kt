@@ -136,7 +136,6 @@ class PassingTestFragment : Fragment() {
         const val DESCRIPTION = "description"
         private const val TAG = "tag"
 
-        @JvmStatic
         fun newInstance(testId: String, title: String, description: String) =
             PassingTestFragment().apply {
                 arguments = bundleOf(

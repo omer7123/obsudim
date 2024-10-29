@@ -38,11 +38,11 @@ class TestScaleResultDelegate : AdapterDelegate {
         fun bind(scale: ScaleResultForHistoryEntity) {
             binding.apply {
                 scaleTitle.text = scale.scaleTitle
-                resultScore.text = if(scale.score.toInt().toFloat() == scale.score ){
-                    scale.score.toInt().toString()
-                } else {
-                    scale.score.toString()
-                }
+
+                val percentOfResult = scale.score.toPercent(scale.maxScore).toInt()
+                val scaleOfPercent = "$percentOfResult %"
+
+                resultScore.text = scaleOfPercent
                 scoreIndicator.progress = scale.score.toPercent(scale.maxScore).toInt()
                 scoreIndicator.setIndicatorColor(Color.parseColor(scale.color))
             }

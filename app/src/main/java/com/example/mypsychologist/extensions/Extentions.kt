@@ -43,5 +43,8 @@ fun <A, B> Map<A, B>.containsKeys(vararg keys: A): Boolean = run {
     contains
 }
 
-fun Float.toPercent(maxValue: Int) =
+fun Float.toPercent(maxValue: Int): Float =
+    this * 100 / maxValue
+
+fun Int.toPercent(maxValue: Int): Int =
     this * 100 / maxValue
