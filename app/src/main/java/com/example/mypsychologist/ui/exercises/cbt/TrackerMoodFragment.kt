@@ -80,4 +80,8 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
             viewModel.saveMood(binding.moodSb.value.toInt())
         }
     }
+
+    companion object{
+        const val TAG = "TAG"
+    }
 }

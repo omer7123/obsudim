@@ -5,6 +5,7 @@ import com.example.mypsychologist.core.ReceivedCookiesInterceptor
 import com.example.mypsychologist.data.remote.authentication.AuthenticationService
 import com.example.mypsychologist.data.remote.diagnostic.TestsDiagnosticService
 import com.example.mypsychologist.data.remote.education.EducationService
+import com.example.mypsychologist.data.remote.exercises.ExerciseService
 import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -111,6 +112,12 @@ class DataModule {
     @Singleton
     fun provideEducationService(retrofit: Retrofit): EducationService{
         return retrofit.create(EducationService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideExerciseService(retrofit: Retrofit): ExerciseService{
+        return retrofit.create(ExerciseService::class.java)
     }
 
 //    @Provides

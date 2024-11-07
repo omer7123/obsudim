@@ -5,24 +5,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentExercisesBinding
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.setupCardPractice
-import com.example.mypsychologist.extensions.setupSmallCard
-import com.example.mypsychologist.presentation.exercises.REBTViewModel
+import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.presentation.exercises.ExercisesScreenState
+import com.example.mypsychologist.presentation.exercises.exercisesFragment.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
-import com.example.mypsychologist.ui.exercises.rebt.ProblemsFragment
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class
 FragmentExercises : Fragment() {
 
     private var binding: FragmentExercisesBinding by autoCleared()
+
+    private val exercisesList = arrayListOf<ExerciseEntity>()
 
     @Inject
     lateinit var vmFactory: REBTViewModel.Factory
@@ -40,103 +49,45 @@ FragmentExercises : Fragment() {
     ): View {
         binding = FragmentExercisesBinding.inflate(inflater, container, false)
 
-   /*     viewModel.screenState
+        viewModel.screenState
             .flowWithLifecycle(lifecycle)
-            .onEach { render(it) }
-            .launchIn(lifecycleScope) */
-
-        binding.include.apply {
-            toolbar.title = getString(R.string.practice)
-            profileIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_profile)
+            .onEach { state ->
+                render(state)
             }
-            psychologistsIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
-            }
-        }
-
+            .launchIn(lifecycleScope)
 
         setupCards()
-        setupCardsForREBT()
         initListener()
 
         return binding.root
     }
 
-  /*  private fun render(it: REBTScreenState) {
-        when (it) {
-            is REBTScreenState.Data -> {
+    private fun render(state: ExercisesScreenState) {
+        when (state) {
+            is ExercisesScreenState.Data -> {
+                exercisesList.addAll(state.data)
                 binding.networkPlaceholder.layout.isVisible = false
-                binding.sectionPlaceholder.isVisible = false
-                binding.containerTaskProblem.isVisible = true
-                setupData(it)
+                binding.progressCircular.isVisible = false
             }
 
-            is REBTScreenState.Loading -> {
+            is ExercisesScreenState.Loading -> {
                 if (!isNetworkConnect()) {
                     binding.networkPlaceholder.layout.isVisible = true
-                    binding.sectionPlaceholder.isVisible = false
-                    binding.containerTaskProblem.isVisible = false
+                } else {
+                    binding.progressCircular.isVisible = true
                 }
             }
 
-            is REBTScreenState.Empty -> {
+            is ExercisesScreenState.Error -> {
                 binding.networkPlaceholder.layout.isVisible = false
-                binding.sectionPlaceholder.isVisible = true
-                binding.containerTaskProblem.isVisible = false
+                binding.progressCircular.isVisible = false
 
+                requireContext().showToast(state.msg)
             }
 
-            is REBTScreenState.Error -> {
-                binding.networkPlaceholder.layout.isVisible = false
-                binding.sectionPlaceholder.isVisible = false
-                binding.containerTaskProblem.isVisible = false
-                requireContext().showToast(getString(R.string.db_error))
-            }
-
-            is REBTScreenState.Init -> Unit
+            is ExercisesScreenState.Init -> Unit
         }
     }
-
-    private fun setupData(it: REBTScreenState.Data) {
-        setupCardsForREBT()
-        it.problemProgress.apply {
-            val problemTitle = "Проработка проблемы: $problem"
-            binding.problemTitle.text = problemTitle
-
-            val primaryCard =
-                AppCompatResources.getDrawable(requireContext(), R.drawable.primary_card)
-
-            if (problemAnalysisCompleted) {
-                binding.problemAnalysis.card.background =
-                    primaryCard
-
-                binding.beliefsCheck.root.setOnClickListener {
-                    findNavController().navigate(R.id.fragment_beliefs_verification)
-                }
-            }
-            if (beliefsCheckCompleted) {
-                binding.beliefsCheck.card.background =
-                    primaryCard
-
-                binding.beliefsAnalysis.root.setOnClickListener {
-                    findNavController().navigate(R.id.fragment_beliefs_analysis)
-                }
-            }
-            if (beliefsAnalysisCompleted) {
-                binding.beliefsAnalysis.card.background =
-                    primaryCard
-
-                binding.dialog.root.setOnClickListener {
-                    findNavController().navigate(R.id.autoDialogFragment)
-                }
-            }
-            if (dialogCompleted)
-                binding.dialog.card.background =
-                    primaryCard
-        }
-    } */
-
 
     private fun initListener() {
         with(binding) {
@@ -145,52 +96,26 @@ FragmentExercises : Fragment() {
             }
 
             trackerCard.root.setOnClickListener {
-                val track = TrackerMoodFragment()
-                track.show(childFragmentManager, "fs")
+                TrackerMoodFragment().apply {
+                    show(childFragmentManager, TrackerMoodFragment.TAG)
+                }
             }
 
             diaryFreeBtn.setOnClickListener {
                 findNavController().navigate(R.id.freeDiaryFragment)
             }
-
-//            diaryNotesCard.root.setOnClickListener {
-//                findNavController().navigate(R.id.freeDiaryFragment)
-//            }
-
-          /*  binding.changeButton.setOnClickListener {
-                setupChangeProblemFragment()
-            }
-
-            binding.beginButton.setOnClickListener {
-                setupChangeProblemFragment()
-            } */
-
-            problemAnalysis.root.setOnClickListener {
-              //  findNavController().navigate(R.id.fragment_rebt_harmful_thought)
-                setupChangeProblemFragment(R.id.fragment_rebt_harmful_thought)
-            }
-            beliefsCheck.root.setOnClickListener {
-                setupChangeProblemFragment(R.id.fragment_beliefs_verification)
-            }
-            beliefsAnalysis.root.setOnClickListener {
-                setupChangeProblemFragment(R.id.fragment_beliefs_analysis)
-            }
-            dialog.root.setOnClickListener {
-                setupChangeProblemFragment(R.id.autoDialogFragment)
-            }
-        }
-    }
-
-    private fun setupChangeProblemFragment(fragmentId: Int) {
-        childFragmentManager.setFragmentResultListener(
-            ProblemsFragment.PROBLEM,
-            viewLifecycleOwner
-        ) { _, bundle ->
-            findNavController().navigate(fragmentId, bundle)
-            viewModel.getProblemProgress(bundle.getString(ProblemsFragment.PROBLEM)!!)
         }
 
-        ProblemsFragment().show(childFragmentManager, TAG)
+        binding.include.apply {
+            toolbar.title = getString(R.string.practice)
+
+            profileIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_profile)
+            }
+            psychologistsIcon.setOnClickListener {
+                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
+            }
+        }
     }
 
     private fun setupCards() {
@@ -205,35 +130,6 @@ FragmentExercises : Fragment() {
                 R.string.cbt_diary,
                 R.drawable.ic_diary_practice
             )
-
         }
-    }
-
-    private fun setupCardsForREBT() {
-        binding.apply {
-            setupSmallCard(
-                problemAnalysis,
-                R.string.problem_analysis,
-                R.drawable.ic_problem_analysis
-            )
-            setupSmallCard(
-                beliefsCheck,
-                R.string.beliefs_check,
-                R.drawable.ic_beliefs_check
-            )
-            setupSmallCard(
-                beliefsAnalysis,
-                R.string.beliefs_analysis,
-                R.drawable.ic_beliefs_analysis
-            )
-            setupSmallCard(
-                dialog,
-                R.string.dialog_me,
-                R.drawable.ic_dialog
-            )
-        }
-    }
-    companion object{
-        const val TAG ="tag"
     }
 }

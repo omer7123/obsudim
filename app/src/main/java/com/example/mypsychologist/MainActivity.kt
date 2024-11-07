@@ -6,12 +6,12 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.example.mypsychologist.databinding.ActivityMainBinding
@@ -20,6 +20,7 @@ import com.example.mypsychologist.ui.psychologist.TasksWorker
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.kirich1409.androidnotificationdsl.channels.createNotificationChannels
 import com.kirich1409.androidnotificationdsl.notification
@@ -75,7 +76,10 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         val notificationManager =
             getSystemService(AppCompatActivity.NOTIFICATION_SERVICE)
 
-        (notificationManager as NotificationManager).notify(TasksWorker.TASK_NOTIFICATION_ID, notification)
+        (notificationManager as NotificationManager).notify(
+            TasksWorker.TASK_NOTIFICATION_ID,
+            notification
+        )
 
         val taskWorkRequest = OneTimeWorkRequest.Builder(TasksWorker::class.java).build()
 
@@ -138,6 +142,12 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     }
 
     private fun setupNavigationListener() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        findViewById<BottomNavigationView>(R.id.navigation)
+            .setupWithNavController(navController)
+
         binding.navigation.setOnItemSelectedListener { item ->
             val navController =
                 (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
@@ -171,7 +181,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     }
 
     override fun setActualItem(id: Int) {
-        if(binding.navigation.selectedItemId != id)
+        if (binding.navigation.selectedItemId != id)
             binding.navigation.selectedItemId = id
     }
 

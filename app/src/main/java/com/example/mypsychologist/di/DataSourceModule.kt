@@ -8,6 +8,8 @@ import com.example.mypsychologist.data.remote.diagnostic.TestsDiagnosticDataSour
 import com.example.mypsychologist.data.remote.diagnostic.TestsDiagnosticDataSourceImpl
 import com.example.mypsychologist.data.remote.education.EducationDataSource
 import com.example.mypsychologist.data.remote.education.EducationDataSourceImpl
+import com.example.mypsychologist.data.remote.exercises.ExerciseDataSource
+import com.example.mypsychologist.data.remote.exercises.ExerciseDataSourceImpl
 import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryDataSource
 import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryDataSourceImpl
 import dagger.Binds
@@ -36,4 +38,8 @@ interface DataSourceModule {
     @Binds
     @Singleton
     fun bindEducationDataSource(impl: EducationDataSourceImpl): EducationDataSource
+
+    @Binds
+    @Singleton
+    fun bindExerciseDataSource(impl: ExerciseDataSourceImpl): ExerciseDataSource
 }

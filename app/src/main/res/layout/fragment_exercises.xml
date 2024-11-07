@@ -60,98 +60,25 @@
         app:layout_constraintStart_toStartOf="@id/container_task"
         app:layout_constraintTop_toBottomOf="@id/container_task" />
 
-    <!--   <androidx.constraintlayout.widget.Group
-           android:id="@+id/section_problem"
-           android:layout_width="0dp"
-           android:layout_height="0dp"
-           app:constraint_referenced_ids="problem_title, change_button, container_task_problem"/>
-
-       <TextView
-           android:id="@+id/problem_title"
-           style="@style/TextAppearance.Material3.TitleMedium"
-           android:layout_width="0dp"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="24dp"
-           android:layout_marginEnd="16dp"
-           android:text="@string/problem_work"
-           app:layout_constraintEnd_toStartOf="@+id/change_button"
-           app:layout_constraintStart_toStartOf="@+id/start"
-           app:layout_constraintTop_toBottomOf="@+id/container_task" />
-
-       <Button
-           android:id="@+id/change_button"
-           style="@style/Widget.Material3.Button.TextButton"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/change"
-           app:layout_constraintBottom_toBottomOf="@+id/problem_title"
-           app:layout_constraintEnd_toStartOf="@+id/end"
-           app:layout_constraintTop_toTopOf="@+id/problem_title" /> -->
-
-
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/container_task_problem"
-        android:layout_width="0dp"
-
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        app:flexWrap="wrap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintTop_toBottomOf="@id/container_task">
-
-        <include
-            android:id="@+id/problem_analysis"
-            layout="@layout/small_card_view_group" />
-
-        <include
-            android:id="@+id/beliefs_check"
-            layout="@layout/small_card_view_group" />
-
-        <include
-            android:id="@+id/beliefsAnalysis"
-            layout="@layout/small_card_view_group" />
-
-        <include
-            android:id="@+id/dialog"
-            layout="@layout/small_card_view_group" />
-
-    </com.google.android.flexbox.FlexboxLayout>
-
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/section_placeholder"
+        android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
-        app:constraint_referenced_ids="placeholder_text, begin_button" />
-
-    <TextView
-        android:id="@+id/placeholder_text"
-        style="@style/TextAppearance.Material3.BodyLarge"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="@string/no_problems"
-        app:layout_constraintEnd_toStartOf="@+id/end"
-        app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintTop_toBottomOf="@+id/container_task" />
-
-    <Button
-        android:id="@+id/begin_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/begin"
-        app:layout_constraintEnd_toStartOf="@+id/end"
-        app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintTop_toBottomOf="@+id/placeholder_text" />
+        app:constraint_referenced_ids="diary_free_btn, titleUp_tv, container_task" />
 
     <include
         android:id="@+id/network_placeholder"
         layout="@layout/include_network_placeholder" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_circular"
+        android:indeterminate="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/start"

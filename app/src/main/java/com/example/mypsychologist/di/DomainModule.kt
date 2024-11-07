@@ -3,10 +3,12 @@ package com.example.mypsychologist.di
 import androidx.lifecycle.ViewModel
 import com.example.mypsychologist.data.repository.AuthenticationRepositoryImpl
 import com.example.mypsychologist.data.repository.EducationRepositoryImpl
+import com.example.mypsychologist.data.repository.ExerciseReposityoryImpl
 import com.example.mypsychologist.data.repository.FreeDiaryRepositoryImpl
 import com.example.mypsychologist.data.repository.TestsDiagnosticRepositoryImpl
 import com.example.mypsychologist.domain.repository.EducationRepository
 import com.example.mypsychologist.domain.repository.retrofit.AuthenticationRepository
+import com.example.mypsychologist.domain.repository.retrofit.ExerciseRepository
 import com.example.mypsychologist.domain.repository.retrofit.FreeDiaryRepository
 import com.example.mypsychologist.domain.repository.retrofit.TestsDiagnosticRepository
 import com.example.mypsychologist.presentation.authentication.authFragment.AuthViewModel
@@ -41,12 +43,17 @@ interface DomainModule {
     fun bindEducationRepository(impl: EducationRepositoryImpl): EducationRepository
 
     @Binds
+    @Singleton
+    fun bindExercise(impl: ExerciseReposityoryImpl): ExerciseRepository
+
+
+
+    @Binds
     @[IntoMap ClassKey(RegisterViewModel::class)]
     fun provideRegisterViewModel(registerViewModel: RegisterViewModel): ViewModel
     @Binds
     @[IntoMap ClassKey(AuthViewModel::class)]
     fun provideAuthViewModel(authViewModel: AuthViewModel): ViewModel
-
 
     @Binds
     @[IntoMap ClassKey(FreeDiariesViewModel::class)]

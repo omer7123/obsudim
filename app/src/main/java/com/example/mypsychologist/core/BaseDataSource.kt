@@ -1,13 +1,9 @@
 package com.example.mypsychologist.core
 
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import retrofit2.Response
-import java.lang.Exception
 
 abstract class BaseDataSource {
 
