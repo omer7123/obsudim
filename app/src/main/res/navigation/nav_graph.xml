@@ -14,12 +14,23 @@
         android:id="@+id/fragment_exercises"
         android:name="com.example.mypsychologist.ui.exercises.FragmentExercises"
         android:label="FragmentExercises"
-        tools:layout="@layout/fragment_exercises" />
+        tools:layout="@layout/fragment_exercises" >
+        <action
+            android:id="@+id/action_fragment_exercises_to_freeDiaryFragment"
+            app:destination="@id/freeDiaryFragment" />
+        <action
+            android:id="@+id/action_fragment_exercises_to_fragment_diaries"
+            app:destination="@id/fragment_diaries" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_diaries"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries"
         android:label="FragmentDiaries"
-        tools:layout="@layout/fragment_diaries" />
+        tools:layout="@layout/fragment_diaries" >
+        <action
+            android:id="@+id/action_fragment_diaries_to_fragment_new_diary"
+            app:destination="@id/fragment_new_diary" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_diary"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary"

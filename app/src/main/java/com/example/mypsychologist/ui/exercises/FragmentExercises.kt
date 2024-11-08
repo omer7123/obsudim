@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,7 +19,7 @@ import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.setupCardPractice
 import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.presentation.exercises.ExercisesScreenState
+import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
@@ -62,15 +63,15 @@ FragmentExercises : Fragment() {
         return binding.root
     }
 
-    private fun render(state: ExercisesScreenState) {
+    private fun render(state: BaseStateUI<List<ExerciseEntity>>) {
         when (state) {
-            is ExercisesScreenState.Data -> {
+            is BaseStateUI.Content -> {
                 exercisesList.addAll(state.data)
                 binding.networkPlaceholder.layout.isVisible = false
                 binding.progressCircular.isVisible = false
             }
 
-            is ExercisesScreenState.Loading -> {
+            is BaseStateUI.Loading -> {
                 if (!isNetworkConnect()) {
                     binding.networkPlaceholder.layout.isVisible = true
                 } else {
@@ -78,21 +79,24 @@ FragmentExercises : Fragment() {
                 }
             }
 
-            is ExercisesScreenState.Error -> {
+            is BaseStateUI.Error -> {
                 binding.networkPlaceholder.layout.isVisible = false
                 binding.progressCircular.isVisible = false
 
                 requireContext().showToast(state.msg)
             }
 
-            is ExercisesScreenState.Init -> Unit
+            is BaseStateUI.Initial -> Unit
         }
     }
 
     private fun initListener() {
         with(binding) {
             diaryCard.root.setOnClickListener {
-                findNavController().navigate(R.id.fragment_diaries)
+                findNavController().navigate(
+                    R.id.fragment_diaries,
+                    bundleOf(EXERCISE_ID to exercisesList.find { it.title == "КПТ-дневник" }!!.id)
+                )
             }
 
             trackerCard.root.setOnClickListener {
@@ -131,5 +135,9 @@ FragmentExercises : Fragment() {
                 R.drawable.ic_diary_practice
             )
         }
+    }
+
+    companion object{
+        private const val EXERCISE_ID = "ID_EXERCISE"
     }
 }

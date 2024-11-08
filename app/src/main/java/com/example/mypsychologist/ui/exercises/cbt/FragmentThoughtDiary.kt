@@ -10,12 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.*
+import com.example.mypsychologist.NavbarHider
+import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentThoughtDiaryBinding
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.exercises.ThoughtDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
@@ -33,8 +33,7 @@ class FragmentThoughtDiary : Fragment() {
     private val viewModel: ThoughtDiaryViewModel by viewModels {
         ThoughtDiaryViewModel.provideFactory(
             vmFactory,
-            requireArguments().getString(ID, ""),
-            //requireArguments().getString(ExercisesFragment.CLIENT_ID, "")
+            requireArguments().getString(ID, "")
         )
     }
 
@@ -167,7 +166,5 @@ class FragmentThoughtDiary : Fragment() {
 
     companion object {
         const val ID = "id"
-        private const val EDIT_AUTO_THOUGHT = "auto_thought"
-        private const val EDIT_ALTERNATIVE_THOUGHT = "alternative_thought"
     }
 }
