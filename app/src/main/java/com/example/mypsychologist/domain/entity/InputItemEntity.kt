@@ -1,5 +1,7 @@
 package com.example.mypsychologist.domain.entity
 
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
+
 data class InputItemEntity(
     val titleId: Int,
     val hintId: Int? = null,
@@ -10,3 +12,20 @@ data class InputItemEntity(
     val text: String = ""
 )
 
+data class InputItemExerciseEntity(
+    val id: String,
+    val titleId: String,
+    val hintId: String? = null,
+    val helperId: String? = null,
+    val saveFunction: (ExerciseResultEntity) -> Unit,
+    val fieldName: String = "",
+    var isNotCorrect: Boolean = false,
+    var text: String = ""
+)
+
+data class InputIntExerciseEntity(
+    val id: String,
+    val title: String,
+    val value: String,
+    val saveResult: (ExerciseResultEntity) -> Unit
+)

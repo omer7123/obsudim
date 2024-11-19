@@ -1,10 +1,9 @@
 package com.example.mypsychologist.ui.exercises.cbt
 
-import com.example.mypsychologist.domain.entity.InputItemEntity
 import com.example.mypsychologist.ui.DelegateItem
 
-class HintDelegateItem(private val value: Int) : DelegateItem {
-    override fun content(): Int = value
+class HintDelegateItem(private val value: String) : DelegateItem {
+    override fun content(): String = value
 
     override fun id(): Int = value.hashCode()
 

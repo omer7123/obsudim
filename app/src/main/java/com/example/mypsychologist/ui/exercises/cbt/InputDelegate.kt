@@ -2,12 +2,13 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.IncludeEditTextBinding
 import com.example.mypsychologist.domain.entity.InputItemEntity
+import com.example.mypsychologist.domain.entity.InputItemExerciseEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
@@ -73,6 +74,49 @@ class InputDelegate(
                 }
 
                 field.setText(item.text)*/
+            }
+        }
+    }
+}
+
+class InputExerciseDelegate(
+    private val onHelpClick: ((Int, Int) -> Unit)? = null
+) : AdapterDelegate {
+    private val mDataSet = HashMap<Int, String>()
+    override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
+        IncludeEditTextBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+        onHelpClick
+    )
+
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        item: DelegateItem,
+        position: Int
+    ) {
+        (holder as ViewHolder).bind((item as InputExerciseDelegateItem).content())
+    }
+
+    override fun isOfViewType(item: DelegateItem) = item is InputExerciseDelegateItem
+
+
+    class ViewHolder(
+        private val binding: IncludeEditTextBinding,
+        private val onHelpClick: ((Int, Int) -> Unit)?
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: InputItemExerciseEntity) {
+            binding.apply {
+                editText.hint = item.titleId
+
+                if (item.isNotCorrect)
+                    editLayout.error = itemView.context.getString(R.string.necessary_to_fill)
+
+                editText.setText(item.text)
+
+                editText.addTextChangedListener {
+                    item.saveFunction(ExerciseResultEntity(item.id, it.toString()))
+                }
+
             }
         }
     }

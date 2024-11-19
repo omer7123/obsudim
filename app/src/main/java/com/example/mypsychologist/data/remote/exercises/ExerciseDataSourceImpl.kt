@@ -2,6 +2,7 @@ package com.example.mypsychologist.data.remote.exercises
 
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.model.ExerciseDetailModel
 import com.example.mypsychologist.data.model.ExercisesModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -17,5 +18,13 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         emit(getResult {
             api.getAllExercises()
         })
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getExerciseDetail(id: String): Flow<Resource<ExerciseDetailModel>> = flow{
+        emit(
+            getResult {
+                api.getExerciseDetail(id)
+            }
+        )
     }.flowOn(Dispatchers.IO)
 }

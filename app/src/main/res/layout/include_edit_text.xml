@@ -8,16 +8,28 @@
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="20dp">
 
-    <EditText
-        android:id="@+id/edit_text"
-        android:padding="16dp"
-        style="@style/BodyM"
-        android:background="@drawable/input_card"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_layout"
+        app:boxStrokeWidth="0dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxBackgroundColor="#F3F5FF"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        tools:text="Name" />
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text"
+            android:textColorHint="@color/text_default_color"
+            android:textColor="@color/text_default_color"
+            android:textAppearance="@style/BodyM.Black"
+            tools:hint="Опиши ситуацию..."
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 </LinearLayout>
 
 <!--<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"

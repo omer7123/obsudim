@@ -177,7 +177,9 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     }
 
     override fun setNavbarVisibility(it: Boolean) {
-        binding.navigation.isVisible = it
+        if (::binding.isInitialized) {
+            binding.navigation.isVisible = it
+        }
     }
 
     override fun setActualItem(id: Int) {

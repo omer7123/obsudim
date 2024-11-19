@@ -2,7 +2,6 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,11 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mypsychologist.*
+import com.example.mypsychologist.NavbarHider
+import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentNewThoughtDiaryBinding
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWithDelegateItem
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
@@ -30,6 +31,8 @@ class FragmentNewCBTDiary : Fragment() {
 
     private var binding: FragmentNewThoughtDiaryBinding by autoCleared()
     private var navbarHider: NavbarHider? = null
+
+    private lateinit var dataList: List<DelegateItem>
 
     @Inject
     lateinit var vmFactory: NewThoughtDiaryViewModel.Factory
@@ -56,8 +59,6 @@ class FragmentNewCBTDiary : Fragment() {
 
         binding.includeToolbar.toolbar.title = getString(R.string.cbt_diary)
 
-        setupAdapter(viewModel.items)
-
         setupListeners()
 
         viewModel.screenState
@@ -65,23 +66,51 @@ class FragmentNewCBTDiary : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+        if (savedInstanceState == null)
+            viewModel.getFields(requireArguments().getString(EXERCISE_ID).toString())
 
         return binding.root
     }
 
-    private fun setupAdapter(items: List<DelegateItem>) {
+    private fun render(state: NewThoughtDiaryScreenState) {
+        when (state) {
+            is NewThoughtDiaryScreenState.RequestResult -> {
+                renderRequest(state.resource)
+            }
+
+            is NewThoughtDiaryScreenState.ValidationError -> {
+                mainAdapter.submitList(state.listWithErrors)
+            }
+
+            is NewThoughtDiaryScreenState.Init -> Unit
+            is NewThoughtDiaryScreenState.Content -> renderContent(state.data)
+            is NewThoughtDiaryScreenState.Error -> {
+                requireContext().showToast(state.msg)
+            }
+
+            NewThoughtDiaryScreenState.Loading -> {
+
+            }
+        }
+    }
+
+    private fun renderContent(data: ExerciseDetailWithDelegateItem) {
+        binding.includeToolbar.toolbar.title = data.title
+        binding.description.text = data.description
+
+        dataList = data.fields
         mainAdapter = MainAdapter().apply {
             addDelegate(
-                InputDelegate()
+                InputExerciseDelegate()
             )
             addDelegate(
-                SliderDelegate(viewModel::setLevel)
+                SliderDelegate()
             )
             addDelegate(
                 HintDelegate()
             )
 
-            submitList(items)
+            submitList(dataList)
         }
 
         binding.itemsRw.apply {
@@ -99,31 +128,24 @@ class FragmentNewCBTDiary : Fragment() {
             showHints()
         }
 
-        binding.saveButton.setOnClickListener { viewModel.tryToSaveDiary() }
-    }
-
-    private fun showHints() {
-        val items = viewModel.items.map { it }.toMutableList()
-        viewModel.items.forEach {
-            if (it is InputDelegateItem) {
-                val position = items.indexOf(it)
-                items.add(position + 1, HintDelegateItem(it.content().helperId!!))
-            }
-            mainAdapter.submitList(items)
+        binding.saveButton.setOnClickListener {
+            viewModel.tryToSave(requireArguments().getString(EXERCISE_ID).toString())
         }
     }
 
-    private fun render(state: NewThoughtDiaryScreenState) {
-        when (state) {
-            is NewThoughtDiaryScreenState.RequestResult -> {
-                renderRequest(state.resource)
+    private fun showHints() {
+        val items = dataList.map { it }.toMutableList()
+        dataList.forEach {
+            if (dataList == mainAdapter.currentList) {
+                if (it is InputExerciseDelegateItem) {
+                    val position = items.indexOf(it)
+                    items.add(position + 1, HintDelegateItem(it.content().helperId!!))
+                }
+                mainAdapter.submitList(items)
+            }else{
+                mainAdapter.submitList(dataList)
             }
 
-            is NewThoughtDiaryScreenState.ValidationError -> {
-                mainAdapter.submitList(state.listWithErrors)
-            }
-
-            is NewThoughtDiaryScreenState.Init -> {}
         }
     }
 
@@ -136,7 +158,6 @@ class FragmentNewCBTDiary : Fragment() {
 
             is Resource.Success -> {
                 findNavController().popBackStack()
-                requireContext().showToast(getString(R.string.success))
             }
 
             is Resource.Loading -> Unit
@@ -147,5 +168,9 @@ class FragmentNewCBTDiary : Fragment() {
         navbarHider?.setNavbarVisibility(true)
         navbarHider = null
         super.onDetach()
+    }
+
+    companion object {
+        private const val EXERCISE_ID = "ID_EXERCISE"
     }
 }

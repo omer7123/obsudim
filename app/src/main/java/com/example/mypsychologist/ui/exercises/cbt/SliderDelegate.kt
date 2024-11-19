@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.IncludeSeekBarBinding
+import com.example.mypsychologist.domain.entity.InputIntExerciseEntity
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
-class SliderDelegate(private val onChangeValue: (Int, Int) -> Unit) : AdapterDelegate {
+class SliderDelegate : AdapterDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup) =
         ViewHolder(
             IncludeSeekBarBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-            onChangeValue
         )
 
     override fun onBindViewHolder(
@@ -27,15 +27,14 @@ class SliderDelegate(private val onChangeValue: (Int, Int) -> Unit) : AdapterDel
 
     class ViewHolder(
         private val binding: IncludeSeekBarBinding,
-        private val onChangeValue: (Int, Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(titleId: Int) {
-            binding.title.text = itemView.context.getString(titleId)
+        fun bind(item: InputIntExerciseEntity) {
+            binding.title.text = item.title
 
-            binding.moodSb.addOnChangeListener { _, value, _ ->
-                    onChangeValue(titleId, value.toInt())
-                            }
+//            binding.moodSb.addOnChangeListener { _, value, _ ->
+//                onChangeValue(titleId, value.toInt())
+//            }
         }
     }
 }

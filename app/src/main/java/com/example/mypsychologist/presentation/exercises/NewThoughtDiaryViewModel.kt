@@ -3,23 +3,27 @@ package com.example.mypsychologist.presentation.exercises
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.R
-import com.example.mypsychologist.domain.entity.InputItemEntity
-import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
-import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
-import com.example.mypsychologist.domain.entity.getMapOfMembers
-import com.example.mypsychologist.domain.useCase.SaveThoughtDiaryUseCase
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.domain.entity.InputIntExerciseEntity
+import com.example.mypsychologist.domain.entity.InputItemExerciseEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWithDelegateItem
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.GetExerciseDetailUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.SaveThoughtDiaryUseCase
+import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.IntDelegateItem
-import com.example.mypsychologist.ui.exercises.cbt.InputDelegateItem
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtDiaryUseCase) :
+class NewThoughtDiaryViewModel(
+    private val saveThoughtDiaryUseCase: SaveThoughtDiaryUseCase,
+    private val getExerciseDetailUseCase: GetExerciseDetailUseCase
+) :
     ViewModel() {
 
     private val _screenState: MutableStateFlow<NewThoughtDiaryScreenState> =
@@ -27,182 +31,139 @@ class NewThoughtDiaryViewModel(private val saveThoughtDiaryUseCase: SaveThoughtD
     val screenState: StateFlow<NewThoughtDiaryScreenState>
         get() = _screenState.asStateFlow()
 
-    private var diary = ThoughtDiaryEntity()
+    private val resultExercise = ArrayList<ExerciseResultEntity>()
 
-    private fun setSituation(it: String) {
-        diary = diary.copy(situation = it)
-    }
 
-    private fun setBehaviour(it: String) {
-        diary = diary.copy(behaviour = it)
-    }
-
-    private fun setMood(it: String) {
-        diary = diary.copy(mood = it)
-    }
-
-    fun setLevel(titleId: Int, it: Int) {
-        when (titleId) {
-            R.string.level ->
-                diary = diary.copy(level = it)
-
-            R.string.new_level ->
-                diary = diary.copy(newLevel = it)
-        }
-    }
-
-    private fun setAutoThought(it: String) {
-        diary = diary.copy(autoThought = it)
-    }
-
-    private fun setProofs(it: String) {
-        diary = diary.copy(proofs = it)
-    }
-
-    private fun setRefutations(it: String) {
-        diary = diary.copy(refutations = it)
-    }
-
-    private fun setAlternativeThought(it: String) {
-        diary = diary.copy(alternativeThought = it)
-    }
-
-    private fun setNewMood(it: String) {
-        diary = diary.copy(newMood = it)
-    }
-
-    fun tryToSaveDiary() {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (fieldsAreCorrect()) {
-                _screenState.value =
-                    NewThoughtDiaryScreenState.RequestResult(saveThoughtDiaryUseCase(diary))
-            }
-        }
-    }
-
-    private fun fieldsAreCorrect(): Boolean {
-        var containErrors = false
-
-        diary.getMapOfMembers().forEach { (member, value) ->
-
-            if (value.isEmpty()) {
-                containErrors = true
-
-                markAsNotCorrect(member)
-            }
-        }
-
-        if (containErrors)
-            _screenState.value = NewThoughtDiaryScreenState.ValidationError(items)
-
-        return !containErrors
-    }
-
-    private fun markAsNotCorrect(member: String) {
+    fun getFields(id: String) {
         viewModelScope.launch {
-            items = items.map { item ->
-                if (item is InputDelegateItem &&
-                    item.content().titleId == diary.mapOfTitles()[member]
-                )
-                    InputDelegateItem(item.content().copy(isNotCorrect = true))
-                else
-                    item
+            _screenState.value = NewThoughtDiaryScreenState.Loading
+
+            getExerciseDetailUseCase(id).collect { resource ->
+                when (resource) {
+                    is Resource.Error -> _screenState.value =
+                        NewThoughtDiaryScreenState.Error(resource.msg.toString())
+
+                    Resource.Loading -> _screenState.value = NewThoughtDiaryScreenState.Loading
+                    is Resource.Success -> {
+
+                        resultExercise.addAll(resource.data.fields.map {
+                            when (it.type) {
+                                TypeOfExercise.NumberInput -> ExerciseResultEntity(
+                                    fieldId = it.id,
+                                    value = "50"
+                                )
+
+                                TypeOfExercise.TextInput -> ExerciseResultEntity(
+                                    fieldId = it.id,
+                                    value = ""
+                                )
+                            }
+
+                        })
+                        _screenState.value =
+                            NewThoughtDiaryScreenState.Content(resource.data.toDelegateItems())
+                    }
+                }
             }
         }
     }
 
-    var items = listOf<DelegateItem>(
-        InputDelegateItem(
-            InputItemEntity(
-                R.string.situation,
-                R.string.situation_helper,
-                R.string.situation_help,
-                ::setSituation
-            )
-        ),
-        InputDelegateItem(
-            InputItemEntity(
-                R.string.behaviour,
-                R.string.behaviour_helper,
-                R.string.behaviour_help,
-                ::setBehaviour
-            )
-        ),
-        InputDelegateItem(
-            InputItemEntity(
-                R.string.mood,
-                R.string.mood_helper,
-                R.string.mood_help,
-                ::setMood
-            )
-        ),
-        IntDelegateItem(R.string.level),
-        InputDelegateItem(
-            InputItemEntity(
-                R.string.auto_thought,
-                R.string.auto_thought_helper,
-                R.string.auto_thought_help,
-                ::setAutoThought
-            )
-        ),
-        InputDelegateItem(
-            InputItemEntity(
-                R.string.proofs,
-                R.string.proofs_helper,
-                R.string.proofs_help,
-                ::setProofs
-            )
-        ),
-        InputDelegateItem(
-            InputItemEntity(
-                R.string.refutations,
-                R.string.refutations_helper,
-                R.string.refutations_help,
-                ::setRefutations
-            )
-        ),
-        InputDelegateItem(
-            InputItemEntity(
-                R.string.alternative_thought,
-                R.string.alternative_thought_helper,
-                R.string.alternative_thought_help,
-                ::setAlternativeThought
-            )
-        ),
-        InputDelegateItem(
-            InputItemEntity(
-                R.string.new_mood,
-                R.string.new_mood_helper,
-                R.string.new_mood_help,
-                ::setNewMood
-            )
-        ),
-        IntDelegateItem(R.string.new_level)
-    )
-        private set
+    fun tryToSave(exercise_id: String) {
+        val currentState = _screenState.value
 
-    class Factory @Inject constructor(private val saveThoughtDiaryUseCase: SaveThoughtDiaryUseCase) :
+        if(currentState is NewThoughtDiaryScreenState.Content){
+            val updatesFields = currentState.data.fields.map { delegateItem ->
+                when (delegateItem) {
+                    is InputExerciseDelegateItem -> {
+                        val updatedContent = if (resultExercise.find { it.fieldId == delegateItem.content().id }?.value == "") {
+                            delegateItem.content().copy(isNotCorrect = true)
+                        } else {
+                            delegateItem.content().copy(isNotCorrect = false)
+                        }
+                        val updateDelegateItem = InputExerciseDelegateItem(
+                            updatedContent
+                        )
+
+                        updateDelegateItem
+                    }
+                    else -> delegateItem
+                }
+            }
+
+            val hasErrors = updatesFields.any {
+                it is InputExerciseDelegateItem && it.content().isNotCorrect
+            }
+            if (hasErrors){
+                _screenState.value = currentState.copy(data = currentState.data.copy(fields = updatesFields))
+            }else{
+                //Save
+            }
+        }
+
+    }
+
+    private fun saveTextInput(res: ExerciseResultEntity) {
+        val searchItem = resultExercise.find { it.fieldId == res.fieldId }
+        searchItem!!.value = res.value
+
+        val currentState = _screenState.value
+        if(currentState is NewThoughtDiaryScreenState.Content){
+            val updatesFields = currentState.data.fields.map { delegateItem ->
+                when (delegateItem) {
+                    is InputExerciseDelegateItem -> {
+                        if (delegateItem.content().id == res.fieldId){
+                            delegateItem.content().text = res.value
+                        }
+                        else if (delegateItem.content().text.isNotEmpty() && delegateItem.content().isNotCorrect){
+                            delegateItem.content().isNotCorrect = false
+                        }
+                        else{
+                            delegateItem.content()
+                        }
+                        delegateItem
+                    }
+                    else -> delegateItem
+                }
+            }
+            _screenState.value = currentState.copy(data = currentState.data.copy(fields = updatesFields))
+        }
+    }
+
+    private fun ExerciseDetailEntity.toDelegateItems(): ExerciseDetailWithDelegateItem {
+        return ExerciseDetailWithDelegateItem(id = id, title = title, description = description,
+            fields = fields.map { field ->
+                when (field.type) {
+                    TypeOfExercise.TextInput -> InputExerciseDelegateItem(
+                        InputItemExerciseEntity(
+                            id = field.id,
+                            titleId = field.title,
+                            helperId = field.description,
+                            hintId = field.title,
+                            saveFunction = { res -> saveTextInput(res) }
+                        )
+                    )
+
+                    TypeOfExercise.NumberInput -> IntDelegateItem(
+                        InputIntExerciseEntity(
+                            id = field.id,
+                            title = field.title,
+                            value = "50",
+                            saveResult = { res -> saveTextInput(res) }
+                        )
+                    )
+                }
+            }
+        )
+    }
+
+    class Factory @Inject constructor(
+        private val saveThoughtDiaryUseCase: SaveThoughtDiaryUseCase,
+        private val getExerciseDetailUseCase: GetExerciseDetailUseCase
+    ) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return NewThoughtDiaryViewModel(saveThoughtDiaryUseCase) as T
+            return NewThoughtDiaryViewModel(saveThoughtDiaryUseCase, getExerciseDetailUseCase) as T
         }
-    }
-
-    private fun ThoughtDiaryEntity.mapOfTitles() =
-        mapOf(
-            ::situation.name to R.string.situation,
-            ::mood.name to R.string.mood,
-            ::level.name to R.string.level.toString(),
-            ::autoThought.name to R.string.auto_thought,
-            ::proofs.name to R.string.proofs,
-            ::refutations.name to R.string.refutations,
-            ::alternativeThought.name to R.string.alternative_thought,
-            ::newMood.name to R.string.new_mood,
-            ::newLevel.name to R.string.new_level.toString()
-        )
-
-    companion object {
-
     }
 }

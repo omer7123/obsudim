@@ -7,7 +7,7 @@ import com.example.mypsychologist.databinding.ItemHintBinding
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
 
-class HintDelegate() : AdapterDelegate {
+class HintDelegate : AdapterDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
         ItemHintBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,8 +27,8 @@ class HintDelegate() : AdapterDelegate {
         private val binding: ItemHintBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Int) {
-            binding.text.text = itemView.context.getString(item)
+        fun bind(item: String) {
+            binding.text.text = item
         }
     }
 }

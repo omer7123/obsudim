@@ -1,4 +1,4 @@
-package com.example.mypsychologist.domain.useCase
+package com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases
 
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.repository.CbtRepository

@@ -53,7 +53,6 @@ class FragmentDiaries : Fragment() {
         binding = FragmentDiariesBinding.inflate(inflater, container, false)
 
         setupListener()
-
         setupAdapter()
 
         viewModel.screenState
@@ -61,14 +60,16 @@ class FragmentDiaries : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+
         return binding.root
     }
 
     private fun setupListener() {
         binding.newDiaryFab.setOnClickListener {
             findNavController().navigate(
-                R.id.action_fragment_diaries_to_fragment_new_diary, requireArguments().getBundle(
-                    EXERCISE_ID
+                R.id.action_fragment_diaries_to_fragment_new_diary,
+                bundleOf(
+                    EXERCISE_ID to requireArguments().getString(EXERCISE_ID)
                 )
             )
         }
