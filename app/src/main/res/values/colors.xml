@@ -1,6 +1,7 @@
 
 <resources>
     <color name="seed">#4CA569</color>
+    <color name="exit_button">#EBEEFF</color>
     <color name="md_theme_light_primary">#3555D4</color>
     <color name="md_theme_light_onPrimary">#EBEFFF</color>
     <color name="md_theme_light_primaryContainer">#3555D4</color>

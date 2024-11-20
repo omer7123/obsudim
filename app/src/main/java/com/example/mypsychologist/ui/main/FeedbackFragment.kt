@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -14,10 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentFeedbackBinding
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.main.FeedbackScreenState
 import com.example.mypsychologist.presentation.main.FeedbackViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -44,7 +42,7 @@ class FeedbackFragment : Fragment() {
 
         binding = FragmentFeedbackBinding.inflate(inflater, container, false)
 
-        binding.include.toolbar.apply {
+        binding.includeToolbar.toolbar.apply {
             title = getString(R.string.feedback)
             setNavigationOnClickListener {
                 findNavController().popBackStack()
@@ -62,14 +60,9 @@ class FeedbackFragment : Fragment() {
 
     private fun render(state: FeedbackScreenState) {
         when (state) {
-            is FeedbackScreenState.Loading -> {
-                if (isNetworkConnect())
-                    binding.progressBar.isVisible = true
-                else
-                    requireContext().showToast(getString(R.string.network_error))
-            }
+            is FeedbackScreenState.Loading -> Unit
             is FeedbackScreenState.Response -> {
-                binding.progressBar.isVisible = false
+//                binding.progressBar.isVisible = false
                 if (state.result) {
                     requireContext().showToast(getString(R.string.success))
                     findNavController().popBackStack()

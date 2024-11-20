@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,15 +13,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mypsychologist.*
+import com.example.mypsychologist.NavbarHider
+import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentEditBinding
-import com.example.mypsychologist.domain.entity.ClientInfoEntity
-import com.example.mypsychologist.domain.entity.TagEntity
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.isNetworkConnect
-import com.example.mypsychologist.extensions.parcelableArray
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.main.EditScreenState
 import com.example.mypsychologist.presentation.main.EditViewModel
@@ -30,14 +25,12 @@ import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.InputDelegate
-import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import javax.inject.Inject
-import kotlin.math.log
 
 
 class EditFragment : Fragment() {
@@ -91,7 +84,7 @@ class EditFragment : Fragment() {
         when (state) {
             is EditScreenState.CurrentData -> {
                 binding.progressBar.isVisible = false
-                binding.birthdayData.text = state.birthday
+                binding.birthdayData.setText(state.birthday)
                 mainAdapter.submitList(state.list)
             }
 
@@ -134,22 +127,22 @@ class EditFragment : Fragment() {
         binding.apply {
 
 
-            changeRequestButton.setOnClickListener {
+//            changeRequestButton.setOnClickListener {
+//
+//                childFragmentManager.setFragmentResultListener(
+//                    EDIT_REQUEST, viewLifecycleOwner
+//                ) { _, bundle ->
+//
+//                    bundle.parcelableArray<TagEntity>(TagsFragment.TAGS)?.let { request ->
+//                        viewModel.setRequest(request.toList())
+//                        setupChips(request.toList())
+//                    }
+//                }
+//
+//                TagsFragment.newInstance().show(childFragmentManager, EDIT_REQUEST)
+//            }
 
-                childFragmentManager.setFragmentResultListener(
-                    EDIT_REQUEST, viewLifecycleOwner
-                ) { _, bundle ->
-
-                    bundle.parcelableArray<TagEntity>(TagsFragment.TAGS)?.let { request ->
-                        viewModel.setRequest(request.toList())
-                        setupChips(request.toList())
-                    }
-                }
-
-                TagsFragment.newInstance().show(childFragmentManager, EDIT_REQUEST)
-            }
-
-            changeBirthdayButton.setOnClickListener {
+            birthday.setEndIconOnClickListener {
                 setupDatePicker()
             }
 
@@ -175,7 +168,7 @@ class EditFragment : Fragment() {
             date.get(Calendar.YEAR),
             date.get(Calendar.MONTH),
             date.get(Calendar.DAY_OF_MONTH))
-            .show();
+            .show()
     }
 
     private fun setupAdapter(items: List<DelegateItem>) {
@@ -186,14 +179,14 @@ class EditFragment : Fragment() {
 
             submitList(items)
         }
-
-        binding.itemsRw.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = mainAdapter
-        }
+//
+//        binding.itemsRw.apply {
+//            layoutManager = LinearLayoutManager(requireContext())
+//            adapter = mainAdapter
+//        }
     }
 
-    private fun setupChips(list: List<TagEntity>) {
+    /*private fun setupChips(list: List<TagEntity>) {
         binding.requestsGroup.removeAllViews()
         list.forEach {
             binding.requestsGroup.addView(
@@ -202,7 +195,7 @@ class EditFragment : Fragment() {
                 }
             )
         }
-    }
+    }*/
 
     override fun onDetach() {
         navbarHider?.setNavbarVisibility(true)

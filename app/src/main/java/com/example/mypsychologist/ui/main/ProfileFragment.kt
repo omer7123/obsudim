@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -68,16 +67,13 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(R.id.fragment_edit)
             }
 
-            forPsychologist.setOnClickListener {
-                findNavController().navigate(R.id.fragment_psychologist_questionnaire)
-            }
 
-            rules.setOnClickListener {
-                findNavController().navigate(R.id.fragment_long_text, bundleOf(
-                    LongTextFragment.TITLE to rules.text.toString(),
-                    LongTextFragment.TEXT_ID to R.string.rules_text
-                ))
-            }
+//            rules.setOnClickListener {
+//                findNavController().navigate(R.id.fragment_long_text, bundleOf(
+//                    LongTextFragment.TITLE to rules.text.toString(),
+//                    LongTextFragment.TEXT_ID to R.string.rules_text
+//                ))
+//            }
 
             feedback.setOnClickListener {
                 findNavController().navigate(R.id.fragment_feedback)
@@ -104,19 +100,6 @@ class ProfileFragment : Fragment() {
             .show(childFragmentManager, EXIT)
     }
 
-    private fun deleteAccount() {
-        childFragmentManager.setFragmentResultListener(
-            DELETE,
-            viewLifecycleOwner
-        ) { _, bundle ->
-            if (bundle.getBoolean(ConfirmationDialogFragment.RESULT)) {
-                viewModel.deleteAccount()
-            }
-        }
-
-        ConfirmationDialogFragment.newInstance(R.string.confirm_delete)
-            .show(childFragmentManager, DELETE)
-    }
 
     private fun startMainActivity() {
         val newIntent = Intent(requireContext(), MainActivity::class.java).apply {
@@ -127,6 +110,5 @@ class ProfileFragment : Fragment() {
 
     companion object {
         private const val EXIT = "exit"
-        private const val DELETE = "delete"
     }
 }

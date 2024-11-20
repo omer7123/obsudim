@@ -308,7 +308,7 @@
     <string name="accept">Принять</string>
     <string name="text_approval">Текст согласия</string>
     <string name="approval">Согласие</string>
-    <string name="approval_text">Согласие...</string>
+    <string name="approval_text">Согласие…</string>
 
     <string name="requests">Заявки</string>
     <string name="watch_all">Посмотреть все</string>
@@ -646,7 +646,7 @@
     <string name="depersonalization">Деперсонализация</string>
     <string name="reduction_of_personal_achievements">Редукция профессиональных достижений</string>
     <string name="index_of_exhaustion">Индекс выгорания</string>
-    <string name="empty"></string>
+    <string name="empty">""</string>
 
     <string name="CSI">Индикатор копинг-стратегий</string>
     <string name="csi_1">Позволяю себе поделиться чувством с другом</string>
@@ -716,5 +716,8 @@
     <string name="tasks_not_require">Менеджер еще не назначил вам задания</string>
     <string name="you_have_not_manager">Вы еще не выбрали ни одного специалиста или ваш запрос пока на рассмотрении</string>
     <string name="specialist_not_found">Специалист не найден</string>
+    <string name="send_message">Написать письмо</string>
+    <string name="placeholder_feedback">Если вы обнаружили ошибку в приложении или у вас есть предложения для создателей, пожалуйста, свяжитесь с нами!</string>
+    <string name="write_to_telegram">Написать в Telegram</string>
 
 </resources>
