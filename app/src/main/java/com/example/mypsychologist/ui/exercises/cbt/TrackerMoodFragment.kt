@@ -77,11 +77,23 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
             findNavController().navigate(R.id.newFreeDiaryFragment)
         }
         binding.saveBtn.setOnClickListener {
-            viewModel.saveMood(binding.moodSb.value.toInt())
+            val dailyTaskId =
+                if (arguments!=null) arguments?.getString(DAILY_TASK_ID, "").toString()
+                else ""
+            viewModel.saveMood(binding.moodSb.value.toInt(), dailyTaskId)
         }
     }
 
     companion object{
         const val TAG = "TAG"
+        private const val DAILY_TASK_ID = "DAILY_TASK_ID"
+
+        fun newInstance(idTask: String): TrackerMoodFragment{
+            return TrackerMoodFragment().apply {
+                arguments =Bundle().apply {
+                    putString(DAILY_TASK_ID, idTask)
+                }
+            }
+        }
     }
 }

@@ -1,8 +1,12 @@
 package com.example.mypsychologist.data.converters
 
+import com.example.mypsychologist.data.model.DailyExerciseModel
+import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
 import com.example.mypsychologist.data.model.ExercisesModel
 import com.example.mypsychologist.data.model.FieldExerciseModel
+import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.FieldExerciseEntity
@@ -23,4 +27,12 @@ fun FieldExerciseModel.toEntity(): FieldExerciseEntity {
     }
     return FieldExerciseEntity(description, title, major, exerciseStructureId, typeOfEntity, id)
 }
+
+fun DailyExerciseModel.toEntity(): DailyExerciseEntity{
+    return DailyExerciseEntity(id, type, title, shortDescription, destinationId, isComplete)
+}
+
+fun DailyTaskMarkIdEntity.toModel() = DailyTaskMarkIdModel(
+    id = id
+)
 

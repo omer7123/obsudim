@@ -2,23 +2,26 @@ package com.example.mypsychologist.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentMainBinding
+import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.setupCard
-import com.example.mypsychologist.presentation.main.mainFragment.MainScreenState
+import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 
@@ -31,6 +34,18 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels { vmFactory }
 
     private var navbarHider: NavbarHider? = null
+
+    private val adapter = DailyCardAdapter(this::clickListener)
+
+    private fun clickListener(dailyExerciseEntity: DailyExerciseEntity) {
+        when(dailyExerciseEntity.type){
+            2->{
+                val fragment = TrackerMoodFragment.newInstance(dailyExerciseEntity.id)
+                fragment.show(childFragmentManager, TrackerMoodFragment.TAG)
+//                findNavController().navigate(R.id.trackerMoodFragment)
+            }
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,104 +64,39 @@ class MainFragment : Fragment() {
 
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
-        setupCards()
-
         setupListeners()
-
-        //    checkIfPsychologist()
-
-        viewModel.screenState.observe(viewLifecycleOwner){state->
-            render(state)
-        }
+        viewModel.screenState.flowWithLifecycle(lifecycle).onEach {
+            render(it)
+        }.launchIn(lifecycleScope)
 
         return binding.root
     }
 
-    private fun render(state: MainScreenState) {
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllExercises()
+    }
+
+    private fun render(state: BaseStateUI<List<DailyExerciseEntity>>) {
         when(state){
-            is MainScreenState.Error -> {
-                Log.e("token", "не найден")
+
+            is BaseStateUI.Error -> {
                 findNavController().navigate(R.id.registrationFragment)
             }
-            MainScreenState.Initial -> {}
-            MainScreenState.Loading -> {
-                if (context is NavbarHider) {
-                    navbarHider = context as NavbarHider
-                    navbarHider!!.setNavbarVisibility(false)
-                }
-                binding.content.isVisible = false
+            is BaseStateUI.Initial -> {}
+            is BaseStateUI.Loading -> {
+
+                binding.exercisesRv.isVisible = false
                 binding.progressCircular.isVisible = true
             }
-            MainScreenState.Success -> {
-                if (context is NavbarHider) {
-                    navbarHider = context as NavbarHider
-                    navbarHider!!.setNavbarVisibility(true)
-                }
-                binding.content.isVisible = true
+            is BaseStateUI.Content -> {
+
+                binding.exercisesRv.isVisible = true
                 binding.progressCircular.isVisible = false
+
+                binding.exercisesRv.adapter = adapter
+                adapter.submitList(state.data)
             }
-        }
-    }
-    /* private fun checkIfPsychologist() {
-         val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
-
-         if (pref.getBoolean(getString(R.string.psychologist_is_checked), false)) {
-             if (pref.getBoolean(getString(R.string.is_psychologist), false)) {
-                 setupCabinetCard()
-             } else {
-             }
-         } else {
-
-             viewModel.checkIfPsychologist()
-
-             viewModel.isPsychologist
-                 .flowWithLifecycle(lifecycle)
-                 .onEach {
-                     with(pref.edit()) {
-                         putBoolean(getString(R.string.psychologist_is_checked), true)
-                         putBoolean(getString(R.string.is_psychologist), it)
-                         apply()
-                     }
-                     if (it)
-                         setupCabinetCard()
-                 }
-                 .launchIn(lifecycleScope)
-        }
-
-    }
-
-    private fun setupCabinetCard() {
-        binding.cabinetCard.card.isVisible = true
-        setupCard(
-            binding.cabinetCard,
-            R.string.psychologist_cabinet,
-            R.string.psychologist_cabinet,
-            R.drawable.ic_diversity__ter,
-            R.drawable.tertiary_card
-        )
-    } */
-
-    private fun setupCards() {
-        binding.apply {
-            //    cabinetCard.card.isVisible = false
-            setupCard(
-                trackerCard,
-                R.string.tracker,
-                R.string.tracker_signature,
-                backgroundRes = R.drawable.primary_card
-            )
-            setupCard(
-                diaryCard,
-                R.string.diary,
-                R.string.diary_signature,
-                backgroundRes = R.drawable.primary_card
-            )
-            setupCard(
-                diagnosticsCard,
-                R.string.diagnostics,
-                R.string.diagnostics_signature,
-                backgroundRes = R.drawable.primary_card
-            )
         }
     }
 
@@ -157,19 +107,6 @@ class MainFragment : Fragment() {
             }
             toolbar.psychologistsIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_psychologists_with_tasks)
-            }
-            /*         cabinetCard.card.setOnClickListener {
-                         findNavController().navigate(R.id.fragment_psychologist_cabinet)
-                     } */
-            trackerCard.card.setOnClickListener {
-                val track: TrackerMoodFragment = TrackerMoodFragment()
-                track.show(childFragmentManager, "fs")
-            }
-            diaryCard.card.setOnClickListener {
-                findNavController().navigate(R.id.freeDiaryFragment)
-            }
-            diagnosticsCard.card.setOnClickListener {
-                findNavController().navigate(R.id.fragment_tests)
             }
         }
     }

@@ -40,3 +40,16 @@ data class ExerciseResultEntity(
     val fieldId: String,
     var value: String
 )
+
+data class DailyExerciseEntity(
+    val id: String,
+    val type: Int,
+    val title: String,
+    val shortDescription: String,
+    val destinationId: String,
+    val isComplete: Boolean
+)
+
+data class DailyTaskMarkIdEntity(
+    val id: String
+)

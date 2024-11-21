@@ -2,8 +2,11 @@ package com.example.mypsychologist.data.remote.exercises
 
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.model.DailyExerciseModel
+import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
 import com.example.mypsychologist.data.model.ExercisesModel
+import com.example.mypsychologist.data.model.StatusPostResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -27,4 +30,21 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
             }
         )
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun getDailyExercises(): Flow<Resource<List<DailyExerciseModel>>> = flow{
+        emit(
+            getResult {
+                api.getDailyExercises()
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun markAsCompleteTask(taskCompleted: DailyTaskMarkIdModel): Flow<Resource<StatusPostResponse>> = flow {
+            emit(
+                getResult {
+                    api.markAsComplete(taskCompleted)
+                }
+            )
+
+        }.flowOn(Dispatchers.IO)
 }

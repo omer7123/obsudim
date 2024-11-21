@@ -28,3 +28,25 @@ data class FieldExerciseModel(
     val type: Int,
     val id: String
 )
+
+@Serializable
+data class DailyExerciseModel(
+    val id: String,
+    val type: Int,
+    val title: String,
+    @SerialName("short_description")
+    val shortDescription: String,
+    @SerialName("destination_id")
+    val destinationId: String,
+    @SerialName("is_complete")
+    val isComplete: Boolean
+)
+@Serializable
+data class DailyTaskMarkIdModel(
+    @SerialName("daily_task_id")
+    val id: String
+)
+@Serializable
+data class StatusPostResponse(
+    val status: String
+)

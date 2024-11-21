@@ -38,6 +38,8 @@
     <color name="md_theme_light_onPrimaryIcon">#001D32</color>
     <color name="md_theme_light_onSecondPrimaryIcon">#3A656E</color>
     <color name="md_theme_light_onPrimaryDetailIcon">#1C1B1F</color>
+    <color name="md_theme_light_title_fiol">#97ACFF</color>
+
 
     <color name="md_theme_dark_primary">#9BCBFB</color>
     <color name="md_theme_dark_onPrimary">#003353</color>

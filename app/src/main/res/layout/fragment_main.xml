@@ -33,46 +33,25 @@
                 android:layout_marginTop="14dp"
                 android:src="@drawable/ic_home_emoj" />
 
-            <!--   <include layout="@layout/card_view_group"
-                   android:layout_marginTop="20dp"
-                   android:id="@+id/cabinet_card"
-                   android:layout_marginHorizontal="16dp"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content" /> -->
 
-
-            <include
-                android:id="@+id/tracker_card"
-                layout="@layout/card_view_group"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/exercises_rv"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="50dp"
+                tools:listitem="@layout/item_daily_exercise"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="56dp" />
-
-            <include
-                android:id="@+id/diary_card"
-                layout="@layout/card_view_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="20dp" />
-
-            <include
-                android:id="@+id/diagnostics_card"
-                layout="@layout/card_view_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="20dp" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
     </ScrollView>
 
-    <ProgressBar
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress_circular"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
+        android:indeterminate="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"

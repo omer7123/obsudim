@@ -1,19 +1,12 @@
 package com.example.mypsychologist.presentation.main.mainFragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.data.model.Token
-import com.example.mypsychologist.domain.useCase.CheckIfPsychologistUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.AuthByTokenUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.GetTokenUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveTokenUseCase
-import com.example.mypsychologist.presentation.authentication.authFragment.AuthState
-import com.example.mypsychologist.presentation.authentication.registrationFragment.RegisterState
-import kotlinx.coroutines.delay
+import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.GetAllDailyExercisesUseCase
+import com.example.mypsychologist.presentation.core.BaseStateUI
+import com.example.mypsychologist.presentation.core.collectRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,35 +14,31 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val checkIfPsychologistUseCase: CheckIfPsychologistUseCase,
+    private val getAllDailyExerciseEntity: GetAllDailyExercisesUseCase
 
 ) : ViewModel() {
-    private val _isPsychologist: MutableStateFlow<Boolean> =
-        MutableStateFlow(false)
+    private val _screenState: MutableStateFlow<BaseStateUI<List<DailyExerciseEntity>>> =
+        MutableStateFlow(BaseStateUI.Initial())
+    val screenState: StateFlow<BaseStateUI<List<DailyExerciseEntity>>>
+        get() = _screenState.asStateFlow()
 
-    private val _screenState: MutableLiveData<MainScreenState> =
-        MutableLiveData(MainScreenState.Initial)
-    val screenState: LiveData<MainScreenState> get() = _screenState
-
-    val isPsychologist: StateFlow<Boolean>
-        get() = _isPsychologist.asStateFlow()
-
-    fun checkIfPsychologist() {
+    fun getAllExercises(){
+        _screenState.value = BaseStateUI.Loading()
         viewModelScope.launch {
-            _isPsychologist.value = checkIfPsychologistUseCase()
+            getAllDailyExerciseEntity().collectRequest(_screenState)
         }
-    }
+    } 
 
 
     class Factory @Inject constructor(
-        private val checkIfPsychologistUseCase: CheckIfPsychologistUseCase,
+        private val getAllDailyExerciseEntity: GetAllDailyExercisesUseCase
     ) :
         ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return MainViewModel(
-                checkIfPsychologistUseCase,
+                getAllDailyExerciseEntity,
             ) as T
         }
     }
