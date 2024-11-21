@@ -3,7 +3,6 @@ package com.example.mypsychologist.ui.diagnostics
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,7 +57,6 @@ class PassingTestFragment : Fragment() {
         when (state) {
             is PassingTestScreenState.Error -> {
                 requireContext().showToast(state.msg)
-                Log.e("FDFD", state.msg)
             }
 
             PassingTestScreenState.Initial -> {}
@@ -68,7 +66,7 @@ class PassingTestFragment : Fragment() {
                     state.answerVariants,
                     state.number,
                     state.count
-                ).show(childFragmentManager, PassingTestFragment.TAG)
+                ).show(childFragmentManager, TAG)
             }
 
             is PassingTestScreenState.Result -> {
@@ -117,8 +115,9 @@ class PassingTestFragment : Fragment() {
             viewLifecycleOwner
         ) { _, bundle ->
             viewModel.saveAnswerAndGoToNext(
-                bundle.getInt(FragmentTestQuestion.SCORE),
-                requireArguments().getString(TEST_ID)
+                score = bundle.getInt(FragmentTestQuestion.SCORE),
+                testId = requireArguments().getString(TEST_ID),
+                taskId = requireArguments().getString(TASK_ID) ?: ""
             )
         }
 
@@ -134,15 +133,7 @@ class PassingTestFragment : Fragment() {
         const val TEST_ID = "test_id"
         const val TITLE = "title"
         const val DESCRIPTION = "description"
+        const val TASK_ID = "task_id"
         private const val TAG = "tag"
-
-        fun newInstance(testId: String, title: String, description: String) =
-            PassingTestFragment().apply {
-                arguments = bundleOf(
-                    TEST_ID to testId,
-                    TITLE to title,
-                    DESCRIPTION to description,
-                )
-            }
     }
 }

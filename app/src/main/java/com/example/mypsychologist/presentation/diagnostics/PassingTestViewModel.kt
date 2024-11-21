@@ -1,7 +1,6 @@
 package com.example.mypsychologist.presentation.diagnostics
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,9 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
+import com.example.mypsychologist.domain.entity.diagnosticEntity.ResultAfterSaveEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.SaveTestResultEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.GetQuestionsOfTestByIdUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.SaveResultTestUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -20,6 +22,7 @@ import javax.inject.Inject
 class PassingTestViewModel @Inject constructor(
     private val saveResultTestUseCase: SaveResultTestUseCase,
     private val getQuestionsOfTestByIdUseCase: GetQuestionsOfTestByIdUseCase,
+    private val marsAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
 ) : ViewModel() {
 
     private val _screenState: MutableLiveData<PassingTestScreenState> = MutableLiveData()
@@ -55,9 +58,9 @@ class PassingTestViewModel @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun saveAnswerAndGoToNext(score: Int, testId: String?) {
+    fun saveAnswerAndGoToNext(score: Int, testId: String?, taskId: String) {
         scoresForTest[questionNumber] = score
-        nextQuestion(testId!!)
+        nextQuestion(testId!!, taskId)
     }
 
     fun previousQuestion() {
@@ -76,35 +79,47 @@ class PassingTestViewModel @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun nextQuestion(testId: String) {
+    private fun nextQuestion(testId: String, taskId: String) {
         questionNumber += 1
 
-        for (i in scoresForTest) Log.e("Score", i.toString())
-
         viewModelScope.launch {
-
-            _screenState.value =
-                if (questionNumber < questions.size) {
-                    PassingTestScreenState.Question(
-                        questions[questionNumber],
-                        questionNumber + 1,
-                        questions.size
-                    )
-                } else {
-                    val res =
-                        saveResultTestUseCase(
-                            SaveTestResultEntity(
-                                testId,
-                                getCurrentTimeInISO8601(),
-                                scoresForTest.asList()
-                            )
+            if (questionNumber < questions.size) {
+                _screenState.value = PassingTestScreenState.Question(
+                    questions[questionNumber],
+                    questionNumber + 1,
+                    questions.size
+                )
+            }else{
+                val res = saveResultTestUseCase(
+                        SaveTestResultEntity(
+                            testId,
+                            getCurrentTimeInISO8601(),
+                            scoresForTest.asList()
                         )
-                    when (res) {
-                        is Resource.Error -> PassingTestScreenState.Error(res.msg.toString())
-                        Resource.Loading -> PassingTestScreenState.Loading
-                        is Resource.Success -> PassingTestScreenState.Result(res.data)
+                )
+
+                when (res) {
+                    is Resource.Error -> PassingTestScreenState.Error(res.msg.toString())
+                    Resource.Loading -> PassingTestScreenState.Loading
+                    is Resource.Success -> {
+                        if (taskId.isEmpty()) {
+                            _screenState.value = PassingTestScreenState.Result(res.data)
+                        } else {
+                            markAsComplete(taskId, res.data)
+                        }
                     }
                 }
+            }
+        }
+    }
+
+    private suspend fun markAsComplete(taskId: String, data: ResultAfterSaveEntity) {
+        marsAsCompleteExerciseUseCase(DailyTaskMarkIdEntity(taskId)).collect { resource ->
+            when (resource) {
+                is Resource.Error -> _screenState.value = PassingTestScreenState.Error(resource.msg.toString())
+                Resource.Loading -> _screenState.value = PassingTestScreenState.Loading
+                is Resource.Success -> _screenState.value = PassingTestScreenState.Result(data)
+            }
         }
     }
 
