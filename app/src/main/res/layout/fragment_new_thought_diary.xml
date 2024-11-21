@@ -41,9 +41,17 @@
                 android:layout_height="wrap_content"
                 tools:text="@string/cbt_diary_desc" />
 
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress_circular"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/items_rw"
                 android:layout_width="match_parent"
+                android:minHeight="250dp"
                 android:layout_height="wrap_content"/>
 
             <Button

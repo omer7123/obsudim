@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -13,13 +14,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
-import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentNewThoughtDiaryBinding
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWithDelegateItem
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryViewModel
+import com.example.mypsychologist.presentation.exercises.exercisesFragment.NewExerciseScreenState
+import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveExerciseStatus
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
@@ -66,35 +67,44 @@ class FragmentNewCBTDiary : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+        viewModel.saveStatus
+            .flowWithLifecycle(lifecycle)
+            .onEach { renderSaveStatus(it) }
+            .launchIn(lifecycleScope)
+
         if (savedInstanceState == null)
             viewModel.getFields(requireArguments().getString(EXERCISE_ID).toString())
 
         return binding.root
     }
 
-    private fun render(state: NewThoughtDiaryScreenState) {
+    private fun renderSaveStatus(status: SaveExerciseStatus) {
+        when(status){
+            is SaveExerciseStatus.Error -> {requireContext().showToast(status.msg)}
+            SaveExerciseStatus.Init -> Unit
+            SaveExerciseStatus.Loading -> {
+                binding.progressCircular.isVisible = true
+            }
+            SaveExerciseStatus.Success -> findNavController().popBackStack()
+        }
+    }
+
+    private fun render(state: NewExerciseScreenState) {
         when (state) {
-            is NewThoughtDiaryScreenState.RequestResult -> {
-                renderRequest(state.resource)
-            }
-
-            is NewThoughtDiaryScreenState.ValidationError -> {
-                mainAdapter.submitList(state.listWithErrors)
-            }
-
-            is NewThoughtDiaryScreenState.Init -> Unit
-            is NewThoughtDiaryScreenState.Content -> renderContent(state.data)
-            is NewThoughtDiaryScreenState.Error -> {
+            is NewExerciseScreenState.Init -> Unit
+            is NewExerciseScreenState.Content -> renderContent(state.data)
+            is NewExerciseScreenState.Error -> {
+                binding.progressCircular.isVisible = false
                 requireContext().showToast(state.msg)
             }
-
-            NewThoughtDiaryScreenState.Loading -> {
-
+            NewExerciseScreenState.Loading -> {
+                binding.progressCircular.isVisible = true
             }
         }
     }
 
     private fun renderContent(data: ExerciseDetailWithDelegateItem) {
+        binding.progressCircular.isVisible = false
         binding.includeToolbar.toolbar.title = data.title
         binding.description.text = data.description
 
@@ -146,21 +156,6 @@ class FragmentNewCBTDiary : Fragment() {
                 mainAdapter.submitList(dataList)
             }
 
-        }
-    }
-
-    private fun renderRequest(resource: Resource<String>) {
-
-        when (resource) {
-            is Resource.Error -> {
-                requireContext().showToast(resource.msg.toString())
-            }
-
-            is Resource.Success -> {
-                findNavController().popBackStack()
-            }
-
-            is Resource.Loading -> Unit
         }
     }
 

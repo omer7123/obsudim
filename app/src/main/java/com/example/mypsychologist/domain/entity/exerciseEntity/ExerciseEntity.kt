@@ -36,6 +36,11 @@ data class ExerciseDetailWithDelegateItem(
     val fields: List<DelegateItem>
 )
 
+data class ExerciseResultRequestEntity(
+    val id: String,
+    val result: List<ExerciseResultEntity>
+)
+
 data class ExerciseResultEntity(
     val fieldId: String,
     var value: String

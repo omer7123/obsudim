@@ -9,13 +9,15 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.educationEntity.EducationMaterialForSaveProgressEntity
 import com.example.mypsychologist.domain.useCase.SaveProgressUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.educationUseCases.GetMaterialOfTopicUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class EducationViewModel(
     private val getEducationMaterialUseCase: GetMaterialOfTopicUseCase,
-    private val saveProgressUseCase: SaveProgressUseCase
+    private val saveProgressUseCase: SaveProgressUseCase,
+    private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
 ) : ViewModel() {
 
     private val _screenState: MutableLiveData<EducationScreenState> = MutableLiveData()
@@ -33,7 +35,9 @@ class EducationViewModel(
     }
 
     fun saveProgress(materialId: String) {
+
         viewModelScope.launch(Dispatchers.IO) {
+
             when(val res = saveProgressUseCase(EducationMaterialForSaveProgressEntity(materialId))){
                 is Resource.Error -> {}
                 Resource.Loading -> {}
@@ -44,14 +48,15 @@ class EducationViewModel(
 
     class Factory @Inject constructor(
         private val getEducationMaterialUseCase: GetMaterialOfTopicUseCase,
-        private val saveProgressUseCase: SaveProgressUseCase
+        private val saveProgressUseCase: SaveProgressUseCase,
+        private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
     ) :
         ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return EducationViewModel(
-                getEducationMaterialUseCase, saveProgressUseCase
+                getEducationMaterialUseCase, saveProgressUseCase, markAsCompleteExerciseUseCase
             ) as T
         }
     }

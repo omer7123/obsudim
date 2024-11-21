@@ -28,7 +28,23 @@ data class FieldExerciseModel(
     val type: Int,
     val id: String
 )
-
+@Serializable
+data class ExerciseResultRequestModel(
+    @SerialName("exercise_structure_id")
+    val id: String,
+    val result: List<ExerciseResultModel>
+)
+@Serializable
+data class ExerciseResultModel(
+    @SerialName("field_id")
+    val fieldId: String,
+    var value: String
+)
+@Serializable
+data class SaveExerciseResultResponseModel(
+    @SerialName("exercise_result_id")
+    val id: String
+)
 @Serializable
 data class DailyExerciseModel(
     val id: String,
@@ -41,11 +57,13 @@ data class DailyExerciseModel(
     @SerialName("is_complete")
     val isComplete: Boolean
 )
+
 @Serializable
 data class DailyTaskMarkIdModel(
     @SerialName("daily_task_id")
     val id: String
 )
+
 @Serializable
 data class StatusPostResponse(
     val status: String

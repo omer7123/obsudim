@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,16 +34,16 @@ class MainFragment : Fragment() {
     lateinit var vmFactory: MainViewModel.Factory
     private val viewModel: MainViewModel by viewModels { vmFactory }
 
-    private var navbarHider: NavbarHider? = null
-
     private val adapter = DailyCardAdapter(this::clickListener)
 
     private fun clickListener(dailyExerciseEntity: DailyExerciseEntity) {
         when(dailyExerciseEntity.type){
+            1->{
+                findNavController().navigate(R.id.fragment_education, bundleOf())
+            }
             2->{
                 val fragment = TrackerMoodFragment.newInstance(dailyExerciseEntity.id)
                 fragment.show(childFragmentManager, TrackerMoodFragment.TAG)
-//                findNavController().navigate(R.id.trackerMoodFragment)
             }
         }
     }

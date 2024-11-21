@@ -9,9 +9,12 @@ import com.example.mypsychologist.domain.entity.InputItemExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWithDelegateItem
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.GetExerciseDetailUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.SaveThoughtDiaryUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.SaveExerciseResultUseCase
+import com.example.mypsychologist.presentation.exercises.exercisesFragment.NewExerciseScreenState
+import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveExerciseStatus
 import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.IntDelegateItem
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,29 +24,34 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewThoughtDiaryViewModel(
-    private val saveThoughtDiaryUseCase: SaveThoughtDiaryUseCase,
+    private val saveExerciseResultUseCase: SaveExerciseResultUseCase,
     private val getExerciseDetailUseCase: GetExerciseDetailUseCase
 ) :
     ViewModel() {
 
-    private val _screenState: MutableStateFlow<NewThoughtDiaryScreenState> =
-        MutableStateFlow(NewThoughtDiaryScreenState.Init)
-    val screenState: StateFlow<NewThoughtDiaryScreenState>
+    private val _screenState: MutableStateFlow<NewExerciseScreenState> =
+        MutableStateFlow(NewExerciseScreenState.Init)
+    val screenState: StateFlow<NewExerciseScreenState>
         get() = _screenState.asStateFlow()
+
+    private val _saveStatus: MutableStateFlow<SaveExerciseStatus> =
+        MutableStateFlow(SaveExerciseStatus.Init)
+    val saveStatus: StateFlow<SaveExerciseStatus>
+        get() = _saveStatus.asStateFlow()
 
     private val resultExercise = ArrayList<ExerciseResultEntity>()
 
 
     fun getFields(id: String) {
         viewModelScope.launch {
-            _screenState.value = NewThoughtDiaryScreenState.Loading
+            _screenState.value = NewExerciseScreenState.Loading
 
             getExerciseDetailUseCase(id).collect { resource ->
                 when (resource) {
                     is Resource.Error -> _screenState.value =
-                        NewThoughtDiaryScreenState.Error(resource.msg.toString())
+                        NewExerciseScreenState.Error(resource.msg.toString())
 
-                    Resource.Loading -> _screenState.value = NewThoughtDiaryScreenState.Loading
+                    Resource.Loading -> _screenState.value = NewExerciseScreenState.Loading
                     is Resource.Success -> {
 
                         resultExercise.addAll(resource.data.fields.map {
@@ -61,7 +69,7 @@ class NewThoughtDiaryViewModel(
 
                         })
                         _screenState.value =
-                            NewThoughtDiaryScreenState.Content(resource.data.toDelegateItems())
+                            NewExerciseScreenState.Content(resource.data.toDelegateItems())
                     }
                 }
             }
@@ -71,7 +79,7 @@ class NewThoughtDiaryViewModel(
     fun tryToSave(exercise_id: String) {
         val currentState = _screenState.value
 
-        if(currentState is NewThoughtDiaryScreenState.Content){
+        if(currentState is NewExerciseScreenState.Content){
             val updatesFields = currentState.data.fields.map { delegateItem ->
                 when (delegateItem) {
                     is InputExerciseDelegateItem -> {
@@ -96,10 +104,22 @@ class NewThoughtDiaryViewModel(
             if (hasErrors){
                 _screenState.value = currentState.copy(data = currentState.data.copy(fields = updatesFields))
             }else{
-                //Save
+                viewModelScope.launch {
+                    saveExerciseResultUseCase(
+                        ExerciseResultRequestEntity(
+                            exercise_id,
+                            resultExercise
+                        )
+                    ).collect {resource->
+                        when(resource){
+                            is Resource.Error -> _saveStatus.value = SaveExerciseStatus.Error(resource.msg.toString())
+                            Resource.Loading -> Unit
+                            is Resource.Success -> _saveStatus.value = SaveExerciseStatus.Success
+                        }
+                    }
+                }
             }
         }
-
     }
 
     private fun saveTextInput(res: ExerciseResultEntity) {
@@ -107,7 +127,7 @@ class NewThoughtDiaryViewModel(
         searchItem!!.value = res.value
 
         val currentState = _screenState.value
-        if(currentState is NewThoughtDiaryScreenState.Content){
+        if(currentState is NewExerciseScreenState.Content){
             val updatesFields = currentState.data.fields.map { delegateItem ->
                 when (delegateItem) {
                     is InputExerciseDelegateItem -> {
@@ -157,13 +177,13 @@ class NewThoughtDiaryViewModel(
     }
 
     class Factory @Inject constructor(
-        private val saveThoughtDiaryUseCase: SaveThoughtDiaryUseCase,
+        private val saveExerciseResultUseCase: SaveExerciseResultUseCase,
         private val getExerciseDetailUseCase: GetExerciseDetailUseCase
     ) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return NewThoughtDiaryViewModel(saveThoughtDiaryUseCase, getExerciseDetailUseCase) as T
+            return NewThoughtDiaryViewModel(saveExerciseResultUseCase, getExerciseDetailUseCase) as T
         }
     }
 }

@@ -3,7 +3,9 @@ package com.example.mypsychologist.data.remote.exercises
 import com.example.mypsychologist.data.model.DailyExerciseModel
 import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
+import com.example.mypsychologist.data.model.ExerciseResultRequestModel
 import com.example.mypsychologist.data.model.ExercisesModel
+import com.example.mypsychologist.data.model.SaveExerciseResultResponseModel
 import com.example.mypsychologist.data.model.StatusPostResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -24,8 +26,8 @@ interface ExerciseService {
 
     @POST("/exercise/save_exercise_result")
     suspend fun saveExerciseResult(
-        @Body resultExercise:String
-    ): Response<String>
+        @Body resultExercise: ExerciseResultRequestModel
+    ): Response<SaveExerciseResultResponseModel>
 
     @GET("/daily_tasks")
     suspend fun getDailyExercises(): Response<List<DailyExerciseModel>>

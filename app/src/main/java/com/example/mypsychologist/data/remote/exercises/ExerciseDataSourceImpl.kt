@@ -5,7 +5,9 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.DailyExerciseModel
 import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
+import com.example.mypsychologist.data.model.ExerciseResultRequestModel
 import com.example.mypsychologist.data.model.ExercisesModel
+import com.example.mypsychologist.data.model.SaveExerciseResultResponseModel
 import com.example.mypsychologist.data.model.StatusPostResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -27,6 +29,14 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         emit(
             getResult {
                 api.getExerciseDetail(id)
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun saveExerciseResult(data: ExerciseResultRequestModel): Flow<Resource<SaveExerciseResultResponseModel>> = flow<Resource<SaveExerciseResultResponseModel>> {
+        emit(
+            getResult {
+                api.saveExerciseResult(data)
             }
         )
     }.flowOn(Dispatchers.IO)
