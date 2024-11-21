@@ -16,12 +16,10 @@ class DailyCardAdapter(val clickOnItem:(item: DailyExerciseEntity) -> Unit): Lis
 
     inner class ViewHolder(private val binding: ItemDailyExerciseBinding): RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: DailyExerciseEntity) {
-
             if (adapterPosition+1==itemCount) binding.lineToBottom.isVisible = false
-
             if(adapterPosition == 0) binding.lineToTop.isVisible = false
 
-            if (adapterPosition!= 0 && getItem(adapterPosition-1).isComplete || adapterPosition == 0 && !item.isComplete){
+            if (adapterPosition != 0 && getItem(adapterPosition-1).isComplete && !item.isComplete || adapterPosition == 0 && !item.isComplete){
                 binding.cardTitle.setTextAppearance(R.style.BodyMBold_White)
                 binding.cardDescription.setTextAppearance(R.style.BodyM_White)
                 binding.exerciseGroup.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_exercise_main)
@@ -29,6 +27,7 @@ class DailyCardAdapter(val clickOnItem:(item: DailyExerciseEntity) -> Unit): Lis
                 binding.radioBtn.buttonTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(binding.root.context, R.color.md_theme_light_primary)
                 )
+
             }else if (item.isComplete){
                 binding.radioBtn.isChecked = true
                 binding.radioBtn.buttonTintList = ColorStateList.valueOf(
@@ -38,7 +37,7 @@ class DailyCardAdapter(val clickOnItem:(item: DailyExerciseEntity) -> Unit): Lis
                 binding.cardTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.md_theme_light_title_fiol))
                 binding.cardDescription.setTextColor(ContextCompat.getColor(itemView.context, R.color.md_theme_light_title_fiol))
 
-            }else if (!item.isComplete){
+            }else {
                 binding.cardTitle.setTextAppearance(R.style.BodyMBold_Black)
                 binding.cardDescription.setTextAppearance(R.style.BodyM_Black)
                 binding.exerciseGroup.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_card_exercise_not_complete)
@@ -53,7 +52,7 @@ class DailyCardAdapter(val clickOnItem:(item: DailyExerciseEntity) -> Unit): Lis
             binding.cardDescription.text = item.shortDescription
 
             binding.root.setOnClickListener {
-                if (adapterPosition!= 0 && getItem(adapterPosition-1).isComplete || adapterPosition == 0 && !item.isComplete){
+                if (adapterPosition!= 0 && getItem(adapterPosition-1).isComplete && !item.isComplete || adapterPosition == 0 && !item.isComplete){
                     clickOnItem(item)
                 }
             }
@@ -83,7 +82,7 @@ class DailyExerciseEntityDiffCallback : DiffUtil.ItemCallback<DailyExerciseEntit
         oldItem: DailyExerciseEntity,
         newItem: DailyExerciseEntity
     ): Boolean {
-        return oldItem == newItem
+        return false
     }
 
 }

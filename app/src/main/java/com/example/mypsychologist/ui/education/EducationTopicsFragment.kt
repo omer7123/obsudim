@@ -73,7 +73,7 @@ class EducationTopicsFragment : Fragment() {
         mainAdapter = MainAdapter().apply {
             addDelegate(TopicsDelegate { item ->
                 findNavController().navigate(R.id.fragment_education, bundleOf(
-                    EducationFragment.TOPIC_TAG to item,
+                    EducationFragment.TOPIC_TAG to item.id,
                 ))
             })
         }

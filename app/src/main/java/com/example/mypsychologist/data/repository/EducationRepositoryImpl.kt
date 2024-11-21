@@ -6,9 +6,10 @@ import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.model.EduSaveResp
 import com.example.mypsychologist.data.remote.education.EducationDataSource
 import com.example.mypsychologist.domain.entity.educationEntity.EducationMaterialForSaveProgressEntity
-import com.example.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
+import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
 import com.example.mypsychologist.domain.repository.EducationRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class EducationRepositoryImpl @Inject constructor(
@@ -23,15 +24,11 @@ class EducationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getEducationMaterial(id: String): Resource<List<ItemMaterialEntity>> =
-        when (val result = dataSource.getEducationMaterial(id)) {
-            is Resource.Error -> Resource.Error(result.msg.toString(), null)
-            is Resource.Success -> Resource.Success(result.data.map { item ->
-                item.toEntity()
-            })
-
-            is Resource.Loading -> Resource.Loading
+    override suspend fun getEducationMaterial(id: String): Flow<Resource<EducationsEntity>> =
+        dataSource.getEducationMaterial(id).checkResource {
+            it.toEntity()
         }
+
 
     override suspend fun saveProgress(educationMaterialForSaveProgressEntity: EducationMaterialForSaveProgressEntity): Resource<EduSaveResp> =
         when(val result = dataSource.saveProgress(educationMaterialForSaveProgressEntity.toModel())){

@@ -20,6 +20,7 @@ import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.education.EducationFragment
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -39,7 +40,12 @@ class MainFragment : Fragment() {
     private fun clickListener(dailyExerciseEntity: DailyExerciseEntity) {
         when(dailyExerciseEntity.type){
             1->{
-                findNavController().navigate(R.id.fragment_education, bundleOf())
+                findNavController().navigate(R.id.fragment_education,
+                    bundleOf(
+                        EducationFragment.TOPIC_TAG to dailyExerciseEntity.destinationId,
+                        EducationFragment.TASK_ID to dailyExerciseEntity.id
+                    )
+                )
             }
             2->{
                 val fragment = TrackerMoodFragment.newInstance(dailyExerciseEntity.id)
@@ -91,7 +97,6 @@ class MainFragment : Fragment() {
                 binding.progressCircular.isVisible = true
             }
             is BaseStateUI.Content -> {
-
                 binding.exercisesRv.isVisible = true
                 binding.progressCircular.isVisible = false
 

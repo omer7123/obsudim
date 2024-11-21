@@ -9,11 +9,12 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.ItemEducationBinding
 import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.education.EducationViewModel
+import com.example.mypsychologist.presentation.education.MarsAsCompleteStatus
 import com.example.mypsychologist.ui.autoCleared
 import javax.inject.Inject
 
@@ -36,10 +37,14 @@ class EducationItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.marsAsCompleteStatus.observe(viewLifecycleOwner){status->
+            renderStatus(status)
+        }
+
         binding = ItemEducationBinding.inflate(inflater, container, false)
 
         viewModel.saveProgress(
-            requireArguments().getString(MATERIAL_ID).toString()
+            requireArguments().getString(MATERIAL_ID).toString(),
         )
 
         setupFields(
@@ -49,10 +54,23 @@ class EducationItemFragment : Fragment() {
         )
 
         binding.exitButton.setOnClickListener {
-            findNavController().navigate(R.id.fragment_education_topics)
+            if(requireArguments().getString(TASK_ID).toString().isEmpty()){
+                parentFragment?.parentFragmentManager?.popBackStack()
+            }else{
+                viewModel.markAsCompleteTask(
+                    requireArguments().getString(TASK_ID).toString()
+                )
+            }
         }
 
         return binding.root
+    }
+
+    private fun renderStatus(status: MarsAsCompleteStatus) {
+        when(status){
+            is MarsAsCompleteStatus.Error -> requireContext().showToast(status.msg)
+            MarsAsCompleteStatus.Success -> parentFragment?.parentFragmentManager?.popBackStack()
+        }
     }
 
     private fun setupFields(current: Int, count: Int, text: String) {
@@ -73,13 +91,14 @@ class EducationItemFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(current: Int, count: Int, text: String, id: String) =
+        fun newInstance(current: Int, count: Int, text: String, id: String, taskId: String = "") =
             EducationItemFragment().apply {
                 arguments = bundleOf(
                     CURRENT to current,
                     COUNT to count,
                     TEXT to text,
-                    MATERIAL_ID to id
+                    MATERIAL_ID to id,
+                    TASK_ID to taskId
                 )
             }
 
@@ -87,5 +106,6 @@ class EducationItemFragment : Fragment() {
         private const val COUNT = "count"
         private const val TEXT = "text"
         private const val MATERIAL_ID = "id_material"
+        private const val TASK_ID = "task_id"
     }
 }

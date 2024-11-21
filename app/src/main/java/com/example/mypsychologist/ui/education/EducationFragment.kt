@@ -3,7 +3,6 @@ package com.example.mypsychologist.ui.education
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.databinding.FragmentEducationBinding
+import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.example.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
-import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.serializable
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.education.EducationScreenState
 import com.example.mypsychologist.presentation.education.EducationViewModel
 import com.example.mypsychologist.ui.PagerAdapter
@@ -32,7 +31,6 @@ class EducationFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         requireContext().getAppComponent().educationComponent().create().inject(this)
     }
 
@@ -45,8 +43,6 @@ class EducationFragment : Fragment() {
         binding = FragmentEducationBinding.inflate(inflater, container, false)
 
         binding.includeToolbar.toolbar.apply {
-            title = requireArguments().serializable<ThemeEntity>(TOPIC_TAG)?.theme
-
             setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
@@ -61,29 +57,31 @@ class EducationFragment : Fragment() {
 
     private fun render(state: EducationScreenState) {
         when (state) {
-            is EducationScreenState.Content -> setupViewPager(state.data)
-            is EducationScreenState.Error -> {}
+            is EducationScreenState.Content -> setupContent(state.data)
+            is EducationScreenState.Error -> {requireContext().showToast(state.msg)}
             EducationScreenState.Initial -> {}
             EducationScreenState.Loading -> {}
+            EducationScreenState.Success -> Unit
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val topic = requireArguments().serializable<ThemeEntity>(key = TOPIC_TAG)
-        viewModel.getMaterial(topic!!.id)
+        viewModel.getMaterial(requireArguments().getString(TOPIC_TAG).toString())
     }
 
-    private fun setupViewPager(data: List<ItemMaterialEntity>) {
+    private fun setupContent(data: EducationsEntity) {
+        binding.includeToolbar.toolbar.title = data.theme
+
         val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
         binding.educationVp.adapter = pagerAdapter
 
         pagerAdapter.update(
-            generateFragmentList(data)
+            generateFragmentList(data.materials)
         )
-        Log.e("item", requireArguments().serializable<ThemeEntity>(TOPIC_TAG).toString())
+
         binding.educationVp.setCurrentItem(
-            requireArguments().serializable<ThemeEntity>(TOPIC_TAG)!!.score, false
+            data.score, false
         )
     }
 
@@ -94,12 +92,14 @@ class EducationFragment : Fragment() {
                 index,
                 items.size,
                 item.text,
-                item.id
+                item.id,
+                taskId = requireArguments().getString(TASK_ID) ?: ""
             )
         }
     }
 
     companion object {
         const val TOPIC_TAG = "tag"
+        const val TASK_ID = "task_id"
     }
 }

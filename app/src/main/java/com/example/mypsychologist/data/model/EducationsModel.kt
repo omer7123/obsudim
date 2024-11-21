@@ -11,7 +11,14 @@ data class ThemeModel(
     @SerialName("max_score")
     val maxScore: Int,
 )
-
+@Serializable
+data class EducationsModel(
+    val theme: String,
+    val score: Int,
+    @SerialName("max_score")
+    val maxScore: Int,
+    val materials: List<ItemMaterialModel>
+)
 @Serializable
 data class ItemMaterialModel(
     val id: String,

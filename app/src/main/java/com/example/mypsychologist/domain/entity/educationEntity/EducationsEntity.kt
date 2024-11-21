@@ -9,6 +9,12 @@ data class ThemeEntity(
     val maxScore: Int,
 ) : Serializable
 
+data class EducationsEntity(
+    val theme: String,
+    val score: Int,
+    val maxScore: Int,
+    val materials: List<ItemMaterialEntity>
+)
 data class ItemMaterialEntity(
     val id: String,
     val text: String
