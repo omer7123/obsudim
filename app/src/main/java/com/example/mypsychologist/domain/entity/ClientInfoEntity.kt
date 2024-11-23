@@ -5,7 +5,7 @@ data class ClientInfoEntity(
     val birthday: String = "",
     val gender: String = "",
     val request: List<TagEntity> = listOf(),
-    val city: String = ""
+    val city: String = "Томск"
 )
 
 fun ClientInfoEntity.getMapOfMembers() =

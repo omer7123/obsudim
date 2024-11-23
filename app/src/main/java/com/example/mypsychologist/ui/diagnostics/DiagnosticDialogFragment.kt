@@ -60,8 +60,6 @@ class DiagnosticDialogFragment : DialogFragment() {
         findNavController().navigate(
             R.id.passingTestFragment, bundleOf(
                 PassingTestFragment.TEST_ID to testId,
-                PassingTestFragment.TITLE to requireArguments().getString(TITLE_ID),
-                PassingTestFragment.DESCRIPTION to requireArguments().getString(DESCRIPTION_ID)
             )
         )
     }

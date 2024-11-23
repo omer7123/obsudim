@@ -97,7 +97,14 @@ data class TestInfoModel(
     val testId: String,
     val scales: List<ScalesOfTestInfoModel>,
 )
-
+@Serializable
+data class TestInfoForPassingModel(
+    val title: String,
+    val description: String,
+    @SerialName("short_desc")
+    val shortDesc: String,
+    val questions: List<QuestionOfTestModel>
+)
 @Serializable
 data class QuestionOfTestModel(
     val number: Int,

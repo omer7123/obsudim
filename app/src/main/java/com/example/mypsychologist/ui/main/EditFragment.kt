@@ -1,7 +1,6 @@
 package com.example.mypsychologist.ui.main
 
 import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentEditBinding
@@ -36,7 +34,6 @@ import javax.inject.Inject
 class EditFragment : Fragment() {
 
     private var binding: FragmentEditBinding by autoCleared()
-    private var navbarHider: NavbarHider? = null
 
     @Inject
     lateinit var vmFactory: EditViewModel.Factory
@@ -48,10 +45,7 @@ class EditFragment : Fragment() {
         super.onAttach(context)
         requireContext().getAppComponent().profileComponent().create().inject(this)
 
-        if (context is NavbarHider) {
-            navbarHider = context
-            navbarHider!!.setNavbarVisibility(false)
-        }
+
     }
 
     override fun onCreateView(
@@ -126,49 +120,58 @@ class EditFragment : Fragment() {
     private fun setupListeners() {
         binding.apply {
 
-
-//            changeRequestButton.setOnClickListener {
-//
-//                childFragmentManager.setFragmentResultListener(
-//                    EDIT_REQUEST, viewLifecycleOwner
-//                ) { _, bundle ->
-//
-//                    bundle.parcelableArray<TagEntity>(TagsFragment.TAGS)?.let { request ->
-//                        viewModel.setRequest(request.toList())
-//                        setupChips(request.toList())
-//                    }
-//                }
-//
-//                TagsFragment.newInstance().show(childFragmentManager, EDIT_REQUEST)
-//            }
-
             birthday.setEndIconOnClickListener {
                 setupDatePicker()
             }
 
             saveButton.setOnClickListener {
-                viewModel.tryToSaveInfo()
+                viewModel.tryToSaveInfo(binding.nameEt.text.toString(), binding.birthdayData.text.toString())
             }
         }
     }
-
+    private val DATE_PATTERN = "dd.MM.yyyy"
     private fun setupDatePicker() {
-        val date: Calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
 
-        val dateListener =
-            OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                date[Calendar.YEAR] = year
-                date[Calendar.MONTH] = monthOfYear
-                date[Calendar.DAY_OF_MONTH] = dayOfMonth
+        // Обработчик выбора даты
+        val dateListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            // Установить дату в календарь
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, monthOfYear)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                viewModel.setBirthday(SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(date.timeInMillis))
-            }
+            // Форматирование выбранной даты
+            val selectedDate =
+                SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(calendar.time)
 
-        DatePickerDialog(requireContext(), dateListener,
-            date.get(Calendar.YEAR),
-            date.get(Calendar.MONTH),
-            date.get(Calendar.DAY_OF_MONTH))
-            .show()
+
+            binding.birthday.editText?.setText(selectedDate)
+
+        }
+        DatePickerDialog(
+            requireContext(),
+            dateListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    private fun isValidBirthday(calendar: Calendar): Boolean {
+        val today = Calendar.getInstance()
+
+        // Минимальный возраст (например, 18 лет)
+        val minAge = 18
+        val maxAge = 100
+
+        val birthDate = calendar.clone() as Calendar
+        birthDate.add(Calendar.YEAR, minAge)
+
+        val oldestDate = calendar.clone() as Calendar
+        oldestDate.add(Calendar.YEAR, -maxAge)
+
+        // Возраст должен быть между minAge и maxAge
+        return today.after(birthDate) && calendar.after(oldestDate)
     }
 
     private fun setupAdapter(items: List<DelegateItem>) {
@@ -197,11 +200,6 @@ class EditFragment : Fragment() {
         }
     }*/
 
-    override fun onDetach() {
-        navbarHider?.setNavbarVisibility(true)
-        navbarHider = null
-        super.onDetach()
-    }
 
     companion object {
         private var DATE_PATTERN = "yyyy-MM-dd"

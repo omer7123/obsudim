@@ -5,10 +5,11 @@ import com.example.mypsychologist.data.model.UserInfoModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface UserService {
-    @POST("/users/update_user")
+    @PATCH("/users/update_user")
     suspend fun updateUser(@Body userInfo: UserInfoModel): Response<String>
 
     @GET("/users/user_data")

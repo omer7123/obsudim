@@ -15,5 +15,6 @@ sealed class PassingTestScreenState {
     ) :
         PassingTestScreenState()
 
+    data class Content(val title: String, val desc: String): PassingTestScreenState()
     data class Error(val msg: String) : PassingTestScreenState()
 }

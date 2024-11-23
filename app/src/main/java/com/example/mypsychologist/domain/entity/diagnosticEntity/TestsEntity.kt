@@ -70,6 +70,14 @@ data class ScalesOfTestInfoEntity(
     val title: String,
 )
 
+
+data class TestInfoForPassingEntity(
+    val title: String,
+    val description: String,
+    val shortDesc: String,
+    val questions: List<QuestionOfTestEntity>
+)
+
 @Parcelize
 data class QuestionOfTestEntity(
     val number: Int,

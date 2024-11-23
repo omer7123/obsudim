@@ -3,6 +3,7 @@ package com.example.mypsychologist.ui.diagnostics
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,8 +58,13 @@ class PassingTestFragment : Fragment() {
         when (state) {
             is PassingTestScreenState.Error -> {
                 requireContext().showToast(state.msg)
+                Log.e("Error", state.msg)
             }
 
+            is PassingTestScreenState.Content -> {
+                binding.title.text = state.title
+                binding.text.text = state.desc
+            }
             PassingTestScreenState.Initial -> {}
             PassingTestScreenState.Loading -> {}
             is PassingTestScreenState.Question -> {
@@ -100,8 +106,6 @@ class PassingTestFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.title.text = requireArguments().getString(TITLE)
-        binding.text.text = requireArguments().getString(DESCRIPTION)
         binding.includeToolbar.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -131,8 +135,6 @@ class PassingTestFragment : Fragment() {
 
     companion object {
         const val TEST_ID = "test_id"
-        const val TITLE = "title"
-        const val DESCRIPTION = "description"
         const val TASK_ID = "task_id"
         private const val TAG = "tag"
     }

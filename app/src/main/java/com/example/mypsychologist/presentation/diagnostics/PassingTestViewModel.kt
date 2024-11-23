@@ -45,8 +45,8 @@ class PassingTestViewModel @Inject constructor(
 
                 Resource.Loading -> _screenState.value = PassingTestScreenState.Loading
                 is Resource.Success -> {
-                    _questions = questionsRequest.data
-
+                    _questions = questionsRequest.data.questions
+                    _screenState.value = PassingTestScreenState.Content(questionsRequest.data.title, questionsRequest.data.description)
                     _screenState.value = PassingTestScreenState.Question(
                         questions[questionNumber],
                         questions[questionNumber].number,
@@ -102,7 +102,7 @@ class PassingTestViewModel @Inject constructor(
                     is Resource.Error -> PassingTestScreenState.Error(res.msg.toString())
                     Resource.Loading -> PassingTestScreenState.Loading
                     is Resource.Success -> {
-                        if (taskId.isEmpty()) {
+                        if (taskId == "") {
                             _screenState.value = PassingTestScreenState.Result(res.data)
                         } else {
                             markAsComplete(taskId, res.data)

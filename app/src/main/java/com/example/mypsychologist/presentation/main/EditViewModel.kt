@@ -1,30 +1,23 @@
 package com.example.mypsychologist.presentation.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.data.converters.toModel
-import com.example.mypsychologist.data.model.UserInfoModel
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.InputItemEntity
 import com.example.mypsychologist.domain.entity.TagEntity
 import com.example.mypsychologist.domain.entity.getMapOfMembers
-import com.example.mypsychologist.domain.useCase.*
+import com.example.mypsychologist.domain.useCase.ChangePasswordUseCase
 import com.example.mypsychologist.domain.useCase.profile.GetOwnDataUseCase
 import com.example.mypsychologist.domain.useCase.profile.SaveClientInfoUseCase
-import com.example.mypsychologist.presentation.exercises.BeliefVerificationScreenState
-import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.InputDelegateItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class EditViewModel(
@@ -101,11 +94,12 @@ class EditViewModel(
         info = info.copy(request = new)
     }
 
-    fun tryToSaveInfo() {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (fieldsAreCorrect())
-                _screenState.value =
-                    EditScreenState.Response(saveClientInfoUseCase(info))
+    fun tryToSaveInfo(name: String, birthDate: String) {
+        viewModelScope.launch {
+            saveClientInfoUseCase(ClientInfoEntity(name, birthday = birthDate))
+//            if (fieldsAreCorrect())
+//                _screenState.value =
+//                    EditScreenState.Response(saveClientInfoUseCase(info))
         }
     }
 
