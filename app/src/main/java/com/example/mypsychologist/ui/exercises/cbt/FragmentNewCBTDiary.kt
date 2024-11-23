@@ -111,7 +111,7 @@ class FragmentNewCBTDiary : Fragment() {
         dataList = data.fields
         mainAdapter = MainAdapter().apply {
             addDelegate(
-                InputExerciseDelegate()
+                InputExerciseDelegate(dataList.size)
             )
             addDelegate(
                 SliderDelegate()

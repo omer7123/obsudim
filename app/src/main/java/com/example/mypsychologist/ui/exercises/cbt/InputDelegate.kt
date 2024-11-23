@@ -1,7 +1,9 @@
 package com.example.mypsychologist.ui.exercises.cbt
 
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.R
@@ -38,6 +40,7 @@ class InputDelegate(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: InputItemEntity) {
+
             binding.apply {
                 item.hintId?.let { id ->
                     editText.hint = itemView.context.getString(id)
@@ -80,6 +83,7 @@ class InputDelegate(
 }
 
 class InputExerciseDelegate(
+    private val itemCount: Int,
     private val onHelpClick: ((Int, Int) -> Unit)? = null
 ) : AdapterDelegate {
     private val mDataSet = HashMap<Int, String>()
@@ -99,12 +103,20 @@ class InputExerciseDelegate(
     override fun isOfViewType(item: DelegateItem) = item is InputExerciseDelegateItem
 
 
-    class ViewHolder(
+    inner class ViewHolder(
         private val binding: IncludeEditTextBinding,
         private val onHelpClick: ((Int, Int) -> Unit)?
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: InputItemExerciseEntity) {
+            if (adapterPosition != itemCount-2)
+                binding.editText.imeOptions = EditorInfo.IME_ACTION_NEXT
+            else
+                binding.editText.imeOptions = EditorInfo.IME_ACTION_DONE
+
+            binding.editText.setRawInputType(InputType.TYPE_CLASS_TEXT)
+            binding.editText.imeOptions = binding.editText.imeOptions
+
             binding.apply {
                 editText.hint = item.titleId
 
