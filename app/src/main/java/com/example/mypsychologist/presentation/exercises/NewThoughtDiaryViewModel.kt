@@ -6,12 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.InputIntExerciseEntity
 import com.example.mypsychologist.domain.entity.InputItemExerciseEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWithDelegateItem
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.GetExerciseDetailUseCase
+import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
 import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.SaveExerciseResultUseCase
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.NewExerciseScreenState
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveExerciseStatus
@@ -25,7 +27,8 @@ import javax.inject.Inject
 
 class NewThoughtDiaryViewModel(
     private val saveExerciseResultUseCase: SaveExerciseResultUseCase,
-    private val getExerciseDetailUseCase: GetExerciseDetailUseCase
+    private val getExerciseDetailUseCase: GetExerciseDetailUseCase,
+    private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
 ) :
     ViewModel() {
 
@@ -76,7 +79,7 @@ class NewThoughtDiaryViewModel(
         }
     }
 
-    fun tryToSave(exercise_id: String) {
+    fun tryToSave(exercise_id: String, taskId: String) {
         val currentState = _screenState.value
 
         if(currentState is NewExerciseScreenState.Content){
@@ -114,7 +117,23 @@ class NewThoughtDiaryViewModel(
                         when(resource){
                             is Resource.Error -> _saveStatus.value = SaveExerciseStatus.Error(resource.msg.toString())
                             Resource.Loading -> Unit
-                            is Resource.Success -> _saveStatus.value = SaveExerciseStatus.Success
+                            is Resource.Success -> {
+                                if (taskId!="") {
+                                    markAsCompleteExerciseUseCase(DailyTaskMarkIdEntity(taskId)).collect {
+                                        when (it) {
+                                            is Resource.Error -> _saveStatus.value =
+                                                SaveExerciseStatus.Error(it.toString())
+
+                                            Resource.Loading -> Unit
+                                            is Resource.Success -> _saveStatus.value =
+                                                SaveExerciseStatus.Success
+                                        }
+                                    }
+                                }else{
+                                    _saveStatus.value =
+                                        SaveExerciseStatus.Success
+                                }
+                            }
                         }
                     }
                 }
@@ -178,12 +197,13 @@ class NewThoughtDiaryViewModel(
 
     class Factory @Inject constructor(
         private val saveExerciseResultUseCase: SaveExerciseResultUseCase,
-        private val getExerciseDetailUseCase: GetExerciseDetailUseCase
+        private val getExerciseDetailUseCase: GetExerciseDetailUseCase,
+        private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
     ) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return NewThoughtDiaryViewModel(saveExerciseResultUseCase, getExerciseDetailUseCase) as T
+            return NewThoughtDiaryViewModel(saveExerciseResultUseCase, getExerciseDetailUseCase, markAsCompleteExerciseUseCase) as T
         }
     }
 }

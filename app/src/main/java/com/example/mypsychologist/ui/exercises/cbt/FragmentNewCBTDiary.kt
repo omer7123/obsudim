@@ -139,7 +139,10 @@ class FragmentNewCBTDiary : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            viewModel.tryToSave(requireArguments().getString(EXERCISE_ID).toString())
+            viewModel.tryToSave(
+                requireArguments().getString(EXERCISE_ID).toString(),
+                requireArguments().getString(TASK_ID) ?: ""
+            )
         }
     }
 
@@ -166,6 +169,7 @@ class FragmentNewCBTDiary : Fragment() {
     }
 
     companion object {
-        private const val EXERCISE_ID = "ID_EXERCISE"
+        const val EXERCISE_ID = "ID_EXERCISE"
+        const val TASK_ID = "TASK_ID"
     }
 }

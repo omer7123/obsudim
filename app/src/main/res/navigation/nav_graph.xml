@@ -9,7 +9,11 @@
         android:id="@+id/main_fragment"
         android:name="com.example.mypsychologist.ui.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_main_fragment_to_fragment_new_diary"
+            app:destination="@id/fragment_new_diary" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_exercises"
         android:name="com.example.mypsychologist.ui.exercises.FragmentExercises"
@@ -30,6 +34,9 @@
         <action
             android:id="@+id/action_fragment_diaries_to_fragment_new_diary"
             app:destination="@id/fragment_new_diary" />
+        <action
+            android:id="@+id/action_fragment_diaries_to_fragment_diary"
+            app:destination="@id/fragment_diary" />
     </fragment>
     <fragment
         android:id="@+id/fragment_diary"
