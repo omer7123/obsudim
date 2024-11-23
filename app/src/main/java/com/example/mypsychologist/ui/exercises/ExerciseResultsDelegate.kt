@@ -42,7 +42,7 @@ class ExerciseResultsDelegate(private val onClick: (String) -> Unit) : AdapterDe
                 onClick(record.completedExerciseId) }
         }
 
-        fun convertToUserTimeZone(isoDate: String): String {
+        private fun convertToUserTimeZone(isoDate: String): String {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 // Для API 26 и выше
                 val utcDateTime = LocalDateTime.parse(

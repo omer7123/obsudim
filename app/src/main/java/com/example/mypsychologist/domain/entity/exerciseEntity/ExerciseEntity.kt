@@ -65,3 +65,9 @@ data class ExerciseResultFromAPIEntity(
     val completedExerciseId: String,
     val date: String
 )
+
+data class ExerciseDetailResultEntity(
+    val title: String,
+    val date: String,
+    val result: List<ExerciseResultEntity>
+)

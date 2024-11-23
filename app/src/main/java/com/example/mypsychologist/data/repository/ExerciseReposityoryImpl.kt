@@ -7,6 +7,7 @@ import com.example.mypsychologist.data.remote.exercises.ExerciseDataSource
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
@@ -49,6 +50,12 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
     override suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseResultFromAPIEntity>>> {
         return dataSource.getExerciseResults(exerciseId).checkResource {list->
             list.map { it.toEntity() }
+        }
+    }
+
+    override suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultEntity>> {
+        return dataSource.getExerciseDetailResult(id).checkResource {
+            it.toEntity()
         }
     }
 }

@@ -12,11 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
-import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentThoughtDiaryBinding
-import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.exercises.ThoughtDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
@@ -64,6 +65,7 @@ class FragmentThoughtDiary : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+        viewModel.loadDiary(requireArguments().getString(RESULT_ID).toString())
         return binding.root
     }
 
@@ -88,53 +90,22 @@ class FragmentThoughtDiary : Fragment() {
             findNavController().popBackStack()
         }
 
-        /*    binding.includeAutoThought.cardImage.setOnClickListener {
-
-                childFragmentManager.setFragmentResultListener(
-                    EDIT_AUTO_THOUGHT, viewLifecycleOwner
-                ) { _, bundle ->
-
-                    bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
-                        viewModel.editAutoThought(newText)
-                        binding.includeAutoThought.cardDescription.text = newText
-                    }
-                }
-
-                FragmentEditField.newInstance(
-                    binding.includeAutoThought.cardTitle.text.toString(),
-                    binding.includeAutoThought.cardDescription.text.toString()
-                ).show(childFragmentManager, EDIT_AUTO_THOUGHT)
-            }
-
-            binding.includeAlternativeThought.cardImage.setOnClickListener {
-                childFragmentManager.setFragmentResultListener(
-                    EDIT_ALTERNATIVE_THOUGHT, viewLifecycleOwner
-                ) { _, bundle ->
-
-                    bundle.getString(FragmentEditField.NEW_TEXT)?.let { newText ->
-                        viewModel.editAlternativeThought(newText)
-                        binding.includeAlternativeThought.cardDescription.text = newText
-                    }
-                }
-
-                FragmentEditField.newInstance(
-                    binding.includeAlternativeThought.cardTitle.text.toString(),
-                    binding.includeAlternativeThought.cardDescription.text.toString()
-                ).show(childFragmentManager, EDIT_ALTERNATIVE_THOUGHT)
-            } */
     }
 
-    private fun render(it: Resource<ThoughtDiaryEntity>) {
+    private fun render(it: BaseStateUI<ExerciseDetailResultEntity>) {
         when (it) {
-            is Resource.Success -> {
-                setupRecords(it.data)
+            is BaseStateUI.Content -> {
+                setupRecords(it.data.result)
             }
 
-            is Resource.Error -> {
-                requireContext().showToast(it.msg.toString())
+            is BaseStateUI.Error -> {
+                requireContext().showToast(it.msg)
             }
 
-            is Resource.Loading -> {}
+            is BaseStateUI.Loading -> {
+
+            }
+            is BaseStateUI.Initial -> Unit
             /*    is ThoughtDiaryScreenState.EditingSuccess -> {
                     if (isNetworkConnect())
                         requireContext().showToast(getString(R.string.success))
@@ -144,17 +115,17 @@ class FragmentThoughtDiary : Fragment() {
         }
     }
 
-    private fun setupRecords(diary: ThoughtDiaryEntity) {
+    private fun setupRecords(diary: List<ExerciseResultEntity>) {
         binding.apply {
-            includeSituation.cardDescription.text = diary.situation
-            includeMood.cardDescription.text =
-                getString(R.string.mood_with_level, diary.mood, diary.level.toString())
-            includeAutoThought.cardDescription.text = diary.autoThought
-            includeProofs.cardDescription.text = diary.proofs
-            includeRefutations.cardDescription.text = diary.refutations
-            includeAlternativeThought.cardDescription.text = diary.alternativeThought
+            includeSituation.cardDescription.text = diary[0].value
+            includeMood.cardDescription.text = diary[3].value
+
+            includeAutoThought.cardDescription.text = diary[4].value
+            includeProofs.cardDescription.text = diary[5].value
+            includeRefutations.cardDescription.text = diary[6].value
+            includeAlternativeThought.cardDescription.text = diary[7].value
             includeNewMood.cardDescription.text =
-                getString(R.string.mood_with_level, diary.newMood, diary.newLevel.toString())
+                getString(R.string.mood_with_level, diary[8].value, diary[9].value)
         }
     }
 
@@ -166,5 +137,6 @@ class FragmentThoughtDiary : Fragment() {
 
     companion object {
         const val ID = "id"
+        const val RESULT_ID = "RESULT_ID"
     }
 }

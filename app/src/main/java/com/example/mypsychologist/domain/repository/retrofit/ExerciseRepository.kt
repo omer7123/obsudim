@@ -4,6 +4,7 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
@@ -16,4 +17,5 @@ interface ExerciseRepository {
     suspend fun markAsCompleteDailyTask(dailyTaskMarkIdEntity: DailyTaskMarkIdEntity): Flow<Resource<String>>
     suspend fun saveExerciseResult(result: ExerciseResultRequestEntity): Flow<Resource<DailyTaskMarkIdEntity>>
     suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseResultFromAPIEntity>>>
+    suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultEntity>>
 }

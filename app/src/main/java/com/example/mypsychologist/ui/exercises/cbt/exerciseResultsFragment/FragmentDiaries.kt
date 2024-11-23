@@ -89,7 +89,7 @@ class FragmentDiaries : Fragment() {
                     findNavController().navigate(
                         R.id.fragment_diary,
                         bundleOf(
-                            FragmentThoughtDiary.ID to id,
+                            FragmentThoughtDiary.RESULT_ID to id,
                         )
                     )
                 }

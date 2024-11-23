@@ -3,6 +3,7 @@ package com.example.mypsychologist.data.remote.exercises
 import com.example.mypsychologist.data.model.DailyExerciseModel
 import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
+import com.example.mypsychologist.data.model.ExerciseDetailResultModel
 import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
 import com.example.mypsychologist.data.model.ExerciseResultRequestModel
 import com.example.mypsychologist.data.model.ExercisesModel
@@ -39,4 +40,8 @@ interface ExerciseService {
 
     @GET("/exercise/get_exercise_results/{exercise_id}")
     suspend fun getExerciseResults(@Path("exercise_id") exerciseId: String): Response<List<ExerciseResultFromAPIModel>>
+
+    @GET("/exercise/get_exercise_result/{completed_exercise_id}")
+    suspend fun getDetailExerciseResult(@Path("completed_exercise_id") id: String): Response<ExerciseDetailResultModel>
+
 }

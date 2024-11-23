@@ -75,3 +75,10 @@ data class ExerciseResultFromAPIModel(
     val completedExerciseId: String,
     val date: String
 )
+
+@Serializable
+data class ExerciseDetailResultModel(
+    val title: String,
+    val date: String,
+    val result: List<ExerciseResultModel>
+)
