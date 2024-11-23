@@ -15,7 +15,7 @@ class RecordDelegateItem(
 
 }
 
-fun List<DiaryRecordEntity>.toDelegateItems() =
+fun List<DiaryRecordEntity>.toDelegateItems(): List<RecordDelegateItem> =
     map { RecordDelegateItem(it) }
 
 fun HashMap<String, String>.toDelegateItems() =

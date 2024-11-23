@@ -3,6 +3,7 @@ package com.example.mypsychologist.data.converters
 import com.example.mypsychologist.data.model.DailyExerciseModel
 import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
+import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
 import com.example.mypsychologist.data.model.ExerciseResultModel
 import com.example.mypsychologist.data.model.ExerciseResultRequestModel
 import com.example.mypsychologist.data.model.ExercisesModel
@@ -12,6 +13,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEn
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.FieldExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
@@ -52,4 +54,6 @@ fun DailyExerciseModel.toEntity(): DailyExerciseEntity{
 fun DailyTaskMarkIdEntity.toModel() = DailyTaskMarkIdModel(
     id = id
 )
+
+fun ExerciseResultFromAPIModel.toEntity() = ExerciseResultFromAPIEntity(completedExerciseId, date)
 

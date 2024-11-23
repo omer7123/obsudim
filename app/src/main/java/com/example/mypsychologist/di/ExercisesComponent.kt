@@ -1,12 +1,12 @@
 package com.example.mypsychologist.di
 
 import com.example.mypsychologist.ui.exercises.FragmentExercises
-import com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries
 import com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary
 import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
 import com.example.mypsychologist.ui.exercises.cbt.FreeDiaryFragment
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
+import com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.FragmentDiaries
 import com.example.mypsychologist.ui.exercises.rebt.AutoDialogFragment
 import com.example.mypsychologist.ui.exercises.rebt.BeliefAnalysisFragment
 import com.example.mypsychologist.ui.exercises.rebt.BeliefVerificationFragment

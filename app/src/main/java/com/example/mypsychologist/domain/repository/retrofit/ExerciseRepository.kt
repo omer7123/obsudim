@@ -5,6 +5,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEnti
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,4 +15,5 @@ interface ExerciseRepository {
     suspend fun getDailyExercises(): Flow<Resource<List<DailyExerciseEntity>>>
     suspend fun markAsCompleteDailyTask(dailyTaskMarkIdEntity: DailyTaskMarkIdEntity): Flow<Resource<String>>
     suspend fun saveExerciseResult(result: ExerciseResultRequestEntity): Flow<Resource<DailyTaskMarkIdEntity>>
+    suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseResultFromAPIEntity>>>
 }

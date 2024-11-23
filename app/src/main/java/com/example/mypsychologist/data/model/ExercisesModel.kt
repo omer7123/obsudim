@@ -68,3 +68,10 @@ data class DailyTaskMarkIdModel(
 data class StatusPostResponse(
     val status: String
 )
+
+@Serializable
+data class ExerciseResultFromAPIModel(
+    @SerialName("completed_exercise_id")
+    val completedExerciseId: String,
+    val date: String
+)

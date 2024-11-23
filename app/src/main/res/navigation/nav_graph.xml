@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_diaries"
-        android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentDiaries"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.FragmentDiaries"
         android:label="FragmentDiaries"
         tools:layout="@layout/fragment_diaries" >
         <action

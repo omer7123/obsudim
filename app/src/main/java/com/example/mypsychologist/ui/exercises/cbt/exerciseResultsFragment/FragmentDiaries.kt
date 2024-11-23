@@ -1,4 +1,4 @@
-package com.example.mypsychologist.ui.exercises.cbt
+package com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment
 
 import android.content.Context
 import android.os.Bundle
@@ -14,15 +14,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
-import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.databinding.FragmentDiariesBinding
-import com.example.mypsychologist.domain.entity.DiaryRecordEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.presentation.exercises.ThoughtDiariesViewModel
+import com.example.mypsychologist.presentation.core.BaseStateUI
+import com.example.mypsychologist.presentation.exercises.diariesFragment.ThoughtDiariesViewModel
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.exercises.ExerciseResultsDelegate
+import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -83,7 +85,7 @@ class FragmentDiaries : Fragment() {
     private fun setupAdapter() {
         adapter = MainAdapter().apply {
             addDelegate(
-                RecordDelegate { id ->
+                ExerciseResultsDelegate { id ->
                     findNavController().navigate(
                         R.id.fragment_diary,
                         bundleOf(
@@ -98,30 +100,31 @@ class FragmentDiaries : Fragment() {
         }
     }
 
-    private fun render(resource: Resource<List<DiaryRecordEntity>>) {
-        when (resource) {
-            is Resource.Success -> {
+    private fun render(state: BaseStateUI<List<ExerciseResultFromAPIEntity>>) {
+        when (state) {
+            is BaseStateUI.Content -> {
                 binding.progressBar.isVisible = false
                 binding.includePlaceholder.layout.isVisible = false
 
-                if (resource.data.isNotEmpty())
-                    adapter.submitList(resource.data.toDelegateItems())
+                if (state.data.isNotEmpty())
+                    adapter.submitList(state.data.map { it.toDelegateItems() })
                 else {
                     showPlaceholderForEmptyList()
                 }
             }
 
-            is Resource.Loading -> {
+            is BaseStateUI.Loading -> {
                 if (isNetworkConnect())
                     binding.progressBar.isVisible = true
                 else
                     binding.includePlaceholder.layout.isVisible = true
             }
 
-            is Resource.Error -> {
+            is BaseStateUI.Error -> {
                 binding.progressBar.isVisible = false
-                requireContext().showToast(resource.msg.toString())
+                requireContext().showToast(state.msg)
             }
+            is BaseStateUI.Initial -> Unit
         }
     }
 
@@ -136,7 +139,7 @@ class FragmentDiaries : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadDiaries()
+        viewModel.loadDiaries(requireArguments().getString(EXERCISE_ID).toString())
     }
 
     companion object {

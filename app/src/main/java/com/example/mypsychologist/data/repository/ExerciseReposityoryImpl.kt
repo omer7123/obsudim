@@ -8,6 +8,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEnti
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.example.mypsychologist.domain.repository.retrofit.ExerciseRepository
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +43,12 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
     override suspend fun saveExerciseResult(result: ExerciseResultRequestEntity): Flow<Resource<DailyTaskMarkIdEntity>> {
         return dataSource.saveExerciseResult(result.toModel()).checkResource {
             DailyTaskMarkIdEntity(it.id)
+        }
+    }
+
+    override suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseResultFromAPIEntity>>> {
+        return dataSource.getExerciseResults(exerciseId).checkResource {list->
+            list.map { it.toEntity() }
         }
     }
 }

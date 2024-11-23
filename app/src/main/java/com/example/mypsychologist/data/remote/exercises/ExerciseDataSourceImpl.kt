@@ -5,6 +5,7 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.DailyExerciseModel
 import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
+import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
 import com.example.mypsychologist.data.model.ExerciseResultRequestModel
 import com.example.mypsychologist.data.model.ExercisesModel
 import com.example.mypsychologist.data.model.SaveExerciseResultResponseModel
@@ -57,4 +58,12 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
             )
 
         }.flowOn(Dispatchers.IO)
+
+    override suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseResultFromAPIModel>>> = flow{
+        emit(
+            getResult {
+                api.getExerciseResults(exerciseId)
+            }
+        )
+    }.flowOn(Dispatchers.IO)
 }
