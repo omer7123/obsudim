@@ -20,6 +20,7 @@ import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.diagnostics.PassingTestFragment
 import com.example.mypsychologist.ui.education.EducationFragment
 import com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
@@ -55,6 +56,14 @@ class MainFragment : Fragment() {
                 }else {
 
                 }
+            }
+            3 -> {
+                findNavController().navigate(R.id.action_main_fragment_to_passingTestFragment,
+                    bundleOf(
+                        PassingTestFragment.TEST_ID to dailyExerciseEntity.destinationId,
+                        PassingTestFragment.TASK_ID to dailyExerciseEntity.id
+                    )
+                )
             }
             4 -> {
                 findNavController().navigate(

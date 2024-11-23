@@ -87,7 +87,7 @@ class FragmentDiaries : Fragment() {
             addDelegate(
                 ExerciseResultsDelegate { id ->
                     findNavController().navigate(
-                        R.id.fragment_diary,
+                        R.id.action_fragment_diaries_to_fragment_diary,
                         bundleOf(
                             FragmentThoughtDiary.RESULT_ID to id,
                         )
