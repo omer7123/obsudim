@@ -1,6 +1,8 @@
 package com.example.mypsychologist.ui.main
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -54,8 +56,32 @@ class FeedbackFragment : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.sendMessageTg.setOnClickListener {
+            val telegramUrl = "https://t.me/desman4"
+
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(telegramUrl))
+                intent.setPackage("org.telegram.messenger") // Устанавливаем пакет Telegram
+                startActivity(intent)
+            } catch (e: Exception) {
+                // Если Telegram не установлен, открываем ссылку через браузер
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(telegramUrl))
+                startActivity(intent)
+            }
+        }
+
+        binding.sendMessage.setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:ilyafomin125@gmail.com"))
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Тема письма")  // Можно задать тему
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "Текст письма...")  // Можно задать текст письма
+            startActivity(Intent.createChooser(emailIntent, "Отправить письмо"))
+        }
     }
 
     private fun render(state: FeedbackScreenState) {

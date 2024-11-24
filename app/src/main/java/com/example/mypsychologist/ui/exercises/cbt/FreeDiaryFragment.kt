@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -72,7 +73,11 @@ class FreeDiaryFragment : Fragment() {
         }
 
         binding.newDiaryFab.setOnClickListener {
-            findNavController().navigate(R.id.newFreeDiaryFragment)
+            findNavController().navigate(R.id.newFreeDiaryFragment,
+                bundleOf(
+                    NewFreeDiaryFragment.KPT_ID to requireArguments().getString(NewFreeDiaryFragment.KPT_ID).toString()
+                )
+            )
         }
     }
 
@@ -129,5 +134,9 @@ class FreeDiaryFragment : Fragment() {
             text.text = getString(R.string.diary_empty)
             layout.isVisible = true
         }
+    }
+
+    companion object {
+        const val KPT_ID = "kpt_id"
     }
 }

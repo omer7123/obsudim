@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -12,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentNewFreeDiaryBinding
 import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
@@ -36,7 +36,6 @@ import javax.inject.Inject
 class NewFreeDiaryFragment : Fragment() {
     private var binding: FragmentNewFreeDiaryBinding by autoCleared()
 
-    private var navbarHider: NavbarHider? = null
 
     @Inject
     lateinit var viewModelFactory: MultiViewModelFactory
@@ -48,10 +47,6 @@ class NewFreeDiaryFragment : Fragment() {
         super.onAttach(context)
         requireContext().getAppComponent().exercisesComponent().create().inject(this)
 
-        if (context is NavbarHider) {
-            navbarHider = context
-            navbarHider!!.setNavbarVisibility(false)
-        }
     }
 
     override fun onCreateView(
@@ -97,7 +92,11 @@ class NewFreeDiaryFragment : Fragment() {
         }
 
         binding.KPTDiaryTv.setOnClickListener {
-            findNavController().navigate(R.id.fragment_new_diary)
+            findNavController().navigate(R.id.fragment_new_diary,
+                bundleOf(
+                    FragmentNewCBTDiary.EXERCISE_ID to requireArguments().getString(KPT_ID).toString()
+                )
+            )
         }
     }
 
@@ -144,10 +143,7 @@ class NewFreeDiaryFragment : Fragment() {
         }
 
     }
-
-    override fun onDetach() {
-        navbarHider?.setNavbarVisibility(true)
-        navbarHider = null
-        super.onDetach()
+    companion object{
+        const val KPT_ID = "kpt_id"
     }
 }

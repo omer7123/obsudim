@@ -79,7 +79,7 @@ class NewThoughtDiaryViewModel(
         }
     }
 
-    fun tryToSave(exercise_id: String, taskId: String) {
+    fun tryToSave(exerciseId: String, taskId: String) {
         val currentState = _screenState.value
 
         if(currentState is NewExerciseScreenState.Content){
@@ -110,7 +110,7 @@ class NewThoughtDiaryViewModel(
                 viewModelScope.launch {
                     saveExerciseResultUseCase(
                         ExerciseResultRequestEntity(
-                            exercise_id,
+                            exerciseId,
                             resultExercise
                         )
                     ).collect {resource->
