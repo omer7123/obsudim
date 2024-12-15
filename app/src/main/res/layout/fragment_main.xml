@@ -16,6 +16,7 @@
 
     <ScrollView
         android:id="@+id/content"
+        android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
@@ -31,13 +32,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:src="@drawable/ic_home_emoj" />
+                android:src="@drawable/ic_home_emoj"
+                tools:ignore="ContentDescription" />
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/exercises_rv"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_marginTop="50dp"
+                android:scrollbars="none"
                 tools:listitem="@layout/item_daily_exercise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

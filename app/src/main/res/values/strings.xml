@@ -332,6 +332,7 @@
 
     <string name="add_task">Добавить задание</string>
     <string name="add_note">Добавить заметку</string>
+    <string name="add_note_tracker">Подробнее</string>
 
     <string name="nobody">Никого нет</string>
     <string name="no_psychologist_in_app">Вы еще не связались с психологом через наше приложение :(</string>
