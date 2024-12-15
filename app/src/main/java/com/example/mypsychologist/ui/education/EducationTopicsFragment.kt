@@ -65,8 +65,12 @@ class EducationTopicsFragment : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
-        viewModel.getTopics()
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getTopics()
     }
 
     private fun setupAdapter() {
