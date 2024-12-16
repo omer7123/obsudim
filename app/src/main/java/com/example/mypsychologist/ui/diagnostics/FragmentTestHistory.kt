@@ -237,6 +237,9 @@ class FragmentTestHistory : Fragment() {
     }
 
     private fun showPlaceholderForEmptyList() {
+        binding.radar.isVisible = false
+        binding.testDatesSwitchesRw.isVisible = false
+
         binding.includePlaceholder.apply {
             image.setImageResource(R.drawable.ic_import_contacts)
             title.text = getString(R.string.nothing)

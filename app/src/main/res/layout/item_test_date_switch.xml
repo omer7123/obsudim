@@ -5,13 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center">
 
-
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/switch_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-/>
+        android:layout_marginStart="16dp" />
 
     <TextView
         android:id="@+id/date"
@@ -29,5 +27,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
-        android:text="@string/go_to" />
+        android:text="@string/add_note_tracker" />
 </LinearLayout>
