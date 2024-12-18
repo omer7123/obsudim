@@ -2,9 +2,14 @@
 <resources>
 
     <style name="TitleFragment" parent="TextAppearance.Material3.ActionBar.Title">
-        <item name="android:titleTextColor">@color/md_theme_light_onSurface</item>
+        <item name="android:textColor">@color/md_theme_light_onTertiary</item>
         <item name="fontFamily">@font/cygre_semi_bold</item>
         <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="SubTitleFragment" parent="TitleFragment">
+        <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/cygre_bold</item>
     </style>
 
     <style name="BodyM">

@@ -138,7 +138,7 @@ class FragmentTestHistory : Fragment() {
             val listRes: ArrayList<RadarEntry> = ArrayList()
             val listResNormalize: ArrayList<RadarEntry> = ArrayList()
             for (scale in res.scaleResults) {
-                listRes.add(RadarEntry(scale.score.toFloat()))
+                listRes.add(RadarEntry(scale.score))
                 listResNormalize.add(RadarEntry(scale.score.toPercent(scale.maxScore)))
                 maxValue = max(scale.maxScore.toFloat(), maxValue)
             }
@@ -246,6 +246,8 @@ class FragmentTestHistory : Fragment() {
             text.text = getString(R.string.no_tests)
             layout.isVisible = true
         }
+
+
     }
 
     companion object {

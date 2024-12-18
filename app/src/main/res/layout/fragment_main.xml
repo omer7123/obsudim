@@ -3,51 +3,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:fitsSystemWindows="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.main.MainFragment">
+
+
+    <ImageView
+        android:id="@+id/home_pict"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_home_fragment"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="495dp"/>
 
     <include
         android:id="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        layout="@layout/include_basic_toolbar"/>
-
-    <ScrollView
-        android:id="@+id/content"
-        android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        layout="@layout/include_basic_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_marginStart="16dp"
+        tools:text="Вторник, 17 декабря"
+        style="@style/SubTitleFragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <View
+        android:id="@+id/line"
+        android:layout_marginBottom="125dp"
+        app:layout_constraintBottom_toBottomOf="@id/home_pict"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <FrameLayout
+        android:id="@+id/content_container"
+        android:background="@drawable/bg_bottom_sheet_dialog_fragment"
+        app:layout_constraintTop_toBottomOf="@id/line"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/exercises_rv"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_daily_exercise"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:id="@+id/plan_picture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/ic_home_emoj"
-                tools:ignore="ContentDescription" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/exercises_rv"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_marginTop="50dp"
-                android:scrollbars="none"
-                tools:listitem="@layout/item_daily_exercise"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </FrameLayout>
 
 
     <com.google.android.material.progressindicator.CircularProgressIndicator

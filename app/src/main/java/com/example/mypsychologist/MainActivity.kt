@@ -9,6 +9,7 @@ import android.net.NetworkRequest
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -17,7 +18,6 @@ import androidx.work.WorkManager
 import com.example.mypsychologist.databinding.ActivityMainBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.ui.psychologist.TasksWorker
-import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     private lateinit var notification: Notification
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         getAppComponent().inject(this)
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         }
 
         val notificationManager =
-            getSystemService(AppCompatActivity.NOTIFICATION_SERVICE)
+            getSystemService(NOTIFICATION_SERVICE)
 
         (notificationManager as NotificationManager).notify(
             TasksWorker.TASK_NOTIFICATION_ID,
@@ -86,19 +87,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         WorkManager.getInstance(this).enqueue(taskWorkRequest)
     }
 
-    private fun createSignInIntent() {
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.PhoneBuilder().build()
-        )
-
-        val signInIntent = AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setAvailableProviders(providers)
-            .setTheme(R.style.Theme_MyPsychologist)
-            .build()
-        signInLauncher.launch(signInIntent)
-    }
 
     private fun registerNetworkCallback() {
         var firstFlag = true
@@ -148,6 +136,23 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         findViewById<BottomNavigationView>(R.id.navigation)
             .setupWithNavController(navController)
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id){
+                R.id.main_fragment-> {
+                    WindowCompat.setDecorFitsSystemWindows(window, false)
+                    window.statusBarColor = android.graphics.Color.TRANSPARENT
+
+//                    window.statusBarColor = android.
+                }else->{
+//                window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_dark_surfaceContainerHighest)
+//                WindowCompat.setDecorFitsSystemWindows(window, true)
+//                val windowInsetsController =
+//                    ViewCompat.getWindowInsetsController(window.decorView)
+//
+//                windowInsetsController?.isAppearanceLightNavigationBars = true
+                }
+            }
+        }
         binding.navigation.setOnItemSelectedListener { item ->
             val navController =
                 (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
