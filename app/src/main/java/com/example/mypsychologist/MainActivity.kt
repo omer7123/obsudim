@@ -130,6 +130,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     }
 
     private fun setupNavigationListener() {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.navigation)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -141,9 +142,14 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                 R.id.main_fragment-> {
                     WindowCompat.setDecorFitsSystemWindows(window, false)
                     window.statusBarColor = android.graphics.Color.TRANSPARENT
-
+                    bottomNav.isVisible = true
 //                    window.statusBarColor = android.
-                }else->{
+                }
+                R.id.freeDiaryFragment->{
+                    bottomNav.isVisible = false
+                }
+                else->{
+                    bottomNav.isVisible = true
 //                window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_dark_surfaceContainerHighest)
 //                WindowCompat.setDecorFitsSystemWindows(window, true)
 //                val windowInsetsController =

@@ -6,12 +6,12 @@
     android:orientation="vertical"
     android:layout_marginHorizontal="16dp"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/main_card"
+    android:background="@drawable/record_card"
     android:gravity="center">
 
     <TextView
         android:id="@+id/situation"
-        style="@style/BodyMBold.White"
+        style="@style/BodyMBold.Black"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/date"
-        style="@style/BodyM.White"
+        style="@style/BodyM.Black"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="16dp"
         android:layout_marginHorizontal="16dp"

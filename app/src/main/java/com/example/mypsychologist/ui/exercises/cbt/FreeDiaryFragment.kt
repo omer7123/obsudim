@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
 import com.example.mypsychologist.presentation.exercises.ThoughtDiariesScreenState
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -58,7 +60,35 @@ class FreeDiaryFragment : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+        initView()
         return binding.root
+    }
+
+    private fun initView() {
+        binding.line.post {
+            val lineBottom = binding.line.bottom
+            val includeTop = binding.include.toolbar.bottom
+
+            val bottomSheetBehavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(binding.bottomSheet)
+            bottomSheetBehavior.peekHeight = lineBottom
+
+            val displayMetrics = DisplayMetrics()
+            val windowManager = requireContext().getSystemService(Context.WINDOW_SERVICE) as android.view.WindowManager
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+            bottomSheetBehavior.maxHeight = displayMetrics.heightPixels - includeTop
+
+            bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    when (newState) {
+                        BottomSheetBehavior.STATE_COLLAPSED -> {
+                            bottomSheetBehavior.peekHeight = lineBottom
+                        }
+                    }
+                }
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+            })
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

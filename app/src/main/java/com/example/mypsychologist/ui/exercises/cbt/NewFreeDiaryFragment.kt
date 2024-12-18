@@ -36,7 +36,6 @@ import javax.inject.Inject
 class NewFreeDiaryFragment : Fragment() {
     private var binding: FragmentNewFreeDiaryBinding by autoCleared()
 
-
     @Inject
     lateinit var viewModelFactory: MultiViewModelFactory
     private val viewModel: NewFreeDiaryViewModel by lazy {
