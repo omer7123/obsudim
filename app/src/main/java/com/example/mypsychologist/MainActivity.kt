@@ -6,7 +6,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -143,13 +146,16 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                     WindowCompat.setDecorFitsSystemWindows(window, false)
                     window.statusBarColor = android.graphics.Color.TRANSPARENT
                     bottomNav.isVisible = true
-//                    window.statusBarColor = android.
+
+                    setLightStatusBarIcons(false)
                 }
                 R.id.freeDiaryFragment->{
                     bottomNav.isVisible = false
+                    setLightStatusBarIcons(false)
                 }
                 else->{
                     bottomNav.isVisible = true
+                    setLightStatusBarIcons(true)
 //                window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_dark_surfaceContainerHighest)
 //                WindowCompat.setDecorFitsSystemWindows(window, true)
 //                val windowInsetsController =
@@ -159,6 +165,8 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                 }
             }
         }
+
+
         binding.navigation.setOnItemSelectedListener { item ->
             val navController =
                 (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
@@ -183,6 +191,27 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                 else -> {
                     false
                 }
+            }
+        }
+    }
+
+    private fun setLightStatusBarIcons(isLight: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val appearance = if (isLight) {
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            } else {
+                0
+            }
+            window.insetsController?.setSystemBarsAppearance(
+                appearance,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = if (isLight) {
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                0
             }
         }
     }

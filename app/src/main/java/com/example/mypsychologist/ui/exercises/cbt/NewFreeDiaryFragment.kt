@@ -137,7 +137,7 @@ class NewFreeDiaryFragment : Fragment() {
             }
 
             else -> {
-                findNavController().navigate(R.id.action_newFreeDiaryFragment_to_main_fragment)
+                findNavController().popBackStack()
             }
         }
 

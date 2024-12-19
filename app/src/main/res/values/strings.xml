@@ -720,5 +720,7 @@
     <string name="send_message">Написать письмо</string>
     <string name="placeholder_feedback">Если вы обнаружили ошибку в приложении или у вас есть предложения для создателей, пожалуйста, свяжитесь с нами!</string>
     <string name="write_to_telegram">Написать в Telegram</string>
+    <string name="has_not_notes">Нет заметок</string>
+    <string name="new_record">Новая запись</string>
 
 </resources>
