@@ -97,9 +97,9 @@ class EditViewModel(
     fun tryToSaveInfo(name: String, birthDate: String) {
         viewModelScope.launch {
             saveClientInfoUseCase(ClientInfoEntity(name, birthday = birthDate))
-//            if (fieldsAreCorrect())
-//                _screenState.value =
-//                    EditScreenState.Response(saveClientInfoUseCase(info))
+            if (fieldsAreCorrect())
+                _screenState.value =
+                    EditScreenState.Response(saveClientInfoUseCase(info))
         }
     }
 

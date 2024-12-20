@@ -57,6 +57,7 @@
             android:id="@+id/exercises_rv"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:scrollbars="none"
+            android:layout_marginTop="4dp"
             tools:listitem="@layout/item_daily_exercise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

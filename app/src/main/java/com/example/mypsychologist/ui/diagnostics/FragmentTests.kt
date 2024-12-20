@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestsBinding
@@ -114,7 +115,7 @@ class FragmentTests : Fragment() {
         }
         binding.testsRw.apply {
 
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(), 2)
 
             adapter = MainAdapter().apply {
 //            addDelegate(TestGroupDelegate(onTestGroupClick))

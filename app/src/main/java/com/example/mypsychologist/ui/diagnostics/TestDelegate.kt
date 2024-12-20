@@ -32,7 +32,6 @@ class TestDelegate(private val onClick: (String, String, String) -> Unit) : Adap
         fun bind(test: TestEntity) {
 
             binding.title.text = test.title
-            binding.description.text = test.descShort
 
 //            binding.title.text = itemView.context.getString(test.titleId)
 //            binding.description.text = itemView.context.getString(test.shortDescriptionId)

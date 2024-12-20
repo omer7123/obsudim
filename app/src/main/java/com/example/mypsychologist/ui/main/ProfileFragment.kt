@@ -63,9 +63,9 @@ class ProfileFragment : Fragment() {
                 findNavController().popBackStack()
             }
 
-//            editData.setOnClickListener {
-//                findNavController().navigate(R.id.fragment_edit)
-//            }
+            editData.setOnClickListener {
+                findNavController().navigate(R.id.fragment_edit)
+            }
 
 
 //            rules.setOnClickListener {
