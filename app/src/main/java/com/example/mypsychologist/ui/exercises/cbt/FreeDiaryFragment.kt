@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentFreeDiaryBinding
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
+import com.example.mypsychologist.extensions.toDp
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
 import com.example.mypsychologist.presentation.exercises.ThoughtDiariesScreenState
@@ -131,23 +131,17 @@ class FreeDiaryFragment : Fragment() {
     }
     private fun render(it: ThoughtDiariesScreenState) {
         when (it) {
-            is ThoughtDiariesScreenState.Data -> {
-                binding.progressBar.isVisible = false
-                binding.includePlaceholder.layout.isVisible = false
+            is ThoughtDiariesScreenState.Data -> renderData(it.records)
 
-                if (it.records.isNotEmpty()) {
-                    adapter.submitList(it.records.toDelegateItems())
-                }else {
-                    showPlaceholderForEmptyList()
-                }
-            }
             is ThoughtDiariesScreenState.Init -> {}
             is ThoughtDiariesScreenState.Loading -> {
-                if (isNetworkConnect()) {
-                    binding.includePlaceholder.layout.isVisible = false
+                binding.apply {
                     binding.progressBar.isVisible = true
-                }else
-                    binding.includePlaceholder.layout.isVisible = true
+                    titleEmptyTv.isVisible = false
+                    descTv.isVisible = false
+                    recordsRw.isVisible = false
+                    bottomHandle.isVisible = false
+                }
             }
             is ThoughtDiariesScreenState.Error -> {
                 binding.progressBar.isVisible = false
@@ -156,17 +150,35 @@ class FreeDiaryFragment : Fragment() {
         }
     }
 
-    private fun showPlaceholderForEmptyList() {
-        binding.descTv.isVisible = false
-        binding.includePlaceholder.apply {
-            image.setImageResource(R.drawable.ic_place)
-            title.text = ""
-            text.text = getString(R.string.diary_empty)
-            layout.isVisible = true
-        }
-    }
+    private fun renderData(records: HashMap<String, String>) {
+        val layout = binding.descTv.layoutParams as ViewGroup.MarginLayoutParams
+        val bottomSheetBehavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(binding.bottomSheet)
 
-    companion object {
-        const val KPT_ID = "kpt_id"
+        binding.progressBar.isVisible = false
+
+        if (records.isNotEmpty()) {
+            binding.apply {
+                recordsRw.isVisible = true
+                bottomHandle.isVisible = true
+                descTv.isVisible = true
+
+                layout.topMargin = 30.toDp(requireContext())
+                descTv.layoutParams = layout
+
+                bottomSheetBehavior.isDraggable = true
+            }
+            adapter.submitList(records.toDelegateItems())
+
+        }else {
+            binding.apply {
+                titleEmptyTv.isVisible = true
+                descTv.isVisible = true
+
+                layout.topMargin = 20.toDp(requireContext())
+                descTv.layoutParams = layout
+
+                bottomSheetBehavior.isDraggable = false
+            }
+        }
     }
 }
