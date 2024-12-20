@@ -18,6 +18,10 @@
         <item name="fontFamily">@font/cygre_bold</item>
     </style>
 
+    <style name="CruinnMedTitle">
+        <item name="fontFamily">@font/cruinn_medium</item>
+        <item name="android:textSize">96sp</item>
+    </style>
     <style name="BodyM">
         <item name="fontFamily">@font/inter_medium</item>
         <item name="android:textSize">14sp</item>
@@ -68,6 +72,10 @@
         <item name="fontFamily">@font/inter_bold</item>
     </style>
 
+    <style name="BodyXL" parent="BodyXLBold">
+        <item name="fontFamily">@font/inter_medium</item>
+    </style>
+
     <style name="BodyXSBold">
         <item name="fontFamily">@font/inter_semibold</item>
         <item name="android:textSize">12sp</item>
@@ -79,5 +87,11 @@
 
     <style name="CustomImageShape">
         <item name="cornerSize">12dp</item>
+    </style>
+    
+    <style name="ButtonPrimary" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">12dp</item>
+        <item name="backgroundTint">@color/md_theme_light_primary</item>
+        <item name="android:textAppearance">@style/BodyMBold.White</item>
     </style>
 </resources>

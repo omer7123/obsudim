@@ -17,6 +17,7 @@
     <string name="main">Главная</string>
     <string name="my_program">Моя программа</string>
     <string name="today">Сегодня</string>
+    <string name="here_goes">Приступим</string>
 
     <string name="plan">План</string>
     <string name="theory">Теория</string>
@@ -722,5 +723,23 @@
     <string name="write_to_telegram">Написать в Telegram</string>
     <string name="has_not_notes">Нет заметок</string>
     <string name="new_record">Новая запись</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="start_board_desc">Одеяло поможет лучше понимать себя и контролировать свое состояние.</string>
+    <string name="nice_to_meet_you">Приятно познакомиться</string>
+    <string name="skip_onboard">Пропустить онбординг</string>
+    <string name="app_name_new">одеяло</string>
+    <string name="how_everything_works">Как все устроено</string>
+    <string name="desc_first_screen1">Мы используем методы когнитивно - поведенческой терапии и рационально - эмоционально - поведенческой терапии.</string>
+    <string name="desc_first_screen2">Такой подход предлагает проверенные инструменты, которые помогут вам самостоятельно справляться с трудностями.</string>
+    <string name="next">Далее</string>
+    <string name="result_of_tests">Результаты тестов</string>
+    <string name="board_desc2">Здесь план работы над собой. Одеяло  подбирает практики исходя из указанных целей и результатов тестов.</string>
+    <string name="board_desc3">Тут можно узнать всё об используемых методах, а также, например, получить советы по борьбе с выгоранием.</string>
+    <string name="board_desc4">В практиках можно применять полученные в теории знания и узнавать больше о себе.</string>
+    <string name="board_desc5">Это пространство для ваших мыслей. Сюда можно написать, всё, что произошло за день \nи что вы почувствовали.</string>
+    <string name="board_desc6">В тестах нет правильных и неправильных ответов, это инструмент самодиагностики.</string>
+    <string name="board_desc7">"Помогут понять причины самочувствия \nи дальнейшие шаги. "</string>
+    <string name="board_current_max">%1$d из %2$d</string>
+
 
 </resources>

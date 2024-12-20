@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.authentication.boardFragment.StartBoardFragment">
+
+    <ImageView
+        android:src="@drawable/ic_start_board"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"/>
+    
+    <TextView
+        android:id="@+id/title_tv"
+        android:text="@string/welcome"
+        android:textAppearance="@style/TitleFragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="61dp"
+        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textColor="@color/md_theme_light_onTertiary"
+        android:textAppearance="@style/BodyXL"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/title_tv"
+        android:text="@string/start_board_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/skip_btn"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/skip_onboard"
+        app:cornerRadius="12dp"
+        style="@style/BodyMBold.Black"
+        android:textAppearance="@style/BodyMBold.Black"
+        android:backgroundTint="@color/md_theme_light_onTertiary"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="16dp"
+        android:paddingVertical="13dp"
+        app:layout_constraintBottom_toTopOf="@id/start_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/start_btn"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/nice_to_meet_you"
+        style="@style/ButtonPrimary"
+        android:layout_marginBottom="52dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:paddingVertical="13dp"
+        android:layout_height="wrap_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

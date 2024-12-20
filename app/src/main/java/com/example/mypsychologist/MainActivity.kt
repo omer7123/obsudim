@@ -8,6 +8,7 @@ import android.net.Network
 import android.net.NetworkRequest
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
@@ -141,28 +142,53 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
             .setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id){
-                R.id.main_fragment-> {
-                    WindowCompat.setDecorFitsSystemWindows(window, false)
-                    window.statusBarColor = android.graphics.Color.TRANSPARENT
-                    bottomNav.isVisible = true
+                when(destination.id){
+                    R.id.freeDiaryFragment ->{
+                        WindowCompat.setDecorFitsSystemWindows(window, false)
+                        window.statusBarColor = android.graphics.Color.TRANSPARENT
 
-                    setLightStatusBarIcons(false)
-                }
-                R.id.freeDiaryFragment->{
-                    bottomNav.isVisible = false
-                    setLightStatusBarIcons(false)
-                }
-                else->{
-                    bottomNav.isVisible = true
-                    setLightStatusBarIcons(true)
-//                window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_dark_surfaceContainerHighest)
-//                WindowCompat.setDecorFitsSystemWindows(window, true)
-//                val windowInsetsController =
-//                    ViewCompat.getWindowInsetsController(window.decorView)
-//
-//                windowInsetsController?.isAppearanceLightNavigationBars = true
-                }
+                        bottomNav.isVisible = false
+                        setLightStatusBarIcons(false)
+                    }
+                    R.id.startBoardFragment->{
+                        Log.e("Fragment", "Start Board Fragment")
+
+                        WindowCompat.setDecorFitsSystemWindows(window, false)
+                        window.statusBarColor = android.graphics.Color.TRANSPARENT
+
+                        bottomNav.isVisible = false
+                        setLightStatusBarIcons(false)
+                    }
+                    R.id.main_fragment-> {
+                        Log.e("Fragment", "Main Fragment")
+                        WindowCompat.setDecorFitsSystemWindows(window, false)
+                        window.statusBarColor = android.graphics.Color.TRANSPARENT
+                        bottomNav.isVisible = true
+
+                        setLightStatusBarIcons(false)
+                    }
+                    R.id.firstBoardFragment-> {
+                        WindowCompat.setDecorFitsSystemWindows(window, false)
+                        window.statusBarColor = android.graphics.Color.TRANSPARENT
+                        bottomNav.isVisible = false
+
+                        setLightStatusBarIcons(true)
+                    }
+
+                    R.id.boardFragment-> {
+                        bottomNav.isVisible = false
+
+                        setLightStatusBarIcons(true)
+                    }
+                    R.id.registrationFragment -> {
+                        bottomNav.isVisible = false
+                    }
+
+                    else->{
+                        bottomNav.isVisible = true
+                        setLightStatusBarIcons(true)
+                    }
+
             }
         }
 

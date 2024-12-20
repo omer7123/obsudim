@@ -19,13 +19,11 @@ import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 import com.example.mypsychologist.extensions.bounce
 import com.example.mypsychologist.extensions.expand
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.text.SimpleDateFormat
@@ -124,24 +122,10 @@ class NewFreeDiaryFragment : Fragment() {
     }
 
     private fun renderRequest() {
-
-        when {
-            !isNetworkConnect() -> {
-                Snackbar.make(
-                    binding.constraint,
-                    R.string.save_after_connect,
-                    Snackbar.LENGTH_LONG
-                ).setAction(R.string.go) {
-                    findNavController().popBackStack()
-                }.show()
-            }
-
-            else -> {
-                findNavController().popBackStack()
-            }
-        }
-
+        findNavController().popBackStack()
     }
+
+
     companion object{
         const val KPT_ID = "kpt_id"
     }

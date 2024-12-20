@@ -2,20 +2,16 @@ package com.example.mypsychologist.ui.authentication.registrationFragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.data.model.OldRegister
 import com.example.mypsychologist.databinding.FragmentRegistrationBinding
-import com.example.mypsychologist.domain.entity.authenticationEntity.Register
 import com.example.mypsychologist.extensions.bounce
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
@@ -29,8 +25,6 @@ class RegistrationFragment : Fragment() {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = requireNotNull(_binding)
 
-    private var navbarHider: NavbarHider? = null
-
 
     @Inject
     lateinit var viewModelFactory: MultiViewModelFactory
@@ -42,14 +36,6 @@ class RegistrationFragment : Fragment() {
         super.onAttach(context)
         requireContext().getAppComponent().authenticationComponent().create().inject(this)
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (context is NavbarHider) {
-            navbarHider = context as NavbarHider
-            navbarHider!!.setNavbarVisibility(false)
-        }
     }
 
     override fun onCreateView(
@@ -91,10 +77,16 @@ class RegistrationFragment : Fragment() {
         when (state) {
             is RegisterState.Error -> renderError(state.msg)
             is RegisterState.Success -> renderSuccess()
+            is RegisterState.SuccessAuth -> renderSuccessAuth()
             RegisterState.Initial -> {}
             RegisterState.Loading -> renderLoading()
             is RegisterState.Content -> renderContent(state)
         }
+    }
+
+    private fun renderSuccessAuth() {
+        binding.progressCircular.isVisible = false
+        findNavController().navigate(R.id.action_registrationFragment_to_main_fragment)
     }
 
     private fun renderContent(state: RegisterState.Content) {
@@ -121,13 +113,7 @@ class RegistrationFragment : Fragment() {
 
     private fun renderSuccess() {
         binding.progressCircular.isVisible = false
-        findNavController().navigate(R.id.action_registrationFragment_to_main_fragment)
-    }
-
-    override fun onDetach() {
-        navbarHider?.setNavbarVisibility(true)
-        navbarHider = null
-        super.onDetach()
+        findNavController().navigate(R.id.action_registrationFragment_to_startBoardFragment)
     }
 
     override fun onDestroy() {

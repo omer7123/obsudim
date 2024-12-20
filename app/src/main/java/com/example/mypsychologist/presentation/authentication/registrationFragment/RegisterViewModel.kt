@@ -70,7 +70,7 @@ class RegisterViewModel @Inject constructor(
     fun authByToken() {
         viewModelScope.launch(handler) {
             _stateScreen.value = RegisterState.Loading
-            val token = getTokenUseCase.invoke()
+            val token = getTokenUseCase()
             if (token == "")
                 _stateScreen.value = RegisterState.Initial
             else {
@@ -81,8 +81,7 @@ class RegisterViewModel @Inject constructor(
                     Resource.Loading -> _stateScreen.value = RegisterState.Loading
                     is Resource.Success -> {
                         saveTokenUseCase(result.data.token)
-//                        saveUserIdUseCase(result.data.user_id)
-                        _stateScreen.value = RegisterState.Success
+                        _stateScreen.value = RegisterState.SuccessAuth
                     }
                 }
             }
