@@ -1,7 +1,6 @@
 package com.example.mypsychologist.di
 
 import com.example.mypsychologist.ui.education.EducationFragment
-import com.example.mypsychologist.ui.education.EducationItemFragment
 import com.example.mypsychologist.ui.education.EducationTopicsFragment
 import dagger.Module
 import dagger.Subcomponent
@@ -11,7 +10,6 @@ import dagger.Subcomponent
 interface EducationComponent {
 
     fun inject(fragment: EducationTopicsFragment)
-    fun inject(fragment: EducationItemFragment)
     fun inject(fragment: EducationFragment)
 
     @Subcomponent.Factory

@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentEducationBinding
 import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.example.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
@@ -17,6 +20,7 @@ import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.education.EducationScreenState
 import com.example.mypsychologist.presentation.education.EducationViewModel
+import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.PagerAdapter
 import com.example.mypsychologist.ui.autoCleared
 import javax.inject.Inject
@@ -28,6 +32,8 @@ class EducationFragment : Fragment() {
     @Inject
     lateinit var vmFactory: EducationViewModel.Factory
     private val viewModel: EducationViewModel by viewModels { vmFactory }
+
+    private lateinit var mainAdapter: MainAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -41,6 +47,8 @@ class EducationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEducationBinding.inflate(inflater, container, false)
+
+        setupAdapter()
 
         binding.includeToolbar.toolbar.apply {
             setNavigationOnClickListener {
@@ -70,31 +78,27 @@ class EducationFragment : Fragment() {
         viewModel.getMaterial(requireArguments().getString(TOPIC_TAG).toString())
     }
 
+
     private fun setupContent(data: EducationsEntity) {
-        binding.includeToolbar.toolbar.title = data.theme
+        binding.title.text = data.theme
 
-        val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
-        binding.educationVp.adapter = pagerAdapter
+        mainAdapter.submitList(data.materials.toDelegateItems())
 
-        pagerAdapter.update(
-            generateFragmentList(data.materials)
-        )
-
-        binding.educationVp.setCurrentItem(
-            data.score, false
+        binding.cardsRw.scrollToPosition(
+            data.score
         )
     }
 
-    private fun generateFragmentList(items: List<ItemMaterialEntity>): List<Fragment> {
-
-        return items.mapIndexed { index, item ->
-            EducationItemFragment.newInstance(
-                index,
-                items.size,
-                item.text,
-                item.id,
-                taskId = requireArguments().getString(TASK_ID) ?: ""
+    private fun setupAdapter() {
+        mainAdapter = MainAdapter().apply {
+            addDelegate(
+                EducationCardDelegate()
             )
+        }
+        binding.cardsRw.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = mainAdapter
+            setHasFixedSize(true)
         }
     }
 

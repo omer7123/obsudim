@@ -2,15 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
         android:id="@+id/include_toolbar"
         layout="@layout/include_simple_toolbar" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/education_vp"
+    <TextView
+        android:id="@+id/title"
+        style="@style/BodyXLBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="TextView"
+        android:layout_marginHorizontal="16dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cards_rw"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp" />
+        tools:listitem="@layout/item_education"/>
+
 </LinearLayout>

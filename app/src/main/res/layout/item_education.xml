@@ -3,45 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
     android:gravity="center_horizontal"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_view"
-        style="@style/BodyM.White"
+        style="@style/BodyL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:background="@drawable/main_card"
+        android:background="@drawable/tertiary_card"
         android:padding="20dp"
         tools:text="TextView" />
-
-    <TextView
-        android:id="@+id/progress"
-        style="@style/TextAppearance.Material3.LabelMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        tools:text="1/10" />
-
-    <ImageView
-        android:id="@+id/swipe_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        app:srcCompat="@drawable/ic_swipe" />
-
-    <Button
-        android:id="@+id/exit_button"
-        style="@style/Widget.Material3.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/end"
-        android:textAppearance="@style/BodyMBold.White"
-        android:visibility="gone" />
 
 </LinearLayout>
