@@ -1,8 +1,10 @@
 package com.example.mypsychologist.ui.diagnostics
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mypsychologist.databinding.TestItemBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
 import com.example.mypsychologist.ui.AdapterDelegate
@@ -33,13 +35,14 @@ class TestDelegate(private val onClick: (String, String, String) -> Unit) : Adap
 
             binding.title.text = test.title
 
-//            binding.title.text = itemView.context.getString(test.titleId)
-//            binding.description.text = itemView.context.getString(test.shortDescriptionId)
 
             binding.layout.setOnClickListener {
                 onClick(test.testId, test.description, test.title)
             }
-//            itemView.setOnClickListener { onClick(test.titleId, test.longDescriptionId) }
+            Log.d("aaaa",test.linkToPicture)
+            Glide.with(itemView.context)
+                .load(test.linkToPicture)
+                .into(binding.imageView)
         }
     }
 }

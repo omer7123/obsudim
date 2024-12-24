@@ -25,8 +25,8 @@ import com.example.mypsychologist.domain.entity.diagnosticEntity.TestInfoEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestInfoForPassingEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
 
-fun TestModel.toEntity() =
-    TestEntity(title, description, shortDesc, testId)
+fun TestModel.toEntity(mainLink: String) =
+    TestEntity(title, description, shortDesc, testId, mainLink+linkToPicture)
 
 fun SaveTestResultEntity.toModel() =
     SaveTestResultModel(testId, date, results)

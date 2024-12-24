@@ -10,7 +10,9 @@ data class TestModel(
     @SerialName("short_desc")
     val shortDesc: String,
     @SerialName("test_id")
-    val testId: String
+    val testId: String,
+    @SerialName("link_to_picture")
+    val linkToPicture: String
 )
 
 @Serializable

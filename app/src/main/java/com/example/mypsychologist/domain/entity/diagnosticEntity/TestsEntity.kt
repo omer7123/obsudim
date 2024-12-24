@@ -7,7 +7,8 @@ data class TestEntity(
     val title: String,
     val description: String,
     val descShort: String,
-    val testId: String
+    val testId: String,
+    val linkToPicture: String
 )
 
 data class SaveTestResultEntity(
