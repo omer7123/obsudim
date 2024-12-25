@@ -55,7 +55,7 @@ class TestResultDialogFragment : DialogFragment() {
     }
 
     private fun setupAdapter(scales: Map<Int, Int>?) {
-        scales?.let { items ->
+        scales?.let { _ ->
             binding.scalesRw.apply {
                 layoutManager = LinearLayoutManager(requireContext())
            //     adapter = ScalesAdapter(items.toList())

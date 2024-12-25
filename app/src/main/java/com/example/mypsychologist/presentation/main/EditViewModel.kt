@@ -7,9 +7,7 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.InputItemEntity
-import com.example.mypsychologist.domain.entity.TagEntity
 import com.example.mypsychologist.domain.entity.getMapOfMembers
-import com.example.mypsychologist.domain.useCase.ChangePasswordUseCase
 import com.example.mypsychologist.domain.useCase.profile.GetOwnDataUseCase
 import com.example.mypsychologist.domain.useCase.profile.SaveClientInfoUseCase
 import com.example.mypsychologist.ui.exercises.cbt.InputDelegateItem
@@ -22,7 +20,6 @@ import javax.inject.Inject
 
 class EditViewModel(
     private val saveClientInfoUseCase: SaveClientInfoUseCase,
-    private val changePasswordUseCase: ChangePasswordUseCase,
     private val getOwnDataUseCase: GetOwnDataUseCase
 ) : ViewModel() {
 
@@ -74,9 +71,7 @@ class EditViewModel(
             }
     }
 
-    fun setBirthday(date: String) {
-        info = info.copy(birthday = date)
-    }
+
 
     private fun setCity(it: String) {
         info = info.copy(city = it)
@@ -90,9 +85,7 @@ class EditViewModel(
         info = info.copy(name = it)
     }
 
-    fun setRequest(new: List<TagEntity>) {
-        info = info.copy(request = new)
-    }
+
 
     fun tryToSaveInfo(name: String, birthDate: String) {
         viewModelScope.launch {
@@ -168,14 +161,13 @@ class EditViewModel(
 
     class Factory @Inject constructor(
         private val saveClientInfoUseCase: SaveClientInfoUseCase,
-        private val changePasswordUseCase: ChangePasswordUseCase,
         private val getOwnDataUseCase: GetOwnDataUseCase
     ) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return EditViewModel(
-                saveClientInfoUseCase, changePasswordUseCase, getOwnDataUseCase
+                saveClientInfoUseCase, getOwnDataUseCase
             ) as T
         }
     }
