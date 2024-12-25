@@ -8,7 +8,7 @@ import com.example.mypsychologist.data.remote.education.EducationDataSource
 import com.example.mypsychologist.domain.entity.educationEntity.EducationMaterialForSaveProgressEntity
 import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
-import com.example.mypsychologist.domain.repository.EducationRepository
+import com.example.mypsychologist.domain.repository.retrofit.EducationRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

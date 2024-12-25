@@ -2,7 +2,7 @@ package com.example.mypsychologist.domain.useCase.retrofitUseCase.educationUseCa
 
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
-import com.example.mypsychologist.domain.repository.EducationRepository
+import com.example.mypsychologist.domain.repository.retrofit.EducationRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

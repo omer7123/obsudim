@@ -6,8 +6,8 @@ import com.example.mypsychologist.data.repository.EducationRepositoryImpl
 import com.example.mypsychologist.data.repository.ExerciseReposityoryImpl
 import com.example.mypsychologist.data.repository.FreeDiaryRepositoryImpl
 import com.example.mypsychologist.data.repository.TestsDiagnosticRepositoryImpl
-import com.example.mypsychologist.domain.repository.EducationRepository
 import com.example.mypsychologist.domain.repository.retrofit.AuthenticationRepository
+import com.example.mypsychologist.domain.repository.retrofit.EducationRepository
 import com.example.mypsychologist.domain.repository.retrofit.ExerciseRepository
 import com.example.mypsychologist.domain.repository.retrofit.FreeDiaryRepository
 import com.example.mypsychologist.domain.repository.retrofit.TestsDiagnosticRepository

@@ -11,8 +11,8 @@ import com.example.mypsychologist.data.remote.exercises.ProblemDataSourceImpl
 import com.example.mypsychologist.data.remote.exercises.ProblemService
 import com.example.mypsychologist.data.repository.CbtRepositoryImpl
 import com.example.mypsychologist.data.repository.RebtRepositoryImpl
-import com.example.mypsychologist.domain.repository.CbtRepository
 import com.example.mypsychologist.domain.repository.RebtRepository
+import com.example.mypsychologist.domain.repository.retrofit.CbtRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

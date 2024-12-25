@@ -2,7 +2,10 @@ package com.example.mypsychologist.domain.repository
 
 import android.net.Uri
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.domain.entity.*
+import com.example.mypsychologist.domain.entity.ClientCardEntity
+import com.example.mypsychologist.domain.entity.ClientInfoEntity
+import com.example.mypsychologist.domain.entity.PsychologistInfo
+import com.example.mypsychologist.domain.entity.TaskEntity
 import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
 
 interface ProfileRepository {

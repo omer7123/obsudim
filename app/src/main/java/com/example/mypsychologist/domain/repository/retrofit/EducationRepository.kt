@@ -1,4 +1,4 @@
-package com.example.mypsychologist.domain.repository
+package com.example.mypsychologist.domain.repository.retrofit
 
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.EduSaveResp
