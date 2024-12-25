@@ -8,7 +8,8 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingBottom="30dp">
+    android:paddingBottom="30dp"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/container_iv"

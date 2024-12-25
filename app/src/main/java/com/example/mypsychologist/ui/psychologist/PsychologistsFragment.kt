@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,9 +17,9 @@ import com.example.mypsychologist.databinding.FragmentPsychologistsBinding
 import com.example.mypsychologist.domain.entity.PsychologistCard
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.psychologist.PsychologistsScreenState
 import com.example.mypsychologist.presentation.psychologist.PsychologistsViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -82,9 +81,9 @@ class PsychologistsFragment : Fragment() {
         binding.psychologistsRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = PsychologistCardsAdapter(list) { id ->
-                findNavController().navigate(R.id.fragment_psychologist, bundleOf(
-                    PsychologistFragment.ID to id
-                ))
+//                findNavController().navigate(R.id.fragment_psychologist, bundleOf(
+//                    PsychologistFragment.ID to id
+//                ))
             }
             setHasFixedSize(true)
         }

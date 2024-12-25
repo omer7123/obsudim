@@ -1,7 +1,9 @@
 package com.example.mypsychologist.di
 
-import com.example.mypsychologist.ui.main.MainFragment
-import com.example.mypsychologist.ui.psychologist.*
+import com.example.mypsychologist.ui.psychologist.ClientRequestFragment
+import com.example.mypsychologist.ui.psychologist.PsychologistFragment
+import com.example.mypsychologist.ui.psychologist.PsychologistsFragment
+import com.example.mypsychologist.ui.psychologist.PsychologistsWithTasksFragment
 import dagger.Subcomponent
 
 @FragmentScope
@@ -10,7 +12,6 @@ interface PsychologistComponent {
 
     fun inject(fragment: PsychologistsFragment)
     fun inject(fragment: PsychologistFragment)
-    fun inject(fragment: PsychologistCabinetFragment)
     fun inject(fragment: ClientRequestFragment)
     fun inject(fragment: PsychologistsWithTasksFragment)
 

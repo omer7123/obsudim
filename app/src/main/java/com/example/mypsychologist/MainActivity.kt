@@ -8,7 +8,6 @@ import android.net.Network
 import android.net.NetworkRequest
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
@@ -22,8 +21,6 @@ import androidx.work.WorkManager
 import com.example.mypsychologist.databinding.ActivityMainBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.ui.psychologist.TasksWorker
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.kirich1409.androidnotificationdsl.channels.createNotificationChannels
@@ -35,11 +32,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     private lateinit var auth: FirebaseAuth
     private var isConnection = false
 
-    private val signInLauncher = registerForActivityResult(
-        FirebaseAuthUIActivityResultContract(),
-    ) { res ->
-        onSignInResult(res)
-    }
+
 
     private lateinit var notification: Notification
 
@@ -67,8 +60,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
         registerNetworkCallback()
 
-//        if (auth.currentUser == null)
-//            createSignInIntent()
+
 
         setupNavigationListener()
     }
@@ -124,15 +116,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         })
     }
 
-    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val message = if (result.resultCode == RESULT_OK) {
-            R.string.hallow
-        } else {
-            R.string.network_error
-        }
-        Toast.makeText(this, getString(message), Toast.LENGTH_LONG).show()
-    }
-
     private fun setupNavigationListener() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.navigation)
         val navHostFragment =
@@ -151,8 +134,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                         setLightStatusBarIcons(false)
                     }
                     R.id.startBoardFragment->{
-                        Log.e("Fragment", "Start Board Fragment")
-
                         WindowCompat.setDecorFitsSystemWindows(window, false)
                         window.statusBarColor = android.graphics.Color.TRANSPARENT
 
@@ -160,7 +141,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                         setLightStatusBarIcons(false)
                     }
                     R.id.main_fragment-> {
-                        Log.e("Fragment", "Main Fragment")
                         WindowCompat.setDecorFitsSystemWindows(window, false)
                         window.statusBarColor = android.graphics.Color.TRANSPARENT
                         bottomNav.isVisible = true

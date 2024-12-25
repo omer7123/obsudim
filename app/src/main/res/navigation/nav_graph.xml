@@ -96,19 +96,12 @@
         android:name="com.example.mypsychologist.ui.main.FeedbackFragment"
         android:label="FeedbackFragment"
         tools:layout="@layout/fragment_feedback" />
-    <fragment
-        android:id="@+id/fragment_psychologist_questionnaire"
-        android:name="com.example.mypsychologist.ui.main.PsychologistQuestionnaireFragment"
-        android:label="PsychologistQuestionnaireFragment"
-        tools:layout="@layout/fragment_psychologist_questionnaire" />
+
     <fragment
         android:id="@+id/fragment_psychologists"
         android:name="com.example.mypsychologist.ui.psychologist.PsychologistsFragment"
         android:label="PsychologistsFragment" />
-    <fragment
-        android:id="@+id/fragment_psychologist"
-        android:name="com.example.mypsychologist.ui.psychologist.PsychologistFragment"
-        android:label="PsychologistFragment" />
+
     <fragment
         android:id="@+id/fragment_edit"
         android:name="com.example.mypsychologist.ui.main.EditFragment"
@@ -121,10 +114,7 @@
         android:id="@+id/fragment_long_text"
         android:name="com.example.mypsychologist.ui.main.LongTextFragment"
         android:label="LongTextFragment" />
-    <fragment
-        android:id="@+id/fragment_psychologist_cabinet"
-        android:name="com.example.mypsychologist.ui.psychologist.PsychologistCabinetFragment"
-        android:label="PsychologistCabinetFragment" />
+
     <fragment
         android:id="@+id/fragment_client_request"
         android:name="com.example.mypsychologist.ui.psychologist.ClientRequestFragment"
@@ -165,22 +155,7 @@
         android:id="@+id/fragment_education"
         android:name="com.example.mypsychologist.ui.education.EducationFragment"
         android:label="EducationFragment" />
-    <fragment
-        android:id="@+id/fragment_rebt_harmful_thought"
-        android:name="com.example.mypsychologist.ui.exercises.rebt.RebtHarmfulThoughtFragment"
-        android:label="RebtHarmfulThoughtFragment" />
-    <fragment
-        android:id="@+id/fragment_rebt_alternative_thought"
-        android:name="com.example.mypsychologist.ui.exercises.rebt.RebtAlternativeThoughtFragment"
-        android:label="RebtAlternativeThoughtFragment" />
-    <fragment
-        android:id="@+id/fragment_beliefs_verification"
-        android:name="com.example.mypsychologist.ui.exercises.rebt.BeliefsVerificationFragment"
-        android:label="BeliefsVerificationFragment" />
-    <fragment
-        android:id="@+id/fragment_beliefs_analysis"
-        android:name="com.example.mypsychologist.ui.exercises.rebt.BeliefsAnalysisFragment"
-        android:label="BeliefsAnalysisFragment" />
+
     <fragment
         android:id="@+id/autoDialogFragment"
         android:name="com.example.mypsychologist.ui.exercises.rebt.AutoDialogFragment"
