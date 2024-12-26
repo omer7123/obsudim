@@ -87,6 +87,12 @@ class EducationFragment : Fragment() {
         binding.cardsRw.scrollToPosition(
             data.score
         )
+
+        binding.saveButton.setOnClickListener {
+            viewModel.saveProgress(data.materials.last().id)
+         //   viewModel.markAsCompleteTask(requireArguments().getString(TASK_ID)!!)
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupAdapter() {
