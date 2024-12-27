@@ -741,5 +741,5 @@
     <string name="board_desc7">"Помогут понять причины самочувствия \nи дальнейшие шаги. "</string>
     <string name="board_current_max">%1$d из %2$d</string>
 
-
+    <string name="all_right">Все понял!</string>
 </resources>

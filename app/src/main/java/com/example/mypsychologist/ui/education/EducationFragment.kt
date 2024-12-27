@@ -87,6 +87,18 @@ class EducationFragment : Fragment() {
         binding.cardsRw.scrollToPosition(
             data.score
         )
+
+        binding.saveButton.setOnClickListener {
+            viewModel.saveProgress(data.materials.last().id)
+            markTaskAsCompleted()
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun markTaskAsCompleted() {
+        requireArguments().getString(TASK_ID)?.let { taskId ->
+            viewModel.markAsCompleteTask(taskId)
+        }
     }
 
     private fun setupAdapter() {
