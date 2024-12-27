@@ -90,8 +90,14 @@ class EducationFragment : Fragment() {
 
         binding.saveButton.setOnClickListener {
             viewModel.saveProgress(data.materials.last().id)
-         //   viewModel.markAsCompleteTask(requireArguments().getString(TASK_ID)!!)
+            markTaskAsCompleted()
             findNavController().popBackStack()
+        }
+    }
+
+    private fun markTaskAsCompleted() {
+        requireArguments().getString(TASK_ID)?.let { taskId ->
+            viewModel.markAsCompleteTask(taskId)
         }
     }
 
