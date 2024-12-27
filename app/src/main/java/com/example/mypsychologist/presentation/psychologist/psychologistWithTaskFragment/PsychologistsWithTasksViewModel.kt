@@ -104,18 +104,6 @@ class PsychologistsWithTasksViewModel(
         }
     }
 
-    private suspend fun List<OwnPsychologistDelegateItem>.concatenate(): List<DelegateItem> {
-        val psychologistsWithTasks = mutableListOf<DelegateItem>()
-
-        forEach { psychologist ->
-
-            psychologistsWithTasks.add(psychologist)
-//            psychologistsWithTasks.addAll(getTasksUseCase(psychologist.content().first).toDelegateItem())
-        }
-
-        return psychologistsWithTasks
-    }
-
     fun markTask(taskId: String, isChecked: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             markTaskUseCase(taskId, isChecked)

@@ -111,34 +111,10 @@
         android:name="com.example.mypsychologist.ui.psychologist.RequestToPsychologistFragment"
         android:label="RequestToPsychologistFragment" />
     <fragment
-        android:id="@+id/fragment_long_text"
-        android:name="com.example.mypsychologist.ui.main.LongTextFragment"
-        android:label="LongTextFragment" />
-
-    <fragment
-        android:id="@+id/fragment_client_request"
-        android:name="com.example.mypsychologist.ui.psychologist.ClientRequestFragment"
-        android:label="ClientRequestFragment" />
-    <fragment
-        android:id="@+id/fragment_client_info"
-        android:name="com.example.mypsychologist.ui.main.ClientInfoFragment"
-        android:label="ClientInfoFragment" />
-    <fragment
         android:id="@+id/fragment_client_tests"
         android:name="com.example.mypsychologist.ui.psychologist.FragmentClientTests"
         android:label="FragmentClientTests" />
-    <fragment
-        android:id="@+id/fragment_exercises_list"
-        android:name="com.example.mypsychologist.ui.psychologist.ExercisesFragment"
-        android:label="ExercisesFragment" />
-    <fragment
-        android:id="@+id/fragment_clients"
-        android:name="com.example.mypsychologist.ui.main.ClientsFragment"
-        android:label="ClientsFragment" />
-    <fragment
-        android:id="@+id/fragment_client_tasks"
-        android:name="com.example.mypsychologist.ui.main.ClientTasksFragment"
-        android:label="ClientTasksFragment" />
+
     <fragment
         android:id="@+id/fragment_psychologists_with_tasks"
         android:name="com.example.mypsychologist.ui.psychologist.PsychologistsWithTasksFragment"
@@ -156,10 +132,6 @@
         android:name="com.example.mypsychologist.ui.education.EducationFragment"
         android:label="EducationFragment" />
 
-    <fragment
-        android:id="@+id/autoDialogFragment"
-        android:name="com.example.mypsychologist.ui.exercises.rebt.AutoDialogFragment"
-        android:label="AutoDialogFragment" />
     <fragment
         android:id="@+id/freeDiaryFragment"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FreeDiaryFragment"

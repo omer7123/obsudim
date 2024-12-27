@@ -17,9 +17,9 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentRequestToPsychologistBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.main.FeedbackScreenState
 import com.example.mypsychologist.presentation.psychologist.RequestToPsychologistViewModel
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.ui.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -92,6 +92,7 @@ class RequestToPsychologistFragment : Fragment() {
                 else
                     requireContext().showToast(getString(R.string.network_error))
             }
+
             is FeedbackScreenState.UserNameSaved -> {
                 binding.progressBar.isVisible = false
                 if (!state.result) {
@@ -99,6 +100,7 @@ class RequestToPsychologistFragment : Fragment() {
                     binding.groupContent.isVisible = false
                 }
             }
+
             is FeedbackScreenState.Response -> {
                 binding.progressBar.isVisible = false
                 if (state.result) {
@@ -108,9 +110,11 @@ class RequestToPsychologistFragment : Fragment() {
                     requireContext().showToast(getString(R.string.db_error))
                 }
             }
+
             is FeedbackScreenState.ValidationError -> {
                 binding.inputLayout.error = getString(R.string.necessary_to_fill)
             }
+
             is FeedbackScreenState.Init -> Unit
         }
     }
