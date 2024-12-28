@@ -7,21 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentEducationBinding
 import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
-import com.example.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.education.EducationScreenState
 import com.example.mypsychologist.presentation.education.EducationViewModel
+import com.example.mypsychologist.presentation.education.MarsAsCompleteStatus
 import com.example.mypsychologist.ui.MainAdapter
-import com.example.mypsychologist.ui.PagerAdapter
 import com.example.mypsychologist.ui.autoCleared
 import javax.inject.Inject
 
@@ -59,17 +56,26 @@ class EducationFragment : Fragment() {
         viewModel.screenState.observe(viewLifecycleOwner) { state ->
             render(state)
         }
+        viewModel.marsAsCompleteStatus.observe(viewLifecycleOwner){status->
+            renderStatus(status)
+        }
 
         return binding.root
+    }
+
+    private fun renderStatus(status: MarsAsCompleteStatus) {
+        when(status){
+            is MarsAsCompleteStatus.Error -> requireContext().showToast(status.msg)
+            MarsAsCompleteStatus.Success -> findNavController().popBackStack()
+        }
     }
 
     private fun render(state: EducationScreenState) {
         when (state) {
             is EducationScreenState.Content -> setupContent(state.data)
             is EducationScreenState.Error -> {requireContext().showToast(state.msg)}
-            EducationScreenState.Initial -> {}
-            EducationScreenState.Loading -> {}
-            EducationScreenState.Success -> Unit
+            EducationScreenState.Initial -> Unit
+            EducationScreenState.Loading -> Unit
         }
     }
 
@@ -91,7 +97,6 @@ class EducationFragment : Fragment() {
         binding.saveButton.setOnClickListener {
             viewModel.saveProgress(data.materials.last().id)
             markTaskAsCompleted()
-            findNavController().popBackStack()
         }
     }
 

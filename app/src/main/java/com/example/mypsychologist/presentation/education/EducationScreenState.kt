@@ -7,5 +7,4 @@ sealed interface EducationScreenState {
     data object Loading: EducationScreenState
     data class Error(val msg: String): EducationScreenState
     data class Content(val data: EducationsEntity): EducationScreenState
-    data object Success: EducationScreenState
 }

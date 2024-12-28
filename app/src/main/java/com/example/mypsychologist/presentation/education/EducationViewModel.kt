@@ -44,9 +44,9 @@ class EducationViewModel(
         viewModelScope.launch {
             _screenState.value = EducationScreenState.Loading
             when(val res = saveProgressUseCase(EducationMaterialForSaveProgressEntity(materialId))){
-                is Resource.Error -> {}
-                Resource.Loading -> {}
-                is Resource.Success -> {}
+                is Resource.Error -> _screenState.value = EducationScreenState.Error(res.msg.toString())
+                Resource.Loading -> Unit
+                is Resource.Success -> Unit
             }
         }
     }
