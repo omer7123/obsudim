@@ -11,9 +11,9 @@ import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestE
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ResultAfterSaveEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.SaveTestResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.GetQuestionsOfTestByIdUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.SaveResultTestUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import com.example.mypsychologist.domain.useCase.diagnosticsUseCases.GetQuestionsOfTestByIdUseCase
+import com.example.mypsychologist.domain.useCase.diagnosticsUseCases.SaveResultTestUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.format.DateTimeFormatter

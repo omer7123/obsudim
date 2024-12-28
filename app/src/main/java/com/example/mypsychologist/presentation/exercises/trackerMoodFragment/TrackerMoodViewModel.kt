@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.freeDiaryUseCase.SaveMoodTrackerUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTrackerUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

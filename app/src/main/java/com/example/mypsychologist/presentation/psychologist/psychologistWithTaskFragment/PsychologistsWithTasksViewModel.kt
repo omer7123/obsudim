@@ -7,11 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.psychologistsEntity.ManagerEntity
 import com.example.mypsychologist.domain.entity.psychologistsEntity.TaskEntity
-import com.example.mypsychologist.domain.useCase.MarkTaskUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetOwnPsychologistsUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetStatusRequestToManagerUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetTasksUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.GetYourPsychologistsUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkTaskUseCase
+import com.example.mypsychologist.domain.useCase.psychologistsUseCases.GetOwnPsychologistsUseCase
+import com.example.mypsychologist.domain.useCase.psychologistsUseCases.GetStatusRequestToManagerUseCase
+import com.example.mypsychologist.domain.useCase.psychologistsUseCases.GetTasksUseCase
+import com.example.mypsychologist.domain.useCase.psychologistsUseCases.GetYourPsychologistsUseCase
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.psychologist.OwnPsychologistDelegateItem

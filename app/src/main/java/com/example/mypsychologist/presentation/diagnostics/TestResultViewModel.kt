@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
-import com.example.mypsychologist.domain.useCase.testUseCase.GetTestResultUseCase
+import com.example.mypsychologist.domain.useCase.diagnosticsUseCases.GetTestResultUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

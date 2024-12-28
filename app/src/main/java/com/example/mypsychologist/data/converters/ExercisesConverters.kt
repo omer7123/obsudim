@@ -1,12 +1,10 @@
 package com.example.mypsychologist.data.converters
 
-import com.example.mypsychologist.data.model.BeliefCheckModel
 import com.example.mypsychologist.data.model.CBTDiaryCardModel
 import com.example.mypsychologist.data.model.CBTDiaryModel
 import com.example.mypsychologist.data.model.GetProblemModel
 import com.example.mypsychologist.data.model.ProblemAnalysisModel
 import com.example.mypsychologist.data.model.SaveProblemModel
-import com.example.mypsychologist.domain.entity.BeliefVerificationEntity
 import com.example.mypsychologist.domain.entity.DiaryRecordEntity
 import com.example.mypsychologist.domain.entity.ProblemAnalysisEntity
 import com.example.mypsychologist.domain.entity.ProblemEntity
@@ -14,11 +12,6 @@ import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.getMapOfFilledMembers
 import com.example.mypsychologist.extensions.containsKeys
 
-fun BeliefCheckModel.toEntity() =
-    BeliefVerificationEntity(truthfulness, consistency, benefit, beliefId)
-
-fun BeliefVerificationEntity.toModel() =
-    BeliefCheckModel(truthfulness, consistency, benefit, beliefId)
 
 fun CBTDiaryModel.toEntity() =
     ThoughtDiaryEntity(

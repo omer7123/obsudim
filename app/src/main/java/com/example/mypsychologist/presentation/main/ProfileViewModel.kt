@@ -3,8 +3,8 @@ package com.example.mypsychologist.presentation.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.DeleteTokenUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.DeleteUserIdUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.DeleteTokenUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.DeleteUserIdUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.educationUseCases.GetAllThemeUseCase
+import com.example.mypsychologist.domain.useCase.educationUseCases.GetAllThemeUseCase
 import com.example.mypsychologist.presentation.ListScreenState
 import com.example.mypsychologist.ui.education.toDelegateItems
 import kotlinx.coroutines.flow.MutableStateFlow

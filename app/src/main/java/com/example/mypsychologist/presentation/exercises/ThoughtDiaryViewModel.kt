@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.GetExerciseDetailResultUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.GetExerciseDetailResultUseCase
 import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.core.collectRequest
 import dagger.assisted.Assisted

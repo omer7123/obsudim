@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.freeDiaryUseCase.AddFreeDiaryUseCase
+import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.AddFreeDiaryUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

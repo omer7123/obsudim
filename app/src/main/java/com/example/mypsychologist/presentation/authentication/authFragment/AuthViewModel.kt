@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.AuthWithDataUserUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveTokenUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveUserIdUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthWithDataUserUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveUserIdUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject

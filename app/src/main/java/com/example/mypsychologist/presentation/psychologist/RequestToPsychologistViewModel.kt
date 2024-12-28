@@ -6,9 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
-import com.example.mypsychologist.domain.useCase.SendRequestToPsychologistUseCase
 import com.example.mypsychologist.domain.useCase.profile.GetOwnDataUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.psychologistsUseCases.SendRequestToManagerUseCase
+import com.example.mypsychologist.domain.useCase.psychologistsUseCases.SendRequestToManagerUseCase
 import com.example.mypsychologist.presentation.main.FeedbackScreenState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

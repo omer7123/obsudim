@@ -12,9 +12,9 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWit
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.GetExerciseDetailUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.SaveExerciseResultUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.GetExerciseDetailUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.SaveExerciseResultUseCase
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.NewExerciseScreenState
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveExerciseStatus
 import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegateItem

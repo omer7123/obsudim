@@ -90,7 +90,14 @@
         android:id="@+id/fragment_profile"
         android:name="com.example.mypsychologist.ui.main.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_fragment_profile_to_fragment_feedback"
+            app:destination="@id/fragment_feedback" />
+        <action
+            android:id="@+id/action_fragment_profile_to_fragment_edit"
+            app:destination="@id/fragment_edit" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_feedback"
         android:name="com.example.mypsychologist.ui.main.FeedbackFragment"
@@ -100,7 +107,11 @@
     <fragment
         android:id="@+id/fragment_psychologists"
         android:name="com.example.mypsychologist.ui.psychologist.PsychologistsFragment"
-        android:label="PsychologistsFragment" />
+        android:label="PsychologistsFragment" >
+        <action
+            android:id="@+id/action_fragment_psychologists_to_fragment_request_to_psychologist"
+            app:destination="@id/fragment_request_to_psychologist" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_edit"
@@ -110,10 +121,6 @@
         android:id="@+id/fragment_request_to_psychologist"
         android:name="com.example.mypsychologist.ui.psychologist.RequestToPsychologistFragment"
         android:label="RequestToPsychologistFragment" />
-    <fragment
-        android:id="@+id/fragment_client_tests"
-        android:name="com.example.mypsychologist.ui.psychologist.FragmentClientTests"
-        android:label="FragmentClientTests" />
 
     <fragment
         android:id="@+id/fragment_psychologists_with_tasks"
@@ -126,7 +133,11 @@
     <fragment
         android:id="@+id/fragment_education_topics"
         android:name="com.example.mypsychologist.ui.education.EducationTopicsFragment"
-        android:label="EducationFragment" />
+        android:label="EducationFragment" >
+        <action
+            android:id="@+id/action_fragment_education_topics_to_fragment_education"
+            app:destination="@id/fragment_education" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_education"
         android:name="com.example.mypsychologist.ui.education.EducationFragment"

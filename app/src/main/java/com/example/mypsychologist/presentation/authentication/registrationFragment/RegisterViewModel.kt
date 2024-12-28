@@ -8,11 +8,11 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.OldRegister
 import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.AuthByTokenUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.GetTokenUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.RegisterUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveTokenUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.authenticationUseCases.SaveUserIdUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthByTokenUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.GetTokenUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.RegisterUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveUserIdUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject

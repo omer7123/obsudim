@@ -1,13 +1,11 @@
 package com.example.mypsychologist.presentation.diagnostics
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
-import com.example.mypsychologist.domain.useCase.TestsWithGroupsUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.diagnosticsUseCases.GetAllTestsUseCase
+import com.example.mypsychologist.domain.useCase.diagnosticsUseCases.GetAllTestsUseCase
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.diagnostics.TestWithoutCategoryDelegateItem
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,12 +15,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TestsViewModel(
-    testsWithGroupsUseCase: TestsWithGroupsUseCase,
     private val getAllTestsUseCase: GetAllTestsUseCase
 ) : ViewModel() {
-
-    private val testsWithCategories = testsWithGroupsUseCase()
-
 
     private val _screenState: MutableStateFlow<TestsScreenState> =
         MutableStateFlow(TestsScreenState.Initial)
@@ -55,51 +49,14 @@ class TestsViewModel(
         }
     }
 
-//    private fun getCategories(): List<TestGroupEntity> = run {
-//        testsWithCategories.keys.toList()
-//    }
-//
-//    fun setupTestsFor(category: TestGroupEntity) {
-//        viewModelScope.launch {
-//            val newList = screenState.value.map { it }.toMutableList()
-//
-//            val position =
-//                newList.indexOf(newList.find {
-//                    (it.content() is TestGroupEntity) &&
-//                            (it.content() as TestGroupEntity).titleId == category.titleId
-//                })
-//
-//            newList.addAll(
-//                position + 1,
-//                (testsWithCategories[category] ?: listOf()).toDelegateItems(category.titleId)
-//            )
-//            _screenState.value = newList
-//        }
-//
-//    }
-
-//    fun hintTestsFor(groupTitleId: Int) {
-//        viewModelScope.launch {
-//
-//            val newList = screenState.value.filter {
-//                it is TestGroupDelegateItem ||
-//                        (it is TestDelegateItem && it.parentGroupTitleId != groupTitleId)
-//            }
-//
-//            _screenState.value = newList
-//        }
-//    }
-
-
     class Factory @Inject constructor(
-        private val testsWithGroupsUseCase: TestsWithGroupsUseCase,
         private val getAllTestsUseCase: GetAllTestsUseCase
     ) :
         ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return TestsViewModel(testsWithGroupsUseCase, getAllTestsUseCase) as T
+            return TestsViewModel(getAllTestsUseCase) as T
         }
     }
 }

@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.educationEntity.EducationMaterialForSaveProgressEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
-import com.example.mypsychologist.domain.useCase.SaveProgressUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.educationUseCases.GetMaterialOfTopicUseCase
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import com.example.mypsychologist.domain.useCase.educationUseCases.GetMaterialOfTopicUseCase
+import com.example.mypsychologist.domain.useCase.educationUseCases.SaveProgressUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

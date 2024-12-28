@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
-import com.example.mypsychologist.domain.useCase.retrofitUseCase.exerciseUseCases.GetAllExerciseResultsUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.GetAllExerciseResultsUseCase
 import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.core.collectRequest
 import kotlinx.coroutines.flow.MutableStateFlow
