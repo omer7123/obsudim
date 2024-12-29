@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -56,7 +57,7 @@ class EducationFragment : Fragment() {
         viewModel.screenState.observe(viewLifecycleOwner) { state ->
             render(state)
         }
-        viewModel.marsAsCompleteStatus.observe(viewLifecycleOwner){status->
+        viewModel.marsAsCompleteStatus.observe(viewLifecycleOwner) { status ->
             renderStatus(status)
         }
 
@@ -64,7 +65,7 @@ class EducationFragment : Fragment() {
     }
 
     private fun renderStatus(status: MarsAsCompleteStatus) {
-        when(status){
+        when (status) {
             is MarsAsCompleteStatus.Error -> requireContext().showToast(status.msg)
             MarsAsCompleteStatus.Success -> findNavController().popBackStack()
         }
@@ -73,7 +74,10 @@ class EducationFragment : Fragment() {
     private fun render(state: EducationScreenState) {
         when (state) {
             is EducationScreenState.Content -> setupContent(state.data)
-            is EducationScreenState.Error -> {requireContext().showToast(state.msg)}
+            is EducationScreenState.Error -> {
+                requireContext().showToast(state.msg)
+            }
+
             EducationScreenState.Initial -> Unit
             EducationScreenState.Loading -> Unit
         }
@@ -86,18 +90,18 @@ class EducationFragment : Fragment() {
 
 
     private fun setupContent(data: EducationsEntity) {
-        binding.title.text = data.theme
+        binding.saveButton.isVisible = true
+        binding.saveButton.setOnClickListener {
+//            viewModel.saveProgress(data.materials.last().id)
+            markTaskAsCompleted()
+        }
 
+        binding.title.text = data.theme
         mainAdapter.submitList(data.materials.toDelegateItems())
 
         binding.cardsRw.scrollToPosition(
             data.score
         )
-
-        binding.saveButton.setOnClickListener {
-            viewModel.saveProgress(data.materials.last().id)
-            markTaskAsCompleted()
-        }
     }
 
     private fun markTaskAsCompleted() {
