@@ -3,7 +3,10 @@ package com.example.mypsychologist.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.domain.useCase.*
+import com.example.mypsychologist.domain.useCase.feedUseCases.GetFeedUseCase
+import com.example.mypsychologist.domain.useCase.feedUseCases.PutLikeInFeedUseCase
+import com.example.mypsychologist.domain.useCase.feedUseCases.RemoveLikeInFeedUseCase
+import com.example.mypsychologist.domain.useCase.feedUseCases.SendMessageInFeedUseCase
 import com.example.mypsychologist.ui.feed.FeedDelegateItem
 import com.example.mypsychologist.ui.feed.toDelegateItem
 import kotlinx.coroutines.flow.MutableStateFlow

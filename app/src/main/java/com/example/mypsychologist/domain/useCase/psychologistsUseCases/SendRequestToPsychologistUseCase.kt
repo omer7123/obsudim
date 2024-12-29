@@ -1,4 +1,4 @@
-package com.example.mypsychologist.domain.useCase
+package com.example.mypsychologist.domain.useCase.psychologistsUseCases
 
 import com.example.mypsychologist.domain.repository.retrofit.PsychologistRepository
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.mypsychologist.domain.useCase
+package com.example.mypsychologist.domain.useCase.feedUseCases
 
 import com.example.mypsychologist.domain.repository.FeedRepository
 import javax.inject.Inject

@@ -101,7 +101,7 @@ FragmentExercises : Fragment() {
             }
 
             trackerCard.root.setOnClickListener {
-                TrackerMoodFragment().show(childFragmentManager, TrackerMoodFragment.TAG)
+                TrackerMoodFragment().show(childFragmentManager, TrackerMoodFragment.SHOW)
             }
 
             diaryFreeBtn.setOnClickListener {

@@ -80,17 +80,19 @@ class MainFragment : Fragment() {
     }
 
     private fun render(state: BaseStateUI<List<DailyExerciseEntity>>) {
-        when(state){
+        when (state) {
 
             is BaseStateUI.Error -> {
                 findNavController().navigate(R.id.registrationFragment)
             }
+
             is BaseStateUI.Initial -> {}
             is BaseStateUI.Loading -> {
 
                 binding.exercisesRv.isVisible = false
                 binding.progressCircular.isVisible = true
             }
+
             is BaseStateUI.Content -> {
                 binding.exercisesRv.isVisible = true
                 binding.progressCircular.isVisible = false
@@ -102,31 +104,46 @@ class MainFragment : Fragment() {
     }
 
     private fun clickListener(dailyExerciseEntity: DailyExerciseEntity) {
-        when(dailyExerciseEntity.type){
+        when (dailyExerciseEntity.type) {
             1 -> {
-                findNavController().navigate(R.id.fragment_education,
+                findNavController().navigate(
+                    R.id.fragment_education,
                     bundleOf(
                         EducationFragment.TOPIC_TAG to dailyExerciseEntity.destinationId,
                         EducationFragment.TASK_ID to dailyExerciseEntity.id
                     )
                 )
             }
-            2 -> {
-                if (dailyExerciseEntity.title == "Трекер настроения"){
-                    val fragment = TrackerMoodFragment.newInstance(dailyExerciseEntity.id)
-                    fragment.show(childFragmentManager, TrackerMoodFragment.TAG)
-                }else {
 
+            2 -> {
+                if (dailyExerciseEntity.title == getString(R.string.tracker_mood_title)) {
+                    val fragment = TrackerMoodFragment.newInstance(dailyExerciseEntity.id)
+                    childFragmentManager.setFragmentResultListener(
+                        TrackerMoodFragment.RESULT_KEY,
+                        viewLifecycleOwner
+                    ){_, res->
+                        val key = res.getString(TrackerMoodFragment.RESULT_KEY)
+                        if (key == TrackerMoodFragment.CLOSE)
+                            viewModel.getAllExercises()
+                    }
+
+                    fragment.show(childFragmentManager, TrackerMoodFragment.SHOW)
+
+                } else {
+                    //Вольный дневник
                 }
             }
+
             3 -> {
-                findNavController().navigate(R.id.action_main_fragment_to_passingTestFragment,
+                findNavController().navigate(
+                    R.id.action_main_fragment_to_passingTestFragment,
                     bundleOf(
                         PassingTestFragment.TEST_ID to dailyExerciseEntity.destinationId,
                         PassingTestFragment.TASK_ID to dailyExerciseEntity.id
                     )
                 )
             }
+
             4 -> {
                 findNavController().navigate(
                     R.id.action_main_fragment_to_fragment_new_diary,

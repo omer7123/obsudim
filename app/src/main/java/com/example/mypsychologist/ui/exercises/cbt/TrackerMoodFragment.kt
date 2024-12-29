@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -78,19 +79,27 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
         }
         binding.saveBtn.setOnClickListener {
             val dailyTaskId =
-                if (arguments!=null) arguments?.getString(DAILY_TASK_ID, "").toString()
+                if (arguments != null) arguments?.getString(DAILY_TASK_ID, "").toString()
                 else ""
             viewModel.saveMood(binding.moodSb.value.toInt(), dailyTaskId)
         }
     }
 
-    companion object{
-        const val TAG = "TAG"
+    override fun dismiss() {
+        super.dismiss()
+        parentFragmentManager.setFragmentResult(RESULT_KEY, bundleOf(RESULT_KEY to CLOSE))
+    }
+
+
+    companion object {
+        const val SHOW = "SHOW"
+        const val CLOSE = "CLOSE"
+        const val RESULT_KEY = "RESULT_KEY"
         private const val DAILY_TASK_ID = "DAILY_TASK_ID"
 
-        fun newInstance(idTask: String): TrackerMoodFragment{
+        fun newInstance(idTask: String): TrackerMoodFragment {
             return TrackerMoodFragment().apply {
-                arguments =Bundle().apply {
+                arguments = Bundle().apply {
                     putString(DAILY_TASK_ID, idTask)
                 }
             }

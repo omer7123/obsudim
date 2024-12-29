@@ -3,7 +3,7 @@ package com.example.mypsychologist.presentation.psychologist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.domain.useCase.GetPsychologistsUseCase
+import com.example.mypsychologist.domain.useCase.psychologistsUseCases.GetPsychologistsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
