@@ -75,7 +75,8 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.specifyBtn.setOnClickListener {
-            findNavController().navigate(R.id.newFreeDiaryFragment)
+            dismiss()
+            findNavController().navigate(R.id.action_main_fragment_to_newFreeDiaryFragment)
         }
         binding.saveBtn.setOnClickListener {
             val dailyTaskId =

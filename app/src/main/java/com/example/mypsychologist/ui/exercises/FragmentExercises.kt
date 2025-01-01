@@ -105,7 +105,8 @@ FragmentExercises : Fragment() {
             }
 
             diaryFreeBtn.setOnClickListener {
-                findNavController().navigate(R.id.freeDiaryFragment,
+                findNavController().navigate(
+                    R.id.freeDiaryFragment,
                     bundleOf(
                         NewFreeDiaryFragment.KPT_ID to exercisesList.find { it.title == "КПТ-дневник" }!!.id
                     )
@@ -140,7 +141,7 @@ FragmentExercises : Fragment() {
         }
     }
 
-    companion object{
+    companion object {
         private const val EXERCISE_ID = "ID_EXERCISE"
     }
 }
