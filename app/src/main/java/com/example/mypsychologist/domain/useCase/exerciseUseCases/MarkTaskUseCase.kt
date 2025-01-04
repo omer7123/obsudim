@@ -9,5 +9,5 @@ class MarkTaskUseCase @Inject constructor(private val repository: PsychologistRe
         if (isChecked)
             repository.markTaskAsCompleted(taskId)
         else
-            repository.markTaskAsNotCompleted(taskId,)
+            repository.markTaskAsNotCompleted(taskId)
 }
