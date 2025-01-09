@@ -4,10 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
 import com.example.mypsychologist.domain.useCase.diagnosticsUseCases.GetAllTestsUseCase
-import com.example.mypsychologist.ui.DelegateItem
-import com.example.mypsychologist.ui.diagnostics.TestWithoutCategoryDelegateItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,9 +26,7 @@ class TestsViewModel(
             when (val result = getAllTestsUseCase()) {
                 is Resource.Success -> {
                     _screenState.value = TestsScreenState.Content(
-                        convertTestListToDelegateItems(
-                            result.data
-                        )
+                        result.data
                     )
                 }
 
@@ -43,20 +38,18 @@ class TestsViewModel(
         }
     }
 
-    private fun convertTestListToDelegateItems(tests: List<TestEntity>): List<DelegateItem> {
-        return tests.map { test ->
-            TestWithoutCategoryDelegateItem(test)
-        }
-    }
+//    private fun convertTestListToDelegateItems(tests: List<TestEntity>): List<DelegateItem> {
+//        return tests.map { test ->
+//            TestWithoutCategoryDelegateItem(test)
+//        }
+//    }
 
     class Factory @Inject constructor(
         private val getAllTestsUseCase: GetAllTestsUseCase
-    ) :
-        ViewModelProvider.Factory {
+    ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return TestsViewModel(getAllTestsUseCase) as T
+            @Suppress("UNCHECKED_CAST") return TestsViewModel(getAllTestsUseCase) as T
         }
     }
 }

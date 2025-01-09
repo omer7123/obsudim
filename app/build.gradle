@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.compose.ui:ui-text-google-fonts:1.7.6'
     def nav_version = "2.7.7"
 
     implementation 'androidx.core:core-ktx:1.13.1'
@@ -130,21 +131,18 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
-    // Optional - Included automatically by material, only add when you need
-    // the icons but not the material library (e.g. when using Material3 or a
-    // custom design system based on Foundation)
     implementation 'androidx.compose.material:material-icons-core'
-    // Optional - Add full set of material icons
     implementation 'androidx.compose.material:material-icons-extended'
-    // Optional - Add window size utils
+
     implementation 'androidx.compose.material3.adaptive:adaptive'
 
-    // Optional - Integration with activities
     implementation 'androidx.activity:activity-compose:1.9.2'
-    // Optional - Integration with ViewModels
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5'
-    // Optional - Integration with LiveData
     implementation 'androidx.compose.runtime:runtime-livedata'
-    // Optional - Integration with RxJava
-    implementation 'androidx.compose.runtime:runtime-rxjava2'
+
+    implementation "com.github.bumptech.glide:compose:1.0.0-beta01"
+
+    //Coil
+    implementation "io.coil-kt.coil3:coil-compose:3.0.4"
+    implementation "io.coil-kt.coil3:coil-network-okhttp:3.0.4"
 }
