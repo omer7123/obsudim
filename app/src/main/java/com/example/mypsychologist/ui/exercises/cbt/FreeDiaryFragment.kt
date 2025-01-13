@@ -162,9 +162,8 @@ class FreeDiaryFragment : Fragment() {
                 bottomHandle.isVisible = true
                 descTv.isVisible = true
 
-                layout.topMargin = 30.toDp(requireContext())
+                layout.topMargin = 30
                 descTv.layoutParams = layout
-
                 bottomSheetBehavior.isDraggable = true
             }
             adapter.submitList(records.toDelegateItems())

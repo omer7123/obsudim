@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <include
@@ -50,13 +50,14 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:paddingVertical="18dp"
         android:text="@string/free_diary"
         android:textAlignment="textStart"
         android:textAppearance="@style/BodyXLBold"
         app:cornerRadius="12dp"
-        app:icon="@drawable/ic_arrow_forward"
-        app:iconGravity="end"
-        app:iconSize="34dp"
+        android:drawableEnd="@drawable/ic_arrow_forward"
         app:layout_constraintEnd_toEndOf="@id/container_task"
         app:layout_constraintStart_toStartOf="@id/container_task"
         app:layout_constraintTop_toBottomOf="@id/container_task" />
@@ -73,9 +74,9 @@
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress_circular"
-        android:indeterminate="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminate="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

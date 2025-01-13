@@ -72,7 +72,8 @@
         <item name="fontFamily">@font/inter_bold</item>
     </style>
 
-    <style name="BodyXL" parent="BodyXLBold">
+    <style name="BodyXL">
+        <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/inter_medium</item>
     </style>
 

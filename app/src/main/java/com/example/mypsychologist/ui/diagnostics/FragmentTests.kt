@@ -19,31 +19,29 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
 import com.example.compose.AppTheme
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestsBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.diagnostics.TestsScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestsViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.theme.textBlackColor
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class FragmentTests : Fragment() {
@@ -63,10 +61,11 @@ class FragmentTests : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentTestsBinding.inflate(inflater, container, false)
 
         binding.include.apply {
-            toolbar.title = getString(R.string.diagnostics)
+            toolbar.title = getString(R.string.tests)
             profileIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_profile)
             }
@@ -75,73 +74,36 @@ class FragmentTests : Fragment() {
             }
         }
 
-        viewModel.screenState.flowWithLifecycle(lifecycle).onEach { state ->
-            renderState(state)
-        }.launchIn(lifecycleScope)
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getTests()
-    }
-
-    private fun renderState(state: TestsScreenState) {
-        when (state) {
-            is TestsScreenState.Content -> setupAdapter(state.data)
-            is TestsScreenState.Error -> {
-                binding.progressCircular.isVisible = false
-                binding.testsRw.isVisible = false
-                requireContext().showToast(state.msg)
-            }
-
-            TestsScreenState.Initial -> {}
-            TestsScreenState.Loading -> {
-                binding.testsRw.isVisible = false
-                binding.progressCircular.isVisible = true
-            }
-        }
-    }
-
-    private fun setupAdapter(data: List<TestEntity>) {
-
-        binding.progressCircular.isVisible = false
-        binding.testsRw.isVisible = true
-
-        val onTestClick: (String, String, String) -> Unit = { testId, description, testTitle ->
-            DiagnosticDialogFragment.newInstance(testId, testTitle, description)
-                .show(childFragmentManager, DiagnosticDialogFragment.TAG)
-
-        }
-
-        val mockData: List<TestEntity> = listOf(
-            TestEntity(
-                "Определение уровня тревожности ", "Fsdf", "fdsf", "fdfd", "fdfd"
-            ),
-            TestEntity("Tete", "Fsdf", "fdsf", "fdfd", "fdfd"),
-            TestEntity("Tete", "Fsdf", "fdsf", "fdfd", "fdfd"),
-            TestEntity("Tete", "Fsdf", "fdsf", "fdfd", "fdfd"),
-        )
-
         binding.testsRw.setContent {
             AppTheme {
-                TestsScreen(data = mockData)
+                TestsScreen(viewModel = viewModel, childFragmentManager)
             }
         }
-//        binding.testsRw.apply {
-//            layoutManager = GridLayoutManager(requireContext(), 2)
-//
-//            adapter = MainAdapter().apply {
-//                addDelegate(TestDelegate(onTestClick))
-//                submitList(data)
-//            }
-//        }
+
+        viewModel.getTests()
+
+        return binding.root
     }
 }
 
 @Composable
-fun TestsScreen(data: List<TestEntity>) {
+fun TestsScreen(viewModel: TestsViewModel, childFragmentManager: FragmentManager) {
+    val viewState = viewModel.screenState.collectAsState()
+    when (val state = viewState.value) {
+        is TestsScreenState.Content -> TestsContent(data = state.data) { test ->
+            DiagnosticDialogFragment.newInstance(test.testId, test.title, test.description)
+                .show(childFragmentManager, DiagnosticDialogFragment.TAG)
+        }
+
+        is TestsScreenState.Error -> {}
+        TestsScreenState.Initial -> {}
+        TestsScreenState.Loading -> {}
+    }
+
+}
+
+@Composable
+fun TestsContent(data: List<TestEntity>, onItemClick: (TestEntity) -> Unit) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxWidth(),
         columns = GridCells.Fixed(2),
@@ -150,23 +112,62 @@ fun TestsScreen(data: List<TestEntity>) {
         contentPadding = PaddingValues(vertical = 20.dp, horizontal = 16.dp)
     ) {
         items(data) {
-            TestItem(it){
-                //CLick
+            TestItem(it) { test ->
+                onItemClick(test)
             }
         }
     }
 }
 
 @Composable
-fun TestItem(item: TestEntity, onItemClick: () -> Unit) {
+@Preview(showBackground = true)
+fun TestsContentPreview() {
+    TestsContent(
+        data = listOf(
+            TestEntity(
+                "Test1",
+                "Desc1",
+                "desc1Short",
+                "ds",
+                "https://shapka-youtube.ru/wp-content/uploads/2024/07/kartinka-na-avatarki-so-lvom.jpg"
+            ),
+            TestEntity(
+                "Test4",
+                "Desc1",
+                "desc1Short",
+                "ds",
+                "https://shapka-youtube.ru/wp-content/uploads/2024/07/kartinka-na-avatarki-so-lvom.jpg"
+            ),
+            TestEntity(
+                "Test3",
+                "Desc1",
+                "desc1Short",
+                "ds",
+                "https://shapka-youtube.ru/wp-content/uploads/2024/07/kartinka-na-avatarki-so-lvom.jpg"
+            ),
+            TestEntity(
+                "Test4",
+                "Desc1",
+                "desc1Short",
+                "ds",
+                "https://shapka-youtube.ru/wp-content/uploads/2024/07/kartinka-na-avatarki-so-lvom.jpg"
+            ),
+        )
+    ) {}
+}
+
+@Composable
+fun TestItem(item: TestEntity, onItemClick: (TestEntity) -> Unit) {
     Column(modifier = Modifier
         .clip(shape = RoundedCornerShape(12.dp))
         .clickable {
-            onItemClick()
+            onItemClick(item)
         }) {
 
         AsyncImage(
-            model = item.linkToPicture,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(item.linkToPicture)
+                .build(),
             contentDescription = item.title,
             contentScale = ContentScale.Crop,
             placeholder = painterResource(id = R.drawable.ic_tracker_mood_practice),
@@ -175,19 +176,12 @@ fun TestItem(item: TestEntity, onItemClick: () -> Unit) {
                 .clip(shape = RoundedCornerShape(12.dp))
                 .aspectRatio(1 / 0.89f)
         )
+
         Text(
             modifier = Modifier.padding(top = 10.dp),
             text = item.title,
             style = MaterialTheme.typography.bodyMedium,
             color = textBlackColor,
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TestItemPreview() {
-    TestItem(TestEntity("Rere", "dsasda", "ds", "Ds", "sd")){
-
     }
 }

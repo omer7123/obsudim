@@ -1,113 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
     android:background="?attr/colorOnPrimaryContainer"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="none"
     tools:context=".ui.authentication.boardFragment.FirstBoardFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:paddingBottom="52dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/clev1_iv"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.16"
+        app:layout_constraintWidth_percent="0.65"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_first_board_clev1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/app_tv"
-        android:textColor="?attr/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:text="@string/app_name_new"
         android:textAppearance="@style/CruinnMedTitle"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/clev2_iv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/app_name_new"
-        app:layout_constraintBottom_toTopOf="@id/clev2_iv"
-        app:layout_constraintTop_toBottomOf="@id/clev1_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/clev1_iv" />
 
     <ImageView
         android:id="@+id/clev2_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintWidth_percent="0.69"
         android:layout_marginTop="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_tv"
         android:src="@drawable/ic_first_board_board_clev2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_tv" />
 
     <TextView
         android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
         android:text="@string/how_everything_works"
         android:textAppearance="@style/TitleFragmentPrimary"
-        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/clev2_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/clev2_iv" />
 
     <TextView
         android:id="@+id/desc_first_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="30dp"
         android:text="@string/desc_first_screen1"
         android:textAppearance="@style/BodyXL"
         android:textColor="?attr/colorOnSurface"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@id/title_tv"
         app:layout_constraintStart_toStartOf="@id/title_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/title_tv" />
 
     <TextView
         android:id="@+id/desc_second_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="30dp"
         android:text="@string/desc_first_screen2"
         android:textAppearance="@style/BodyXL"
         android:textColor="?attr/colorOnSurface"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@id/desc_first_tv"
         app:layout_constraintStart_toStartOf="@id/title_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/desc_first_tv" />
 
     <FrameLayout
         android:id="@+id/num_container"
-        android:elevation="0dp"
-        android:background="@drawable/bg_white_rounded"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/desc_second_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_white_rounded"
+        android:elevation="0dp"
+        app:layout_constraintBottom_toTopOf="@id/next_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:text="1 из 7"
-            android:textAppearance="@style/BodyXSBold"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="16dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:text="1 из 7"
+            android:textAppearance="@style/BodyXSBold" />
     </FrameLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/next_btn"
+        style="@style/ButtonPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="52dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:text="@string/next"
-        style="@style/ButtonPrimary"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@id/num_container"
-        android:layout_width="match_parent"
         android:paddingVertical="13dp"
-        android:layout_height="wrap_content"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

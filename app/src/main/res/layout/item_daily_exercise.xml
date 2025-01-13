@@ -32,7 +32,7 @@
 
     <com.google.android.material.radiobutton.MaterialRadioButton
         android:id="@+id/radio_btn"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="13dp"
         app:layout_constraintTop_toTopOf="@id/exercise_group"
         app:layout_constraintBottom_toBottomOf="@id/exercise_group"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
         android:layout_marginEnd="16dp"
         android:paddingVertical="12dp"
         android:paddingHorizontal="16dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/radio_btn"
         android:layout_width="0dp"
