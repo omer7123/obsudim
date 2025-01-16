@@ -7,6 +7,7 @@
     <string name="network_error">Ошибка сети.</string>
     <string name="connect">Соединение восстановлено</string>
     <string name="db_error">Ошибка базы данных</string>
+    <string name="unknown_error_placeholder">Извините, произошла непредивденная ошибка. Попробуйте немного позже</string>
     <string name="after_connection">При восстановлении соединения данные загрузятся автоматически</string>
     <string name="diary_empty">Это место для заметок. Напиши, как прошёл день, как себя чувствуешь :)</string>
 

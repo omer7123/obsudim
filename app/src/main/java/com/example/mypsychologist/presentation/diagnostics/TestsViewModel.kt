@@ -38,12 +38,6 @@ class TestsViewModel(
         }
     }
 
-//    private fun convertTestListToDelegateItems(tests: List<TestEntity>): List<DelegateItem> {
-//        return tests.map { test ->
-//            TestWithoutCategoryDelegateItem(test)
-//        }
-//    }
-
     class Factory @Inject constructor(
         private val getAllTestsUseCase: GetAllTestsUseCase
     ) : ViewModelProvider.Factory {

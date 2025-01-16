@@ -13,8 +13,10 @@ interface PsychologistService {
 
     @GET("/manager/get_all_manager")
     suspend fun getManagersList(): Response<List<ManagerModel>>
+
     @GET("/client/get_your_psychologist")
     suspend fun getYourPsychologist(): Response<List<MyPsychologistModel>>
+
     @POST("/client/get_list_get_psycholog")
     suspend fun getManager(@Body user_id: String): Response<ManagerModel>
 

@@ -5,23 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -33,7 +36,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import com.example.compose.AppTheme
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestsBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
@@ -41,6 +43,8 @@ import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.diagnostics.TestsScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestsViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.core.PlaceholderError
+import com.example.mypsychologist.ui.theme.AppTheme
 import com.example.mypsychologist.ui.theme.textBlackColor
 import javax.inject.Inject
 
@@ -95,11 +99,31 @@ fun TestsScreen(viewModel: TestsViewModel, childFragmentManager: FragmentManager
                 .show(childFragmentManager, DiagnosticDialogFragment.TAG)
         }
 
-        is TestsScreenState.Error -> {}
+        is TestsScreenState.Error -> {
+            PlaceholderError()
+        }
         TestsScreenState.Initial -> {}
-        TestsScreenState.Loading -> {}
+        TestsScreenState.Loading -> {
+            TestsLoading()
+        }
     }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TestsLoading() {
+    LazyVerticalGrid(
+        modifier = Modifier.fillMaxWidth(),
+        columns = GridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        contentPadding = PaddingValues(vertical = 20.dp, horizontal = 16.dp)
+    ) {
+        items(6) {
+            SkeletonItem()
+        }
+    }
 }
 
 @Composable
@@ -120,43 +144,6 @@ fun TestsContent(data: List<TestEntity>, onItemClick: (TestEntity) -> Unit) {
 }
 
 @Composable
-@Preview(showBackground = true)
-fun TestsContentPreview() {
-    TestsContent(
-        data = listOf(
-            TestEntity(
-                "Test1",
-                "Desc1",
-                "desc1Short",
-                "ds",
-                "https://shapka-youtube.ru/wp-content/uploads/2024/07/kartinka-na-avatarki-so-lvom.jpg"
-            ),
-            TestEntity(
-                "Test4",
-                "Desc1",
-                "desc1Short",
-                "ds",
-                "https://shapka-youtube.ru/wp-content/uploads/2024/07/kartinka-na-avatarki-so-lvom.jpg"
-            ),
-            TestEntity(
-                "Test3",
-                "Desc1",
-                "desc1Short",
-                "ds",
-                "https://shapka-youtube.ru/wp-content/uploads/2024/07/kartinka-na-avatarki-so-lvom.jpg"
-            ),
-            TestEntity(
-                "Test4",
-                "Desc1",
-                "desc1Short",
-                "ds",
-                "https://shapka-youtube.ru/wp-content/uploads/2024/07/kartinka-na-avatarki-so-lvom.jpg"
-            ),
-        )
-    ) {}
-}
-
-@Composable
 fun TestItem(item: TestEntity, onItemClick: (TestEntity) -> Unit) {
     Column(modifier = Modifier
         .clip(shape = RoundedCornerShape(12.dp))
@@ -165,9 +152,7 @@ fun TestItem(item: TestEntity, onItemClick: (TestEntity) -> Unit) {
         }) {
 
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(item.linkToPicture)
-                .build(),
+            model = ImageRequest.Builder(LocalContext.current).data(item.linkToPicture).build(),
             contentDescription = item.title,
             contentScale = ContentScale.Crop,
             placeholder = painterResource(id = R.drawable.ic_tracker_mood_practice),
@@ -180,8 +165,50 @@ fun TestItem(item: TestEntity, onItemClick: (TestEntity) -> Unit) {
         Text(
             modifier = Modifier.padding(top = 10.dp),
             text = item.title,
-            style = MaterialTheme.typography.bodyMedium,
+            style = AppTheme.typography.bodyMedium,
             color = textBlackColor,
         )
     }
+}
+
+@Composable
+fun SkeletonItem() {
+    Column {
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .aspectRatio(1 / 0.89f)
+                .background(color = Color.LightGray.copy(alpha = 0.3f))
+
+        )
+
+        Box(
+            modifier = Modifier
+                .padding(vertical = 20.dp)
+                .height(16.dp)
+                .fillMaxWidth(0.6f)
+                .clip(RoundedCornerShape(4.dp))
+                .background(color = Color.LightGray.copy(alpha = 0.3f))
+
+        )
+    }
+}
+
+
+@Composable
+@Preview(showBackground = true)
+fun TestsContentPreview() {
+    val data: MutableList<TestEntity> = MutableList(6) {
+        TestEntity(
+            "Test1",
+            "Desc1",
+            "desc1Short",
+            "ds",
+            "https://shapka-youtube.ru/wp-content/uploads/2024/07/kartinka-na-avatarki-so-lvom.jpg"
+        )
+    }
+
+    TestsContent(
+        data = data
+    ) {}
 }
