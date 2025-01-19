@@ -5,6 +5,7 @@ import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.model.EduSaveResp
 import com.example.mypsychologist.data.remote.education.EducationDataSource
+import com.example.mypsychologist.di.ApiUrlProvider
 import com.example.mypsychologist.domain.entity.educationEntity.EducationMaterialForSaveProgressEntity
 import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
@@ -13,14 +14,15 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class EducationRepositoryImpl @Inject constructor(
-    private val dataSource: EducationDataSource
+    private val dataSource: EducationDataSource,
+    private val urlProvider: ApiUrlProvider
 ) :
     EducationRepository {
     override suspend fun getAllTheme(): Resource<List<ThemeEntity>> {
         return when (val res = dataSource.getAllTheme()) {
             is Resource.Error -> Resource.Error(res.msg.toString(), null)
             Resource.Loading -> Resource.Loading
-            is Resource.Success -> Resource.Success(res.data.map { it.toEntity() })
+            is Resource.Success -> Resource.Success(res.data.map { it.toEntity(urlProvider.url) })
         }
     }
 

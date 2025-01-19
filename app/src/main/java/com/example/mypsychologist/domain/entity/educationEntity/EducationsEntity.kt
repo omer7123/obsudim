@@ -7,6 +7,7 @@ data class ThemeEntity(
     val theme: String,
     val score: Int,
     val maxScore: Int,
+    val linkToPicture: String
 ) : Serializable
 
 data class EducationsEntity(

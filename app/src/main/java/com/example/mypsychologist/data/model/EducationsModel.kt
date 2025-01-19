@@ -10,6 +10,8 @@ data class ThemeModel(
     val score: Int,
     @SerialName("max_score")
     val maxScore: Int,
+    @SerialName("link_to_picture")
+    val lincToPicture: String
 )
 @Serializable
 data class EducationsModel(
