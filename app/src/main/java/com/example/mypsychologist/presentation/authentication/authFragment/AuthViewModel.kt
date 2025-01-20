@@ -9,7 +9,6 @@ import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthWith
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveUserIdUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -34,8 +33,6 @@ class AuthViewModel @Inject constructor(
         val password = _stateScreen.value.password
         if (email.isNotEmpty() && password.isNotEmpty()) {
             viewModelScope.launch(handler) {
-                _stateScreen.value = _stateScreen.value.copy(loading = true)
-                delay(3000)
                 _stateScreen.value = _stateScreen.value.copy(loading = true, error = null)
                 when (val result = authWithDataUserUseCase(AuthModel(email, password))) {
                     is Resource.Error -> _stateScreen.value = _stateScreen.value.copy(error = result.msg.toString(), loading = false)
