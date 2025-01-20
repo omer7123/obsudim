@@ -126,6 +126,13 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
                 when(destination.id){
+                    R.id.authFragment->{
+                        WindowCompat.setDecorFitsSystemWindows(window, false)
+                        window.statusBarColor = android.graphics.Color.TRANSPARENT
+
+                        bottomNav.isVisible = false
+                        setLightStatusBarIcons(false)
+                    }
                     R.id.freeDiaryFragment ->{
                         WindowCompat.setDecorFitsSystemWindows(window, false)
                         window.statusBarColor = android.graphics.Color.TRANSPARENT

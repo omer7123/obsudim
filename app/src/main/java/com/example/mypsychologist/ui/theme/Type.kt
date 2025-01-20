@@ -1,58 +1,84 @@
 package com.example.mypsychologist.ui.theme
 
-import androidx.compose.material3.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.googlefonts.Font
-import androidx.compose.ui.text.googlefonts.GoogleFont
+import androidx.compose.ui.unit.sp
 import com.example.mypsychologist.R
 
-val provider = GoogleFont.Provider(
-    providerAuthority = "com.google.android.gms.fonts",
-    providerPackage = "com.google.android.gms",
-    certificates = R.array.com_google_android_gms_fonts_certs
+data class AppTypography(
+    val titleCygreFont: TextStyle,
+    val titleXS: TextStyle,
+    val bodyXLBold: TextStyle,
+    val bodyXL: TextStyle,
+    val bodyLBold: TextStyle,
+    val bodyL: TextStyle,
+    val bodyMBold: TextStyle,
+    val bodyM: TextStyle,
+    val bodySBold: TextStyle,
+    val bodyS: TextStyle,
 )
 
-val bodyFontFamily = FontFamily(
-    Font(
-        googleFont = GoogleFont("Inter"),
-        fontProvider = provider,
+val appTypography = AppTypography(
+    titleCygreFont = TextStyle(
+        fontFamily = FontFamily(Font(R.font.cygre_semi_bold)),
+        fontWeight = FontWeight(600),
+        fontSize = 32.sp,
+        lineHeight = 40.sp
+    ),
+    titleXS = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_bold)),
+        fontWeight = FontWeight(700),
+        fontSize = 24.sp,
+        lineHeight = 30.sp,
+    ),
+    bodyXLBold = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_bold)),
+        fontWeight = FontWeight(700),
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
+    ),
+    bodyXL = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_medium)),
+        fontWeight = FontWeight(500),
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
+    ),
+    bodyLBold = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_bold)),
+        fontWeight = FontWeight(700),
+        fontSize = 16.sp,
+        lineHeight = 20.sp,
+    ),
+    bodyL = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_medium)),
+        fontWeight = FontWeight(500),
+        fontSize = 16.sp,
+        lineHeight = 20.sp,
+    ),
+    bodyMBold = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_bold)),
+        fontWeight = FontWeight(700),
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+    ),
+    bodyM = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_medium)),
+        fontWeight = FontWeight(500),
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+    ),
+    bodySBold = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_semibold)),
+        fontWeight = FontWeight(600),
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+    ),
+    bodyS = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_medium)),
+        fontWeight = FontWeight(500),
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
     )
 )
-
-val displayFontFamily = FontFamily(
-    Font(
-        googleFont = GoogleFont("Inter"),
-        fontProvider = provider,
-    )
-)
-
-// Default Material 3 typography values
-val baseline = Typography()
-
-val AppTypography = Typography(
-    displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
-    displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily),
-    displaySmall = baseline.displaySmall.copy(fontFamily = displayFontFamily),
-    headlineLarge = baseline.headlineLarge.copy(fontFamily = displayFontFamily),
-    headlineMedium = baseline.headlineMedium.copy(fontFamily = displayFontFamily),
-    headlineSmall = baseline.headlineSmall.copy(fontFamily = displayFontFamily),
-    titleLarge = baseline.titleLarge.copy(fontFamily = displayFontFamily),
-    titleMedium = baseline.titleMedium.copy(fontFamily = displayFontFamily),
-    titleSmall = baseline.titleSmall.copy(fontFamily = displayFontFamily),
-    bodyLarge = baseline.bodyLarge.copy(
-        fontFamily = bodyFontFamily,
-        fontWeight = FontWeight.Medium
-    ),
-
-    bodyMedium = baseline.bodyMedium.copy(
-        fontFamily = bodyFontFamily,
-        fontWeight = FontWeight.Medium
-    ),
-
-    bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily),
-    labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily),
-    labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily),
-    labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily),
-)
-

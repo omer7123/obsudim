@@ -45,7 +45,6 @@ import com.example.mypsychologist.presentation.diagnostics.TestsViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.core.PlaceholderError
 import com.example.mypsychologist.ui.theme.AppTheme
-import com.example.mypsychologist.ui.theme.textBlackColor
 import javax.inject.Inject
 
 class FragmentTests : Fragment() {
@@ -93,6 +92,7 @@ class FragmentTests : Fragment() {
 @Composable
 fun TestsScreen(viewModel: TestsViewModel, childFragmentManager: FragmentManager) {
     val viewState = viewModel.screenState.collectAsState()
+
     when (val state = viewState.value) {
         is TestsScreenState.Content -> TestsContent(data = state.data) { test ->
             DiagnosticDialogFragment.newInstance(test.testId, test.title, test.description)
@@ -165,8 +165,8 @@ fun TestItem(item: TestEntity, onItemClick: (TestEntity) -> Unit) {
         Text(
             modifier = Modifier.padding(top = 10.dp),
             text = item.title,
-            style = AppTheme.typography.bodyMedium,
-            color = textBlackColor,
+            style = AppTheme.typography.bodyM,
+            color = AppTheme.colors.primaryText,
         )
     }
 }
