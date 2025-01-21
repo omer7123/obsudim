@@ -10,7 +10,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
-import com.example.mypsychologist.databinding.TestBottomSheetBinding
+import com.example.mypsychologist.databinding.FragmentTestQuestionBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.extensions.parcelable
 import com.example.mypsychologist.ui.autoCleared
@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class FragmentTestQuestion : BottomSheetDialogFragment() {
 
-    private var binding: TestBottomSheetBinding by autoCleared()
+    private var binding: FragmentTestQuestionBinding by autoCleared()
 
     private lateinit var question: QuestionOfTestEntity
 
@@ -29,7 +29,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
     ): View {
         question = requireArguments().parcelable(ANSWER_VARIANTS)!!
 
-        binding = TestBottomSheetBinding.inflate(inflater, container, false)
+        binding = FragmentTestQuestionBinding.inflate(inflater, container, false)
 
         binding.progress.text = getString(
             R.string.test_progress,
@@ -53,7 +53,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
 
     private fun setupListeners() {
 
-        binding.backButton.setOnClickListener {
+        binding.includeToolbar.toolbar.setNavigationOnClickListener{
             if (requireArguments().getInt(NUMBER) > 1) {
                 setFragmentResult(GO_BACK, bundleOf())
                 dismiss()

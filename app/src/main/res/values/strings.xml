@@ -102,7 +102,7 @@
     <string name="new_mood_help">Опиши, как ты себя чувствуешь после заполнения дневника</string>
     <string name="no_diaries">Вы еще не заполняли дневник в нашем приложении. Самое время начать!</string>
 
-    <string name="test_progress">%1$s/%2$s</string>
+    <string name="test_progress">%1$s из %2$s</string>
 
     <string name="depression">Депрессия</string>
     <string name="anxiety">Тревожность</string>
