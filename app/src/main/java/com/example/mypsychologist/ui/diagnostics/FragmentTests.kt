@@ -94,7 +94,9 @@ fun TestsScreen(viewModel: TestsViewModel, childFragmentManager: FragmentManager
     val viewState = viewModel.screenState.collectAsState()
 
     when (val state = viewState.value) {
+
         is TestsScreenState.Content -> TestsContent(data = state.data) { test ->
+
             DiagnosticDialogFragment.newInstance(test.testId, test.title, test.description)
                 .show(childFragmentManager, DiagnosticDialogFragment.TAG)
         }
@@ -102,6 +104,7 @@ fun TestsScreen(viewModel: TestsViewModel, childFragmentManager: FragmentManager
         is TestsScreenState.Error -> {
             PlaceholderError()
         }
+
         TestsScreenState.Initial -> {}
         TestsScreenState.Loading -> {
             TestsLoading()

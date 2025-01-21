@@ -18,18 +18,18 @@ class EducationTopicsViewModel(
 ) :
     ViewModel() {
 
-    private val _screenState: MutableStateFlow<ListScreenState> =
-        MutableStateFlow(ListScreenState.Init)
-    val screenState: StateFlow<ListScreenState>
+    private val _screenState: MutableStateFlow<TopicsScreenState> =
+        MutableStateFlow(TopicsScreenState.Initial)
+    val screenState: StateFlow<TopicsScreenState>
         get() = _screenState.asStateFlow()
 
     fun getTopics(){
         viewModelScope.launch {
-            _screenState.value = ListScreenState.Loading
+            _screenState.value = TopicsScreenState.Loading
             when(val res = getAllThemeUseCase()){
-                is Resource.Error -> _screenState.value = ListScreenState.Error
-                Resource.Loading -> _screenState.value = ListScreenState.Loading
-                is Resource.Success -> _screenState. value = ListScreenState.Data(res.data.toDelegateItems())
+                is Resource.Error -> _screenState.value = TopicsScreenState.Error(res.msg.toString())
+                Resource.Loading -> _screenState.value = TopicsScreenState.Loading
+                is Resource.Success -> _screenState. value = TopicsScreenState.Content(res.data)
             }
         }
     }

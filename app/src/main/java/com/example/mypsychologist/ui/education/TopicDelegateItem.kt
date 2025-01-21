@@ -1,11 +1,11 @@
 package com.example.mypsychologist.ui.education
 
-import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
+import com.example.mypsychologist.domain.entity.educationEntity.TopicEntity
 import com.example.mypsychologist.ui.DelegateItem
 
-class TopicDelegateItem(private val value: ThemeEntity) : DelegateItem {
+class TopicDelegateItem(private val value: TopicEntity) : DelegateItem {
 
-    override fun content(): ThemeEntity =
+    override fun content(): TopicEntity =
         value
 
     override fun id(): Int =
@@ -15,5 +15,5 @@ class TopicDelegateItem(private val value: ThemeEntity) : DelegateItem {
         (other as TopicDelegateItem).content() == content()
 }
 
-fun List<ThemeEntity>.toDelegateItems() =
+fun List<TopicEntity>.toDelegateItems() =
     map { TopicDelegateItem(it) }

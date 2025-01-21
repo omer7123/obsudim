@@ -6,13 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypsychologist.databinding.ItemTopicsTheoryBinding
-import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
+import com.example.mypsychologist.domain.entity.educationEntity.TopicEntity
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
-import com.example.mypsychologist.ui.AppNameGlideModule
-import com.example.mypsychologist.ui.GlideApp
 
-class TopicsDelegate(private val onClick: (ThemeEntity) -> Unit) : AdapterDelegate {
+class TopicsDelegate(private val onClick: (TopicEntity) -> Unit) : AdapterDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup) =
         ViewHolder(
@@ -33,7 +31,7 @@ class TopicsDelegate(private val onClick: (ThemeEntity) -> Unit) : AdapterDelega
         private val binding: ItemTopicsTheoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ThemeEntity) {
+        fun bind(item: TopicEntity) {
             val minutesOfTheory = "${item.maxScore} минут"
             binding.titleTv.text = item.theme
             binding.timeTv.text = minutesOfTheory

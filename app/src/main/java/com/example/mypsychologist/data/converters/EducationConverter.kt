@@ -7,10 +7,10 @@ import com.example.mypsychologist.data.model.ThemeModel
 import com.example.mypsychologist.domain.entity.educationEntity.EducationMaterialForSaveProgressEntity
 import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.example.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
-import com.example.mypsychologist.domain.entity.educationEntity.ThemeEntity
+import com.example.mypsychologist.domain.entity.educationEntity.TopicEntity
 
 fun ThemeModel.toEntity(url: String) =
-    ThemeEntity(id, theme, score, maxScore, url.dropLast(1)+lincToPicture)
+    TopicEntity(id, theme, score, maxScore, url.dropLast(1)+lincToPicture)
 
 fun EducationsModel.toEntity() = EducationsEntity(theme,score,maxScore, materials = materials.map { it.toEntity() })
 fun ItemMaterialModel.toEntity() = ItemMaterialEntity(id, text)
