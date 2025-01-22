@@ -12,7 +12,9 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -33,7 +35,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     private var isConnection = false
 
 
-
     private lateinit var notification: Notification
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +44,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         getAppComponent().inject(this)
 
         notification = notification(
-            this,
-            TASK_CHANNEL_ID,
-            smallIcon = R.drawable.ic_cognition
+            this, TASK_CHANNEL_ID, smallIcon = R.drawable.ic_cognition
         ) {
             contentTitle = "Мяу"
 
@@ -70,12 +69,10 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
             channel(TASK_CHANNEL_ID, TASK_CHANNEL_NAME)
         }
 
-        val notificationManager =
-            getSystemService(NOTIFICATION_SERVICE)
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE)
 
         (notificationManager as NotificationManager).notify(
-            TasksWorker.TASK_NOTIFICATION_ID,
-            notification
+            TasksWorker.TASK_NOTIFICATION_ID, notification
         )
 
         val taskWorkRequest = OneTimeWorkRequest.Builder(TasksWorker::class.java).build()
@@ -89,8 +86,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        val networkRequest = NetworkRequest.Builder()
-            .build()
+        val networkRequest = NetworkRequest.Builder().build()
 
         cm.registerNetworkCallback(networkRequest, object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
@@ -106,9 +102,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
             override fun onUnavailable() {
                 Toast.makeText(
-                    this@MainActivity,
-                    getString(R.string.network_error),
-                    Toast.LENGTH_LONG
+                    this@MainActivity, getString(R.string.network_error), Toast.LENGTH_LONG
                 ).show()
 
                 firstFlag = false
@@ -121,60 +115,66 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        findViewById<BottomNavigationView>(R.id.navigation)
-            .setupWithNavController(navController)
+        findViewById<BottomNavigationView>(R.id.navigation).setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-                when(destination.id){
-                    R.id.authFragment->{
-                        WindowCompat.setDecorFitsSystemWindows(window, false)
-                        window.statusBarColor = android.graphics.Color.TRANSPARENT
+            when (destination.id) {
+                R.id.authFragment -> {
+                    transparentStatusBar()
+                    bottomNav.isVisible = false
+                    setLightStatusBarIcons(false)
+                }
 
-                        bottomNav.isVisible = false
-                        setLightStatusBarIcons(false)
-                    }
-                    R.id.freeDiaryFragment ->{
-                        WindowCompat.setDecorFitsSystemWindows(window, false)
-                        window.statusBarColor = android.graphics.Color.TRANSPARENT
+                R.id.freeDiaryFragment -> {
+                    transparentStatusBar()
+                    bottomNav.isVisible = false
+                    setLightStatusBarIcons(false)
+                }
 
-                        bottomNav.isVisible = false
-                        setLightStatusBarIcons(false)
-                    }
-                    R.id.startBoardFragment->{
-                        WindowCompat.setDecorFitsSystemWindows(window, false)
-                        window.statusBarColor = android.graphics.Color.TRANSPARENT
+                R.id.freeDiaryTrackerMoodFragment -> {
+                    transparentStatusBar()
+                    bottomNav.isVisible = false
+                    setLightStatusBarIcons(false)
+                }
 
-                        bottomNav.isVisible = false
-                        setLightStatusBarIcons(false)
-                    }
-                    R.id.main_fragment-> {
-                        WindowCompat.setDecorFitsSystemWindows(window, false)
-                        window.statusBarColor = android.graphics.Color.TRANSPARENT
-                        bottomNav.isVisible = true
+                R.id.startBoardFragment -> {
+                    transparentStatusBar()
+                    bottomNav.isVisible = false
+                    setLightStatusBarIcons(false)
+                }
 
-                        setLightStatusBarIcons(false)
-                    }
-                    R.id.firstBoardFragment-> {
-                        WindowCompat.setDecorFitsSystemWindows(window, false)
-                        window.statusBarColor = android.graphics.Color.TRANSPARENT
-                        bottomNav.isVisible = false
+                R.id.main_fragment -> {
+                    transparentStatusBar()
+                    bottomNav.isVisible = true
+                    setLightStatusBarIcons(false)
+                }
 
-                        setLightStatusBarIcons(true)
-                    }
+                R.id.firstBoardFragment -> {
+                    transparentStatusBar()
+                    bottomNav.isVisible = false
+                    setLightStatusBarIcons(true)
+                }
 
-                    R.id.boardFragment-> {
-                        bottomNav.isVisible = false
+                R.id.boardFragment -> {
+                    bottomNav.isVisible = false
 
-                        setLightStatusBarIcons(true)
-                    }
-                    R.id.registrationFragment -> {
-                        bottomNav.isVisible = false
-                    }
+                    setLightStatusBarIcons(true)
+                }
 
-                    else->{
-                        bottomNav.isVisible = true
-                        setLightStatusBarIcons(true)
+                R.id.registrationFragment -> {
+                    bottomNav.isVisible = false
+                }
+
+                else -> {
+                    window.statusBarColor = android.graphics.Color.WHITE
+                    ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+                        val statusBarInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+                        view.setPadding(0, statusBarInsets.top, 0, 0)
+                        insets
                     }
+                    bottomNav.isVisible = true
+                    setLightStatusBarIcons(true)
+                }
 
             }
         }
@@ -189,18 +189,22 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                     navController.navigate(R.id.main_fragment)
                     true
                 }
+
                 R.id.practice_item -> {
                     navController.navigate(R.id.fragment_exercises)
                     true
                 }
+
                 R.id.theory_item -> {
                     navController.navigate(R.id.fragment_education_topics)
                     true
                 }
+
                 R.id.tests_item -> {
                     navController.navigate(R.id.fragment_tests)
                     true
                 }
+
                 else -> {
                     false
                 }
@@ -208,6 +212,14 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         }
     }
 
+    private fun transparentStatusBar(){
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            view.setPadding(0, 0, 0, 0)
+            insets
+        }
+    }
     private fun setLightStatusBarIcons(isLight: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val appearance = if (isLight) {
@@ -216,8 +228,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                 0
             }
             window.insetsController?.setSystemBarsAppearance(
-                appearance,
-                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                appearance, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         } else {
             @Suppress("DEPRECATION")
@@ -236,12 +247,10 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     }
 
     override fun setActualItem(id: Int) {
-        if (binding.navigation.selectedItemId != id)
-            binding.navigation.selectedItemId = id
+        if (binding.navigation.selectedItemId != id) binding.navigation.selectedItemId = id
     }
 
-    override fun isConnection() =
-        isConnection
+    override fun isConnection() = isConnection
 
     companion object {
         const val TASK_CHANNEL_ID = "CHANNEL TASK"

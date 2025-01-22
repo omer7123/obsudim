@@ -200,7 +200,7 @@
         android:id="@+id/authFragment"
         android:name="com.example.mypsychologist.ui.authentication.authFragment.AuthFragment"
         android:label="fragment_auth"
-        tools:layout="@layout/fragment_auth">
+        >
         <action
             android:id="@+id/action_authFragment_to_main_fragment"
             app:destination="@id/main_fragment"
@@ -286,4 +286,8 @@
             android:id="@+id/action_diagnosticDialogFragment_to_passingTestFragment"
             app:destination="@id/passingTestFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/freeDiaryTrackerMoodFragment"
+        android:name="com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.FreeDiaryTrackerMoodFragment"
+        android:label="FreeDiaryTrackerMoodFragment" />
 </navigation>

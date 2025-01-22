@@ -118,11 +118,11 @@ fun PrimarySecurityTextField(
 
     TextField(
         modifier = modifier
-        .fillMaxWidth()
-        .background(
-            color = AppTheme.colors.tertiaryBackground,
-            shape = RoundedCornerShape(12.dp)
-        ),
+            .fillMaxWidth()
+            .background(
+                color = AppTheme.colors.tertiaryBackground,
+                shape = RoundedCornerShape(12.dp)
+            ),
         value = field,
         onValueChange = onFieldChange,
         singleLine = true,
