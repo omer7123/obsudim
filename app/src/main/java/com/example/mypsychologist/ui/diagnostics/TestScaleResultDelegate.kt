@@ -4,11 +4,13 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.ItemTestScaleResultBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ScaleResultForHistoryEntity
 import com.example.mypsychologist.extensions.toPercent
 import com.example.mypsychologist.ui.AdapterDelegate
 import com.example.mypsychologist.ui.DelegateItem
+import com.google.android.material.color.utilities.ColorUtils
 
 class TestScaleResultDelegate : AdapterDelegate {
     override fun onCreateViewHolder(parent: ViewGroup) =
@@ -39,12 +41,13 @@ class TestScaleResultDelegate : AdapterDelegate {
             binding.apply {
                 scaleTitle.text = scale.scaleTitle
 
-                val percentOfResult = scale.score.toPercent(scale.maxScore).toInt()
-                val scaleOfPercent = "$percentOfResult %"
+               // val percentOfResult = scale.score.toPercent(scale.maxScore).toInt()
+                val scaleOfPercent = "${scale.score.toInt()} из ${scale.maxScore}"
 
                 resultScore.text = scaleOfPercent
                 scoreIndicator.progress = scale.score.toPercent(scale.maxScore).toInt()
                 scoreIndicator.setIndicatorColor(Color.parseColor(scale.color))
+                scoreIndicator.trackColor = itemView.context.getColor(R.color.md_theme_dark_onSecondaryContainer)
             }
         }
     }

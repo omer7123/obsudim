@@ -149,7 +149,6 @@ fun TestsContent(data: List<TestEntity>, onItemClick: (TestEntity) -> Unit) {
 @Composable
 fun TestItem(item: TestEntity, onItemClick: (TestEntity) -> Unit) {
     Column(modifier = Modifier
-        .clip(shape = RoundedCornerShape(12.dp))
         .clickable {
             onItemClick(item)
         }) {

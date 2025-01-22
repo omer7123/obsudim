@@ -101,15 +101,16 @@ class PassingTestFragment : Fragment() {
         totalNumber: Int
     ) {
         binding.testQuestionVp.adapter =
-            TestQuestionAdapter(questions, totalNumber, onAnswerClick = { score ->
-                viewModel.saveAnswerAndGoToNext(
-                    score = score,
-                    testId = requireArguments().getString(TEST_ID),
-                    taskId = requireArguments().getString(TASK_ID) ?: ""
-                )
-            }, onBackClick = {
-                viewModel.previousQuestion()
-            })
+            TestQuestionAdapter(questions, totalNumber,
+                onAnswerClick = { score ->
+                    viewModel.saveAnswerAndGoToNext(
+                        score = score,
+                        testId = requireArguments().getString(TEST_ID),
+                        taskId = requireArguments().getString(TASK_ID) ?: ""
+                    )
+                }, onBackClick = {
+                    viewModel.previousQuestion()
+                })
 
         binding.testQuestionVp.isUserInputEnabled = false
     }

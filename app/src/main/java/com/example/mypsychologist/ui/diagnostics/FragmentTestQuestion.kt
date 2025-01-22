@@ -31,11 +31,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
 
         binding = FragmentTestQuestionBinding.inflate(inflater, container, false)
 
-        binding.progress.text = getString(
-            R.string.test_progress,
-            requireArguments().getInt(NUMBER).toString(),
-            requireArguments().getInt(COUNT).toString()
-        )
+
 
         if (question.number != 0) {
             binding.question.apply {

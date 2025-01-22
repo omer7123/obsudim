@@ -32,8 +32,7 @@ class PassingTestViewModel @Inject constructor(
     private val questions get() = requireNotNull(_questions)
 
 
-    private var _questionNumber = 0
-    val questionNumber = _questionNumber
+    private var questionNumber = 0
 
     private val scoresForTest: IntArray by lazy {
         IntArray(questions.size)
@@ -68,41 +67,49 @@ class PassingTestViewModel @Inject constructor(
 
     fun previousQuestion() {
         if (questionNumber > 0) {
-            _questionNumber -= 1
+            questionNumber -= 1
+            _screenState.value = PassingTestScreenState.Question(
+                questionNumber
+            )
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun nextQuestion(testId: String, taskId: String) {
-        _questionNumber += 1
+        questionNumber += 1
 
         viewModelScope.launch {
 
             if (questionNumber < questions.size) {
 
                 _screenState.value = PassingTestScreenState.Question(
-                    questionNumber + 1
+                    questionNumber
                 )
             } else {
 
-                val res = saveResultTestUseCase(
-                    SaveTestResultEntity(
-                        testId,
-                        getCurrentTimeInISO8601(),
-                        scoresForTest.asList()
-                    )
-                )
+                saveTestResult(testId, taskId)
+            }
+        }
+    }
 
-                when (res) {
-                    is Resource.Error -> PassingTestScreenState.Error(res.msg.toString())
-                    Resource.Loading -> PassingTestScreenState.Loading
-                    is Resource.Success -> {
-                        if (taskId == "") {
-                            _screenState.value = PassingTestScreenState.Result(res.data)
-                        } else {
-                            markAsComplete(taskId, res.data)
-                        }
-                    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private suspend fun saveTestResult(testId: String, taskId: String) {
+        val res = saveResultTestUseCase(
+            SaveTestResultEntity(
+                testId,
+                getCurrentTimeInISO8601(),
+                scoresForTest.asList()
+            )
+        )
+
+        when (res) {
+            is Resource.Error -> PassingTestScreenState.Error(res.msg.toString())
+            Resource.Loading -> PassingTestScreenState.Loading
+            is Resource.Success -> {
+                if (taskId == "") {
+                    _screenState.value = PassingTestScreenState.Result(res.data)
+                } else {
+                    markAsComplete(taskId, res.data)
                 }
             }
         }

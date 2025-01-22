@@ -41,10 +41,10 @@ class TestQuestionAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(question: QuestionOfTestEntity, position: Int) {
-            binding.progress.text =
+            binding.toolbar.toolbar.title =
                 itemView.context.getString(
                     R.string.test_progress,
-                    position.toString(),
+                    (position + 1).toString(),
                     totalNumber.toString()
                 )
 
