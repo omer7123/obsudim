@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentPassingTestBinding
+import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ResultAfterSaveEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
@@ -50,29 +51,27 @@ class PassingTestFragment : Fragment() {
         viewModel.screenState.observe(viewLifecycleOwner) { state ->
             render(state)
         }
-        setFragmentResultListener()
         return binding.root
     }
 
+    private lateinit var testTitle: String
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun render(state: PassingTestScreenState) {
         when (state) {
-            is PassingTestScreenState.Error -> {
-                requireContext().showToast(state.msg)
-                Log.e("Error", state.msg)
+            is PassingTestScreenState.Content -> {
+                testTitle = state.title
             }
 
-            is PassingTestScreenState.Content -> {
-                binding.title.text = state.title
-                binding.text.text = state.desc
-            }
             PassingTestScreenState.Initial -> {}
             PassingTestScreenState.Loading -> {}
+            is PassingTestScreenState.Questions -> {
+
+                setupViewPager(state.list, state.list.size)
+            }
+
             is PassingTestScreenState.Question -> {
-                FragmentTestQuestion.newInstance(
-                    state.answerVariants,
-                    state.number,
-                    state.count
-                ).show(childFragmentManager, TAG)
+                binding.testQuestionVp.currentItem = state.position
             }
 
             is PassingTestScreenState.Result -> {
@@ -88,27 +87,49 @@ class PassingTestFragment : Fragment() {
                     showResult(state.result)
                 }
             }
+
+            is PassingTestScreenState.Error -> {
+                requireContext().showToast(state.msg)
+                Log.e("Error", state.msg)
+            }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setupViewPager(
+        questions: List<QuestionOfTestEntity>,
+        totalNumber: Int
+    ) {
+        binding.testQuestionVp.adapter =
+            TestQuestionAdapter(questions, totalNumber, onAnswerClick = { score ->
+                viewModel.saveAnswerAndGoToNext(
+                    score = score,
+                    testId = requireArguments().getString(TEST_ID),
+                    taskId = requireArguments().getString(TASK_ID) ?: ""
+                )
+            }, onBackClick = {
+                viewModel.previousQuestion()
+            })
+
+        binding.testQuestionVp.isUserInputEnabled = false
     }
 
     private fun showResult(conclusions: ResultAfterSaveEntity) {
         findNavController().navigate(
             R.id.action_passingTestFragment_to_testResultFragment, bundleOf(
-                TestResultFragment.TEST_TITLE to binding.title.text,
+                TestResultFragment.TEST_TITLE to testTitle,
                 TestResultViewModel.TEST_RESULT_ID to conclusions.testResultId
             )
         )
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
     }
 
     private fun initView() {
-        binding.includeToolbar.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
         viewModel.getQuestions(requireArguments().getString(TEST_ID).toString())
     }
 
@@ -129,7 +150,7 @@ class PassingTestFragment : Fragment() {
             FragmentTestQuestion.GO_BACK,
             viewLifecycleOwner
         ) { _, _ ->
-            viewModel.previousQuestion()
+            //    viewModel.previousQuestion()
         }
     }
 

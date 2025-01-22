@@ -52,15 +52,6 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
     }
 
     private fun setupListeners() {
-
-        binding.includeToolbar.toolbar.setNavigationOnClickListener{
-            if (requireArguments().getInt(NUMBER) > 1) {
-                setFragmentResult(GO_BACK, bundleOf())
-                dismiss()
-            }else{
-                findNavController().popBackStack()
-            }
-        }
     }
 
     private fun setupAdapter() {

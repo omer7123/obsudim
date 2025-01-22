@@ -31,7 +31,9 @@ class PassingTestViewModel @Inject constructor(
     private var _questions: List<QuestionOfTestEntity>? = null
     private val questions get() = requireNotNull(_questions)
 
-    private var questionNumber = 0
+
+    private var _questionNumber = 0
+    val questionNumber = _questionNumber
 
     private val scoresForTest: IntArray by lazy {
         IntArray(questions.size)
@@ -44,14 +46,15 @@ class PassingTestViewModel @Inject constructor(
                     PassingTestScreenState.Error(questionsRequest.msg.toString())
 
                 Resource.Loading -> _screenState.value = PassingTestScreenState.Loading
+
                 is Resource.Success -> {
                     _questions = questionsRequest.data.questions
-                    _screenState.value = PassingTestScreenState.Content(questionsRequest.data.title, questionsRequest.data.description)
-                    _screenState.value = PassingTestScreenState.Question(
-                        questions[questionNumber],
-                        questions[questionNumber].number,
-                        questions.size
+                    _screenState.value = PassingTestScreenState.Content(
+                        questionsRequest.data.title,
+                        questionsRequest.data.description
                     )
+
+                    _screenState.value = PassingTestScreenState.Questions(questions)
                 }
             }
         }
@@ -65,37 +68,29 @@ class PassingTestViewModel @Inject constructor(
 
     fun previousQuestion() {
         if (questionNumber > 0) {
-            questionNumber -= 1
-
-            viewModelScope.launch {
-                _screenState.value =
-                    PassingTestScreenState.Question(
-                        questions[questionNumber],
-                        questionNumber + 1,
-                        questions.size
-                    )
-            }
+            _questionNumber -= 1
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun nextQuestion(testId: String, taskId: String) {
-        questionNumber += 1
+        _questionNumber += 1
 
         viewModelScope.launch {
+
             if (questionNumber < questions.size) {
+
                 _screenState.value = PassingTestScreenState.Question(
-                    questions[questionNumber],
-                    questionNumber + 1,
-                    questions.size
+                    questionNumber + 1
                 )
-            }else{
+            } else {
+
                 val res = saveResultTestUseCase(
-                        SaveTestResultEntity(
-                            testId,
-                            getCurrentTimeInISO8601(),
-                            scoresForTest.asList()
-                        )
+                    SaveTestResultEntity(
+                        testId,
+                        getCurrentTimeInISO8601(),
+                        scoresForTest.asList()
+                    )
                 )
 
                 when (res) {
@@ -116,7 +111,9 @@ class PassingTestViewModel @Inject constructor(
     private suspend fun markAsComplete(taskId: String, data: ResultAfterSaveEntity) {
         marsAsCompleteExerciseUseCase(DailyTaskMarkIdEntity(taskId)).collect { resource ->
             when (resource) {
-                is Resource.Error -> _screenState.value = PassingTestScreenState.Error(resource.msg.toString())
+                is Resource.Error -> _screenState.value =
+                    PassingTestScreenState.Error(resource.msg.toString())
+
                 Resource.Loading -> _screenState.value = PassingTestScreenState.Loading
                 is Resource.Success -> _screenState.value = PassingTestScreenState.Result(data)
             }

@@ -8,13 +8,10 @@ sealed class PassingTestScreenState {
     data object Loading : PassingTestScreenState()
     data class Result(val result: ResultAfterSaveEntity) : PassingTestScreenState()
 
-    data class Question(
-        val answerVariants: QuestionOfTestEntity,
-        val number: Int,
-        val count: Int
-    ) :
-        PassingTestScreenState()
+    data class Questions(val list: List<QuestionOfTestEntity>) : PassingTestScreenState()
 
-    data class Content(val title: String, val desc: String): PassingTestScreenState()
+    data class Question(val position: Int) : PassingTestScreenState()
+
+    data class Content(val title: String, val desc: String) : PassingTestScreenState()
     data class Error(val msg: String) : PassingTestScreenState()
 }
