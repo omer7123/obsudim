@@ -535,6 +535,13 @@
 
     <string name="normal">Норма</string>
 
+    <string name="normal_mood">нормально</string>
+    <string name="bad_mood">плохо</string>
+    <string name="good_mood">хорошо</string>
+    <string name="super_mood">прекрасно</string>
+    <string name="terrible_mood">ужасно</string>
+
+
     <string name="very_low">Очень низкий</string>
     <string name="low">Низкий</string>
     <string name="moderately">Умеренный</string>

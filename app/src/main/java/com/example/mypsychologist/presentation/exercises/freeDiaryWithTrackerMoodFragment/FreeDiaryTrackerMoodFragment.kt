@@ -22,6 +22,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -190,6 +192,46 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                         onClick = {writeNoteClick()},
                         modifier = Modifier.padding(top = 20.dp)
                     )
+
+                    Text(
+                        text = stringResource(id = R.string.mood),
+                        style = AppTheme.typography.titleXS,
+                        color = AppTheme.colors.primaryText,
+                        modifier = Modifier.padding(top = 40.dp)
+                    )
+
+                    Slider(
+                        value = res.mood,
+                        onValueChange = { viewModel.changeMood(it) },
+                        colors = SliderDefaults.colors(
+                            thumbColor = AppTheme.colors.primaryBackground,
+                            activeTrackColor = AppTheme.colors.primaryBackground,
+                            inactiveTrackColor = AppTheme.colors.secondaryBackground,
+                        ),
+                        steps = 0,
+                        valueRange = 0f..100f,
+                        modifier = Modifier.padding(top = 20.dp)
+                    )
+
+                    Text(
+                        text = stringResource(id = res.moodTitleIdSource),
+                        style = AppTheme.typography.bodyS,
+                        color = AppTheme.colors.primaryBackground,
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .background(
+                                color = AppTheme.colors.secondaryBackground,
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .padding(horizontal = 10.dp, vertical = 8.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+
+                    PrimaryTextButton(
+                        textString = stringResource(id = R.string.save),
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier.padding(top = 20.dp)
+                    )
                 }
             },
 
@@ -218,6 +260,7 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                                 modifier = Modifier.padding(bottom = 4.dp)
                             )
                         }
+
                         val timeStr =
                             Date().formatToDayString() + " " + Date().formatToMonthStringInf()
                         Text(
@@ -226,7 +269,6 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                             color = AppTheme.colors.primaryTextInvert,
                         )
                     }
-
 
                     CalendarView(
                         month = res.month,
@@ -312,10 +354,9 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                     year = "2024",
                     dates = dates,
                     freeDiaries = listOf<FreeDiaryEntity>(
-                        FreeDiaryEntity("ds", "Заметка 1", "9:30"),
                         FreeDiaryEntity("ds", "Заметка 2", "9:30"),
                     ),
-                    freeDiariesLoading = true
+                    moodTitleIdSource = R.string.normal_mood,
                 ),
                 onClickNext = {},
                 onClickPrev = {},

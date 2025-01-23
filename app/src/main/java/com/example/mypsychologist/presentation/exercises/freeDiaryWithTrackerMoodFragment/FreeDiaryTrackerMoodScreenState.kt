@@ -11,5 +11,7 @@ sealed class FreeDiaryTrackerMoodScreenState {
         val freeDiaries: List<FreeDiaryEntity>,
         val freeDiariesError: Boolean = false,
         val freeDiariesLoading: Boolean = false,
+        val mood: Float = 50f,
+        val moodTitleIdSource: Int
     ): FreeDiaryTrackerMoodScreenState()
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
@@ -36,7 +37,8 @@ class TrackerMoodViewModel @Inject constructor(
             month = Calendar.getInstance().time,
             year = Calendar.getInstance().get(Calendar.YEAR).toString(),
             dates = getDatesList(),
-            emptyList()
+            emptyList(),
+            moodTitleIdSource = R.string.normal_mood
         )
     )
 
@@ -128,13 +130,10 @@ class TrackerMoodViewModel @Inject constructor(
 
                     is Resource.Success -> _viewState.value = currentViewState.copy(
                         freeDiaries = resource.data.map {
-                            FreeDiaryEntity(it.id,
-                                it.text,
-                                it.createdAt.convertToTimeOnly()
+                            FreeDiaryEntity(
+                                it.id, it.text, it.createdAt.convertToTimeOnly()
                             )
-                        },
-                        freeDiariesLoading = false,
-                        freeDiariesError = false
+                        }, freeDiariesLoading = false, freeDiariesError = false
                     )
                 }
             }
@@ -189,5 +188,24 @@ class TrackerMoodViewModel @Inject constructor(
             it.second
         }!!.first
         getNotes(selectedDate)
+    }
+
+    fun changeMood(newMood: Float) {
+        val newTitleMood = when (newMood.toInt()) {
+            in 0..20 -> R.string.terrible_mood
+            in 21..40 -> R.string.bad_mood
+            in 41..59 -> R.string.normal_mood
+            in 60..79 -> R.string.good_mood
+            in 80..100 -> R.string.super_mood
+            else -> {
+                R.string.super_mood
+            }
+        }
+
+        _viewState.value = (viewState.value as FreeDiaryTrackerMoodScreenState.Content).copy(
+            mood = newMood,
+            moodTitleIdSource = newTitleMood
+        )
+
     }
 }
