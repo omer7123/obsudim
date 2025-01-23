@@ -51,19 +51,25 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        if (activity is NavbarHider) {
-            (activity as NavbarHider).setActualItem(R.id.plan_item)
-        }
+        setNavbarActualItem()
 
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
         setupListeners()
-        viewModel.screenState.flowWithLifecycle(lifecycle).onEach {
-            render(it)
-        }.launchIn(lifecycleScope)
+
+        viewModel.screenState
+            .flowWithLifecycle(lifecycle)
+            .onEach { render(it) }
+            .launchIn(lifecycleScope)
 
         initView()
         return binding.root
+    }
+
+    private fun setNavbarActualItem() {
+        if (activity is NavbarHider) {
+            (activity as NavbarHider).setActualItem(R.id.plan_item)
+        }
     }
 
     private fun initView() {
@@ -121,7 +127,7 @@ class MainFragment : Fragment() {
                     childFragmentManager.setFragmentResultListener(
                         TrackerMoodFragment.RESULT_KEY,
                         viewLifecycleOwner
-                    ){_, res->
+                    ) { _, res ->
                         val key = res.getString(TrackerMoodFragment.RESULT_KEY)
                         if (key == TrackerMoodFragment.CLOSE)
                             viewModel.getAllExercises()

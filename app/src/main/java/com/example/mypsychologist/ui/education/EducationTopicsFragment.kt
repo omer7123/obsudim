@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -173,6 +174,7 @@ fun TopicItem(item: TopicEntity, onItemClick: (TopicEntity) -> Unit) {
             error = painterResource(id = R.drawable.ic_diary_practice),
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(12.dp))
+                .aspectRatio(1 / 0.67f)
 
         )
 
