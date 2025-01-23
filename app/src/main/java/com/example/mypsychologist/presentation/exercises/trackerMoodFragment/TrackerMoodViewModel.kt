@@ -5,10 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetFreeDiariesByDayUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTrackerUseCase
+import com.example.mypsychologist.extensions.convertDateToString
+import com.example.mypsychologist.extensions.convertToTimeOnly
 import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.FreeDiaryTrackerMoodScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +23,8 @@ import javax.inject.Inject
 
 class TrackerMoodViewModel @Inject constructor(
     private val saveTrackMoodTrackerUseCase: SaveMoodTrackerUseCase,
-    private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
+    private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase,
+    private val getFreeDiariesByDayUseCase: GetFreeDiariesByDayUseCase
 ) : ViewModel() {
 
     private val _stateScreen: MutableLiveData<TrackerMoodScreenState> =
@@ -30,41 +35,60 @@ class TrackerMoodViewModel @Inject constructor(
         FreeDiaryTrackerMoodScreenState.Content(
             month = Calendar.getInstance().time,
             year = Calendar.getInstance().get(Calendar.YEAR).toString(),
-            dates = getDatesList()
+            dates = getDatesList(),
+            emptyList()
         )
     )
 
     val viewState: StateFlow<FreeDiaryTrackerMoodScreenState> = _viewState
 
+    init {
+        getNotes(Date())
+    }
+
     fun nextMonth() {
-        val currentMonth = (_viewState.value as FreeDiaryTrackerMoodScreenState.Content).month
+        val currentViewState = viewState.value as FreeDiaryTrackerMoodScreenState.Content
+
+        val currentMonth = currentViewState.month
         val nextMonth = Calendar.getInstance().apply {
             time = currentMonth
             add(Calendar.MONTH, 1)
         }
 
         val nextYear = nextMonth.get(Calendar.YEAR).toString()
+        val newDateList = getDatesList(nextMonth.time)
 
-        _viewState.value = (_viewState.value as FreeDiaryTrackerMoodScreenState.Content).copy(
-            month = nextMonth.time,
-            year = nextYear,
-            dates = getDatesList(nextMonth.time)
+        _viewState.value = currentViewState.copy(
+            month = nextMonth.time, year = nextYear, dates = newDateList
         )
+
+        val currentDateAfterNext = newDateList.find {
+            it.second
+        }
+        getNotes(currentDateAfterNext!!.first)
     }
 
-    fun prevMonth(){
-        val currentMonth = (viewState.value as FreeDiaryTrackerMoodScreenState.Content).month
+    //TODO("Надо сделать чтобы при свайпе месяца выбранный день сохранялся")
+    fun prevMonth() {
+        val currentViewState = viewState.value as FreeDiaryTrackerMoodScreenState.Content
+
+        val currentMonth = currentViewState.month
         val prevMonth = Calendar.getInstance().apply {
             time = currentMonth
             add(Calendar.MONTH, -1)
         }
         val year = prevMonth.get(Calendar.YEAR).toString()
 
-        _viewState.value = (viewState.value as FreeDiaryTrackerMoodScreenState.Content).copy(
-            month = prevMonth.time,
-            year = year,
-            getDatesList(prevMonth.time)
+        val newDateList = getDatesList(prevMonth.time)
+
+        _viewState.value = currentViewState.copy(
+            month = prevMonth.time, year = year, dates = newDateList
         )
+
+        val currentDateAfterPrev = newDateList.find {
+            it.second
+        }
+        getNotes(currentDateAfterPrev!!.first)
     }
 
     fun onClickDate(selectedDate: Date) {
@@ -79,6 +103,42 @@ class TrackerMoodViewModel @Inject constructor(
         }
 
         _viewState.value = currentViewState.copy(dates = updatedDates)
+
+        getNotes(selectedDate)
+    }
+
+    private fun getNotes(selectedDate: Date) {
+        viewModelScope.launch {
+            val currentViewState = _viewState.value as FreeDiaryTrackerMoodScreenState.Content
+            _viewState.value = currentViewState.copy(
+                freeDiaries = emptyList(), freeDiariesLoading = true, freeDiariesError = false
+            )
+
+            getFreeDiariesByDayUseCase(selectedDate.convertDateToString()).collect { resource ->
+                when (resource) {
+                    is Resource.Error -> _viewState.value = currentViewState.copy(
+                        freeDiaries = emptyList(), freeDiariesError = true
+                    )
+
+                    Resource.Loading -> _viewState.value = currentViewState.copy(
+                        freeDiaries = emptyList(),
+                        freeDiariesLoading = true,
+                        freeDiariesError = false
+                    )
+
+                    is Resource.Success -> _viewState.value = currentViewState.copy(
+                        freeDiaries = resource.data.map {
+                            FreeDiaryEntity(it.id,
+                                it.text,
+                                it.createdAt.convertToTimeOnly()
+                            )
+                        },
+                        freeDiariesLoading = false,
+                        freeDiariesError = false
+                    )
+                }
+            }
+        }
     }
 
     fun saveMood(score: Int, taskId: String = "") {
@@ -114,5 +174,12 @@ class TrackerMoodViewModel @Inject constructor(
             if (currentDay == it) calendar.time to true
             else calendar.time to false
         }
+    }
+
+    fun getSelectedDay(): String {
+        val currentViewState = viewState.value as FreeDiaryTrackerMoodScreenState.Content
+        return currentViewState.dates.find {
+            it.second
+        }!!.first.convertDateToString()
     }
 }

@@ -45,7 +45,7 @@ fun PrimaryTextButton(
             CircularProgressIndicator(
                 modifier = Modifier.size(22.dp),
                 strokeWidth = 2.dp,
-                color = AppTheme.colors.tertiaryBackground
+                color = AppTheme.colors.screenBackground
             )
         }
     }

@@ -11,6 +11,7 @@ import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerRespEntit
 import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
 import com.example.mypsychologist.domain.repository.retrofit.FreeDiaryRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDiaryDataSource) :
@@ -29,6 +30,14 @@ class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDi
 
     override suspend fun addFreeDiary(freeDiary: NewFreeDiaryEntity): Resource<String> {
         return dataSource.addFreeDiary(freeDiary.toNewFreeDiaryModel())
+    }
+
+    override suspend fun getFreeDiariesByDay(day: String): Flow<Resource<List<FreeDiaryEntity>>> {
+        return dataSource.getFreeDiariesByDate(day).checkResource {freeDiaries->
+            freeDiaries.map {
+                it.toFreeDiaryEntity()
+            }
+        }
     }
 
     override suspend fun saveMoodTracker(saveMoodEntity: SaveMoodEntity): Resource<MoodTrackerRespEntity> {

@@ -43,6 +43,14 @@ private fun Date.formatToMonthString(): String =
         it.uppercase()
     }
 
+fun Date.formatToMonthStringInf(): String =
+    SimpleDateFormat("MMMM", Locale.getDefault()).format(this).replaceFirstChar {
+        it.uppercase()
+    }
+fun Date.formatToDayString(): String =
+    SimpleDateFormat("dd", Locale.getDefault()).format(this)
+
+
 private fun Int.getDayOfWeek3Letters(): String? =
     Calendar.getInstance().apply { set(Calendar.DAY_OF_WEEK, this@getDayOfWeek3Letters) }
         .getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault())
@@ -140,7 +148,7 @@ fun getWeekDays(startFromSunday: Boolean): List<Int> {
 private fun CalendarCustomLayout(
     modifier: Modifier = Modifier,
     horizontalGapDp: Dp = 2.dp,
-    verticalGapDp: Dp = 2.dp,
+    verticalGapDp: Dp = (-10).dp,
     content: @Composable () -> Unit,
 ) {
     val horizontalGap = with(LocalDensity.current) { horizontalGapDp.roundToPx() }
@@ -213,7 +221,7 @@ fun CalendarView(
                     Icon(
                         painterResource(id = R.drawable.ic_arrow_left_calendar),
                         contentDescription = "Предыдущий месяц",
-                        tint = AppTheme.colors.tertiaryBackground
+                        tint = AppTheme.colors.screenBackground
                     )
                 }
 
@@ -222,7 +230,7 @@ fun CalendarView(
                     Icon(
                         painterResource(id = R.drawable.ic_arrow_right_calendar),
                         contentDescription = "Следующий месяц",
-                        tint = AppTheme.colors.tertiaryBackground
+                        tint = AppTheme.colors.screenBackground
                     )
                 }
         }

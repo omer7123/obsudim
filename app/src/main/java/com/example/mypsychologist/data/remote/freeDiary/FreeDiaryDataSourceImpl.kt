@@ -7,6 +7,9 @@ import com.example.mypsychologist.data.model.MoodTrackerRespModel
 import com.example.mypsychologist.data.model.NewFreeDiaryModel
 import com.example.mypsychologist.data.model.SaveMoodModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -18,6 +21,11 @@ class FreeDiaryDataSourceImpl @Inject constructor(private val api: FreeDiaryServ
             api.getFreeDiaryList()
         }
     }
+    override suspend fun getFreeDiariesByDate(date: String): Flow<Resource<List<FreeDiaryModel>>> = flow {
+        emit(getResult {
+            api.getFreeDiariesByDay(date)
+        })
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun addFreeDiary(freeDiary: NewFreeDiaryModel): Resource<String> = getResult {
         withContext(Dispatchers.IO) {

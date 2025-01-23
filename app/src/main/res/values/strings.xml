@@ -10,6 +10,7 @@
     <string name="unknown_error_placeholder">Извините, произошла непредивденная ошибка. Попробуйте немного позже</string>
     <string name="after_connection">При восстановлении соединения данные загрузятся автоматически</string>
     <string name="diary_empty">Это место для заметок. Напиши, как прошёл день, как себя чувствуешь :)</string>
+    <string name="diary_empty_placeholder">Напиши, как прошёл день, как себя чувствуешь :)</string>
 
     <string name="nothing">Ничего нет :(</string>
     <string name="need_data">Необходимы данные.</string>
@@ -709,7 +710,9 @@
     <string name="specify">Уточнить</string>
     <string name="save_without_specify">Сохранить без подробностей</string>
 
+
     <string name="register">Зарегистрироваться</string>
+    <string name="write_note">Написать заметку</string>
     <string name="log_in">Войти</string>
     <string name="coping_behavior">Совладающее поведение</string>
     <string name="restore">Восстановить</string>

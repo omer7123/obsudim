@@ -289,5 +289,9 @@
     <fragment
         android:id="@+id/freeDiaryTrackerMoodFragment"
         android:name="com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.FreeDiaryTrackerMoodFragment"
-        android:label="FreeDiaryTrackerMoodFragment" />
+        android:label="FreeDiaryTrackerMoodFragment" >
+        <action
+            android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
+            app:destination="@id/newFreeDiaryFragment" />
+    </fragment>
 </navigation>

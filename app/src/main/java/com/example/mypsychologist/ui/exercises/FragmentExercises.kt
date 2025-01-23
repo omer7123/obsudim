@@ -23,7 +23,6 @@ import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
-import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -101,7 +100,8 @@ FragmentExercises : Fragment() {
             }
 
             trackerCard.root.setOnClickListener {
-                TrackerMoodFragment().show(childFragmentManager, TrackerMoodFragment.SHOW)
+                findNavController().navigate(R.id.freeDiaryTrackerMoodFragment)
+//                TrackerMoodFragment().show(childFragmentManager, TrackerMoodFragment.SHOW)
             }
 
             diaryFreeBtn.setOnClickListener {

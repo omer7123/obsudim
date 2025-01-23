@@ -8,6 +8,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface FreeDiaryService {
 
@@ -16,6 +17,9 @@ interface FreeDiaryService {
 
     @POST("/diary/writing_free_diary")
     suspend fun addFreeDiary(@Body freeDiary: NewFreeDiaryModel): Response<String>
+
+    @GET("/diary/reading_free_diary_with_date")
+    suspend fun getFreeDiariesByDay(@Query("date") date: String): Response<List<FreeDiaryModel>>
 
     @POST("/mood_tracker/save_mood_tracker")
     suspend fun saveMoodTracker(@Body saveMoodTracker: SaveMoodModel): Response<MoodTrackerRespModel>

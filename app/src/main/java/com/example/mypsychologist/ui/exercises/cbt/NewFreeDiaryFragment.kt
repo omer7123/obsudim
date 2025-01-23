@@ -81,7 +81,8 @@ class NewFreeDiaryFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            viewModel.addDiary(NewFreeDiaryEntity(binding.field.text.toString()))
+            val date = requireArguments().getString(DATE)
+            viewModel.addDiary(NewFreeDiaryEntity(binding.field.text.toString()), date)
         }
 
         binding.includeToolbar.toolbar.setNavigationOnClickListener {
@@ -128,5 +129,6 @@ class NewFreeDiaryFragment : Fragment() {
 
     companion object{
         const val KPT_ID = "kpt_id"
+        const val DATE = "date"
     }
 }

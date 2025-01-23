@@ -12,7 +12,8 @@ import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
 fun FreeDiaryModel.toFreeDiaryEntity(): FreeDiaryEntity {
     return FreeDiaryEntity(
         id = this.freeDiaryId,
-        text = this.text
+        text = this.text,
+        createdAt = this.createdAt
     )
 }
 

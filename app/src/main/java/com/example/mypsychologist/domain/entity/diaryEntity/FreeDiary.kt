@@ -1,10 +1,9 @@
 package com.example.mypsychologist.domain.entity.diaryEntity
 
-import kotlinx.serialization.SerialName
-
 data class FreeDiaryEntity (
     val id: String,
-    val text: String
+    val text: String,
+    val createdAt: String,
 )
 data class NewFreeDiaryEntity (
     val text: String

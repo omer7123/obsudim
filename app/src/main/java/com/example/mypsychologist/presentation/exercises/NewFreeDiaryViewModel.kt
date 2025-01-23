@@ -11,7 +11,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewFreeDiaryViewModel @Inject constructor(private val addFreeDiaryUseCase: AddFreeDiaryUseCase) :
+class NewFreeDiaryViewModel @Inject constructor(
+    private val addFreeDiaryUseCase: AddFreeDiaryUseCase,
+
+) :
     ViewModel() {
 
     private val _screenState: MutableStateFlow<NewFreeDiaryScreenState> =
@@ -20,18 +23,22 @@ class NewFreeDiaryViewModel @Inject constructor(private val addFreeDiaryUseCase:
         get() = _screenState.asStateFlow()
 
 
-    fun addDiary(diary: NewFreeDiaryEntity) {
-        if (diary.text.isNotEmpty()) {
-            viewModelScope.launch {
-                _screenState.value =
-                    NewFreeDiaryScreenState.Loading
-                when (val result = addFreeDiaryUseCase(diary)) {
-                    is Resource.Error -> _screenState.value =
-                        NewFreeDiaryScreenState.Error(result.msg.toString())
+    fun addDiary(diary: NewFreeDiaryEntity, date: String? = null) {
+        if(diary.text.isNotEmpty()){
+            if (date.isNullOrEmpty()){
+                viewModelScope.launch {
+                    _screenState.value =
+                        NewFreeDiaryScreenState.Loading
+                    when (val result = addFreeDiaryUseCase(diary)) {
+                        is Resource.Error -> _screenState.value =
+                            NewFreeDiaryScreenState.Error(result.msg.toString())
 
-                    Resource.Loading -> _screenState.value = NewFreeDiaryScreenState.Loading
-                    is Resource.Success -> _screenState.value = NewFreeDiaryScreenState.Success
+                        Resource.Loading -> _screenState.value = NewFreeDiaryScreenState.Loading
+                        is Resource.Success -> _screenState.value = NewFreeDiaryScreenState.Success
+                    }
                 }
+            }else{
+
             }
         }else{
             _screenState.value = NewFreeDiaryScreenState.Content
