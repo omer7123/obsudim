@@ -5,6 +5,7 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.FreeDiaryModel
 import com.example.mypsychologist.data.model.MoodTrackerRespModel
 import com.example.mypsychologist.data.model.NewFreeDiaryModel
+import com.example.mypsychologist.data.model.NewFreeDiaryWithDateModel
 import com.example.mypsychologist.data.model.SaveMoodModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -21,11 +22,13 @@ class FreeDiaryDataSourceImpl @Inject constructor(private val api: FreeDiaryServ
             api.getFreeDiaryList()
         }
     }
-    override suspend fun getFreeDiariesByDate(date: String): Flow<Resource<List<FreeDiaryModel>>> = flow {
-        emit(getResult {
-            api.getFreeDiariesByDay(date)
-        })
-    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getFreeDiariesByDate(date: String): Flow<Resource<List<FreeDiaryModel>>> =
+        flow {
+            emit(getResult {
+                api.getFreeDiariesByDay(date)
+            })
+        }.flowOn(Dispatchers.IO)
 
     override suspend fun addFreeDiary(freeDiary: NewFreeDiaryModel): Resource<String> = getResult {
         withContext(Dispatchers.IO) {
@@ -37,4 +40,11 @@ class FreeDiaryDataSourceImpl @Inject constructor(private val api: FreeDiaryServ
         getResult {
             api.saveMoodTracker(saveMoodModel)
         }
+
+    override suspend fun addFreeDiaryWithDate(freeDiaryModel: NewFreeDiaryWithDateModel): Flow<Resource<String>> =
+        flow {
+            emit(getResult {
+                api.addFreeDiaryWithDate(freeDiaryModel)
+            })
+        }.flowOn(Dispatchers.IO)
 }

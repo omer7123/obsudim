@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,6 +104,7 @@ class NewFreeDiaryFragment : Fragment() {
 
             is NewFreeDiaryScreenState.Error -> {
                 requireContext().showToast(state.msg)
+                Log.e("Error", state.msg)
             }
             is NewFreeDiaryScreenState.Init -> {}
             NewFreeDiaryScreenState.Loading -> renderLoading()

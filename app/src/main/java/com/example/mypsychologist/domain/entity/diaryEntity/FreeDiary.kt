@@ -9,6 +9,11 @@ data class NewFreeDiaryEntity (
     val text: String
 )
 
+data class NewFreeDiaryWithDateEntity (
+    val text: String,
+    val createdAt: String,
+)
+
 data class SaveMoodEntity(
     val score: Int,
     val freeDiaryId: String = "",

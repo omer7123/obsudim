@@ -61,6 +61,10 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[TrackerMoodViewModel::class.java]
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.reInitData()
+    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireContext().getAppComponent().exercisesComponent().create().inject(this)

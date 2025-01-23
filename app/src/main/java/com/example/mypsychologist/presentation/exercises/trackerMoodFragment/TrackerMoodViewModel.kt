@@ -182,4 +182,12 @@ class TrackerMoodViewModel @Inject constructor(
             it.second
         }!!.first.convertDateToString()
     }
+
+    fun reInitData() {
+        val currentViewState = viewState.value as FreeDiaryTrackerMoodScreenState.Content
+        val selectedDate = currentViewState.dates.find {
+            it.second
+        }!!.first
+        getNotes(selectedDate)
+    }
 }

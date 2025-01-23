@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryWithDateEntity
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.AddFreeDiaryUseCase
+import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.AddFreeDiaryUseCaseWithDate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +15,7 @@ import javax.inject.Inject
 
 class NewFreeDiaryViewModel @Inject constructor(
     private val addFreeDiaryUseCase: AddFreeDiaryUseCase,
-
+    private val addFreeDiaryUseCaseWithDate: AddFreeDiaryUseCaseWithDate
 ) :
     ViewModel() {
 
@@ -38,7 +40,19 @@ class NewFreeDiaryViewModel @Inject constructor(
                     }
                 }
             }else{
+                viewModelScope.launch {
+                    _screenState.value =
+                        NewFreeDiaryScreenState.Loading
+                    addFreeDiaryUseCaseWithDate(NewFreeDiaryWithDateEntity((diary.text), date)).collect{ resource->
+                        when(resource){
+                            is Resource.Error -> _screenState.value =
+                                NewFreeDiaryScreenState.Error(resource.msg.toString())
 
+                            Resource.Loading -> _screenState.value = NewFreeDiaryScreenState.Loading
+                            is Resource.Success -> _screenState.value = NewFreeDiaryScreenState.Success
+                        }
+                    }
+                }
             }
         }else{
             _screenState.value = NewFreeDiaryScreenState.Content

@@ -9,6 +9,7 @@ import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryDataSource
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerRespEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryWithDateEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
 import com.example.mypsychologist.domain.repository.retrofit.FreeDiaryRepository
 import kotlinx.coroutines.flow.Flow
@@ -46,5 +47,9 @@ class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDi
             is Resource.Error -> Resource.Error(res.msg.toString(), null)
             Resource.Loading -> Resource.Loading
         }
+    }
+
+    override suspend fun addFreeDiaryWithDate(data: NewFreeDiaryWithDateEntity): Flow<Resource<String>> {
+        return dataSource.addFreeDiaryWithDate(data.toNewFreeDiaryModel())
     }
 }

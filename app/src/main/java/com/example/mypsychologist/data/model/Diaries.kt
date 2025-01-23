@@ -18,6 +18,12 @@ data class FreeDiaryModel(
 data class NewFreeDiaryModel (
     val text: String
 )
+@Serializable
+data class NewFreeDiaryWithDateModel(
+    val text: String,
+    @SerialName("created_at")
+    val createdAt: String
+)
 
 @Serializable
 data class SaveMoodModel(
