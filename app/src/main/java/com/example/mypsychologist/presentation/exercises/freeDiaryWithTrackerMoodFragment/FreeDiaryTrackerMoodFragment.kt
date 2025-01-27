@@ -3,13 +3,17 @@ package com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMo
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,6 +45,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.exercises.trackerMoodFragment.TrackerMoodViewModel
@@ -91,6 +96,7 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
         navController: NavController
     ) {
         val viewState = viewModel.viewState.collectAsState()
+        Log.e("FRAGMENTSTATE",viewState.value.toString())
         when (val res = viewState.value) {
             is FreeDiaryTrackerMoodScreenState.Content -> {
                 FreeDiaryTrackerMoodScreenContent(res = res,
@@ -105,7 +111,9 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                             args = bundleOf(NewFreeDiaryFragment.DATE to viewModel.getSelectedDay())
                         )
                     },
-                    onNavIconClick = {navController.popBackStack()}
+                    onNavIconClick = {navController.popBackStack()},
+                    onIconAddClick = {viewModel.changeStatusAddNewMood(it)},
+                    onClickSaveMood = {viewModel.saveMoodTrack()}
                 )
             }
         }
@@ -118,181 +126,266 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
         onClickPrev: () -> Unit,
         onClickDate: (Date) -> Unit,
         writeNoteClick: () -> Unit,
-        onNavIconClick: () -> Unit
+        onNavIconClick: () -> Unit,
+        onIconAddClick: (Boolean) -> Unit,
+        onClickSaveMood: () -> Unit,
     ) {
+        Log.e("State: ", res.freeDiariesLoading.toString())
+        androidx.compose.material.BottomSheetScaffold(
+            sheetShape = RoundedCornerShape(
+                topStart = 28.dp, topEnd = 28.dp,
+            ),
+            sheetContent = {
+                SheetContent(
+                    res,
+                    writeNoteClick,
+                    onIconAddClick,
+                    onClickSaveMood
+                )
+            },
 
-        ScaffoldWithBottomSheetExample(
-            res = res,
-            onClickNext = onClickNext,
-            onClickPrev = onClickPrev,
-            onClickDate = onClickDate,
-            writeNoteClick = writeNoteClick,
-            onNavIconClick = onNavIconClick
+            sheetPeekHeight = 400.dp,
+            content = {
+                MainContent(
+                    res = res,
+                    onClickNext = onClickNext,
+                    onClickPrev = onClickPrev,
+                    onClickDate = onClickDate,
+                    onNavIconClick = onNavIconClick,
+                    )
+            }
         )
     }
 
     @Composable
-    fun ScaffoldWithBottomSheetExample(
+    fun MainContent(
         res: FreeDiaryTrackerMoodScreenState.Content,
         onClickNext: () -> Unit,
         onClickPrev: () -> Unit,
         onClickDate: (Date) -> Unit,
-        writeNoteClick: () -> Unit,
         onNavIconClick: () -> Unit
     ) {
-        androidx.compose.material.BottomSheetScaffold(sheetShape = RoundedCornerShape(
-            topStart = 28.dp, topEnd = 28.dp
-        ),
+        Column(
+            modifier = Modifier.background(AppTheme.colors.primaryBackground)
+        ) {
+            Row(
+                modifier = Modifier
+                    .statusBarsPadding()
+                    .height(64.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
 
-            sheetContent = {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = stringResource(id = R.string.notes),
-                        style = AppTheme.typography.titleXS,
-                        color = AppTheme.colors.primaryText
-                    )
-                    when{
-                        res.freeDiariesLoading -> {
-                            CircularProgressIndicator(
-                                modifier = Modifier
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(top = 20.dp),
-                            )
-                        }
-                        res.freeDiariesError -> {
-                            Text(
-                                text = stringResource(id = R.string.unknown_error_placeholder),
-                                style = AppTheme.typography.bodyL,
-                                color = AppTheme.colors.primaryText,
-                                modifier = Modifier.padding(top = 10.dp)
-                            )
-                        }
-                        res.freeDiaries.isNotEmpty() -> {
-                            LazyColumn(
-                                contentPadding = PaddingValues(top = 20.dp),
-                                verticalArrangement = Arrangement.spacedBy(20.dp)
-                            ) {
-                                items(res.freeDiaries){record->
-                                    RecordItem(item = record)
-                                }
-                            }
-                        }
-                        else -> {
-                            Text(
-                                text = stringResource(id = R.string.diary_empty_placeholder),
-                                style = AppTheme.typography.bodyL,
-                                color = AppTheme.colors.primaryText,
-                                modifier = Modifier.padding(top = 10.dp)
-                            )
-                        }
-                    }
-
-                    PrimaryTextButton(
-                        textString = stringResource(id = R.string.write_note),
-                        onClick = {writeNoteClick()},
-                        modifier = Modifier.padding(top = 20.dp)
-                    )
-
-                    Text(
-                        text = stringResource(id = R.string.mood),
-                        style = AppTheme.typography.titleXS,
-                        color = AppTheme.colors.primaryText,
-                        modifier = Modifier.padding(top = 40.dp)
-                    )
-
-                    Slider(
-                        value = res.mood,
-                        onValueChange = { viewModel.changeMood(it) },
-                        colors = SliderDefaults.colors(
-                            thumbColor = AppTheme.colors.primaryBackground,
-                            activeTrackColor = AppTheme.colors.primaryBackground,
-                            inactiveTrackColor = AppTheme.colors.secondaryBackground,
-                        ),
-                        steps = 0,
-                        valueRange = 0f..100f,
-                        modifier = Modifier.padding(top = 20.dp)
-                    )
-
-                    Text(
-                        text = stringResource(id = res.moodTitleIdSource),
-                        style = AppTheme.typography.bodyS,
-                        color = AppTheme.colors.primaryBackground,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .background(
-                                color = AppTheme.colors.secondaryBackground,
-                                shape = RoundedCornerShape(12.dp)
-                            )
-                            .padding(horizontal = 10.dp, vertical = 8.dp)
-                            .align(Alignment.CenterHorizontally)
-                    )
-
-                    PrimaryTextButton(
-                        textString = stringResource(id = R.string.save),
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier.padding(top = 20.dp)
-                    )
-                }
-            },
-
-            sheetPeekHeight = 400.dp, content = {
-                Column(
-                    modifier = Modifier.background(AppTheme.colors.primaryBackground)
+            ) {
+                IconButton(
+                    onClick = {
+                        onNavIconClick()
+                    },
+                    modifier = Modifier.padding(start = 12.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .statusBarsPadding()
-                            .height(64.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-
-                    ) {
-                        IconButton(
-                            onClick = {
-                                onNavIconClick()
-                            },
-                            modifier = Modifier.padding(start = 12.dp)
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_arrow_back_white),
-                                contentDescription = stringResource(id = R.string.feedback),
-                                tint = AppTheme.colors.tertiaryBackground,
-                                modifier = Modifier.padding(bottom = 4.dp)
-                            )
-                        }
-
-                        val timeStr =
-                            Date().formatToDayString() + " " + Date().formatToMonthStringInf()
-                        Text(
-                            text = timeStr,
-                            style = AppTheme.typography.titleCygreFont,
-                            color = AppTheme.colors.primaryTextInvert,
-                        )
-                    }
-
-                    CalendarView(
-                        month = res.month,
-                        years = res.year,
-                        date = res.dates,
-                        displayNext = true,
-                        displayPrev = true,
-                        onClickNext = {
-                            onClickNext()
-                        },
-                        onClickPrev = {
-                            onClickPrev()
-                        },
-                        onClick = { selectedDate ->
-                            onClickDate(selectedDate)
-                        },
-                        startFromSunday = false,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(top = 26.dp)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_back_white),
+                        contentDescription = stringResource(id = R.string.feedback),
+                        tint = AppTheme.colors.tertiaryBackground,
+                        modifier = Modifier.padding(bottom = 4.dp)
                     )
                 }
-            })
+
+                val timeStr =
+                    Date().formatToDayString() + " " + Date().formatToMonthStringInf()
+                Text(
+                    text = timeStr,
+                    style = AppTheme.typography.titleCygreFont,
+                    color = AppTheme.colors.primaryTextInvert,
+                )
+            }
+
+            CalendarView(
+                month = res.month,
+                years = res.year,
+                date = res.dates,
+                displayNext = true,
+                displayPrev = true,
+                onClickNext = {
+                    onClickNext()
+                },
+                onClickPrev = {
+                    onClickPrev()
+                },
+                onClick = { selectedDate ->
+                    onClickDate(selectedDate)
+                },
+                startFromSunday = false,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(top = 26.dp)
+            )
+        }
+    }
+
+    @Composable
+    fun SheetContent(
+        res: FreeDiaryTrackerMoodScreenState.Content,
+        writeNoteClick: () -> Unit,
+        onIconAddClick: (Boolean) -> Unit,
+        onClickSaveMood: () -> Unit
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = stringResource(id = R.string.notes),
+                style = AppTheme.typography.titleXS,
+                color = AppTheme.colors.primaryText
+            )
+            when {
+                res.freeDiariesLoading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 20.dp),
+                    )
+                }
+
+                res.freeDiariesError -> {
+                    Text(
+                        text = stringResource(id = R.string.unknown_error_placeholder),
+                        style = AppTheme.typography.bodyL,
+                        color = AppTheme.colors.primaryText,
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
+                }
+
+                res.freeDiaries.isNotEmpty() -> {
+                    LazyColumn(
+                        contentPadding = PaddingValues(top = 20.dp),
+                        verticalArrangement = Arrangement.spacedBy(20.dp)
+                    ) {
+                        items(res.freeDiaries) { record ->
+                            RecordItem(item = record)
+                        }
+                    }
+                }
+
+                else -> {
+                    Text(
+                        text = stringResource(id = R.string.diary_empty_placeholder),
+                        style = AppTheme.typography.bodyL,
+                        color = AppTheme.colors.primaryText,
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
+                }
+            }
+
+            PrimaryTextButton(
+                textString = stringResource(id = R.string.write_note),
+                onClick = { writeNoteClick() },
+                modifier = Modifier.padding(top = 20.dp)
+            )
+
+            Row(modifier = Modifier
+                .padding(top = 40.dp)
+                .fillMaxWidth()) {
+                Text(
+                    text = stringResource(id = R.string.mood),
+                    style = AppTheme.typography.titleXS,
+                    color = AppTheme.colors.primaryText,
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                if (!res.addNewMoodStatus) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_add_circle),
+                        contentDescription = stringResource(
+                            id = R.string.add_note_tracker
+                        ),
+                        tint = AppTheme.colors.primaryBackground,
+                        modifier = Modifier.clickable {
+                            onIconAddClick(true)
+                        }
+                    )
+                }
+            }
+            if(res.addNewMoodStatus){
+                Slider(
+                    value = res.mood,
+                    onValueChange = { viewModel.changeMood(it) },
+                    colors = SliderDefaults.colors(
+                        thumbColor = AppTheme.colors.primaryBackground,
+                        activeTrackColor = AppTheme.colors.primaryBackground,
+                        inactiveTrackColor = AppTheme.colors.secondaryBackground,
+                    ),
+                    steps = 0,
+                    valueRange = 0f..100f,
+                    modifier = Modifier.padding(top = 20.dp)
+                )
+
+                Text(
+                    text = stringResource(id = res.moodTitleIdSource),
+                    style = AppTheme.typography.bodyS,
+                    color = AppTheme.colors.primaryBackground,
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .background(
+                            color = AppTheme.colors.secondaryBackground,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .padding(horizontal = 10.dp, vertical = 8.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+
+                PrimaryTextButton(
+                    textString = stringResource(id = R.string.save),
+                    onClick = { onClickSaveMood() },
+                    modifier = Modifier.padding(top = 20.dp)
+                )
+            }
+            val contentPaddingTopForMoods = if (res.addNewMoodStatus) 40
+            else 20
+            LazyColumn(
+                contentPadding = PaddingValues(top = contentPaddingTopForMoods.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                items(res.moods){item->
+                    RecordMood(item)
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun RecordMood(
+        item: MoodPresentEntity,
+        modifier: Modifier = Modifier
+    ) {
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(AppTheme.colors.fourthBackground, shape = RoundedCornerShape(12.dp))
+        )
+        {
+
+            Text(
+                text = stringResource(id = item.moodTitleResStr),
+                style = AppTheme.typography.titleCygreFont,
+                color = AppTheme.colors.primaryBackground,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(vertical = 30.dp)
+            )
+            Text(
+                text = item.date,
+                style = AppTheme.typography.bodyS,
+                color = AppTheme.colors.primaryBackground,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(6.dp)
+                    .background(
+                        color = AppTheme.colors.screenBackground,
+                        shape = RoundedCornerShape(6.dp)
+                    )
+                    .padding(vertical = 3.dp, horizontal = 8.dp)
+            )
+        }
     }
 
 
@@ -325,21 +418,6 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
 
     @Preview(showBackground = true)
     @Composable
-    fun RecordItem_Preview() {
-        AppTheme {
-            RecordItem(
-                item = FreeDiaryEntity(
-                    "dsds",
-                    "Заметка раз-раз-раз",
-                    "9:30"
-                ),
-                modifier = Modifier.padding(all = 15.dp)
-            )
-        }
-    }
-
-    @Preview(showBackground = true)
-    @Composable
     fun ScaffoldWithBottomSheetExample_Preview() {
         val calendar = Calendar.getInstance()
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
@@ -348,7 +426,7 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
             Pair(calendar.time, it % 5 == 0) // Пример: сигналы для каждых 5 дней
         }
         AppTheme {
-            ScaffoldWithBottomSheetExample(
+            FreeDiaryTrackerMoodScreenContent(
                 res = FreeDiaryTrackerMoodScreenState.Content(
                     month = Date(),
                     year = "2024",
@@ -357,12 +435,22 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                         FreeDiaryEntity("ds", "Заметка 2", "9:30"),
                     ),
                     moodTitleIdSource = R.string.normal_mood,
+                    moods = listOf(
+                        MoodPresentEntity(
+                            "ds",
+                            50,
+                            R.string.normal_mood,
+                            "9:30"
+                        )
+                    )
                 ),
                 onClickNext = {},
                 onClickPrev = {},
                 onClickDate = {},
                 writeNoteClick = {},
                 onNavIconClick = {},
+                onIconAddClick = {},
+                onClickSaveMood = {}
             )
         }
     }

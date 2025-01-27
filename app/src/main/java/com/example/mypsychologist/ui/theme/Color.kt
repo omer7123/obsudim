@@ -14,6 +14,7 @@ data class AppThemeColor(
     val primaryBackground: Color, // синий 80
     val secondaryBackground: Color, // синий 30
     val tertiaryBackground: Color, // белый 70
+    val fourthBackground: Color, // синий 20
     val screenBackground: Color, // белый 100
     val navBackground: Color, // синий 100
 )
@@ -26,6 +27,7 @@ val lightShema = AppThemeColor(
     primaryBackground = Color(0xFF3555D4), // синий 80
     secondaryBackground = Color(0xFFEBEEFF), // синий 30
     tertiaryBackground = Color(0xFFF1F3F6), // белый 70
+    fourthBackground = Color(0xFFF3F5FF), // синий 20
     screenBackground = Color(0xFFFFFFFF), // белый 100
     navBackground = Color(0xFF0C2A9F), // синий 100
 )
@@ -38,6 +40,7 @@ val darkShema = AppThemeColor(
     primaryBackground = Color(0xFF3555D4), // синий 80
     secondaryBackground = Color(0xFF373E5B), // синий 30
     tertiaryBackground = Color(0xFFF1F3F6), // белый 70
+    fourthBackground = Color(0xFFF3F5FF), // синий 20
     screenBackground = Color(0xFFFFFFFF), // белый 100
     navBackground = Color(0xFF0C2A9F), // синий 100
 )

@@ -21,6 +21,24 @@ data class SaveMoodEntity(
     val diaryType: Int = 0
 )
 
+data class SaveMoodWithDateEntity(
+    val score: Int,
+    val date: String
+)
+
+data class MoodPresentEntity(
+    val id: String,
+    val score: Int,
+    val moodTitleResStr: Int,
+    val date: String,
+)
+
+data class MoodTrackerResultEntity(
+    val id: String,
+    val score: Int,
+    val date: String,
+)
+
 data class MoodTrackerRespEntity(
     val id: String
 )

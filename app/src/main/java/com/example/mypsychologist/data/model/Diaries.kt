@@ -34,6 +34,18 @@ data class SaveMoodModel(
     val thinkDiaryId: String = "",
     val diaryType: Int = 0
 )
+@Serializable
+data class SaveMoodWithDateModel(
+    val score: Int,
+    val date: String
+)
+
+@Serializable
+data class MoodTrackerPresentModel(
+    val id: String,
+    val score: Int,
+    val date: String
+)
 
 @Serializable
 data class MoodTrackerRespModel(

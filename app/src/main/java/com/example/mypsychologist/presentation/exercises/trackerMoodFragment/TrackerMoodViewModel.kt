@@ -7,13 +7,19 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodWithDateEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetAllMoodTrackersUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetFreeDiariesByDayUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTrackerUseCase
+import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTrackerWithDateUseCase
 import com.example.mypsychologist.extensions.convertDateToString
+import com.example.mypsychologist.extensions.convertToISO8601
 import com.example.mypsychologist.extensions.convertToTimeOnly
+import com.example.mypsychologist.extensions.isSameDay
 import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.FreeDiaryTrackerMoodScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +31,9 @@ import javax.inject.Inject
 class TrackerMoodViewModel @Inject constructor(
     private val saveTrackMoodTrackerUseCase: SaveMoodTrackerUseCase,
     private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase,
-    private val getFreeDiariesByDayUseCase: GetFreeDiariesByDayUseCase
+    private val getFreeDiariesByDayUseCase: GetFreeDiariesByDayUseCase,
+    private val saveMoodTrackerWithDateUseCase: SaveMoodTrackerWithDateUseCase,
+    private val getAllMoodTrackersUseCase: GetAllMoodTrackersUseCase
 ) : ViewModel() {
 
     private val _stateScreen: MutableLiveData<TrackerMoodScreenState> =
@@ -37,15 +45,69 @@ class TrackerMoodViewModel @Inject constructor(
             month = Calendar.getInstance().time,
             year = Calendar.getInstance().get(Calendar.YEAR).toString(),
             dates = getDatesList(),
-            emptyList(),
-            moodTitleIdSource = R.string.normal_mood
+            freeDiaries = emptyList(),
+            moodTitleIdSource = R.string.normal_mood,
+            moods = emptyList()
         )
     )
 
     val viewState: StateFlow<FreeDiaryTrackerMoodScreenState> = _viewState
 
     init {
-        getNotes(Date())
+        viewModelScope.launch {
+            getNotes(Date())
+            getMoodTrackers(Date())
+        }
+    }
+
+
+    fun saveMoodTrack() {
+        val currentViewState = viewState.value as FreeDiaryTrackerMoodScreenState.Content
+
+        val date = Date()
+        val selectedDate = currentViewState.dates.find {
+            it.second
+        }!!.first
+
+        val isSameDay = date isSameDay selectedDate
+
+        if (!isSameDay) {
+            viewModelScope.launch {
+                _viewState.value = currentViewState.copy(moodTrackerLoading = true)
+                saveMoodTrackerWithDateUseCase(
+                    SaveMoodWithDateEntity(
+                        score = currentViewState.mood.toInt(),
+                        date = selectedDate.convertDateToString()
+                    )
+                ).collect { resource ->
+                    when (resource) {
+                        is Resource.Error -> {}
+                        Resource.Loading -> _viewState.value =
+                            currentViewState.copy(moodTrackerLoading = true)
+
+                        is Resource.Success -> {
+                            _viewState.value =
+                                currentViewState.copy(moodTrackerLoading = false)
+                            getMoodTrackers(selectedDate)
+                        }
+                    }
+                }
+            }
+        } else {
+            viewModelScope.launch {
+                when (saveTrackMoodTrackerUseCase(SaveMoodEntity(currentViewState.mood.toInt()))) {
+                    is Resource.Error -> {}
+
+                    Resource.Loading -> _viewState.value =
+                        currentViewState.copy(moodTrackerLoading = true)
+
+                    is Resource.Success -> {
+                        _viewState.value = currentViewState.copy(moodTrackerLoading = false)
+                        getMoodTrackers(selectedDate)
+                    }
+                }
+            }
+        }
     }
 
     fun nextMonth() {
@@ -67,7 +129,9 @@ class TrackerMoodViewModel @Inject constructor(
         val currentDateAfterNext = newDateList.find {
             it.second
         }
-        getNotes(currentDateAfterNext!!.first)
+        viewModelScope.launch {
+            getNotes(currentDateAfterNext!!.first)
+        }
     }
 
     //TODO("Надо сделать чтобы при свайпе месяца выбранный день сохранялся")
@@ -90,7 +154,9 @@ class TrackerMoodViewModel @Inject constructor(
         val currentDateAfterPrev = newDateList.find {
             it.second
         }
-        getNotes(currentDateAfterPrev!!.first)
+        viewModelScope.launch {
+            getNotes(currentDateAfterPrev!!.first)
+        }
     }
 
     fun onClickDate(selectedDate: Date) {
@@ -106,29 +172,32 @@ class TrackerMoodViewModel @Inject constructor(
 
         _viewState.value = currentViewState.copy(dates = updatedDates)
 
-        getNotes(selectedDate)
+        viewModelScope.launch {
+            getMoodTrackers(selectedDate)
+            getNotes(selectedDate)
+        }
     }
 
-    private fun getNotes(selectedDate: Date) {
-        viewModelScope.launch {
-            val currentViewState = _viewState.value as FreeDiaryTrackerMoodScreenState.Content
-            _viewState.value = currentViewState.copy(
-                freeDiaries = emptyList(), freeDiariesLoading = true, freeDiariesError = false
-            )
+    private suspend fun getNotes(selectedDate: Date) {
+        val currentViewState = _viewState.value as FreeDiaryTrackerMoodScreenState.Content
+        _viewState.value = currentViewState.copy(
+            freeDiaries = emptyList(), freeDiariesLoading = true, freeDiariesError = false
+        )
 
-            getFreeDiariesByDayUseCase(selectedDate.convertDateToString()).collect { resource ->
-                when (resource) {
-                    is Resource.Error -> _viewState.value = currentViewState.copy(
+        getFreeDiariesByDayUseCase(selectedDate.convertDateToString()).collect { resource ->
+            when (resource) {
+                is Resource.Error -> {
+                    _viewState.value = currentViewState.copy(
                         freeDiaries = emptyList(), freeDiariesError = true
                     )
+                }
 
-                    Resource.Loading -> _viewState.value = currentViewState.copy(
-                        freeDiaries = emptyList(),
-                        freeDiariesLoading = true,
-                        freeDiariesError = false
-                    )
+                Resource.Loading -> _viewState.value = currentViewState.copy(
+                    freeDiaries = emptyList(), freeDiariesLoading = true, freeDiariesError = false
+                )
 
-                    is Resource.Success -> _viewState.value = currentViewState.copy(
+                is Resource.Success -> {
+                    _viewState.value = currentViewState.copy(
                         freeDiaries = resource.data.map {
                             FreeDiaryEntity(
                                 it.id, it.text, it.createdAt.convertToTimeOnly()
@@ -136,6 +205,44 @@ class TrackerMoodViewModel @Inject constructor(
                         }, freeDiariesLoading = false, freeDiariesError = false
                     )
                 }
+            }
+
+        }
+    }
+
+    private suspend fun getMoodTrackers(selectedDate: Date) {
+        val currentViewState = _viewState.value as FreeDiaryTrackerMoodScreenState.Content
+        _viewState.value = currentViewState.copy(
+            moods = emptyList(), moodTrackerLoading = true, moodTrackerError = false
+        )
+
+        getAllMoodTrackersUseCase(selectedDate.convertToISO8601()).collect { resource ->
+            when (resource) {
+                is Resource.Error -> _viewState.value = currentViewState.copy(
+                    moods = emptyList(), moodTrackerLoading = false, moodTrackerError = true
+                )
+
+                Resource.Loading -> _viewState.value = currentViewState.copy(
+                    moods = emptyList(), moodTrackerLoading = true, moodTrackerError = false
+                )
+
+                is Resource.Success ->{
+
+                    _viewState.value = currentViewState.copy(
+                        moods = resource.data.map {
+                            MoodPresentEntity(
+                                id = it.id,
+                                score = it.score,
+                                moodTitleResStr = calculateMoodTitle(it.score),
+                                date = it.date.convertToTimeOnly()
+                            )
+                        },
+                        moodTrackerLoading = false,
+                        moodTrackerError = false,
+                        addNewMoodStatus = resource.data.isEmpty()
+                    )
+                }
+
             }
         }
     }
@@ -175,11 +282,15 @@ class TrackerMoodViewModel @Inject constructor(
         }
     }
 
-    fun getSelectedDay(): String {
+    fun getSelectedDay(): String? {
         val currentViewState = viewState.value as FreeDiaryTrackerMoodScreenState.Content
-        return currentViewState.dates.find {
+        val selectedDate = currentViewState.dates.find {
             it.second
-        }!!.first.convertDateToString()
+        }!!.first
+        val date = Date()
+
+        return if (date isSameDay selectedDate) null
+        else selectedDate.convertDateToString()
     }
 
     fun reInitData() {
@@ -187,11 +298,20 @@ class TrackerMoodViewModel @Inject constructor(
         val selectedDate = currentViewState.dates.find {
             it.second
         }!!.first
-        getNotes(selectedDate)
+        viewModelScope.launch {
+            getNotes(selectedDate)
+        }
     }
 
     fun changeMood(newMood: Float) {
-        val newTitleMood = when (newMood.toInt()) {
+        val newTitleMood = calculateMoodTitle(newMood.toInt())
+        _viewState.value = (viewState.value as FreeDiaryTrackerMoodScreenState.Content).copy(
+            mood = newMood, moodTitleIdSource = newTitleMood
+        )
+    }
+
+    private fun calculateMoodTitle(mood: Int): Int {
+        return when (mood) {
             in 0..20 -> R.string.terrible_mood
             in 21..40 -> R.string.bad_mood
             in 41..59 -> R.string.normal_mood
@@ -201,11 +321,10 @@ class TrackerMoodViewModel @Inject constructor(
                 R.string.super_mood
             }
         }
+    }
 
-        _viewState.value = (viewState.value as FreeDiaryTrackerMoodScreenState.Content).copy(
-            mood = newMood,
-            moodTitleIdSource = newTitleMood
-        )
-
+    fun changeStatusAddNewMood(newStatus: Boolean) {
+        _viewState.value =
+            (_viewState.value as FreeDiaryTrackerMoodScreenState.Content).copy(addNewMoodStatus = newStatus)
     }
 }
