@@ -3,7 +3,6 @@ package com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMo
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.background
@@ -72,6 +71,7 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
         super.onResume()
         viewModel.reInitData()
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireContext().getAppComponent().exercisesComponent().create().inject(this)
@@ -92,11 +92,10 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
 
     @Composable
     fun FreeDiaryTrackerMoodScreen(
-        viewModel: TrackerMoodViewModel,
-        navController: NavController
+        viewModel: TrackerMoodViewModel, navController: NavController
     ) {
         val viewState = viewModel.viewState.collectAsState()
-        Log.e("FRAGMENTSTATE",viewState.value.toString())
+
         when (val res = viewState.value) {
             is FreeDiaryTrackerMoodScreenState.Content -> {
                 FreeDiaryTrackerMoodScreenContent(res = res,
@@ -111,10 +110,9 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                             args = bundleOf(NewFreeDiaryFragment.DATE to viewModel.getSelectedDay())
                         )
                     },
-                    onNavIconClick = {navController.popBackStack()},
-                    onIconAddClick = {viewModel.changeStatusAddNewMood(it)},
-                    onClickSaveMood = {viewModel.saveMoodTrack()}
-                )
+                    onNavIconClick = { navController.popBackStack() },
+                    onIconAddClick = { viewModel.changeStatusAddNewMood(it) },
+                    onClickSaveMood = { viewModel.saveMoodTrack() })
             }
         }
     }
@@ -130,36 +128,28 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
         onIconAddClick: (Boolean) -> Unit,
         onClickSaveMood: () -> Unit,
     ) {
-        Log.e("State: ", res.freeDiariesLoading.toString())
-        androidx.compose.material.BottomSheetScaffold(
-            sheetShape = RoundedCornerShape(
-                topStart = 28.dp, topEnd = 28.dp,
-            ),
-            sheetContent = {
-                SheetContent(
-                    res,
-                    writeNoteClick,
-                    onIconAddClick,
-                    onClickSaveMood
-                )
-            },
+        androidx.compose.material.BottomSheetScaffold(sheetShape = RoundedCornerShape(
+            topStart = 28.dp, topEnd = 28.dp,
+        ), sheetContent = {
+            SheetContent(
+                res, writeNoteClick, onIconAddClick, onClickSaveMood
+            )
+        },
 
-            sheetPeekHeight = 400.dp,
-            content = {
+            sheetPeekHeight = 400.dp, content = {
                 MainContent(
-                    res = res,
+                    res = res.calendarViewState,
                     onClickNext = onClickNext,
                     onClickPrev = onClickPrev,
                     onClickDate = onClickDate,
                     onNavIconClick = onNavIconClick,
-                    )
-            }
-        )
+                )
+            })
     }
 
     @Composable
     fun MainContent(
-        res: FreeDiaryTrackerMoodScreenState.Content,
+        res: CalendarContent,
         onClickNext: () -> Unit,
         onClickPrev: () -> Unit,
         onClickDate: (Date) -> Unit,
@@ -179,8 +169,7 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                 IconButton(
                     onClick = {
                         onNavIconClick()
-                    },
-                    modifier = Modifier.padding(start = 12.dp)
+                    }, modifier = Modifier.padding(start = 12.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_back_white),
@@ -190,8 +179,8 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                     )
                 }
 
-                val timeStr =
-                    Date().formatToDayString() + " " + Date().formatToMonthStringInf()
+                val timeStr = Date().formatToDayString() + " " + Date().formatToMonthStringInf()
+
                 Text(
                     text = timeStr,
                     style = AppTheme.typography.titleCygreFont,
@@ -234,18 +223,31 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
             Text(
                 text = stringResource(id = R.string.notes),
                 style = AppTheme.typography.titleXS,
-                color = AppTheme.colors.primaryText
+                color = AppTheme.colors.primaryText,
             )
-            when {
-                res.freeDiariesLoading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(top = 20.dp),
-                    )
+
+            when (val data = res.freeDiaryState) {
+                is FreeDiaryViewState.Content -> {
+                    if (data.freeDiaries.isNotEmpty()) {
+                        LazyColumn(
+                            contentPadding = PaddingValues(top = 20.dp),
+                            verticalArrangement = Arrangement.spacedBy(20.dp)
+                        ) {
+                            items(data.freeDiaries) { record ->
+                                RecordItem(item = record)
+                            }
+                        }
+                    } else {
+                        Text(
+                            text = stringResource(id = R.string.diary_empty_placeholder),
+                            style = AppTheme.typography.bodyL,
+                            color = AppTheme.colors.primaryText,
+                            modifier = Modifier.padding(top = 10.dp)
+                        )
+                    }
                 }
 
-                res.freeDiariesError -> {
+                FreeDiaryViewState.Error -> {
                     Text(
                         text = stringResource(id = R.string.unknown_error_placeholder),
                         style = AppTheme.typography.bodyL,
@@ -254,23 +256,12 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                     )
                 }
 
-                res.freeDiaries.isNotEmpty() -> {
-                    LazyColumn(
-                        contentPadding = PaddingValues(top = 20.dp),
-                        verticalArrangement = Arrangement.spacedBy(20.dp)
-                    ) {
-                        items(res.freeDiaries) { record ->
-                            RecordItem(item = record)
-                        }
-                    }
-                }
-
-                else -> {
-                    Text(
-                        text = stringResource(id = R.string.diary_empty_placeholder),
-                        style = AppTheme.typography.bodyL,
-                        color = AppTheme.colors.primaryText,
-                        modifier = Modifier.padding(top = 10.dp)
+                FreeDiaryViewState.Initial -> Unit
+                FreeDiaryViewState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 20.dp),
                     )
                 }
             }
@@ -281,88 +272,129 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                 modifier = Modifier.padding(top = 20.dp)
             )
 
-            Row(modifier = Modifier
-                .padding(top = 40.dp)
-                .fillMaxWidth()) {
-                Text(
-                    text = stringResource(id = R.string.mood),
-                    style = AppTheme.typography.titleXS,
-                    color = AppTheme.colors.primaryText,
-                )
+            when (val data = res.newMoodViewState) {
+                is NewMoodStatusViewState.Content -> {
+                    Text(
+                        text = stringResource(id = R.string.mood),
+                        style = AppTheme.typography.titleXS,
+                        color = AppTheme.colors.primaryText,
+                        modifier = Modifier.padding(top = 40.dp)
+                    )
 
-                Spacer(modifier = Modifier.weight(1f))
-
-                if (!res.addNewMoodStatus) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_add_circle),
-                        contentDescription = stringResource(
-                            id = R.string.add_note_tracker
+                    Slider(
+                        value = data.mood,
+                        onValueChange = { viewModel.changeMood(it) },
+                        colors = SliderDefaults.colors(
+                            thumbColor = AppTheme.colors.primaryBackground,
+                            activeTrackColor = AppTheme.colors.primaryBackground,
+                            inactiveTrackColor = AppTheme.colors.secondaryBackground,
                         ),
-                        tint = AppTheme.colors.primaryBackground,
-                        modifier = Modifier.clickable {
-                            onIconAddClick(true)
-                        }
+                        steps = 0,
+                        valueRange = 0f..100f,
+                        modifier = Modifier.padding(top = 20.dp)
+                    )
+
+                    Text(
+                        text = stringResource(id = data.moodTitleIdSource),
+                        style = AppTheme.typography.bodyS,
+                        color = AppTheme.colors.primaryBackground,
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .background(
+                                color = AppTheme.colors.secondaryBackground,
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .padding(horizontal = 10.dp, vertical = 8.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+
+                    PrimaryTextButton(
+                        textString = stringResource(id = R.string.save),
+                        onClick = { onClickSaveMood() },
+                        modifier = Modifier.padding(top = 20.dp)
                     )
                 }
-            }
-            if(res.addNewMoodStatus){
-                Slider(
-                    value = res.mood,
-                    onValueChange = { viewModel.changeMood(it) },
-                    colors = SliderDefaults.colors(
-                        thumbColor = AppTheme.colors.primaryBackground,
-                        activeTrackColor = AppTheme.colors.primaryBackground,
-                        inactiveTrackColor = AppTheme.colors.secondaryBackground,
-                    ),
-                    steps = 0,
-                    valueRange = 0f..100f,
-                    modifier = Modifier.padding(top = 20.dp)
-                )
 
-                Text(
-                    text = stringResource(id = res.moodTitleIdSource),
-                    style = AppTheme.typography.bodyS,
-                    color = AppTheme.colors.primaryBackground,
-                    modifier = Modifier
-                        .padding(top = 10.dp)
-                        .background(
-                            color = AppTheme.colors.secondaryBackground,
-                            shape = RoundedCornerShape(12.dp)
+                NewMoodStatusViewState.Hide -> {
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 40.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.mood),
+                            style = AppTheme.typography.titleXS,
+                            color = AppTheme.colors.primaryText,
                         )
-                        .padding(horizontal = 10.dp, vertical = 8.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
 
-                PrimaryTextButton(
-                    textString = stringResource(id = R.string.save),
-                    onClick = { onClickSaveMood() },
-                    modifier = Modifier.padding(top = 20.dp)
-                )
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        Icon(painter = painterResource(id = R.drawable.ic_add_circle),
+                            contentDescription = stringResource(
+                                id = R.string.add_note_tracker
+                            ),
+                            tint = AppTheme.colors.primaryBackground,
+                            modifier = Modifier.clickable {
+                                onIconAddClick(true)
+                            }
+                        )
+                    }
+                }
             }
-            val contentPaddingTopForMoods = if (res.addNewMoodStatus) 40
-            else 20
-            LazyColumn(
-                contentPadding = PaddingValues(top = contentPaddingTopForMoods.dp),
-                verticalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-                items(res.moods){item->
-                    RecordMood(item)
+
+            val contentPaddingTopForMoods =
+                if (res.newMoodViewState is NewMoodStatusViewState.Content) 40
+                else 20
+
+            when (val data = res.moodsViewState) {
+                is MoodsTrackerViewState.Content -> {
+                    LazyColumn(
+                        contentPadding = PaddingValues(top = contentPaddingTopForMoods.dp),
+                        verticalArrangement = Arrangement.spacedBy(20.dp)
+                    ) {
+                        items(data.moods) { item ->
+                            RecordMood(item)
+                        }
+                    }
+                }
+
+                MoodsTrackerViewState.Error -> Unit
+                MoodsTrackerViewState.Initial -> Unit
+                MoodsTrackerViewState.Loading -> {
+                    LazyColumn(
+                        contentPadding = PaddingValues(top = contentPaddingTopForMoods.dp),
+                        verticalArrangement = Arrangement.spacedBy(20.dp)
+                    ) {
+                        items(2) {
+                            RecordMoodLoading()
+                        }
+                    }
                 }
             }
         }
     }
 
     @Composable
+    fun RecordMoodLoading() {
+        Box(
+            modifier = Modifier
+                .height(86.dp)
+                .fillMaxWidth()
+                .background(
+                    color = AppTheme.colors.fourthBackground, shape = RoundedCornerShape(12.dp)
+                )
+        )
+    }
+
+    @Composable
     fun RecordMood(
-        item: MoodPresentEntity,
-        modifier: Modifier = Modifier
+        item: MoodPresentEntity, modifier: Modifier = Modifier
     ) {
         Box(
             modifier = modifier
                 .fillMaxWidth()
                 .background(AppTheme.colors.fourthBackground, shape = RoundedCornerShape(12.dp))
-        )
-        {
+        ) {
 
             Text(
                 text = stringResource(id = item.moodTitleResStr),
@@ -380,8 +412,7 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
                     .align(Alignment.BottomStart)
                     .padding(6.dp)
                     .background(
-                        color = AppTheme.colors.screenBackground,
-                        shape = RoundedCornerShape(6.dp)
+                        color = AppTheme.colors.screenBackground, shape = RoundedCornerShape(6.dp)
                     )
                     .padding(vertical = 3.dp, horizontal = 8.dp)
             )
@@ -426,32 +457,31 @@ class FreeDiaryTrackerMoodFragment : Fragment() {
             Pair(calendar.time, it % 5 == 0) // Пример: сигналы для каждых 5 дней
         }
         AppTheme {
-            FreeDiaryTrackerMoodScreenContent(
-                res = FreeDiaryTrackerMoodScreenState.Content(
+            FreeDiaryTrackerMoodScreenContent(res = FreeDiaryTrackerMoodScreenState.Content(
+                calendarViewState = CalendarContent(
                     month = Date(),
                     year = "2024",
                     dates = dates,
+                ),
+                freeDiaryState = FreeDiaryViewState.Content(
                     freeDiaries = listOf<FreeDiaryEntity>(
                         FreeDiaryEntity("ds", "Заметка 2", "9:30"),
                     ),
-                    moodTitleIdSource = R.string.normal_mood,
-                    moods = listOf(
-                        MoodPresentEntity(
-                            "ds",
-                            50,
-                            R.string.normal_mood,
-                            "9:30"
-                        )
-                    )
                 ),
+                newMoodViewState = NewMoodStatusViewState.Content(
+                    moodTitleIdSource = R.string.normal_mood,
+                ),
+                moodsViewState = MoodsTrackerViewState.Content(
+                    moods = emptyList(),
+                ),
+            ),
                 onClickNext = {},
                 onClickPrev = {},
                 onClickDate = {},
                 writeNoteClick = {},
                 onNavIconClick = {},
                 onIconAddClick = {},
-                onClickSaveMood = {}
-            )
+                onClickSaveMood = {})
         }
     }
 }
