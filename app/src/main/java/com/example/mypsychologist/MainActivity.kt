@@ -3,6 +3,7 @@ package com.example.mypsychologist
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Color.WHITE
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
@@ -166,7 +167,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                 }
 
                 else -> {
-                    window.statusBarColor = android.graphics.Color.WHITE
+                    window.statusBarColor = WHITE
                     ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
                         val statusBarInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
                         view.setPadding(0, statusBarInsets.top, 0, 0)
