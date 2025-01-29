@@ -65,7 +65,8 @@
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:constraint_referenced_ids="diary_free_btn, titleUp_tv, container_task" />
+        app:constraint_referenced_ids="titleUp_tv, diary_free_btn, kpt_iv, kpt_tv"
+        />
 
     <include
         android:id="@+id/network_placeholder"
