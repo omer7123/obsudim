@@ -17,12 +17,10 @@ import com.example.mypsychologist.databinding.FragmentExercisesBinding
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.isNetworkConnect
-import com.example.mypsychologist.extensions.setupCardPractice
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -57,7 +55,6 @@ FragmentExercises : Fragment() {
             }
             .launchIn(lifecycleScope)
 
-        setupCards()
         initListener()
 
         return binding.root
@@ -92,24 +89,16 @@ FragmentExercises : Fragment() {
 
     private fun initListener() {
         with(binding) {
-            diaryCard.root.setOnClickListener {
+            kptIv.setOnClickListener {
                 findNavController().navigate(
                     R.id.fragment_diaries,
                     bundleOf(EXERCISE_ID to exercisesList.find { it.title == "КПТ-дневник" }!!.id)
                 )
             }
 
-            trackerCard.root.setOnClickListener {
-                findNavController().navigate(R.id.freeDiaryTrackerMoodFragment)
-//                TrackerMoodFragment().show(childFragmentManager, TrackerMoodFragment.SHOW)
-            }
-
             diaryFreeBtn.setOnClickListener {
                 findNavController().navigate(
-                    R.id.freeDiaryFragment,
-                    bundleOf(
-                        NewFreeDiaryFragment.KPT_ID to exercisesList.find { it.title == "КПТ-дневник" }!!.id
-                    )
+                    R.id.freeDiaryTrackerMoodFragment,
                 )
             }
         }
@@ -123,21 +112,6 @@ FragmentExercises : Fragment() {
             psychologistsIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_psychologists_with_tasks)
             }
-        }
-    }
-
-    private fun setupCards() {
-        binding.apply {
-            setupCardPractice(
-                trackerCard,
-                R.string.tracker_mood_title,
-                R.drawable.ic_tracker_mood_practice
-            )
-            setupCardPractice(
-                diaryCard,
-                R.string.cbt_diary,
-                R.drawable.ic_diary_practice
-            )
         }
     }
 

@@ -24,31 +24,31 @@
         app:layout_constraintTop_toBottomOf="@id/include" />
 
 
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/container_task"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/kpt_iv"
+        app:layout_constraintTop_toBottomOf="@id/titleUp_tv"
         android:layout_marginTop="20dp"
-        app:justifyContent="space_between"
-        app:layout_constraintEnd_toEndOf="@id/end"
-        app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintTop_toBottomOf="@id/titleUp_tv">
+        android:layout_marginHorizontal="16dp"
+        android:src="@drawable/ic_kpt_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-        <include
-            android:id="@+id/tracker_card"
-            layout="@layout/layout_card_practice" />
-
-        <include
-            android:id="@+id/diary_card"
-            layout="@layout/layout_card_practice" />
-
-    </com.google.android.flexbox.FlexboxLayout>
+    <TextView
+        android:id="@+id/kpt_tv"
+        app:layout_constraintTop_toBottomOf="@id/kpt_iv"
+        android:text="КПТ-дневник"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:textAppearance="@style/BodyXLBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/diary_free_btn"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:paddingVertical="18dp"
@@ -57,9 +57,9 @@
         android:textAppearance="@style/BodyXLBold"
         app:cornerRadius="12dp"
         android:drawableEnd="@drawable/ic_arrow_forward"
-        app:layout_constraintEnd_toEndOf="@id/container_task"
-        app:layout_constraintStart_toStartOf="@id/container_task"
-        app:layout_constraintTop_toBottomOf="@id/container_task" />
+        app:layout_constraintEnd_toEndOf="@id/kpt_iv"
+        app:layout_constraintStart_toStartOf="@id/kpt_iv"
+        app:layout_constraintTop_toBottomOf="@id/kpt_tv" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/content"
