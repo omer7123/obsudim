@@ -4,8 +4,9 @@ import android.os.Build
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZonedDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -32,17 +33,32 @@ fun String.convertToTimeOnly(): String {
     return dateTime.format(formatter)
 }
 
-fun String.convertToTimeOnlyDateJava(): String {
-    // Парсим строку в ZonedDateTime с учетом UTC ('Z')
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ENGLISH)
-    val utcDateTime = ZonedDateTime.parse(this, formatter)
+fun String.convertLondonTimeToDeviceTime(): String {
+    // Форматы для парсинга
+    val formatterWithMicroSec = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    val formatterWithoutMicroSec = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
 
-    // Преобразуем в локальное время
-    val localDateTime = utcDateTime.withZoneSameInstant(ZoneId.systemDefault())
+    return try {
+        // Пробуем парсить с микросекундами (если удастся, значит это UTC)
+        val utcDateTime = LocalDateTime.parse(this, formatterWithMicroSec)
+        val utcZonedDateTime = utcDateTime.atZone(ZoneOffset.UTC) // Указываем, что это UTC
 
-    // Форматируем в строку "часы:минуты"
-    return localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+        // Конвертируем в локальное время устройства
+        val deviceTime = utcZonedDateTime.withZoneSameInstant(ZoneId.systemDefault())
+
+        // Форматируем в "HH:mm"
+        deviceTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+    } catch (e: DateTimeParseException) {
+        try {
+            // Если формат без микросекунд → просто возвращаем "00:00"
+            LocalDateTime.parse(this, formatterWithoutMicroSec)
+            "00:00"
+        } catch (e: DateTimeParseException) {
+            throw IllegalArgumentException("Неверный формат времени: $this")
+        }
+    }
 }
+
 fun Date.convertToISO8601(): String {
     // Формат входящей строки
     val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)

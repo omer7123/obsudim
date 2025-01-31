@@ -17,8 +17,8 @@ import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetFreeDiaries
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTrackerUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTrackerWithDateUseCase
 import com.example.mypsychologist.extensions.convertDateToString
+import com.example.mypsychologist.extensions.convertLondonTimeToDeviceTime
 import com.example.mypsychologist.extensions.convertToISO8601
-import com.example.mypsychologist.extensions.convertToTimeOnly
 import com.example.mypsychologist.extensions.isSameDay
 import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.CalendarContent
 import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.FreeDiaryTrackerMoodScreenState
@@ -223,7 +223,7 @@ class TrackerMoodViewModel @Inject constructor(
                         freeDiaryState = FreeDiaryViewState.Content(
                             freeDiaries = resource.data.map {
                                 FreeDiaryEntity(
-                                    it.id, it.text, it.createdAt.convertToTimeOnly()
+                                    it.id, it.text, it.createdAt.convertLondonTimeToDeviceTime()
                                 )
                             }
                         ),
@@ -254,7 +254,7 @@ class TrackerMoodViewModel @Inject constructor(
                                     id = it.id,
                                     score = it.score,
                                     moodTitleResStr = calculateMoodTitle(it.score),
-                                    date = it.date.convertToTimeOnly()
+                                    date = it.date.convertLondonTimeToDeviceTime()
                                 )
                             },
                         ),

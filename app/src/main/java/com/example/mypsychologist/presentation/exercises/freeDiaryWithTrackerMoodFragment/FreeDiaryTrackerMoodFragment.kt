@@ -16,8 +16,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+    import androidx.compose.foundation.layout.heightIn
+    import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -134,7 +135,7 @@ import javax.inject.Inject
             androidx.compose.material.BottomSheetScaffold(sheetShape = RoundedCornerShape(
                 topStart = 28.dp, topEnd = 28.dp,
             ),
-                modifier = Modifier.statusBarsPadding(),
+                modifier = Modifier.safeDrawingPadding(),
                 sheetContent = {
                 SheetContent(
                     res, writeNoteClick, onIconAddClick, onClickSaveMood
@@ -222,7 +223,9 @@ import javax.inject.Inject
             onIconAddClick: (Boolean) -> Unit,
             onClickSaveMood: () -> Unit
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier
+                .padding(16.dp)
+            ) {
                 Text(
                     text = stringResource(id = R.string.notes),
                     style = AppTheme.typography.titleXS,
@@ -380,7 +383,8 @@ import javax.inject.Inject
                     if (freeDiaryState.freeDiaries.isNotEmpty()) {
                         LazyColumn(
                             contentPadding = PaddingValues(top = 20.dp),
-                            verticalArrangement = Arrangement.spacedBy(20.dp)
+                            verticalArrangement = Arrangement.spacedBy(20.dp),
+                            modifier = Modifier.heightIn(max = 300.dp)
                         ) {
                             items(freeDiaryState.freeDiaries) { record ->
                                 RecordItem(item = record)
