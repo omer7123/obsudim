@@ -16,10 +16,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-    import androidx.compose.foundation.layout.heightIn
-    import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.lazy.LazyColumn
+    import androidx.compose.foundation.layout.size
+    import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -224,9 +225,21 @@ import javax.inject.Inject
             onClickSaveMood: () -> Unit
         ) {
             Column(modifier = Modifier
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
             ) {
+                Box(modifier = Modifier
+                    .padding(top = 6.dp)
+                    .size(width = 40.dp, height = 4.dp)
+                    .background(
+                        color = AppTheme.colors.tertiaryBackground,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .align(Alignment.CenterHorizontally)
+                )
+
                 Text(
+                    modifier = Modifier.padding(top = 6.dp),
                     text = stringResource(id = R.string.notes),
                     style = AppTheme.typography.titleXS,
                     color = AppTheme.colors.primaryText,
@@ -341,7 +354,8 @@ import javax.inject.Inject
                         PrimaryTextButton(
                             textString = stringResource(id = R.string.save),
                             onClick = { onClickSaveMood() },
-                            modifier = Modifier.padding(top = 20.dp)
+                            modifier = Modifier.padding(top = 20.dp),
+                            isLoading = newMoodViewState.loading
                         )
                     }
                 }
