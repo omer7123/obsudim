@@ -38,8 +38,8 @@ class DailyCardAdapter(val clickOnItem:(item: DailyExerciseEntity) -> Unit): Lis
                 binding.cardDescription.setTextColor(ContextCompat.getColor(itemView.context, R.color.md_theme_light_title_fiol))
 
             }else {
-                binding.cardTitle.setTextAppearance(R.style.BodyMBold_Black)
-                binding.cardDescription.setTextAppearance(R.style.BodyM_Black)
+                binding.cardTitle.setTextAppearance(R.style.BodyMBold_SecondaryContainer)
+                binding.cardDescription.setTextAppearance(R.style.BodyM_SecondaryContainer)
                 binding.exerciseGroup.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_card_exercise_not_complete)
 
                 binding.radioBtn.isChecked = false
