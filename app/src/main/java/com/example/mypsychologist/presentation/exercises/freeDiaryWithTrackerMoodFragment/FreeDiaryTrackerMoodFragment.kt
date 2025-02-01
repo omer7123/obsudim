@@ -280,7 +280,7 @@ import javax.inject.Inject
                         verticalArrangement = Arrangement.spacedBy(20.dp),
                         modifier = modifier
                     ) {
-                        items(moodsViewState.moods) { item ->
+                        items(moodsViewState.moods, key = {it.id}) { item ->
                             RecordMood(item)
                         }
                     }
@@ -402,7 +402,7 @@ import javax.inject.Inject
                             verticalArrangement = Arrangement.spacedBy(20.dp),
                             modifier = Modifier.heightIn(max = 300.dp)
                         ) {
-                            items(freeDiaryState.freeDiaries) { record ->
+                            items(freeDiaryState.freeDiaries, key = {it.id}) { record ->
                                 RecordItem(item = record)
                             }
                         }
