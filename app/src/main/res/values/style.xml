@@ -8,7 +8,7 @@
     </style>
 
     <style name="TitleFragmentPrimary" parent="TitleFragment">
-        <item name="android:textColor">@color/md_theme_light_onSurface</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="fontFamily">@font/cygre_semi_bold</item>
         <item name="android:textSize">32sp</item>
     </style>
@@ -81,6 +81,7 @@
     <style name="BodyXLBold">
         <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
     <style name="BodyXL">
