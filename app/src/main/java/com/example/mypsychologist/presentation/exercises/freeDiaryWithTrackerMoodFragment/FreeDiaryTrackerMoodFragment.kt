@@ -34,13 +34,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
+    import androidx.compose.runtime.mutableStateOf
+    import androidx.compose.runtime.remember
+    import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
     import androidx.compose.ui.platform.LocalConfiguration
     import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+    import androidx.compose.ui.tooling.preview.Preview
+    import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -59,7 +62,8 @@ import com.example.mypsychologist.ui.core.formatToMonthStringInf
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
 import com.example.mypsychologist.ui.theme.AppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import java.util.Date
+    import java.util.Calendar
+    import java.util.Date
 import javax.inject.Inject
 
     class FreeDiaryTrackerMoodFragment : Fragment() {
@@ -525,41 +529,52 @@ import javax.inject.Inject
                 )
             }
         }
-    }
 
-//        @Preview(showBackground = true)
-//        @Composable
-//        fun ScaffoldWithBottomSheetExample_Preview() {
-//            val calendar = Calendar.getInstance()
-//            val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-//            val dates = (1..daysInMonth).map {
-//                calendar.set(Calendar.DAY_OF_MONTH, it)
-//                Pair(calendar.time, it % 5 == 0) // Пример: сигналы для каждых 5 дней
-//            }
-//            AppTheme {
-//                FreeDiaryTrackerMoodScreenContent(
-//                    calendarViewState = CalendarContent(
-//                        month = Date(),
-//                        year = "2024",
-//                        dates = dates,
-//                    ),
-//                    freeDiaryState = FreeDiaryViewState.Content(
-//                        freeDiaries = listOf(
-//                            FreeDiaryEntity("ds", "Заметка 2", "9:30"),
-//                        ),
-//                    ),
-//                    newMoodViewState = NewMoodStatusViewState.Content(
-//                        moodTitleIdSource = R.string.normal_mood,
-//                    ),
-//                    moodsViewState = MoodsTrackerViewState.Loading,
-//                ),
-//                    onClickNext = {},
-//                    onClickPrev = {},
-//                    onClickDate = {},
-//                    writeNoteClick = {},
-//                    onNavIconClick = {},
-//                    onIconAddClick = {},
-//                    onClickSaveMood = {})
-//            }
-//        }
-//    }
+
+        @Preview(showBackground = true)
+        @Composable
+        fun FreeDiaryTrackerMoodScreenContent_Preview() {
+            val calendar = Calendar.getInstance()
+            val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+            val dates = (1..daysInMonth).map {
+                calendar.set(Calendar.DAY_OF_MONTH, it)
+                Pair(calendar.time, it % 5 == 0) // Пример: сигналы для каждых 5 дней
+            }
+
+            AppTheme {
+                FreeDiaryTrackerMoodScreenContent(
+                    calendarViewState = remember {
+                        mutableStateOf(
+                            CalendarContent(
+                                month = Date(),
+                                year = "2024",
+                                dates = dates
+                            )
+                        )
+                    },
+                    freeDiaryViewState = remember {
+                        mutableStateOf(
+                            FreeDiaryViewState.Content(
+                                freeDiaries = listOf(FreeDiaryEntity("ds", "Заметка 2", "9:30"))
+                            )
+                        )
+                    },
+                    newMoodViewState = remember {
+                        mutableStateOf(
+                            NewMoodStatusViewState.Content(
+                                moodTitleIdSource = R.string.normal_mood
+                            )
+                        )
+                    },
+                    moodsViewState = remember { mutableStateOf(MoodsTrackerViewState.Loading) },
+                    onClickNext = {},
+                    onClickPrev = {},
+                    onClickDate = {},
+                    writeNoteClick = {},
+                    onNavIconClick = {},
+                    onIconAddClick = {},
+                    onClickSaveMood = {}
+                )
+            }
+        }
+    }
