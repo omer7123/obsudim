@@ -75,6 +75,7 @@
     <style name="TitleXS">
         <item name="fontFamily">@font/inter_bold</item>
         <item name="android:textSize">24sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
     <style name="BodyXLBold">
