@@ -19,12 +19,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-    import androidx.compose.foundation.layout.size
-    import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-    import androidx.compose.material.BottomSheetScaffold
-    import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -32,13 +32,14 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.painterResource
+    import androidx.compose.ui.platform.LocalConfiguration
+    import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -58,7 +59,6 @@ import com.example.mypsychologist.ui.core.formatToMonthStringInf
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
 import com.example.mypsychologist.ui.theme.AppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
 
@@ -97,34 +97,42 @@ import javax.inject.Inject
         fun FreeDiaryTrackerMoodScreen(
             viewModel: TrackerMoodViewModel, navController: NavController
         ) {
-            val viewState = viewModel.viewState.collectAsState()
+            val calendarViewState = viewModel.calendarViewState.collectAsState()
+            val freeDiaryViewState = viewModel.freeDiaryViewState.collectAsState()
+            val newMoodViewState = viewModel.newMoodViewState.collectAsState()
+            val moodsViewState = viewModel.moodsViewState.collectAsState()
 
             val systemUiController = rememberSystemUiController()
             systemUiController.setStatusBarColor(color = AppTheme.colors.primaryBackground)
-            when (viewState.value) {
-                is FreeDiaryTrackerMoodScreenState.Content -> {
-                    FreeDiaryTrackerMoodScreenContent(res = viewState.value as FreeDiaryTrackerMoodScreenState.Content,
-                        onClickNext = { viewModel.nextMonth() },
-                        onClickPrev = { viewModel.prevMonth() },
-                        onClickDate = { selectedDate ->
-                            viewModel.onClickDate(selectedDate)
-                        },
-                        writeNoteClick = {
-                            navController.navigate(
-                                resId = R.id.action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment,
-                                args = bundleOf(NewFreeDiaryFragment.DATE to viewModel.getSelectedDay())
-                            )
-                        },
-                        onNavIconClick = { navController.popBackStack() },
-                        onIconAddClick = { viewModel.changeStatusAddNewMood(it) },
-                        onClickSaveMood = { viewModel.saveMoodTrack() })
-                }
-            }
+
+            FreeDiaryTrackerMoodScreenContent(
+                calendarViewState = calendarViewState,
+                freeDiaryViewState = freeDiaryViewState,
+                newMoodViewState = newMoodViewState,
+                moodsViewState = moodsViewState,
+                onClickNext = { viewModel.nextMonth() },
+                onClickPrev = { viewModel.prevMonth() },
+                onClickDate = { selectedDate ->
+                    viewModel.onClickDate(selectedDate)
+                },
+                writeNoteClick = {
+                    navController.navigate(
+                        resId = R.id.action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment,
+                        args = bundleOf(NewFreeDiaryFragment.DATE to viewModel.getSelectedDay())
+                    )
+                },
+                onNavIconClick = { navController.popBackStack() },
+                onIconAddClick = { viewModel.changeStatusAddNewMood(it) },
+                onClickSaveMood = { viewModel.saveMoodTrack() })
         }
+
 
         @Composable
         fun FreeDiaryTrackerMoodScreenContent(
-            res: FreeDiaryTrackerMoodScreenState.Content,
+            calendarViewState: State<CalendarContent>,
+            freeDiaryViewState: State<FreeDiaryViewState>,
+            newMoodViewState: State<NewMoodStatusViewState>,
+            moodsViewState: State<MoodsTrackerViewState>,
             onClickNext: () -> Unit,
             onClickPrev: () -> Unit,
             onClickDate: (Date) -> Unit,
@@ -133,28 +141,39 @@ import javax.inject.Inject
             onIconAddClick: (Boolean) -> Unit,
             onClickSaveMood: () -> Unit,
         ) {
+            val configuration = LocalConfiguration.current
+            val screenHeight = configuration.screenHeightDp.dp
+
             BottomSheetScaffold(sheetShape = RoundedCornerShape(
                 topStart = 28.dp, topEnd = 28.dp,
             ),
                 modifier = Modifier.safeDrawingPadding(),
                 sheetContent = {
-                SheetContent(
-                    res, writeNoteClick, onIconAddClick, onClickSaveMood
-                )
-            }, sheetPeekHeight = 400.dp, content = {
-                MainContent(
-                    res = res.calendarViewState,
-                    onClickNext = onClickNext,
-                    onClickPrev = onClickPrev,
-                    onClickDate = onClickDate,
-                    onNavIconClick = onNavIconClick,
+                    SheetContent(
+                        freeDiaryViewState,
+                        newMoodViewState,
+                        moodsViewState,
+                        writeNoteClick,
+                        onIconAddClick,
+                        onClickSaveMood
+                    )
+                },
+                sheetPeekHeight = screenHeight - 400.dp,
+                sheetBackgroundColor = AppTheme.colors.screenBackground,
+                content = {
+                    MainContent(
+                        res = calendarViewState,
+                        onClickNext = onClickNext,
+                        onClickPrev = onClickPrev,
+                        onClickDate = onClickDate,
+                        onNavIconClick = onNavIconClick,
                     )
                 })
         }
 
         @Composable
         fun MainContent(
-            res: CalendarContent,
+            res: State<CalendarContent>,
             onClickNext: () -> Unit,
             onClickPrev: () -> Unit,
             onClickDate: (Date) -> Unit,
@@ -194,9 +213,9 @@ import javax.inject.Inject
                 }
 
                 CalendarView(
-                    month = res.month,
-                    years = res.year,
-                    date = res.dates,
+                    month = res.value.month,
+                    years = res.value.year,
+                    date = res.value.dates,
                     displayNext = true,
                     displayPrev = true,
                     onClickNext = {
@@ -219,25 +238,28 @@ import javax.inject.Inject
 
         @Composable
         fun SheetContent(
-            res: FreeDiaryTrackerMoodScreenState.Content,
+            freeDiaryViewState: State<FreeDiaryViewState>,
+            newMoodViewState: State<NewMoodStatusViewState>,
+            moodsViewState: State<MoodsTrackerViewState>,
             writeNoteClick: () -> Unit,
             onIconAddClick: (Boolean) -> Unit,
             onClickSaveMood: () -> Unit
         ) {
-            Column(modifier = Modifier
-                .background(color = AppTheme.colors.screenBackground)
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 16.dp)
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 16.dp)
 
             ) {
-                Box(modifier = Modifier
-                    .padding(top = 6.dp)
-                    .size(width = 40.dp, height = 4.dp)
-                    .background(
-                        color = AppTheme.colors.tertiaryBackground,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                    .align(Alignment.CenterHorizontally)
+                Box(
+                    modifier = Modifier
+                        .padding(top = 6.dp)
+                        .size(width = 40.dp, height = 4.dp)
+                        .background(
+                            color = AppTheme.colors.tertiaryBackground,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .align(Alignment.CenterHorizontally)
                 )
 
                 Text(
@@ -248,7 +270,7 @@ import javax.inject.Inject
                 )
 
                 FreeDiaryContent(
-                    res.freeDiaryState,
+                    freeDiaryState = freeDiaryViewState,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
 
@@ -257,30 +279,33 @@ import javax.inject.Inject
                     onClick = { writeNoteClick() },
                     modifier = Modifier.padding(top = 20.dp)
                 )
-                
+
                 AddNewMoodContent(
-                    newMoodViewState = res.newMoodViewState,
-                    onClickSaveMood = {onClickSaveMood()},
-                    onIconAddClick = {onIconAddClick(it)},
+                    newMoodViewState = newMoodViewState,
+                    onClickSaveMood = { onClickSaveMood() },
+                    onIconAddClick = { onIconAddClick(it) },
                     modifier = Modifier.padding(top = 40.dp),
                 )
                 val contentPaddingTopForMoods =
-                    if (res.newMoodViewState is NewMoodStatusViewState.Content) 40
+                    if (newMoodViewState.value is NewMoodStatusViewState.Content) 40
                     else 20
 
-                MoodsContent(res.moodsViewState, modifier = Modifier.padding(top = contentPaddingTopForMoods.dp))
+                MoodsContent(
+                    moodsViewState,
+                    modifier = Modifier.padding(top = contentPaddingTopForMoods.dp)
+                )
             }
         }
 
         @Composable
-        fun MoodsContent(moodsViewState: MoodsTrackerViewState, modifier: Modifier) {
-            when (moodsViewState) {
+        fun MoodsContent(moodsViewState: State<MoodsTrackerViewState>, modifier: Modifier) {
+            when (val state = moodsViewState.value) {
                 is MoodsTrackerViewState.Content -> {
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(20.dp),
                         modifier = modifier
                     ) {
-                        items(moodsViewState.moods, key = {it.id}) { item ->
+                        items(state.moods, key = { it.id }) { item ->
                             RecordMood(item)
                         }
                     }
@@ -311,12 +336,12 @@ import javax.inject.Inject
 
         @Composable
         fun AddNewMoodContent(
-            newMoodViewState: NewMoodStatusViewState,
+            newMoodViewState: State<NewMoodStatusViewState>,
             onClickSaveMood: () -> Unit,
             onIconAddClick: (Boolean) -> Unit,
             modifier: Modifier = Modifier
         ) {
-            when (newMoodViewState) {
+            when (val state = newMoodViewState.value) {
                 is NewMoodStatusViewState.Content -> {
                     Column(modifier = Modifier) {
                         Text(
@@ -327,7 +352,7 @@ import javax.inject.Inject
                         )
 
                         Slider(
-                            value = newMoodViewState.mood,
+                            value = state.mood,
                             onValueChange = { viewModel.changeMood(it) },
                             colors = SliderDefaults.colors(
                                 thumbColor = AppTheme.colors.primaryBackground,
@@ -340,7 +365,7 @@ import javax.inject.Inject
                         )
 
                         Text(
-                            text = stringResource(id = newMoodViewState.moodTitleIdSource),
+                            text = stringResource(id = state.moodTitleIdSource),
                             style = AppTheme.typography.bodyS,
                             color = AppTheme.colors.primaryBackground,
                             modifier = Modifier
@@ -357,10 +382,11 @@ import javax.inject.Inject
                             textString = stringResource(id = R.string.save),
                             onClick = { onClickSaveMood() },
                             modifier = Modifier.padding(top = 20.dp),
-                            isLoading = newMoodViewState.loading
+                            isLoading = state.loading
                         )
                     }
                 }
+
                 NewMoodStatusViewState.Hide -> {
                     Row(
                         modifier = Modifier
@@ -391,18 +417,18 @@ import javax.inject.Inject
 
         @Composable
         fun FreeDiaryContent(
-            freeDiaryState: FreeDiaryViewState,
+            freeDiaryState: State<FreeDiaryViewState>,
             modifier: Modifier = Modifier
         ) {
-            when (freeDiaryState) {
+            when (val state = freeDiaryState.value) {
                 is FreeDiaryViewState.Content -> {
-                    if (freeDiaryState.freeDiaries.isNotEmpty()) {
+                    if (state.freeDiaries.isNotEmpty()) {
                         LazyColumn(
                             contentPadding = PaddingValues(top = 20.dp),
                             verticalArrangement = Arrangement.spacedBy(20.dp),
                             modifier = Modifier.heightIn(max = 300.dp)
                         ) {
-                            items(freeDiaryState.freeDiaries, key = {it.id}) { record ->
+                            items(state.freeDiaries, key = { it.id }) { record ->
                                 RecordItem(item = record)
                             }
                         }
@@ -499,40 +525,41 @@ import javax.inject.Inject
                 )
             }
         }
-
-        @Preview(showBackground = true)
-        @Composable
-        fun ScaffoldWithBottomSheetExample_Preview() {
-            val calendar = Calendar.getInstance()
-            val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-            val dates = (1..daysInMonth).map {
-                calendar.set(Calendar.DAY_OF_MONTH, it)
-                Pair(calendar.time, it % 5 == 0) // Пример: сигналы для каждых 5 дней
-            }
-            AppTheme {
-                FreeDiaryTrackerMoodScreenContent(res = FreeDiaryTrackerMoodScreenState.Content(
-                    calendarViewState = CalendarContent(
-                        month = Date(),
-                        year = "2024",
-                        dates = dates,
-                    ),
-                    freeDiaryState = FreeDiaryViewState.Content(
-                        freeDiaries = listOf(
-                            FreeDiaryEntity("ds", "Заметка 2", "9:30"),
-                        ),
-                    ),
-                    newMoodViewState = NewMoodStatusViewState.Content(
-                        moodTitleIdSource = R.string.normal_mood,
-                    ),
-                    moodsViewState = MoodsTrackerViewState.Loading,
-                ),
-                    onClickNext = {},
-                    onClickPrev = {},
-                    onClickDate = {},
-                    writeNoteClick = {},
-                    onNavIconClick = {},
-                    onIconAddClick = {},
-                    onClickSaveMood = {})
-            }
-        }
     }
+
+//        @Preview(showBackground = true)
+//        @Composable
+//        fun ScaffoldWithBottomSheetExample_Preview() {
+//            val calendar = Calendar.getInstance()
+//            val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+//            val dates = (1..daysInMonth).map {
+//                calendar.set(Calendar.DAY_OF_MONTH, it)
+//                Pair(calendar.time, it % 5 == 0) // Пример: сигналы для каждых 5 дней
+//            }
+//            AppTheme {
+//                FreeDiaryTrackerMoodScreenContent(
+//                    calendarViewState = CalendarContent(
+//                        month = Date(),
+//                        year = "2024",
+//                        dates = dates,
+//                    ),
+//                    freeDiaryState = FreeDiaryViewState.Content(
+//                        freeDiaries = listOf(
+//                            FreeDiaryEntity("ds", "Заметка 2", "9:30"),
+//                        ),
+//                    ),
+//                    newMoodViewState = NewMoodStatusViewState.Content(
+//                        moodTitleIdSource = R.string.normal_mood,
+//                    ),
+//                    moodsViewState = MoodsTrackerViewState.Loading,
+//                ),
+//                    onClickNext = {},
+//                    onClickPrev = {},
+//                    onClickDate = {},
+//                    writeNoteClick = {},
+//                    onNavIconClick = {},
+//                    onIconAddClick = {},
+//                    onClickSaveMood = {})
+//            }
+//        }
+//    }

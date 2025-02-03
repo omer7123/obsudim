@@ -6,17 +6,6 @@ import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import java.util.Date
 
-@Immutable
-sealed class FreeDiaryTrackerMoodScreenState {
-    @Immutable
-    data class Content(
-        val calendarViewState: CalendarContent,
-        val freeDiaryState: FreeDiaryViewState,
-        val newMoodViewState: NewMoodStatusViewState,
-        val moodsViewState: MoodsTrackerViewState,
-    ) : FreeDiaryTrackerMoodScreenState()
-
-}
 
 @Stable
 data class CalendarContent(
