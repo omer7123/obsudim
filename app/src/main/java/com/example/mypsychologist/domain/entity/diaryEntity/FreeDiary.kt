@@ -1,5 +1,7 @@
 package com.example.mypsychologist.domain.entity.diaryEntity
 
+import java.util.Date
+
 data class FreeDiaryEntity (
     val id: String,
     val text: String,
@@ -41,4 +43,15 @@ data class MoodTrackerResultEntity(
 
 data class MoodTrackerRespEntity(
     val id: String
+)
+
+data class CalendarEntity(
+    val date: Date,
+    val signal: Boolean,
+    val diary: Boolean
+)
+
+data class CalendarResponseEntity(
+    val date: Int,
+    val diary: Boolean
 )

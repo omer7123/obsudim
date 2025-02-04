@@ -1,5 +1,6 @@
 package com.example.mypsychologist.data.converters
 
+import com.example.mypsychologist.data.model.CalendarResponseModel
 import com.example.mypsychologist.data.model.FreeDiaryModel
 import com.example.mypsychologist.data.model.MoodTrackerPresentModel
 import com.example.mypsychologist.data.model.MoodTrackerRespModel
@@ -7,6 +8,7 @@ import com.example.mypsychologist.data.model.NewFreeDiaryModel
 import com.example.mypsychologist.data.model.NewFreeDiaryWithDateModel
 import com.example.mypsychologist.data.model.SaveMoodModel
 import com.example.mypsychologist.data.model.SaveMoodWithDateModel
+import com.example.mypsychologist.domain.entity.diaryEntity.CalendarResponseEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerRespEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerResultEntity
@@ -44,3 +46,8 @@ fun MoodTrackerPresentModel.toEntity() =
         id = id, score = score, date = date
     )
 
+fun CalendarResponseModel.toEntity(): CalendarResponseEntity =
+    CalendarResponseEntity(
+        date = date,
+        diary = diary
+    )

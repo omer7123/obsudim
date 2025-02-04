@@ -1,6 +1,7 @@
 package com.example.mypsychologist.data.remote.freeDiary
 
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.model.CalendarResponseModel
 import com.example.mypsychologist.data.model.FreeDiaryModel
 import com.example.mypsychologist.data.model.MoodTrackerPresentModel
 import com.example.mypsychologist.data.model.MoodTrackerRespModel
@@ -18,4 +19,5 @@ interface FreeDiaryDataSource {
     suspend fun saveMoodTrackerWithDate(saveMoodModel: SaveMoodWithDateModel): Flow<Resource<MoodTrackerRespModel>>
     suspend fun addFreeDiaryWithDate(toNewFreeDiaryModel: NewFreeDiaryWithDateModel): Flow<Resource<String>>
     suspend fun getAllMoodTrackers(date: String): Flow<Resource<List<MoodTrackerPresentModel>>>
+    suspend fun getDatesWithDiaries(month: Int): Flow<Resource<List<CalendarResponseModel>>>
 }

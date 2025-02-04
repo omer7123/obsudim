@@ -52,3 +52,9 @@ data class MoodTrackerRespModel(
     @SerialName("mood_tracker_id")
     val moodTrackerId: String
 )
+
+@Serializable
+data class CalendarResponseModel(
+    val date: Int,
+    val diary: Boolean,
+)

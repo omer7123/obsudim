@@ -2,6 +2,7 @@ package com.example.mypsychologist.data.remote.freeDiary
 
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.model.CalendarResponseModel
 import com.example.mypsychologist.data.model.FreeDiaryModel
 import com.example.mypsychologist.data.model.MoodTrackerPresentModel
 import com.example.mypsychologist.data.model.MoodTrackerRespModel
@@ -63,5 +64,13 @@ class FreeDiaryDataSourceImpl @Inject constructor(private val api: FreeDiaryServ
             emit(getResult {
                 api.getAllMoodTrackers(date)
             })
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getDatesWithDiaries(month: Int): Flow<Resource<List<CalendarResponseModel>>> = flow<Resource<List<CalendarResponseModel>>> {
+        emit(
+            getResult {
+                api.getDatesWithDiary(month)
+            }
+        )
     }.flowOn(Dispatchers.IO)
 }

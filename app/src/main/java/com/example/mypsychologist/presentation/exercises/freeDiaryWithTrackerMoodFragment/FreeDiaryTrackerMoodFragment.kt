@@ -34,16 +34,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-    import androidx.compose.runtime.mutableStateOf
-    import androidx.compose.runtime.remember
-    import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-    import androidx.compose.ui.platform.LocalConfiguration
-    import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-    import androidx.compose.ui.tooling.preview.Preview
-    import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -55,15 +55,14 @@ import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.exercises.trackerMoodFragment.TrackerMoodViewModel
-import com.example.mypsychologist.ui.core.CalendarView
 import com.example.mypsychologist.ui.core.PrimaryTextButton
 import com.example.mypsychologist.ui.core.formatToDayString
 import com.example.mypsychologist.ui.core.formatToMonthStringInf
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
 import com.example.mypsychologist.ui.theme.AppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-    import java.util.Calendar
-    import java.util.Date
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
     class FreeDiaryTrackerMoodFragment : Fragment() {
@@ -216,27 +215,27 @@ import javax.inject.Inject
                     )
                 }
 
-                CalendarView(
-                    month = res.value.month,
-                    years = res.value.year,
-                    date = res.value.dates,
-                    displayNext = true,
-                    displayPrev = true,
-                    onClickNext = {
-                        onClickNext()
-                    },
-                    onClickPrev = {
-                        onClickPrev()
-                    },
-                    onClick = { selectedDate ->
-                        onClickDate(selectedDate)
-                    },
-                    startFromSunday = false,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(top = 26.dp)
-                )
+//                CalendarView(
+//                    month = res.value.month,
+//                    years = res.value.year,
+//                    date = res.value.dates,
+//                    displayNext = true,
+//                    displayPrev = true,
+//                    onClickNext = {
+//                        onClickNext()
+//                    },
+//                    onClickPrev = {
+//                        onClickPrev()
+//                    },
+//                    onClick = { selectedDate ->
+//                        onClickDate(selectedDate)
+//                    },
+//                    startFromSunday = false,
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .weight(1f)
+//                        .padding(top = 26.dp)
+//                )
             }
         }
 

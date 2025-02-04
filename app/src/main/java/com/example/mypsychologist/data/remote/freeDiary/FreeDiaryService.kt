@@ -1,5 +1,6 @@
 package com.example.mypsychologist.data.remote.freeDiary
 
+import com.example.mypsychologist.data.model.CalendarResponseModel
 import com.example.mypsychologist.data.model.FreeDiaryModel
 import com.example.mypsychologist.data.model.MoodTrackerPresentModel
 import com.example.mypsychologist.data.model.MoodTrackerRespModel
@@ -35,4 +36,7 @@ interface FreeDiaryService {
 
     @GET("/mood_tracker/get_all_mood_tracker")
     suspend fun getAllMoodTrackers(@Query("date") date: String): Response<List<MoodTrackerPresentModel>>
+
+    @GET("/diary/reading_free_diary_by_month")
+    suspend fun getDatesWithDiary(@Query("date") date: Int): Response<List<CalendarResponseModel>>
 }

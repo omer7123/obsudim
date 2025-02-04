@@ -1,5 +1,6 @@
 package com.example.mypsychologist.presentation.exercises.trackerMoodFragment
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodWithDateEnti
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetAllMoodTrackersUseCase
+import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetDatesWithDiariesUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetFreeDiariesByDayUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTrackerUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTrackerWithDateUseCase
@@ -36,7 +38,8 @@ class TrackerMoodViewModel @Inject constructor(
     private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase,
     private val getFreeDiariesByDayUseCase: GetFreeDiariesByDayUseCase,
     private val saveMoodTrackerWithDateUseCase: SaveMoodTrackerWithDateUseCase,
-    private val getAllMoodTrackersUseCase: GetAllMoodTrackersUseCase
+    private val getAllMoodTrackersUseCase: GetAllMoodTrackersUseCase,
+    private val getDatesWithDiariesUseCase: GetDatesWithDiariesUseCase
 ) : ViewModel() {
 
     private val _stateScreen: MutableLiveData<TrackerMoodScreenState> =
@@ -63,6 +66,15 @@ class TrackerMoodViewModel @Inject constructor(
     val moodsViewState: StateFlow<MoodsTrackerViewState> = _moodsViewState
 
     init {
+
+        viewModelScope.launch {
+            getDatesWithDiariesUseCase(Date().time.toString().take(10).toInt()).collect {
+                if(it is Resource.Success){
+                    Log.e("InitData", Date().time.toString().take(10))
+                    Log.e("Success", it.data.toString())
+                }
+            }
+        }
         _freeDiaryViewState.value = FreeDiaryViewState.Loading
         _moodsViewState.value = MoodsTrackerViewState.Loading
 

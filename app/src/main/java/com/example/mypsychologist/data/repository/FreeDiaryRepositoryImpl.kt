@@ -6,6 +6,7 @@ import com.example.mypsychologist.data.converters.toFreeDiaryEntity
 import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.converters.toNewFreeDiaryModel
 import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryDataSource
+import com.example.mypsychologist.domain.entity.diaryEntity.CalendarResponseEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerRespEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerResultEntity
@@ -67,6 +68,14 @@ class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDi
 
     override suspend fun addFreeDiaryWithDate(data: NewFreeDiaryWithDateEntity): Flow<Resource<String>> {
         return dataSource.addFreeDiaryWithDate(data.toNewFreeDiaryModel())
+    }
+
+    override suspend fun getDatesWithDiaries(month: Int): Flow<Resource<List<CalendarResponseEntity>>> {
+        return dataSource.getDatesWithDiaries(month).checkResource {listOfDates->
+            listOfDates.map {
+                it.toEntity()
+            }
+        }
     }
 }
 
