@@ -2,6 +2,7 @@ package com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMo
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
+import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import java.util.Date
@@ -11,7 +12,7 @@ import java.util.Date
 data class CalendarContent(
     val month: Date,
     val year: String,
-    val dates: List<Pair<Date, Boolean>>,
+    val dates: List<CalendarEntity>,
 )
 
 @Immutable

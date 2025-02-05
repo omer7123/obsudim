@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.CalendarResponseEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
@@ -50,7 +52,7 @@ class TrackerMoodViewModel @Inject constructor(
         CalendarContent(
                 month = Calendar.getInstance().time,
                 year = Calendar.getInstance().get(Calendar.YEAR).toString(),
-                dates = getDatesList(),
+                dates = collectDates(Calendar.getInstance().time),
         )
     )
 
@@ -86,8 +88,8 @@ class TrackerMoodViewModel @Inject constructor(
     fun saveMoodTrack() {
         val date = Date()
         val selectedDate = calendarViewState.value.dates.find {
-            it.second
-        }!!.first
+            it.signal
+        }!!.date
 
         val isSameDay = date isSameDay selectedDate
 
@@ -147,28 +149,29 @@ class TrackerMoodViewModel @Inject constructor(
             add(Calendar.MONTH, amount)
         }
         val year = prevMonth.get(Calendar.YEAR).toString()
-        val newDateList = getDatesList(prevMonth.time)
+
 
         _calendarViewState.value = calendarViewState.value.copy(
-            month = prevMonth.time, year = year, dates = newDateList
+            month = prevMonth.time, year = year, dates = collectDates(prevMonth.time)
         )
+        getDatesList(prevMonth.time)
 
-        val currentDateAfterPrev = newDateList.find {
-            it.second
+        val currentDateAfterPrev = calendarViewState.value.dates.find {
+            it.signal
         }
 
         _freeDiaryViewState.value = FreeDiaryViewState.Loading
         _moodsViewState.value = MoodsTrackerViewState.Loading
 
-        getNotes(currentDateAfterPrev!!.first)
-        getMoodTrackers(currentDateAfterPrev.first)
+        getNotes(currentDateAfterPrev!!.date)
+        getMoodTrackers(currentDateAfterPrev.date)
     }
 
     fun onClickDate(selectedDate: Date) {
         val updatedDates = calendarViewState.value.dates.map {
             when {
-                it.first == selectedDate -> it.first to true
-                it.first != selectedDate -> it.first to false
+                it.date == selectedDate -> it.copy(signal = true)
+                it.date != selectedDate -> it.copy(signal = false)
                 else -> it
             }
         }
@@ -259,22 +262,42 @@ class TrackerMoodViewModel @Inject constructor(
         }
     }
 
-    private fun getDatesList(currentMonth: Date = Calendar.getInstance().time): List<Pair<Date, Boolean>> {
+    private fun getDatesList(currentMonth: Date = Calendar.getInstance().time) {
+        viewModelScope.launch {
+            getDatesWithDiariesUseCase(currentMonth.time.toString().take(10).toInt()).collect{resource->
+                when(resource){
+                    is Resource.Error -> Unit
+                    Resource.Loading -> Unit
+                    is Resource.Success -> {
+                        _calendarViewState.value =
+                            calendarViewState.value.copy(dates = collectDates(currentMonth, resource.data))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun collectDates(currentMonth: Date, datesWithDiary: List<CalendarResponseEntity> = emptyList()): List<CalendarEntity>{
         val calendar = Calendar.getInstance().apply { time = currentMonth }
         val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
 
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         return (1..daysInMonth).map {
             calendar.set(Calendar.DAY_OF_MONTH, it)
-            if (currentDay == it) calendar.time to true
-            else calendar.time to false
+            var signal = false
+            if (currentDay == it) signal = true
+            if (datesWithDiary.isEmpty()) {
+                CalendarEntity(calendar.time, signal, false)
+            }else {
+                CalendarEntity(calendar.time, signal, datesWithDiary[it - 1].diary)
+            }
         }
     }
 
     fun getSelectedDay(): String? {
         val selectedDate = calendarViewState.value.dates.find {
-            it.second
-        }!!.first
+            it.signal
+        }!!.date
         val date = Date()
 
         return if (date isSameDay selectedDate) null
@@ -283,8 +306,8 @@ class TrackerMoodViewModel @Inject constructor(
 
     fun reInitData() {
         val selectedDate = calendarViewState.value.dates.find {
-            it.second
-        }!!.first
+            it.signal
+        }!!.date
         viewModelScope.launch {
             getNotes(selectedDate)
         }

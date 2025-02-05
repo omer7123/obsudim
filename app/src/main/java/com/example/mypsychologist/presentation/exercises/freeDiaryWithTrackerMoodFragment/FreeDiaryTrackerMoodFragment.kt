@@ -50,12 +50,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
-import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
+    import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
+    import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.exercises.trackerMoodFragment.TrackerMoodViewModel
-import com.example.mypsychologist.ui.core.PrimaryTextButton
+    import com.example.mypsychologist.ui.core.CalendarView
+    import com.example.mypsychologist.ui.core.PrimaryTextButton
 import com.example.mypsychologist.ui.core.formatToDayString
 import com.example.mypsychologist.ui.core.formatToMonthStringInf
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
@@ -215,27 +217,27 @@ import javax.inject.Inject
                     )
                 }
 
-//                CalendarView(
-//                    month = res.value.month,
-//                    years = res.value.year,
-//                    date = res.value.dates,
-//                    displayNext = true,
-//                    displayPrev = true,
-//                    onClickNext = {
-//                        onClickNext()
-//                    },
-//                    onClickPrev = {
-//                        onClickPrev()
-//                    },
-//                    onClick = { selectedDate ->
-//                        onClickDate(selectedDate)
-//                    },
-//                    startFromSunday = false,
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .weight(1f)
-//                        .padding(top = 26.dp)
-//                )
+                CalendarView(
+                    month = res.value.month,
+                    years = res.value.year,
+                    date = res.value.dates,
+                    displayNext = true,
+                    displayPrev = true,
+                    onClickNext = {
+                        onClickNext()
+                    },
+                    onClickPrev = {
+                        onClickPrev()
+                    },
+                    onClick = { selectedDate ->
+                        onClickDate(selectedDate)
+                    },
+                    startFromSunday = false,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(top = 26.dp)
+                )
             }
         }
 
@@ -537,7 +539,7 @@ import javax.inject.Inject
             val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
             val dates = (1..daysInMonth).map {
                 calendar.set(Calendar.DAY_OF_MONTH, it)
-                Pair(calendar.time, it % 5 == 0) // Пример: сигналы для каждых 5 дней
+                CalendarEntity(calendar.time, it % 5 == 0, it % 3 == 0)
             }
 
             AppTheme {
