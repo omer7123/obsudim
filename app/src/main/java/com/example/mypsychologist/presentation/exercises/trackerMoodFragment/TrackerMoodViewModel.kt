@@ -1,6 +1,5 @@
 package com.example.mypsychologist.presentation.exercises.trackerMoodFragment
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -68,18 +67,10 @@ class TrackerMoodViewModel @Inject constructor(
     val moodsViewState: StateFlow<MoodsTrackerViewState> = _moodsViewState
 
     init {
-
-        viewModelScope.launch {
-            getDatesWithDiariesUseCase(Date().time.toString().take(10).toInt()).collect {
-                if(it is Resource.Success){
-                    Log.e("InitData", Date().time.toString().take(10))
-                    Log.e("Success", it.data.toString())
-                }
-            }
-        }
         _freeDiaryViewState.value = FreeDiaryViewState.Loading
         _moodsViewState.value = MoodsTrackerViewState.Loading
 
+        getDatesList()
         getNotes(Date())
         getMoodTrackers(Date())
     }
