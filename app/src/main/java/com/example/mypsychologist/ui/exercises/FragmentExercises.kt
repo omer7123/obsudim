@@ -20,6 +20,7 @@ import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.FragmentDiaries
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -83,9 +84,16 @@ class FragmentExercises : Fragment() {
     private fun initListener() {
         with(binding) {
             kptIv.setOnClickListener {
+                val kptItem = exercisesList.find { it.title == "КПТ-дневник" }!!
+
                 findNavController().navigate(
                     R.id.fragment_diaries,
-                    bundleOf(EXERCISE_ID to exercisesList.find { it.title == "КПТ-дневник" }!!.id)
+                    bundleOf(
+                        FragmentDiaries.EXERCISE_ID to kptItem.id,
+                        FragmentDiaries.EXERCISE_TITLE to kptItem.title,
+                        FragmentDiaries.EXERCISE_DESCRIPTION to kptItem.description,
+                        FragmentDiaries.IMAGE to kptItem.linkToPicture,
+                    )
                 )
             }
 
@@ -108,7 +116,4 @@ class FragmentExercises : Fragment() {
         }
     }
 
-    companion object {
-        private const val EXERCISE_ID = "ID_EXERCISE"
-    }
 }

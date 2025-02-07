@@ -3,10 +3,10 @@ package com.example.mypsychologist.presentation.exercises.diariesFragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
+import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.GetAllExerciseResultsUseCase
-import com.example.mypsychologist.presentation.core.BaseStateUI
-import com.example.mypsychologist.presentation.core.collectRequest
+import com.example.mypsychologist.extensions.convertLondonTimeToDeviceTime
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,16 +18,29 @@ class ThoughtDiariesViewModel (
 ) :
     ViewModel() {
 
-    private val _screenState: MutableStateFlow<BaseStateUI<List<ExerciseResultFromAPIEntity>>> =
-        MutableStateFlow(BaseStateUI.Initial())
-
-    val screenState: StateFlow<BaseStateUI<List<ExerciseResultFromAPIEntity>>>
+    private val _screenState: MutableStateFlow<ThoughtDiariesScreenState> =
+        MutableStateFlow(ThoughtDiariesScreenState.Initial)
+    val screenState: StateFlow<ThoughtDiariesScreenState>
         get() = _screenState.asStateFlow()
 
     fun loadDiaries(exerciseId: String) {
-        _screenState.value = BaseStateUI.Loading()
+        _screenState.value = ThoughtDiariesScreenState.Loading
         viewModelScope.launch {
-            getAllExerciseResultsUseCase(exerciseId).collectRequest(_screenState)
+            getAllExerciseResultsUseCase(exerciseId).collect{resource->
+                when(resource){
+                    is Resource.Error -> _screenState.value = ThoughtDiariesScreenState.Error
+                    Resource.Loading -> Unit
+                    is Resource.Success -> _screenState.value = ThoughtDiariesScreenState.Content(
+                        resource.data.map {
+                            RecordExerciseEntity(
+                                it.completedExerciseId,
+                                "",
+                                it.date.convertLondonTimeToDeviceTime()
+                            )
+                        }
+                    )
+                }
+            }
         }
     }
 

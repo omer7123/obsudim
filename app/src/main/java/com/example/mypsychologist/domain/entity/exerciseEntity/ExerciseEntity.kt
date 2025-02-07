@@ -1,12 +1,12 @@
 package com.example.mypsychologist.domain.entity.exerciseEntity
 
 import com.example.mypsychologist.ui.DelegateItem
-import kotlinx.serialization.SerialName
 
 data class ExerciseEntity(
     val id: String,
     val title: String,
-    val description: String
+    val description: String,
+    val linkToPicture: String
 )
 
 data class ExerciseDetailEntity(
@@ -61,7 +61,6 @@ data class DailyTaskMarkIdEntity(
 )
 
 data class ExerciseResultFromAPIEntity(
-    @SerialName("completed_exercise_id")
     val completedExerciseId: String,
     val date: String
 )
@@ -70,4 +69,10 @@ data class ExerciseDetailResultEntity(
     val title: String,
     val date: String,
     val result: List<ExerciseResultEntity>
+)
+
+data class RecordExerciseEntity(
+    val id: String,
+    val title: String,
+    val date: String
 )

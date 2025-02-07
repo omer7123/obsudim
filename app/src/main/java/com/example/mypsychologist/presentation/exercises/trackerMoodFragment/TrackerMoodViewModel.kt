@@ -8,11 +8,11 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.CalendarResponseEntity
-import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodWithDateEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetAllMoodTrackersUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetDatesWithDiariesUseCase
@@ -192,7 +192,7 @@ class TrackerMoodViewModel @Inject constructor(
                     is Resource.Success -> {
                         _freeDiaryViewState.value = FreeDiaryViewState.Content(
                             freeDiaries = resource.data.map {
-                                FreeDiaryEntity(
+                                RecordExerciseEntity(
                                     it.id, it.text, it.createdAt.convertLondonTimeToDeviceTime()
                                 )
                             }

@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,14 +49,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
-    import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
-    import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.exercises.trackerMoodFragment.TrackerMoodViewModel
-    import com.example.mypsychologist.ui.core.CalendarView
+import com.example.mypsychologist.ui.core.CalendarView
+    import com.example.mypsychologist.ui.core.IndicatorBottomSheet
     import com.example.mypsychologist.ui.core.PrimaryTextButton
+import com.example.mypsychologist.ui.core.RecordItem
 import com.example.mypsychologist.ui.core.formatToDayString
 import com.example.mypsychologist.ui.core.formatToMonthStringInf
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
@@ -256,14 +257,9 @@ import javax.inject.Inject
                     .padding(bottom = 16.dp)
 
             ) {
-                Box(
+                IndicatorBottomSheet(
                     modifier = Modifier
                         .padding(top = 6.dp)
-                        .size(width = 40.dp, height = 4.dp)
-                        .background(
-                            color = AppTheme.colors.tertiaryBackground,
-                            shape = RoundedCornerShape(12.dp)
-                        )
                         .align(Alignment.CenterHorizontally)
                 )
 
@@ -503,35 +499,6 @@ import javax.inject.Inject
             }
         }
 
-        @Composable
-        fun RecordItem(
-            item: FreeDiaryEntity, modifier: Modifier = Modifier
-        ) {
-            Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = AppTheme.colors.tertiaryBackground,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-
-            ) {
-                Text(
-                    text = item.text,
-                    style = AppTheme.typography.bodyMBold,
-                    color = AppTheme.colors.primaryText,
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp)
-                )
-                Text(
-                    text = item.createdAt,
-                    style = AppTheme.typography.bodyM,
-                    color = AppTheme.colors.primaryText,
-                    modifier = Modifier.padding(start = 16.dp, top = 6.dp, bottom = 16.dp)
-                )
-            }
-        }
-
-
         @Preview(showBackground = true)
         @Composable
         fun FreeDiaryTrackerMoodScreenContent_Preview() {
@@ -556,7 +523,7 @@ import javax.inject.Inject
                     freeDiaryViewState = remember {
                         mutableStateOf(
                             FreeDiaryViewState.Content(
-                                freeDiaries = listOf(FreeDiaryEntity("ds", "Заметка 2", "9:30"))
+                                freeDiaries = listOf(RecordExerciseEntity("ds", "Заметка 2", "9:30"))
                             )
                         )
                     },

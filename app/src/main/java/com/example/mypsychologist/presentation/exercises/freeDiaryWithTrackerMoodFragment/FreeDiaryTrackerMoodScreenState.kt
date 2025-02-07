@@ -3,8 +3,8 @@ package com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMo
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
-import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import java.util.Date
 
 
@@ -19,7 +19,7 @@ data class CalendarContent(
 sealed interface FreeDiaryViewState {
     @Stable
     data class Content(
-        val freeDiaries: List<FreeDiaryEntity>,
+        val freeDiaries: List<RecordExerciseEntity>,
     ) : FreeDiaryViewState
     data object Loading : FreeDiaryViewState
     data object Error : FreeDiaryViewState

@@ -7,7 +7,9 @@ import kotlinx.serialization.Serializable
 data class ExercisesModel(
     val id: String,
     val title: String,
-    val description: String
+    val description: String,
+    @SerialName("link_to_picture")
+    val linkToPicture: String
 )
 
 @Serializable
