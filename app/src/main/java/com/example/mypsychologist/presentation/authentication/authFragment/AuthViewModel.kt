@@ -4,8 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
+import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthByTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthWithDataUserUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.GetTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveUserIdUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -17,7 +20,9 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authWithDataUserUseCase: AuthWithDataUserUseCase,
     private val saveTokenUseCase: SaveTokenUseCase,
-    private val saveUserIdUseCase: SaveUserIdUseCase
+    private val saveUserIdUseCase: SaveUserIdUseCase,
+    private val authByTokenUseCase: AuthByTokenUseCase,
+    private val getTokenUseCase: GetTokenUseCase,
 ) : ViewModel() {
 
     private val _stateScreen: MutableStateFlow<AuthContent> = MutableStateFlow(AuthContent())
@@ -38,6 +43,27 @@ class AuthViewModel @Inject constructor(
                     is Resource.Error -> _stateScreen.value = _stateScreen.value.copy(error = result.msg.toString(), loading = false)
                     Resource.Loading -> _stateScreen.value = _stateScreen.value.copy(error = null, loading = true)
                     is Resource.Success -> saveToken(result.data)
+                }
+            }
+        }
+    }
+
+    fun authByToken() {
+        viewModelScope.launch(handler) {
+            _stateScreen.value = stateScreen.value.copy(loading = true)
+            val token = getTokenUseCase()
+            if (token == "")
+                _stateScreen.value = stateScreen.value.copy(loading = false)
+            else {
+                when (val result = authByTokenUseCase(Token(token))) {
+                    is Resource.Error -> _stateScreen.value =
+                        stateScreen.value.copy(error = result.msg)
+
+                    Resource.Loading -> _stateScreen.value = stateScreen.value.copy(loading = true)
+                    is Resource.Success -> {
+                        saveTokenUseCase(result.data.token)
+                        _stateScreen.value = stateScreen.value.copy(success = true)
+                    }
                 }
             }
         }

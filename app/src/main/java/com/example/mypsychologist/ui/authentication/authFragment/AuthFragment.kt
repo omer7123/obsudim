@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -75,6 +76,9 @@ class AuthFragment : Fragment() {
 
     @Composable
     fun AuthScreen(viewModel: AuthViewModel, navController: NavController) {
+        LaunchedEffect(key1 = Unit) {
+            viewModel.authByToken()
+        }
         val viewState = viewModel.stateScreen.collectAsState()
         val res = viewState.value
         if (res.success) {
