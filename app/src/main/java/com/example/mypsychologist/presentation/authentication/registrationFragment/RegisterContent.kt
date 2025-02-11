@@ -7,7 +7,7 @@ data class RegisterContent(
     val step: StepScreen,
     val name: String = "",
     val birthday: String = "",
-    val gender: Gender = Gender.UNKNOWN,
+    val gender: Gender = Gender.INITIAL,
     val city: String = "",
 
     val email: String = "",
@@ -31,5 +31,6 @@ sealed class StepScreen{
 enum class Gender{
     MALE,
     FEMALE,
-    UNKNOWN
+    UNKNOWN,
+    INITIAL
 }

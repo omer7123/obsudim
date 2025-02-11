@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -34,6 +36,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -76,6 +79,7 @@ fun PrimaryTextField(
     placeHolderText: String,
     onFieldChange: (String) -> Unit,
     imeAction: ImeAction,
+    capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
     modifier: Modifier = Modifier
     ) {
     val focusManager = LocalFocusManager.current
@@ -98,8 +102,54 @@ fun PrimaryTextField(
             cursorColor = AppTheme.colors.primaryText
         ), textStyle = typography.bodyM,
         keyboardOptions = KeyboardOptions(
-            imeAction = imeAction
+            imeAction = imeAction,
+            capitalization = capitalization
         ),
+        keyboardActions = KeyboardActions(onNext = {
+            focusManager.moveFocus(FocusDirection.Down)
+        }
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun TextFieldForDropMenu(
+    field: String,
+    placeHolderText: String,
+    onFieldChange: (String) -> Unit,
+    imeAction: ImeAction,
+    isExpanded: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val focusManager = LocalFocusManager.current
+
+    TextField(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(
+                color = AppTheme.colors.tertiaryBackground, shape = RoundedCornerShape(12.dp)
+            ),
+        value = field, onValueChange = onFieldChange, singleLine = true, placeholder = {
+            Text(
+                text = placeHolderText,
+                style = typography.bodyM,
+                color = AppTheme.colors.secondaryText
+            )
+        },
+        trailingIcon = {
+            ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = AppTheme.colors.primaryText,
+            unfocusedBorderColor = Color.Transparent,
+            focusedBorderColor = Color.Transparent,
+            cursorColor = AppTheme.colors.primaryText
+        ), textStyle = typography.bodyM,
+        keyboardOptions = KeyboardOptions(
+            imeAction = imeAction,
+        ),
+        readOnly = true,
         keyboardActions = KeyboardActions(onNext = {
             focusManager.moveFocus(FocusDirection.Down)
         }

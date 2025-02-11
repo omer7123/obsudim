@@ -283,6 +283,7 @@
     <string name="gender">Пол</string>
     <string name="man">Мужской</string>
     <string name="woman">Женский</string>
+    <string name="unknown">Не указывать</string>
     <string name="other">Другое</string>
     <string name="birthday">Дата рождения</string>
 

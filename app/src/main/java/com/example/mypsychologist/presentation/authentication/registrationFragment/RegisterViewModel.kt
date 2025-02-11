@@ -60,4 +60,16 @@ class RegisterViewModel @Inject constructor(
         saveUserIdUseCase(result.data.user_id)
         _statusRegistration.value = RegisterStatus.Success
     }
+
+    fun changeName(name: String){
+        _stateScreen.value = stateScreen.value.copy(name = name)
+    }
+
+    fun changeCity(city: String){
+        _stateScreen.value = stateScreen.value.copy(city = city)
+    }
+
+    fun changeGender(gender: Gender){
+        _stateScreen.value = stateScreen.value.copy(gender = gender)
+    }
 }
