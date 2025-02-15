@@ -204,7 +204,7 @@ import javax.inject.Inject
                         Icon(
                             painter = painterResource(id = R.drawable.ic_arrow_back_white),
                             contentDescription = stringResource(id = R.string.feedback),
-                            tint = AppTheme.colors.tertiaryBackground,
+                            tint = AppTheme.colors.screenBackground,
                             modifier = Modifier.padding(bottom = 4.dp)
                         )
                     }

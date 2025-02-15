@@ -16,6 +16,7 @@
     <string name="need_data">Необходимы данные.</string>
     <string name="need_user_data">Пожалуйста, укажите свои данные, чтобы HR-менеджер мог вас идентифицировать. Если вы не готовы к этому, укажите псевдоним.</string>
     <string name="enter_your_data">Укажите свои данные</string>
+    <string name="placeholder_registration">Почта и телефон нужны для напоминаний о необходимости пройти практику или записать впечатления о дне</string>
 
     <string name="main">Главная</string>
     <string name="my_program">Моя программа</string>

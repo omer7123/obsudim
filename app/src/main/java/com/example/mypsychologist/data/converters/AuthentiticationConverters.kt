@@ -4,7 +4,7 @@ import com.example.mypsychologist.data.model.AuthModel
 import com.example.mypsychologist.data.model.RegisterModel
 import com.example.mypsychologist.data.model.UserModel
 import com.example.mypsychologist.domain.entity.authenticationEntity.Auth
-import com.example.mypsychologist.domain.entity.authenticationEntity.Register
+import com.example.mypsychologist.domain.entity.authenticationEntity.RegisterEntity
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
 
 fun AuthModel.toAuth(): Auth {
@@ -14,10 +14,16 @@ fun AuthModel.toAuth(): Auth {
     )
 }
 
-fun RegisterModel.toRegister(): Register {
-    return Register(
-        auth = this.auth.toAuth(),
-        checkPassword = this.checkPassword
+fun RegisterEntity.toModel(): RegisterModel{
+    return RegisterModel(
+        username = username,
+        birthDate = birthDate,
+        gender = gender.name,
+        city = city,
+        email = email,
+        phoneNumber = phoneNumber,
+        password = password,
+        confirmPassword = confirmPassword
     )
 }
 
@@ -38,12 +44,6 @@ fun Auth.toAuthModel(): AuthModel {
     )
 }
 
-fun Register.toRegisterModel(): RegisterModel {
-    return RegisterModel(
-        auth = this.auth.toAuthModel(),
-        checkPassword = this.checkPassword
-    )
-}
 
 fun User.toUserModel(): UserModel {
     return UserModel(

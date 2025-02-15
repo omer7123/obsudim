@@ -1,7 +1,9 @@
 package com.example.mypsychologist.extensions
 
 import android.os.Build
+import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -91,4 +93,18 @@ infix fun Date.isSameDay(selectedDate: Date): Boolean {
     }
 
     return calendarSelected.time == calendarCurrent.time
+}
+
+fun Long.convertMillisToDate(): String {
+    val formatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+    return formatter.format(Date(this))
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun convertDateToBackendFormatString(inputDate: String): String {
+    val inputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+    val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+    val date = LocalDate.parse(inputDate, inputFormatter)
+    return date.format(outputFormatter)
 }

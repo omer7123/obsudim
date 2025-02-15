@@ -12,12 +12,6 @@ data class AuthModel(
 )
 
 @Serializable
-data class RegisterModel(
-    val auth: AuthModel,
-    val checkPassword: String,
-)
-
-@Serializable
 data class UserModel(
     @SerializedName("user_id")
     val userId: String,
@@ -28,12 +22,19 @@ data class UserModel(
 )
 
 @Serializable
-data class OldRegister(
-    val email: String,
+data class RegisterModel(
     val username: String,
+    @SerialName("birth_date")
+    val birthDate: String,
+    val gender: String,
+    val city: String,
+    val email: String,
+    @SerialName("phone_number")
+    val phoneNumber: String,
     val password: String,
-    val confirm_password: String
-) //Для старого бэка, который сейчас
+    @SerialName("confirm_password")
+    val confirmPassword: String
+)
 
 @Serializable
 data class Token(
