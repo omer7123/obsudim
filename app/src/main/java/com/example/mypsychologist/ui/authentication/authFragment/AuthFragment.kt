@@ -18,6 +18,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -30,7 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
@@ -49,6 +49,7 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.authentication.authFragment.AuthContent
+import com.example.mypsychologist.presentation.authentication.authFragment.AuthState
 import com.example.mypsychologist.presentation.authentication.authFragment.AuthViewModel
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.ui.core.PrimaryPickerTextField
@@ -93,28 +94,36 @@ class AuthFragment : Fragment() {
             viewModel.authByToken()
         }
         val viewState = viewModel.stateScreen.collectAsState()
-        val res = viewState.value
-        if (res.success) {
-            navController.navigate(R.id.action_authFragment_to_main_fragment)
-        }
-        else {
-            AuthInitial(
-                email = res.email,
-                password = res.password,
-                res,
-                onEmailChange = { email ->
-                    viewModel.emailChange(email)
-                },
-                onPasswordChange = { password ->
-                    viewModel.passwordChange(password)
-                },
-                onSubmitClick = {
-                    viewModel.auth()
-                },
-                onRegisterClick = {
-                    navController.navigate(R.id.action_authFragment_to_registrationFragment)
+        val authByTokenState = viewModel.authByTokenStatus.collectAsState()
+        when(authByTokenState.value){
+            AuthState.Error -> {
+                AuthInitial(
+                    email = viewState.value.email,
+                    password = viewState.value.password,
+                    res = viewState.value,
+                    onEmailChange = { email ->
+                        viewModel.emailChange(email)
+                    },
+                    onPasswordChange = { password ->
+                        viewModel.passwordChange(password)
+                    },
+                    onSubmitClick = {
+                        viewModel.auth()
+                    },
+                    onRegisterClick = {
+                        navController.navigate(R.id.action_authFragment_to_registrationFragment)
+                    }
+                )
+            }
+            AuthState.Initial -> Unit
+            AuthState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize()){
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
-            )
+            }
+            AuthState.Success -> {
+                navController.navigate(R.id.action_authFragment_to_main_fragment)
+            }
         }
     }
 
@@ -145,24 +154,24 @@ class AuthFragment : Fragment() {
                 contentScale = ContentScale.Crop,
             )
 
-            Text(
-                modifier = Modifier.padding(start = 16.dp, top = 64.dp),
-                text = stringResource(R.string.have_you_account),
-                style = AppTheme.typography.titleCygreFont,
-                color = AppTheme.colors.primaryTextInvert,
-            )
-
             Column(
                 modifier = Modifier
                     .statusBarsPadding()
                     .align(Alignment.BottomCenter)
                     .background(
-                        color = Color.White,
+                        color = AppTheme.colors.screenBackground,
                         shape = RoundedCornerShape(topEnd = 28.dp, topStart = 28.dp)
                     )
                     .padding(horizontal = 16.dp)
                     .imePadding()
             ) {
+                Text(
+                    modifier = Modifier.padding(top = 16.dp),
+                    text = stringResource(R.string.have_you_account),
+                    style = AppTheme.typography.titleXS,
+                    color = AppTheme.colors.primaryText,
+                )
+
                 PrimaryTextField(
                     field = email,
                     placeHolderText = stringResource(id = R.string.mail),
@@ -172,7 +181,7 @@ class AuthFragment : Fragment() {
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next,
                     ),
-                    modifier = Modifier.padding(top = 16.dp)
+                    modifier = Modifier.padding(top = 30.dp)
                 )
 
                 PrimaryPickerTextField(

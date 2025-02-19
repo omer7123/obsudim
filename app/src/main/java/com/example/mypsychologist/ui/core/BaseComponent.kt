@@ -11,8 +11,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -91,6 +98,59 @@ fun IndicatorBottomSheet(modifier: Modifier = Modifier){
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DropdownMenu() {
+    var expandedGender by remember {
+        mutableStateOf(false)
+    }
+
+    ExposedDropdownMenuBox(
+        modifier = Modifier.fillMaxWidth(),
+        expanded = expandedGender,
+        onExpandedChange = { expandedGender = it }
+    ) {
+//        TextFieldForDropMenu(
+//            field = when (value.gender) {
+//                Gender.MALE -> stringResource(id = R.string.man)
+//                Gender.FEMALE -> stringResource(id = R.string.woman)
+//                Gender.UNKNOWN -> stringResource(id = R.string.unknown)
+//                Gender.INITIAL -> ""
+//            },
+//            placeHolderText = stringResource(id = R.string.gender),
+//            onFieldChange = {},
+//            imeAction = ImeAction.Default,
+//            isExpanded = expandedGender
+//        )
+
+        ExposedDropdownMenu(
+            expanded = expandedGender,
+            onDismissRequest = { expandedGender = false },
+        ) {
+            DropdownMenuItem(
+                text = { Text(text = stringResource(id = R.string.man)) },
+                onClick = {
+//                    onGenderChange(Gender.MALE)
+                    expandedGender = false
+                }
+            )
+            DropdownMenuItem(
+                text = { Text(text = stringResource(id = R.string.woman)) },
+                onClick = {
+//                    onGenderChange(Gender.FEMALE)
+                    expandedGender = false
+                }
+            )
+            DropdownMenuItem(
+                text = { Text(text = stringResource(id = R.string.unknown)) },
+                onClick = {
+//                    onGenderChange(Gender.UNKNOWN)
+                    expandedGender = false
+                }
+            )
+        }
+    }
+}
 
 @Preview(showBackground = false)
 @Composable

@@ -28,6 +28,9 @@ class AuthViewModel @Inject constructor(
     private val _stateScreen: MutableStateFlow<AuthContent> = MutableStateFlow(AuthContent())
     val stateScreen: StateFlow<AuthContent> = _stateScreen
 
+    private val _authByTokenStatus: MutableStateFlow<AuthState> = MutableStateFlow(AuthState.Initial)
+    val authByTokenStatus: StateFlow<AuthState> = _authByTokenStatus
+
 
     private val handler = CoroutineExceptionHandler { _, error ->
         _stateScreen.value = _stateScreen.value.copy(error = error.toString())
@@ -50,23 +53,28 @@ class AuthViewModel @Inject constructor(
 
     fun authByToken() {
         viewModelScope.launch(handler) {
-            _stateScreen.value = stateScreen.value.copy(loading = true)
+            _authByTokenStatus.value = AuthState.Loading
             val token = getTokenUseCase()
             if (token == "")
-                _stateScreen.value = stateScreen.value.copy(loading = false)
+                _authByTokenStatus.value = AuthState.Error
             else {
                 when (val result = authByTokenUseCase(Token(token))) {
-                    is Resource.Error -> _stateScreen.value =
-                        stateScreen.value.copy(error = result.msg)
+                    is Resource.Error -> _authByTokenStatus.value = AuthState.Error
 
-                    Resource.Loading -> _stateScreen.value = stateScreen.value.copy(loading = true)
+                    Resource.Loading -> _authByTokenStatus.value = AuthState.Loading
                     is Resource.Success -> {
                         saveTokenUseCase(result.data.token)
-                        _stateScreen.value = stateScreen.value.copy(success = true)
+                        _authByTokenStatus.value = AuthState.Success
                     }
                 }
             }
         }
+    }
+    private suspend fun saveToken(result: User) {
+        _stateScreen.value = _stateScreen.value.copy(loading = true)
+        saveTokenUseCase(result.token)
+        saveUserIdUseCase(result.user_id)
+        _authByTokenStatus.value = AuthState.Success
     }
 
     fun emailChange(email: String){
@@ -77,12 +85,6 @@ class AuthViewModel @Inject constructor(
         _stateScreen.value = _stateScreen.value.copy(password = password)
     }
 
-    private suspend fun saveToken(result: User) {
-        _stateScreen.value = _stateScreen.value.copy(loading = true)
-        saveTokenUseCase(result.token)
-        saveUserIdUseCase(result.user_id)
-        _stateScreen.value = _stateScreen.value.copy(success = true)
-    }
     fun removeError() {
         _stateScreen.value = _stateScreen.value.copy(error = null)
     }

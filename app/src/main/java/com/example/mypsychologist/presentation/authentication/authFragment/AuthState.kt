@@ -5,5 +5,11 @@ data class AuthContent (
     val password: String = "",
     val loading: Boolean = false,
     val error: String? = null,
-    val success: Boolean = false
 )
+
+sealed interface AuthState{
+    data object Success: AuthState
+    data object Loading: AuthState
+    data object Error : AuthState
+    data object Initial: AuthState
+}

@@ -11,6 +11,7 @@
     <string name="after_connection">При восстановлении соединения данные загрузятся автоматически</string>
     <string name="diary_empty">Это место для заметок. Напиши, как прошёл день, как себя чувствуешь :)</string>
     <string name="diary_empty_placeholder">Напиши, как прошёл день, как себя чувствуешь :)</string>
+    <string name="just_a_little_left">Осталось чуть-чуть</string>
 
     <string name="nothing">Ничего нет :(</string>
     <string name="need_data">Необходимы данные.</string>

@@ -6,17 +6,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuBox
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
@@ -24,7 +27,6 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -56,10 +58,6 @@ import com.example.mypsychologist.extensions.convertMillisToDate
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.authentication.registrationFragment.Gender
-import com.example.mypsychologist.presentation.authentication.registrationFragment.Gender.FEMALE
-import com.example.mypsychologist.presentation.authentication.registrationFragment.Gender.INITIAL
-import com.example.mypsychologist.presentation.authentication.registrationFragment.Gender.MALE
-import com.example.mypsychologist.presentation.authentication.registrationFragment.Gender.UNKNOWN
 import com.example.mypsychologist.presentation.authentication.registrationFragment.RegisterContent
 import com.example.mypsychologist.presentation.authentication.registrationFragment.RegisterStatus
 import com.example.mypsychologist.presentation.authentication.registrationFragment.RegisterViewModel
@@ -69,7 +67,6 @@ import com.example.mypsychologist.ui.core.DatePickerModal
 import com.example.mypsychologist.ui.core.PrimaryPickerTextField
 import com.example.mypsychologist.ui.core.PrimaryTextButton
 import com.example.mypsychologist.ui.core.PrimaryTextField
-import com.example.mypsychologist.ui.core.TextFieldForDropMenu
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -170,7 +167,7 @@ class RegistrationFragment : Fragment() {
             androidx.compose.material3.IconButton(
                 modifier = Modifier
                     .statusBarsPadding()
-                    .padding(top = 30.dp, start = 16.dp),
+                    .padding(top = 12.dp, start = 8.dp),
                 onClick = {
                     onBackNavIcon()
                 },
@@ -269,9 +266,7 @@ class RegistrationFragment : Fragment() {
         showDatePicker: MutableState<Boolean>,
         onNextClick: () -> Unit
     ) {
-        var expandedGender by remember {
-            mutableStateOf(false)
-        }
+
 
         Text(
             text = stringResource(id = R.string.enter_your_data),
@@ -284,6 +279,17 @@ class RegistrationFragment : Fragment() {
             placeHolderText = stringResource(id = R.string.name),
             onFieldChange = {onNameChange(it)},
             modifier = Modifier.padding(top = 30.dp),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done,
+                capitalization = KeyboardCapitalization.Words
+            )
+        )
+
+        PrimaryTextField(
+            field = value.city,
+            placeHolderText = stringResource(id = R.string.city),
+            onFieldChange = {onCityChange(it)},
+            modifier = Modifier.padding(top = 16.dp),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 capitalization = KeyboardCapitalization.Words
@@ -306,61 +312,65 @@ class RegistrationFragment : Fragment() {
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
-        ExposedDropdownMenuBox(
-            modifier = Modifier.fillMaxWidth(),
-            expanded = expandedGender,
-            onExpandedChange = {expandedGender = it}
-        ){
-            TextFieldForDropMenu(
-                field = when(value.gender){
-                    MALE -> stringResource(id = R.string.man)
-                    FEMALE -> stringResource(id = R.string.woman)
-                    UNKNOWN -> stringResource(id = R.string.unknown)
-                    INITIAL -> ""
-                },
-                placeHolderText = stringResource(id = R.string.gender),
-                onFieldChange = {},
-                imeAction = ImeAction.Default,
-                isExpanded = expandedGender
-            )
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Box(
+                modifier = Modifier.background(
+                    color = when(value.gender) {
+                        Gender.MALE -> AppTheme.colors.secondaryBackground
+                        else -> AppTheme.colors.tertiaryBackground
+                    },
+                    shape = RoundedCornerShape(12.dp)
+                ).weight(0.5f).clickable(
+                    interactionSource = null,
+                    indication = null,
+                    onClick = {
+                        onGenderChange(Gender.MALE)
+                    }
+                ),
 
-            ExposedDropdownMenu(
-                expanded = expandedGender,
-                onDismissRequest = { expandedGender = false },
             ) {
-                DropdownMenuItem(
-                    text = {Text(text = stringResource(id = R.string.man))},
-                    onClick = {
-                        onGenderChange(MALE)
-                        expandedGender = false
-                    }
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .align(Alignment.Center),
+                    text = stringResource(id = R.string.man),
+                    style = AppTheme.typography.bodyM,
+                    color = AppTheme.colors.primaryText
                 )
-                DropdownMenuItem(
-                    text = {Text(text = stringResource(id = R.string.woman))},
-                    onClick = {
-                        onGenderChange(FEMALE)
-                        expandedGender = false
-                    }
-                )
-                DropdownMenuItem(
-                    text = {Text(text = stringResource(id = R.string.unknown))},
-                    onClick = {
-                        onGenderChange(UNKNOWN)
-                        expandedGender = false
-                    }
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Box(
+                modifier = Modifier
+                    .background(
+                        color = when(value.gender) {
+                            Gender.FEMALE -> AppTheme.colors.secondaryBackground
+                            else -> AppTheme.colors.tertiaryBackground
+                        },
+                        shape = RoundedCornerShape(12.dp))
+                    .weight(0.5f)
+                    .clickable(
+                        interactionSource = null,
+                        indication = null,
+                        onClick = {
+                            onGenderChange(Gender.FEMALE)
+                        }
+                    )
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .align(Alignment.Center),
+                    text = stringResource(id = R.string.woman),
+                    style = AppTheme.typography.bodyM,
+                    color = AppTheme.colors.primaryText
                 )
             }
         }
-        PrimaryTextField(
-            field = value.city,
-            placeHolderText = stringResource(id = R.string.city),
-            onFieldChange = {onCityChange(it)},
-            modifier = Modifier.padding(top = 16.dp),
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done,
-                capitalization = KeyboardCapitalization.Words
-            )
-        )
+
         PrimaryTextButton(
             textString = stringResource(id = R.string.next),
             onClick = {onNextClick()},
@@ -380,7 +390,7 @@ class RegistrationFragment : Fragment() {
         var passwordVisible by remember { mutableStateOf(false) }
 
         Text(
-            text = stringResource(id = R.string.enter_your_data),
+            text = stringResource(id = R.string.just_a_little_left),
             style = AppTheme.typography.titleXS,
             color = AppTheme.colors.primaryText,
         )
@@ -477,7 +487,7 @@ class RegistrationFragment : Fragment() {
         AppTheme {
             Content(
                 viewState = remember {
-                    mutableStateOf(RegisterContent(step = StepScreen.RegistrationScreen))
+                    mutableStateOf(RegisterContent(step = StepScreen.PersonalScreen))
                 },
                 {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
             )

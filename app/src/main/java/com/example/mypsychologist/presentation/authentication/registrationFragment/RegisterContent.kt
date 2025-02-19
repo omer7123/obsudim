@@ -31,6 +31,5 @@ sealed class StepScreen{
 enum class Gender{
     MALE,
     FEMALE,
-    UNKNOWN,
     INITIAL
 }
