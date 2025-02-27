@@ -25,7 +25,7 @@
     <color name="md_theme_light_surface">#FFFFFF</color>
     <color name="md_theme_light_surfaceContainerHighest">#FFFFFF</color>
     <color name="md_theme_light_surfaceContainerHigh">#F1F3F6</color>
-    <color name="md_theme_light_onSurface">#1C1A1A</color>
+    <color name="md_theme_light_onSurface">#0C2A9F</color>
     <color name="md_theme_light_surfaceVariant">#F3F5FF</color>
     <color name="md_theme_light_onSurfaceVariant">#0C2A9F</color>
     <color name="md_theme_light_inverseSurface">#CDD7FF</color>
