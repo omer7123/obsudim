@@ -3,6 +3,7 @@ package com.example.mypsychologist.ui.education
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,11 +98,14 @@ class EducationFragment : Fragment() {
         }
 
         binding.title.text = data.theme
-        mainAdapter.submitList(data.materials.toDelegateItems())
 
-        binding.cardsRw.scrollToPosition(
+
+
+        mainAdapter.submitList(data.materials.toCardDelegateItems())        //почему-то не срабатывает , хотя список непустой и делегаты верные
+
+      /*  binding.cardsRw.scrollToPosition(
             data.score
-        )
+        ) */ //пока убрали скор на бэке - я забыл про этот момент
     }
 
     private fun markTaskAsCompleted() {

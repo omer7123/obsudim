@@ -1,5 +1,6 @@
 package com.example.mypsychologist.domain.entity.educationEntity
 
+import com.example.mypsychologist.data.model.ItemMaterialModel
 import java.io.Serializable
 
 data class TopicEntity(
@@ -12,9 +13,12 @@ data class TopicEntity(
 
 data class EducationsEntity(
     val theme: String,
-    val score: Int,
     val maxScore: Int,
-    val materials: List<ItemMaterialEntity>
+    val materials: List<SubtopicEntity>
+)
+data class SubtopicEntity(
+    val subtitle: String,
+    val cards: List<ItemMaterialEntity>
 )
 data class ItemMaterialEntity(
     val id: String,
