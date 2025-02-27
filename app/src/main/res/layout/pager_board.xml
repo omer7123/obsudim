@@ -24,13 +24,13 @@
 
     <ImageView
         android:id="@+id/image_iv"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="86dp"
+        android:layout_width="249dp"
+        android:layout_height="410dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_board_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_board_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title_tv"

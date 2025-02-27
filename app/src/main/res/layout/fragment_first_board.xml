@@ -31,7 +31,6 @@
             android:id="@+id/app_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:text="@string/app_name_new"
             android:textAppearance="@style/CruinnMedTitle"
             android:textColor="?attr/colorPrimary"
@@ -42,21 +41,20 @@
 
         <ImageView
             android:id="@+id/clev2_iv"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:src="@drawable/ic_first_board_board_clev2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.12"
             app:layout_constraintTop_toBottomOf="@id/app_tv"
-            app:layout_constraintWidth_percent="0.69" />
+            />
 
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="@string/how_everything_works"
             android:textAppearance="@style/TitleFragmentPrimary"
             app:layout_constraintStart_toStartOf="parent"
