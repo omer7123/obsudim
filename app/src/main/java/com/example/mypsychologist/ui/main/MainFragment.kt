@@ -6,6 +6,7 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -25,6 +26,7 @@ import com.example.mypsychologist.ui.diagnostics.PassingTestFragment
 import com.example.mypsychologist.ui.education.EducationFragment
 import com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.util.Date
@@ -73,6 +75,26 @@ class MainFragment : Fragment() {
     }
 
     private fun initView() {
+        binding.guidelineBottom.post {
+            val lineBottom = binding.guidelineBottom.bottom
+            val includeTop = binding.guidelineTop.bottom
+            val bottomSheetBehavior: BottomSheetBehavior<LinearLayout> = BottomSheetBehavior.from(binding.bottomSheet)
+
+            bottomSheetBehavior.peekHeight = lineBottom
+            bottomSheetBehavior.maxHeight = binding.root.height - includeTop
+
+            bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    when (newState) {
+                        BottomSheetBehavior.STATE_COLLAPSED -> {
+                            bottomSheetBehavior.peekHeight = lineBottom
+                        }
+                    }
+                }
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+            })
+        }
+
         var formattedDate: String = DateFormat.format("EEEE, d MMMM", Date()).toString()
         val formattedDateSplit = formattedDate.split(" ").toMutableList()
         formattedDateSplit[2] = formattedDateSplit[2].lowercase()
@@ -87,14 +109,11 @@ class MainFragment : Fragment() {
 
     private fun render(state: BaseStateUI<List<DailyExerciseEntity>>) {
         when (state) {
-
             is BaseStateUI.Error -> {
                 findNavController().navigate(R.id.registrationFragment)
             }
-
             is BaseStateUI.Initial -> {}
             is BaseStateUI.Loading -> {
-
                 binding.exercisesRv.isVisible = false
                 binding.progressCircular.isVisible = true
             }
@@ -102,9 +121,10 @@ class MainFragment : Fragment() {
             is BaseStateUI.Content -> {
                 binding.exercisesRv.isVisible = true
                 binding.progressCircular.isVisible = false
-
                 binding.exercisesRv.adapter = adapter
-                adapter.submitList(state.data)
+                val mock = state.data.toMutableList()
+                mock.addAll(state.data)
+                adapter.submitList(mock)
             }
         }
     }
