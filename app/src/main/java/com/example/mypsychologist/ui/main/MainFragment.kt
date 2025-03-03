@@ -85,10 +85,8 @@ class MainFragment : Fragment() {
 
             bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    when (newState) {
-                        BottomSheetBehavior.STATE_COLLAPSED -> {
-                            bottomSheetBehavior.peekHeight = lineBottom
-                        }
+                    if(newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                        bottomSheetBehavior.peekHeight = lineBottom
                     }
                 }
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
@@ -122,9 +120,7 @@ class MainFragment : Fragment() {
                 binding.exercisesRv.isVisible = true
                 binding.progressCircular.isVisible = false
                 binding.exercisesRv.adapter = adapter
-                val mock = state.data.toMutableList()
-                mock.addAll(state.data)
-                adapter.submitList(mock)
+                adapter.submitList(state.data)
             }
         }
     }
