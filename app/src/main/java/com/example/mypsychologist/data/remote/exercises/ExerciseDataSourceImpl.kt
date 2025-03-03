@@ -22,12 +22,14 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
     ExerciseDataSource {
 
     override suspend fun getAllExercises(): Flow<Resource<List<ExercisesModel>>> = flow {
+        emit(Resource.Loading)
         emit(getResult {
             api.getAllExercises()
         })
     }.flowOn(Dispatchers.IO)
 
     override suspend fun getExerciseDetail(id: String): Flow<Resource<ExerciseDetailModel>> = flow{
+        emit(Resource.Loading)
         emit(
             getResult {
                 api.getExerciseDetail(id)
@@ -36,6 +38,7 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
     }.flowOn(Dispatchers.IO)
 
     override suspend fun saveExerciseResult(data: ExerciseResultRequestModel): Flow<Resource<SaveExerciseResultResponseModel>> = flow<Resource<SaveExerciseResultResponseModel>> {
+        emit(Resource.Loading)
         emit(
             getResult {
                 api.saveExerciseResult(data)
@@ -44,6 +47,7 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
     }.flowOn(Dispatchers.IO)
 
     override suspend fun getDailyExercises(): Flow<Resource<List<DailyExerciseModel>>> = flow{
+        emit(Resource.Loading)
         emit(
             getResult {
                 api.getDailyExercises()
@@ -52,7 +56,8 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
     }.flowOn(Dispatchers.IO)
 
     override suspend fun markAsCompleteTask(taskCompleted: DailyTaskMarkIdModel): Flow<Resource<StatusPostResponse>> = flow {
-            emit(
+        emit(Resource.Loading)
+        emit(
                 getResult {
                     api.markAsComplete(taskCompleted)
                 }
@@ -61,6 +66,7 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         }.flowOn(Dispatchers.IO)
 
     override suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseResultFromAPIModel>>> = flow{
+        emit(Resource.Loading)
         emit(
             getResult {
                 api.getExerciseResults(exerciseId)
@@ -69,6 +75,7 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
     }.flowOn(Dispatchers.IO)
 
     override suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultModel>> = flow{
+        emit(Resource.Loading)
         emit(
             getResult {
                 api.getDetailExerciseResult(id)

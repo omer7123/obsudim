@@ -32,7 +32,7 @@ class EducationFragment : Fragment() {
     lateinit var vmFactory: EducationViewModel.Factory
     private val viewModel: EducationViewModel by viewModels { vmFactory }
 
-    private lateinit var mainAdapter: MainAdapter
+    private var adapter: MainAdapter = MainAdapter()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -78,7 +78,6 @@ class EducationFragment : Fragment() {
             is EducationScreenState.Error -> {
                 requireContext().showToast(state.msg)
             }
-
             EducationScreenState.Initial -> Unit
             EducationScreenState.Loading -> Unit
         }
@@ -98,14 +97,15 @@ class EducationFragment : Fragment() {
         }
 
         binding.title.text = data.theme
-
-
-
-        mainAdapter.submitList(data.materials.toCardDelegateItems())        //почему-то не срабатывает , хотя список непустой и делегаты верные
+        val a = data.materials.toCardDelegateItems()
+        Log.e("EducationFragment", "List size: ${a.size}")
+        a.forEach { Log.e("EducationFragment", "Item: ${it.content()}") }
+        adapter.submitList(a)
+        adapter.notifyDataSetChanged()
 
       /*  binding.cardsRw.scrollToPosition(
             data.score
-        ) */ //пока убрали скор на бэке - я забыл про этот момент
+        ) */
     }
 
     private fun markTaskAsCompleted() {
@@ -115,14 +115,14 @@ class EducationFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        mainAdapter = MainAdapter().apply {
+        adapter = MainAdapter().apply {
             addDelegate(
                 EducationCardDelegate()
             )
         }
         binding.cardsRw.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = mainAdapter
+            adapter = adapter
             setHasFixedSize(true)
         }
     }

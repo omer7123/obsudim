@@ -91,8 +91,6 @@ class TrackerMoodViewModel @Inject constructor(
 
         if (!isSameDay) {
             viewModelScope.launch {
-
-
                 saveMoodTrackerWithDateUseCase(
                     SaveMoodWithDateEntity(
                         score = currentNewMoodViewState.mood.toInt(),

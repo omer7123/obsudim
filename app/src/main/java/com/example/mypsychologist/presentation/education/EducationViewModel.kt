@@ -36,7 +36,6 @@ class EducationViewModel(
                     is Resource.Success -> _screenState.value = EducationScreenState.Content(result.data)
                 }
             }
-
         }
     }
 

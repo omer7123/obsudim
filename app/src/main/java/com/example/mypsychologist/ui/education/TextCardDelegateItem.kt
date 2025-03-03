@@ -24,7 +24,5 @@ fun List<SubtopicEntity>.toCardDelegateItems() = run {
     newList
 }
 
-
-
 fun List<ItemMaterialEntity>.toDelegateItems() =
     map { TextCardDelegateItem(it) }

@@ -26,7 +26,7 @@
         android:id="@+id/image_iv"
         android:layout_width="249dp"
         android:layout_height="410dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="70dp"
         android:src="@drawable/ic_board_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
