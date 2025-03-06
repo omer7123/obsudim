@@ -3,25 +3,40 @@ package com.example.mypsychologist.ui.education
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentEducationBinding
 import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
+import com.example.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.education.EducationScreenState
 import com.example.mypsychologist.presentation.education.EducationViewModel
 import com.example.mypsychologist.presentation.education.MarsAsCompleteStatus
-import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.core.PrimaryTextButton
+import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
 class EducationFragment : Fragment() {
@@ -32,7 +47,6 @@ class EducationFragment : Fragment() {
     lateinit var vmFactory: EducationViewModel.Factory
     private val viewModel: EducationViewModel by viewModels { vmFactory }
 
-    private var adapter: MainAdapter = MainAdapter()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -46,8 +60,6 @@ class EducationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEducationBinding.inflate(inflater, container, false)
-
-        setupAdapter()
 
         binding.includeToolbar.toolbar.apply {
             setNavigationOnClickListener {
@@ -78,6 +90,7 @@ class EducationFragment : Fragment() {
             is EducationScreenState.Error -> {
                 requireContext().showToast(state.msg)
             }
+
             EducationScreenState.Initial -> Unit
             EducationScreenState.Loading -> Unit
         }
@@ -90,22 +103,70 @@ class EducationFragment : Fragment() {
 
 
     private fun setupContent(data: EducationsEntity) {
-        binding.saveButton.isVisible = true
-        binding.saveButton.setOnClickListener {
-//            viewModel.saveProgress(data.materials.last().id)
-            markTaskAsCompleted()
-        }
 
         binding.title.text = data.theme
-        val a = data.materials.toCardDelegateItems()
-        Log.e("EducationFragment", "List size: ${a.size}")
-        a.forEach { Log.e("EducationFragment", "Item: ${it.content()}") }
-        adapter.submitList(a)
-        adapter.notifyDataSetChanged()
 
-      /*  binding.cardsRw.scrollToPosition(
-            data.score
-        ) */
+        val resultList = ArrayList<ItemMaterialEntity>()
+
+        for (subTopic in data.materials) {
+            for (card in subTopic.cards) {
+                resultList.add(card)
+            }
+        }
+
+        binding.cardsRw.setContent {
+            AppTheme {
+                EducationContent(
+                    resultList,
+                    onBtnClick = {
+                        markTaskAsCompleted()
+                    }
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun EducationContent(data: List<ItemMaterialEntity>, onBtnClick: () -> Unit) {
+        Column {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+            ) {
+                items(data) {
+                    EducationItem(it)
+                }
+                item {
+                    PrimaryTextButton(
+                        modifier = Modifier.padding(top = 20.dp),
+                        textString = stringResource(R.string.all_right),
+                        onClick = {
+                            onBtnClick()
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun EducationItem(item: ItemMaterialEntity) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color = AppTheme.colors.fourthBackground,
+                    shape = RoundedCornerShape(12.dp)
+                )
+        ) {
+            Text(
+                modifier = Modifier.padding(10.dp),
+                text = item.text,
+                style = AppTheme.typography.bodyL,
+                color = AppTheme.colors.primaryText
+            )
+        }
     }
 
     private fun markTaskAsCompleted() {
@@ -114,16 +175,30 @@ class EducationFragment : Fragment() {
         }
     }
 
-    private fun setupAdapter() {
-        adapter = MainAdapter().apply {
-            addDelegate(
-                EducationCardDelegate()
+    @Composable
+    @Preview(showBackground = true)
+    fun TestsContentPreview() {
+        val data = listOf(
+            ItemMaterialEntity(
+                id = "",
+                text = "Предлагаем узнать побольше о методике \n" +
+                        "когнитивно-поведенческой терапии - КПТ. \n" +
+                        "\n" +
+                        "Здесь собрана краткая, но ёмкая информация, которая поможет освоить метод самостоятельно или с психотерапевтом."
+            ), ItemMaterialEntity(
+                id = "",
+                text = "Метод позволяет достаточно быстро достичь эффекта и сохранить его после завершения терапии. За счет работы с проблемами, которые волнуют сейчас, без подробного погружения в прошлое."
+            ), ItemMaterialEntity(
+                id = "",
+                text = "Предлагаем узнать побольше о методике \n" +
+                        "когнитивно-поведенческой терапии - КПТ. \n" +
+                        "\n" +
+                        "Здесь собрана краткая, но ёмкая информация, которая поможет освоить метод самостоятельно или с психотерапевтом."
             )
-        }
-        binding.cardsRw.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = adapter
-            setHasFixedSize(true)
+
+        )
+        AppTheme {
+            EducationContent(data, {})
         }
     }
 

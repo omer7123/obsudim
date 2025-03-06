@@ -95,11 +95,13 @@ fun TestsScreen(viewModel: TestsViewModel, childFragmentManager: FragmentManager
 
     when (val state = viewState.value) {
 
-        is TestsScreenState.Content -> TestsContent(data = state.data) { test ->
+        is TestsScreenState.Content ->{
+            TestsContent(data = state.data) { test ->
 
             DiagnosticDialogFragment.newInstance(test.testId, test.title, test.description)
                 .show(childFragmentManager, DiagnosticDialogFragment.TAG)
         }
+            }
 
         is TestsScreenState.Error -> {
             PlaceholderError()
