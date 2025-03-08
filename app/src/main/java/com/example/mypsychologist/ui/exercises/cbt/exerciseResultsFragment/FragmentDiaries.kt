@@ -79,7 +79,8 @@ class FragmentDiaries : Fragment() {
             id = requireArguments().getString(EXERCISE_ID)!!,
             title = requireArguments().getString(EXERCISE_TITLE)!!,
             description = requireArguments().getString(EXERCISE_DESCRIPTION)!!,
-            linkToPicture = requireArguments().getString(IMAGE)!!
+            linkToPicture = requireArguments().getString(IMAGE)!!,
+            closed = false
         )
         setContent {
             AppTheme{
@@ -268,7 +269,8 @@ class FragmentDiaries : Fragment() {
                 exercise = ExerciseEntity(
                     "fdf", "КПТ-дневник",
                     stringResource(R.string.kpt_desc),
-                    "ds"
+                    "ds",
+                    true
                 ),
                 navBackOnClick = {}
             )

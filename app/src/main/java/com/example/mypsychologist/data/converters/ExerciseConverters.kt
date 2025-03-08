@@ -21,7 +21,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.FieldExerciseEnti
 import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
 
 fun ExercisesModel.toEntity(): ExerciseEntity {
-    return ExerciseEntity(id, title, description, linkToPicture)
+    return ExerciseEntity(id, title, description, "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai$linkToPicture", closed)
 }
 
 fun ExerciseDetailModel.toEntity(): ExerciseDetailEntity =

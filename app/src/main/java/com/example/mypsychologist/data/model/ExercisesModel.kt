@@ -9,7 +9,9 @@ data class ExercisesModel(
     val title: String,
     val description: String,
     @SerialName("link_to_picture")
-    val linkToPicture: String
+    val linkToPicture: String,
+    val closed: Boolean
+
 )
 
 @Serializable

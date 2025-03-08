@@ -1,16 +1,21 @@
 package com.example.mypsychologist.ui.core
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -77,9 +82,56 @@ fun SecondaryTextButton(
     }
 }
 
+@Composable
+fun DiaryTextButton(
+    modifier: Modifier = Modifier,
+    textString: String = stringResource(id = R.string.free_diary),
+    onClick: () -> Unit
+){
+    TextButton(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(
+                color = AppTheme.colors.primaryBackground,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        contentPadding = PaddingValues(horizontal = 16.5.dp, vertical = 13.dp),
+        onClick = { onClick() },
+        content = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    modifier = Modifier,
+                    text = textString,
+                    style = AppTheme.typography.bodyXLBold,
+                    color = AppTheme.colors.primaryTextInvert
+                )
+                Icon(
+                    modifier = Modifier.size(34.dp),
+                    painter = painterResource(id = R.drawable.ic_arrow_forward),
+                    tint = AppTheme.colors.primaryTextInvert,
+                    contentDescription = ""
+                )
+            }
+        }
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
-fun PrimaryTextButton_Preview(){
+private fun DiaryTextButton_Preview(){
+    AppTheme {
+        DiaryTextButton() {
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PrimaryTextButton_Preview(){
     AppTheme {
         PrimaryTextButton(
             textString = stringResource(id = R.string.mail),

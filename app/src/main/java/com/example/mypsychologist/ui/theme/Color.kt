@@ -18,6 +18,9 @@ data class AppThemeColor(
     val fiveBackground: Color, // синий 60
     val screenBackground: Color, // белый 100
     val navBackground: Color, // синий 100
+
+    //Extension Basic
+    val loading: Color
 )
 
 val lightShema = AppThemeColor(
@@ -32,6 +35,7 @@ val lightShema = AppThemeColor(
     fiveBackground = Color(0xFF97ACFF), // синий 60
     screenBackground = Color(0xFFFFFFFF), // белый 100
     navBackground = Color(0xFF0C2A9F), // синий 100
+    loading = Color(0xFFCFCFCF), // синий 100
 )
 
 val darkShema = AppThemeColor(
@@ -46,6 +50,7 @@ val darkShema = AppThemeColor(
     fiveBackground = Color(0xFF97ACFF), // синий 60
     screenBackground = Color(0xFF2F2D2D), // белый 100
     navBackground = Color(0xFFF3F5FF), // синий 100
+    loading =  Color(0xFF787777), // синий 100
 )
 
 object AppTheme {

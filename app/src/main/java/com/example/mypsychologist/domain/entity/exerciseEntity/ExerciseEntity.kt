@@ -6,7 +6,8 @@ data class ExerciseEntity(
     val id: String,
     val title: String,
     val description: String,
-    val linkToPicture: String
+    val linkToPicture: String,
+    val closed: Boolean
 )
 
 data class ExerciseDetailEntity(
