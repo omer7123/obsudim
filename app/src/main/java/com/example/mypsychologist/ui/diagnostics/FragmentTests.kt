@@ -72,9 +72,6 @@ class FragmentTests : Fragment() {
             profileIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_profile)
             }
-            psychologistsIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
-            }
         }
 
         binding.testsRw.setContent {

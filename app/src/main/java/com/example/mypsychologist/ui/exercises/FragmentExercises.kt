@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -80,6 +79,9 @@ class FragmentExercises : Fragment() {
     ): View {
         binding = FragmentExercisesBinding.inflate(inflater, container, false)
 
+        binding.include.profileIcon.setOnClickListener {
+            findNavController().navigate(R.id.fragment_profile)
+        }
         binding.content.setContent {
             AppTheme {
                 SetupMainContent(onThinkDiaryClick = {
@@ -97,9 +99,8 @@ class FragmentExercises : Fragment() {
                     findNavController().navigate(
                         R.id.freeDiaryTrackerMoodFragment,
                     )
-                }, onExerciseClick = {
-
-                })
+                },
+                    )
 
             }
         }
@@ -110,18 +111,15 @@ class FragmentExercises : Fragment() {
     private fun SetupMainContent(
         onThinkDiaryClick: () -> Unit,
         onFreeDiaryClick: () -> Unit,
-        onExerciseClick: (ExerciseEntity) -> Unit
     ) {
         val viewState = viewModel.screenState.collectAsState()
         when (val res = viewState.value) {
             is BaseStateUI.Content -> {
                 kptExercise = res.data.find { it.title == "КПТ-дневник" }
-                val resValue = res.data.filter { it != (kptExercise) }
 
-                RenderContent(value = resValue,
+                RenderContent(
                     onThinkDiaryClick = { onThinkDiaryClick() },
                     onFreeDiaryClick = { onFreeDiaryClick() },
-                    onExerciseClick = { onExerciseClick(it) },
                     modifier = Modifier.background(color = AppTheme.colors.screenBackground)
                 )
             }
@@ -134,10 +132,8 @@ class FragmentExercises : Fragment() {
 
     @Composable
     private fun RenderContent(
-        value: List<ExerciseEntity>,
         onThinkDiaryClick: () -> Unit,
         onFreeDiaryClick: () -> Unit,
-        onExerciseClick: (ExerciseEntity) -> Unit,
         modifier: Modifier = Modifier,
     ) {
         LazyVerticalGrid(
@@ -166,8 +162,7 @@ class FragmentExercises : Fragment() {
                         .clickable(
                             interactionSource = remember {
                                 MutableInteractionSource()
-                            },
-                            indication = null
+                            }, indication = null
                         ) {
                             onThinkDiaryClick()
                         },
@@ -199,25 +194,25 @@ class FragmentExercises : Fragment() {
                 }
             }
 
-            item(span = {
-                GridItemSpan(2)
-            }) {
-                Text(
-                    text = stringResource(id = R.string.problem_work),
-                    style = AppTheme.typography.titleXS,
-                    color = AppTheme.colors.primaryText
-                )
-            }
+//            item(span = {
+//                GridItemSpan(2)
+//            }) {
+//                Text(
+//                    text = stringResource(id = R.string.problem_work),
+//                    style = AppTheme.typography.titleXS,
+//                    color = AppTheme.colors.primaryText
+//                )
+//            }
 
-            items(value) {
-                Spacer(modifier = Modifier.padding(top = 20.dp))
-                when (it.closed) {
-                    true -> ExerciseItemClosed(item = it)
-                    false -> ExerciseItem(item = it) { item ->
-                        onExerciseClick(item)
-                    }
-                }
-            }
+//            items(value) {
+//                Spacer(modifier = Modifier.padding(top = 20.dp))
+//                when (it.closed) {
+//                    true -> ExerciseItemClosed(item = it)
+//                    false -> ExerciseItem(item = it) { item ->
+//                        onExerciseClick(item)
+//                    }
+//                }
+//            }
         }
     }
 
@@ -287,7 +282,7 @@ class FragmentExercises : Fragment() {
 
     @Composable
     private fun RenderLoading() {
-        Box(modifier = Modifier.fillMaxSize()){
+        Box(modifier = Modifier.fillMaxSize()) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
@@ -297,38 +292,7 @@ class FragmentExercises : Fragment() {
     private fun RenderContent_Preview() {
         Scaffold {
             AppTheme {
-                RenderContent(modifier = Modifier.padding(it), value = listOf(
-                    ExerciseEntity(
-                        id = "",
-                        title = "Определение групп \n" + "(категорий) проблем",
-                        linkToPicture = "",
-                        description = "",
-                        closed = false
-                    ),
-                    ExerciseEntity(
-                        id = "",
-                        title = "Определение групп \n" + "(категорий) проблем",
-                        linkToPicture = "",
-                        description = "",
-                        closed = true
-                    ),
-                    ExerciseEntity(
-                        id = "",
-                        title = "Определение групп \n" + "(категорий) проблем",
-                        linkToPicture = "",
-                        description = "",
-                        closed = true
-
-                    ),
-                    ExerciseEntity(
-                        id = "",
-                        title = "Определение групп \n" + "(категорий) проблем",
-                        linkToPicture = "",
-                        description = "",
-                        closed = true
-                    ),
-
-                    ), onThinkDiaryClick = {}, onFreeDiaryClick = {}, onExerciseClick = {})
+                RenderContent(modifier = Modifier.padding(it), onThinkDiaryClick = {}, onFreeDiaryClick = {},)
             }
         }
     }

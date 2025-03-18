@@ -38,7 +38,6 @@ import com.example.mypsychologist.domain.entity.educationEntity.TopicEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.education.EducationTopicsViewModel
 import com.example.mypsychologist.presentation.education.TopicsScreenState
-import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.core.PlaceholderError
 import com.example.mypsychologist.ui.diagnostics.SkeletonItem
@@ -52,8 +51,6 @@ class EducationTopicsFragment : Fragment() {
     @Inject
     lateinit var vmFactory: EducationTopicsViewModel.Factory
     private val viewModel: EducationTopicsViewModel by viewModels { vmFactory }
-
-    private lateinit var mainAdapter: MainAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -71,9 +68,6 @@ class EducationTopicsFragment : Fragment() {
             toolbar.title = getString(R.string.psychoeducation)
             profileIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_profile)
-            }
-            psychologistsIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
             }
         }
 
