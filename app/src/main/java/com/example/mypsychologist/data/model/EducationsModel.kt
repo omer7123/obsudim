@@ -20,7 +20,7 @@ data class EducationsModel(
     @SerialName("max_score")
     val maxScore: Int,
     @SerialName("link_to_picture")
-    val lincToPicture: String,
+    val linkToPicture: String,
     @SerialName("related_topics")
     val relatedTopics: List<RelatedTopicModel>,
     val subtopics: List<SubtopicModel>
@@ -30,7 +30,7 @@ data class RelatedTopicModel(
     val id: String,
     val theme: String,
     @SerialName("link_to_picture")
-    val lincToPicture: String,
+    val linkToPicture: String,
     @SerialName("max_score")
     val maxScore: Int
 )
@@ -44,7 +44,7 @@ data class ItemMaterialModel(
     val id: String,
     val text: String,
     @SerialName("link_to_picture")
-    val lincToPicture: String,
+    val linkToPicture: String,
 )
 
 @Serializable

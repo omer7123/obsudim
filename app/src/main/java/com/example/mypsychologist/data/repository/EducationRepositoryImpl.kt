@@ -1,6 +1,5 @@
 package com.example.mypsychologist.data.repository
 
-import android.util.Log
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
