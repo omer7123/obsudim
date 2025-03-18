@@ -191,7 +191,7 @@ class EducationFragment : Fragment() {
                         .fillMaxWidth(),
                 )
                 Box(
-                    modifier = Modifier
+                    modifier = Modifier.padding(10.dp)
                         .fillMaxWidth()
                         .background(
                             color = AppTheme.colors.fourthBackground,
