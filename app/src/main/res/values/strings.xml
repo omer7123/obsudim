@@ -19,6 +19,17 @@
     <string name="enter_your_data">Укажите свои данные</string>
     <string name="placeholder_registration">Почта и телефон нужны для напоминаний о необходимости пройти практику или записать впечатления о дне</string>
 
+    <string name="email_empty_placeholder">Укажите почту</string>
+    <string name="name_empty_placeholder">Укажите имя</string>
+    <string name="birthday_empty_placeholder">Укажите дату рождения</string>
+    <string name="city_empty_placeholder">Укажите город</string>
+    <string name="phone_empty_placeholder">Укажите номер телефона</string>
+    <string name="password_empty_placeholder">Укажите пароль</string>
+    <string name="password_confirm_empty_placeholder">Повторите пароль</string>
+    <string name="password_confirm_not_equals_placeholder">Пароли не совпадают</string>
+    <string name="email_not_valid_placeholder">Почта указана в неверном формате</string>
+    <string name="phone_not_valid_placeholder">Номер телефона указан в неверном формате</string>
+
     <string name="main">Главная</string>
     <string name="my_program">Моя программа</string>
     <string name="today">Сегодня</string>

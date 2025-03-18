@@ -19,14 +19,13 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -54,6 +53,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
+import com.example.mypsychologist.data.repository.PhoneVisualTransformation
 import com.example.mypsychologist.extensions.convertMillisToDate
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
@@ -130,7 +130,7 @@ class RegistrationFragment : Fragment() {
             onGenderChange = {viewModel.changeGender(it)},
             onDateBirthDayChange = {viewModel.changeBirthday(it)},
             onNextClick = {viewModel.onNextClick()},
-            onRegisterClick = {viewModel.registerR()},
+            onRegisterClick = {viewModel.register()},
             onEmailChange = {viewModel.changeEmail(it)},
             onPhoneChange = {viewModel.changePhone(it)},
             onPasswordChange = {viewModel.changePassword(it)},
@@ -256,7 +256,6 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
     @Composable
     private fun PersonalDataScreen(
         value: RegisterContent,
@@ -282,20 +281,25 @@ class RegistrationFragment : Fragment() {
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 capitalization = KeyboardCapitalization.Words
-            )
+            ),
+            errorStr = value.nameError?.let { stringResource(id = it) } ?: ""
         )
+
+        Spacer(modifier = Modifier.padding(top = 16.dp))
 
         PrimaryTextField(
             field = value.city,
             placeHolderText = stringResource(id = R.string.city),
             onFieldChange = {onCityChange(it)},
-            modifier = Modifier.padding(top = 16.dp),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 capitalization = KeyboardCapitalization.Words
-            )
+            ),
+            errorStr = value.cityError?.let { stringResource(id = it) } ?: ""
         )
 
+
+        Spacer(modifier = Modifier.padding(top = 16.dp))
         PrimaryPickerTextField(
             field = value.birthday,
             placeHolderText = stringResource(id = R.string.birthday),
@@ -309,26 +313,32 @@ class RegistrationFragment : Fragment() {
                     )
                 }
             },
-            modifier = Modifier.padding(vertical = 16.dp)
+            errorStr = value.birthdayError?.let { stringResource(id = it) },
+
         )
+
+        Spacer(modifier = Modifier.padding(top = 16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
             Box(
-                modifier = Modifier.background(
-                    color = when(value.gender) {
-                        Gender.MALE -> AppTheme.colors.secondaryBackground
-                        else -> AppTheme.colors.tertiaryBackground
-                    },
-                    shape = RoundedCornerShape(12.dp)
-                ).weight(0.5f).clickable(
-                    interactionSource = null,
-                    indication = null,
-                    onClick = {
-                        onGenderChange(Gender.MALE)
-                    }
-                ),
+                modifier = Modifier
+                    .background(
+                        color = when (value.gender) {
+                            Gender.MALE -> AppTheme.colors.secondaryBackground
+                            else -> AppTheme.colors.tertiaryBackground
+                        },
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .weight(0.5f)
+                    .clickable(
+                        interactionSource = null,
+                        indication = null,
+                        onClick = {
+                            onGenderChange(Gender.MALE)
+                        }
+                    ),
 
             ) {
                 Text(
@@ -346,11 +356,12 @@ class RegistrationFragment : Fragment() {
             Box(
                 modifier = Modifier
                     .background(
-                        color = when(value.gender) {
+                        color = when (value.gender) {
                             Gender.FEMALE -> AppTheme.colors.secondaryBackground
                             else -> AppTheme.colors.tertiaryBackground
                         },
-                        shape = RoundedCornerShape(12.dp))
+                        shape = RoundedCornerShape(12.dp)
+                    )
                     .weight(0.5f)
                     .clickable(
                         interactionSource = null,
@@ -401,6 +412,8 @@ class RegistrationFragment : Fragment() {
             modifier = Modifier.padding(top = 10.dp)
         )
 
+        Spacer(modifier = Modifier.padding(top = 16.dp))
+
         PrimaryTextField(
             field = value.email,
             placeHolderText = stringResource(id = R.string.mail),
@@ -411,20 +424,26 @@ class RegistrationFragment : Fragment() {
                 imeAction = ImeAction.Next,
                 keyboardType = KeyboardType.Email
             ),
-            modifier = Modifier.padding(top = 30.dp)
+            errorStr = value.emailError?.let { stringResource(id = it) } ?: ""
         )
+
+        Spacer(modifier = Modifier.padding(top = 16.dp))
 
         PrimaryTextField(
             field = value.phoneNumber,
             placeHolderText = stringResource(id = R.string.phone),
             onFieldChange = { phoneNumber ->
-                onPhoneChange(phoneNumber)
+                onPhoneChange(phoneNumber.take(LENGTH_PHONE_NUMBER))
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Phone
             ),
-            modifier = Modifier.padding(top = 16.dp)
+            visualTransformation = PhoneVisualTransformation(),
+            errorStr = value.phoneNumberError?.let { stringResource(id = it) } ?: "",
         )
+
+        Spacer(modifier = Modifier.padding(top = 16.dp))
 
         PrimaryPickerTextField(
             field = value.password,
@@ -446,11 +465,16 @@ class RegistrationFragment : Fragment() {
                     )
                 }
             },
-            visualTransformation =
-                if(passwordVisible) VisualTransformation.None
+            visualTransformation = if(passwordVisible) {
+                    VisualTransformation.None
+                }
                 else PasswordVisualTransformation(),
-            modifier = Modifier.padding(top = 16.dp)
+
+            errorStr = value.passwordError?.let { stringResource(id = it) }
+
         )
+
+        Spacer(modifier = Modifier.padding(top = 16.dp))
 
         PrimaryPickerTextField(
             field = value.confirmPassword,
@@ -468,10 +492,10 @@ class RegistrationFragment : Fragment() {
                     Icon(imageVector = image, contentDescription = "", tint = AppTheme.colors.primaryText)
                 }
             },
+            errorStr = value.confirmPasswordError?.let{ stringResource(id = it)},
             visualTransformation =
                 if(passwordVisible) VisualTransformation.None
                 else PasswordVisualTransformation(),
-            modifier = Modifier.padding(top = 16.dp)
         )
 
         PrimaryTextButton(
@@ -487,10 +511,13 @@ class RegistrationFragment : Fragment() {
         AppTheme {
             Content(
                 viewState = remember {
-                    mutableStateOf(RegisterContent(step = StepScreen.PersonalScreen))
+                    mutableStateOf(RegisterContent(step = StepScreen.RegistrationScreen))
                 },
                 {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
             )
         }
+    }
+    companion object{
+        const val LENGTH_PHONE_NUMBER = 10
     }
 }

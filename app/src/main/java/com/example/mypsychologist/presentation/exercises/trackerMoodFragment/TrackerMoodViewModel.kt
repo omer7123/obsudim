@@ -63,7 +63,8 @@ class TrackerMoodViewModel @Inject constructor(
     private val _newMoodViewState: MutableStateFlow<NewMoodStatusViewState> = MutableStateFlow(NewMoodStatusViewState.Hide)
     val newMoodViewState: StateFlow<NewMoodStatusViewState> = _newMoodViewState
 
-    private val _moodsViewState: MutableStateFlow<MoodsTrackerViewState> = MutableStateFlow(MoodsTrackerViewState.Initial)
+    private val _moodsViewState: MutableStateFlow<MoodsTrackerViewState> =
+        MutableStateFlow(MoodsTrackerViewState.Initial)
     val moodsViewState: StateFlow<MoodsTrackerViewState> = _moodsViewState
 
     init {

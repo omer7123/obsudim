@@ -26,7 +26,8 @@ class FreeDiaryDataSourceImpl @Inject constructor(private val api: FreeDiaryServ
         }
     }
 
-    override suspend fun getFreeDiariesByDate(date: String): Flow<Resource<List<FreeDiaryModel>>> =
+    override suspend fun getFreeDiariesByDate(date: String):
+            Flow<Resource<List<FreeDiaryModel>>> =
         flow {
             emit(Resource.Loading)
             emit(getResult {

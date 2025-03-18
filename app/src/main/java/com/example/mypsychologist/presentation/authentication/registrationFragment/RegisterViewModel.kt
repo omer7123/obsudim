@@ -1,11 +1,11 @@
 package com.example.mypsychologist.presentation.authentication.registrationFragment
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.annotation.SuppressLint
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.data.model.RegisterModel
 import com.example.mypsychologist.domain.entity.authenticationEntity.RegisterEntity
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.RegisterUseCase
@@ -36,58 +36,25 @@ class RegisterViewModel @Inject constructor(
         _statusRegistration.value = RegisterStatus.Error(error.message.toString())
     }
 
-    fun register(register: RegisterModel) {
-//        if (register.email.isNotEmpty() && register.password.isNotEmpty() && register.confirm_password.isNotEmpty() && register.password == register.confirm_password) {
-//            viewModelScope.launch(handler) {
-//                _statusRegistration.value = RegisterStatus.Loading
-//                when (val result = registerUseCase(register)) {
-//                    is Resource.Error -> _statusRegistration.value =
-//                        RegisterStatus.Error(result.msg.toString())
-//
-//                    Resource.Loading -> _statusRegistration.value = RegisterStatus.Loading
-//                    is Resource.Success -> {
-//                        saveToken(result)
-//                    }
-//                }
-//            }
-//        } else {
-//            _stateScreen.value = RegisterStatus.Content(
-//                email = register.email.isEmpty(),
-//                password = register.password.isEmpty(),
-//                confirmPassword = register.confirm_password.isEmpty(),
-//            )
-//        }
-    }
-
     private suspend fun saveToken(result: Resource.Success<User>) {
         saveTokenUseCase(result.data.token)
         saveUserIdUseCase(result.data.user_id)
         _statusRegistration.value = RegisterStatus.Success
     }
 
-    fun changeName(name: String){
-        _stateScreen.value = stateScreen.value.copy(name = name)
-    }
-
-    fun changeCity(city: String){
-        _stateScreen.value = stateScreen.value.copy(city = city)
-    }
-
-    fun changeGender(gender: Gender){
-        _stateScreen.value = stateScreen.value.copy(gender = gender)
-    }
-
-    fun changeBirthday(date: String){
-        _stateScreen.value = stateScreen.value.copy(birthday = date)
-    }
-
     fun onNextClick() {
-        if (
-            stateScreen.value.city.isNotEmpty() &&
-            stateScreen.value.city.isNotEmpty() &&
-            stateScreen.value.gender != Gender.INITIAL &&
-            stateScreen.value.birthday.isNotEmpty()
-        ){
+        val name = stateScreen.value.name
+        val city = stateScreen.value.city
+        val birthday = stateScreen.value.birthday
+
+        if (name.isEmpty()) _stateScreen.value =
+            stateScreen.value.copy(nameError = R.string.name_empty_placeholder)
+        if (city.isEmpty()) _stateScreen.value =
+            stateScreen.value.copy(cityError = R.string.city_empty_placeholder)
+        if (birthday.isEmpty()) _stateScreen.value =
+            stateScreen.value.copy(birthdayError = R.string.birthday_empty_placeholder)
+
+        if (stateScreen.value.name.isNotEmpty() && stateScreen.value.city.isNotEmpty() && stateScreen.value.gender != Gender.INITIAL && stateScreen.value.birthday.isNotEmpty()) {
             _stateScreen.value = stateScreen.value.copy(step = StepScreen.RegistrationScreen)
         }
     }
@@ -96,25 +63,27 @@ class RegisterViewModel @Inject constructor(
         _stateScreen.value = stateScreen.value.copy(step = StepScreen.PersonalScreen)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun registerR() {
-        val currentState = stateScreen.value
-        val email = currentState.email
-        val phoneNumber = currentState.phoneNumber
-        val password = currentState.password
-        val confirmPassword = currentState.confirmPassword
+    @SuppressLint("NewApi")
+    fun register() {
+        validationData()
 
-        if (email.isNotEmpty() &&
-            phoneNumber.isNotEmpty() &&
-            password.isNotEmpty() &&
-            confirmPassword.isNotEmpty() &&
-            password == confirmPassword) {
+        val currentStateAfterValidation = stateScreen.value
+        val email = currentStateAfterValidation.email
+        val phoneNumber = currentStateAfterValidation.phoneNumber
+        val password = currentStateAfterValidation.password
+        val confirmPassword = currentStateAfterValidation.confirmPassword
+
+        if (currentStateAfterValidation.emailError == null &&
+            currentStateAfterValidation.phoneNumberError == null &&
+            currentStateAfterValidation.passwordError == null &&
+            currentStateAfterValidation.confirmPasswordError == null
+        ) {
 
             val registerEntity = RegisterEntity(
-                username = currentState.name,
-                birthDate = convertDateToBackendFormatString(currentState.birthday),
-                gender = currentState.gender,
-                city = currentState.city,
+                username = currentStateAfterValidation.name,
+                birthDate = convertDateToBackendFormatString(currentStateAfterValidation.birthday),
+                gender = currentStateAfterValidation.gender,
+                city = currentStateAfterValidation.city,
                 email = email,
                 phoneNumber = phoneNumber,
                 password = password,
@@ -137,19 +106,65 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    private fun validationData() {
+        val currentState = stateScreen.value
+        val email = currentState.email
+        val phoneNumber = currentState.phoneNumber
+        val password = currentState.password
+        val confirmPassword = currentState.confirmPassword
+
+        if (email.isEmpty()) {
+            _stateScreen.value =
+                stateScreen.value.copy(emailError = R.string.email_empty_placeholder)
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            _stateScreen.value = stateScreen.value.copy(emailError = R.string.email_not_valid_placeholder)
+        }
+        if (phoneNumber.isEmpty()){
+            _stateScreen.value =
+                stateScreen.value.copy(phoneNumberError = R.string.phone_empty_placeholder)
+        }else if(phoneNumber.length<10){
+            _stateScreen.value = stateScreen.value.copy(phoneNumberError = R.string.phone_not_valid_placeholder)
+        }
+        if (password.isEmpty()) _stateScreen.value =
+            stateScreen.value.copy(passwordError = R.string.password_empty_placeholder)
+        if (confirmPassword.isEmpty()) {
+            _stateScreen.value =
+                stateScreen.value.copy(confirmPasswordError = R.string.password_confirm_empty_placeholder)
+        }else if(confirmPassword != password){
+            _stateScreen.value = currentState.copy(confirmPasswordError = R.string.password_confirm_not_equals_placeholder)
+        }
+    }
+
+    fun changeName(name: String) {
+        _stateScreen.value = stateScreen.value.copy(name = name, nameError = null)
+    }
+
+    fun changeCity(city: String) {
+        _stateScreen.value = stateScreen.value.copy(city = city, cityError = null)
+    }
+
+    fun changeGender(gender: Gender) {
+        _stateScreen.value = stateScreen.value.copy(gender = gender)
+    }
+
+    fun changeBirthday(date: String) {
+        _stateScreen.value = stateScreen.value.copy(birthday = date, birthdayError = null)
+    }
+
     fun changeEmail(email: String) {
-        _stateScreen.value = stateScreen.value.copy(email = email)
+        _stateScreen.value = stateScreen.value.copy(email = email, emailError = null)
     }
 
     fun changePhone(phone: String) {
-        _stateScreen.value = stateScreen.value.copy(phoneNumber = phone)
+        _stateScreen.value = stateScreen.value.copy(phoneNumber = phone, phoneNumberError = null)
     }
 
-    fun changePassword(password: String){
-        _stateScreen.value = _stateScreen.value.copy(password = password)
+    fun changePassword(password: String) {
+        _stateScreen.value = _stateScreen.value.copy(password = password, passwordError = null)
     }
 
-    fun changeConfirmPassword(password: String){
-        _stateScreen.value = _stateScreen.value.copy(confirmPassword = password)
+    fun changeConfirmPassword(password: String) {
+        _stateScreen.value =
+            _stateScreen.value.copy(confirmPassword = password, confirmPasswordError = null)
     }
 }

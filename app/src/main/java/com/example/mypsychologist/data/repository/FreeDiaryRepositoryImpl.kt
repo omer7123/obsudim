@@ -36,7 +36,8 @@ class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDi
         return dataSource.addFreeDiary(freeDiary.toNewFreeDiaryModel())
     }
 
-    override suspend fun getFreeDiariesByDay(day: String): Flow<Resource<List<FreeDiaryEntity>>> {
+    override suspend fun getFreeDiariesByDay(day: String):
+            Flow<Resource<List<FreeDiaryEntity>>> {
         return dataSource.getFreeDiariesByDate(day).checkResource {freeDiaries->
             freeDiaries.map {
                 it.toFreeDiaryEntity()

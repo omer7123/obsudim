@@ -1,7 +1,10 @@
 package com.example.mypsychologist.ui.core
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -32,37 +35,59 @@ fun PrimaryTextField(
     placeHolderText: String,
     onFieldChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    errorStr: String? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
     val focusManager: FocusManager = LocalFocusManager.current
 
-    TextField(
-        modifier = modifier
+    Column(modifier = modifier) {
+        TextField(modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = AppTheme.colors.tertiaryBackground, shape = RoundedCornerShape(12.dp)
-            ), value = field, onValueChange = onFieldChange, singleLine = true, placeholder = {
+                color = if (errorStr.isNullOrEmpty()) {
+                    AppTheme.colors.tertiaryBackground
+                } else {
+                    AppTheme.colors.errorContainer
+                }, shape = RoundedCornerShape(12.dp)
+            ),
+            value = field,
+            onValueChange = onFieldChange,
+            singleLine = true,
+
+            placeholder = {
+                Text(
+                    text = placeHolderText,
+                    style = AppTheme.typography.bodyM,
+                    color = AppTheme.colors.secondaryText
+                )
+            },
+            visualTransformation = visualTransformation,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                textColor = AppTheme.colors.primaryText,
+                unfocusedBorderColor = Color.Transparent,
+                focusedBorderColor = Color.Transparent,
+                cursorColor = AppTheme.colors.primaryText
+            ),
+
+            textStyle = AppTheme.typography.bodyM,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = KeyboardActions(onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }, onDone = {
+                focusManager.clearFocus()
+            })
+        )
+
+        Spacer(modifier = Modifier.padding(top = 10.dp))
+        if (!errorStr.isNullOrEmpty()) {
             Text(
-                text = placeHolderText,
+                text = errorStr,
                 style = AppTheme.typography.bodyM,
                 color = AppTheme.colors.secondaryText
             )
-        }, colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = AppTheme.colors.primaryText,
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            cursorColor = AppTheme.colors.primaryText
-        ), textStyle = AppTheme.typography.bodyM,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = KeyboardActions(
-            onNext = {
-                focusManager.moveFocus(FocusDirection.Down)
-            },
-            onDone = {
-                focusManager.clearFocus()
-            }
-        )
-    )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -77,36 +102,28 @@ fun TextFieldForDropMenu(
 ) {
     val focusManager = LocalFocusManager.current
 
-    TextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(
-                color = AppTheme.colors.tertiaryBackground, shape = RoundedCornerShape(12.dp)
-            ),
-        value = field, onValueChange = onFieldChange, singleLine = true, placeholder = {
-            Text(
-                text = placeHolderText,
-                style = AppTheme.typography.bodyM,
-                color = AppTheme.colors.secondaryText
-            )
-        },
-        trailingIcon = {
-            ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
-        },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = AppTheme.colors.primaryText,
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            cursorColor = AppTheme.colors.primaryText
-        ), textStyle = AppTheme.typography.bodyM,
-        keyboardOptions = KeyboardOptions(
-            imeAction = imeAction,
-        ),
-        readOnly = true,
-        keyboardActions = KeyboardActions(onNext = {
-            focusManager.moveFocus(FocusDirection.Down)
-        }
+    TextField(modifier = modifier
+        .fillMaxWidth()
+        .background(
+            color = AppTheme.colors.tertiaryBackground, shape = RoundedCornerShape(12.dp)
+        ), value = field, onValueChange = onFieldChange, singleLine = true, placeholder = {
+        Text(
+            text = placeHolderText,
+            style = AppTheme.typography.bodyM,
+            color = AppTheme.colors.secondaryText
         )
+    }, trailingIcon = {
+        ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
+    }, colors = TextFieldDefaults.outlinedTextFieldColors(
+        textColor = AppTheme.colors.primaryText,
+        unfocusedBorderColor = Color.Transparent,
+        focusedBorderColor = Color.Transparent,
+        cursorColor = AppTheme.colors.primaryText
+    ), textStyle = AppTheme.typography.bodyM, keyboardOptions = KeyboardOptions(
+        imeAction = imeAction,
+    ), readOnly = true, keyboardActions = KeyboardActions(onNext = {
+        focusManager.moveFocus(FocusDirection.Down)
+    })
     )
 }
 
@@ -120,74 +137,83 @@ fun PrimaryPickerTextField(
     imeAction: ImeAction = ImeAction.Default,
     readOnly: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    errorStr: String? = null,
 ) {
     val focusManager = LocalFocusManager.current
 
-    TextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(
-                color = AppTheme.colors.tertiaryBackground,
-                shape = RoundedCornerShape(12.dp)
+    Column(modifier = modifier) {
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color = if (errorStr.isNullOrEmpty()) {
+                        AppTheme.colors.tertiaryBackground
+                    } else {
+                        AppTheme.colors.errorContainer
+                    }, shape = RoundedCornerShape(12.dp)
+
+                ),
+            value = field,
+            onValueChange = onFieldChange,
+            singleLine = true,
+            trailingIcon = trailingIcon,
+            visualTransformation = visualTransformation,
+            placeholder = {
+                Text(
+                    text = placeHolderText,
+                    style = AppTheme.typography.bodyM,
+                    color = AppTheme.colors.secondaryText
+                )
+            },
+            readOnly = readOnly,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                textColor = AppTheme.colors.primaryText,
+                unfocusedBorderColor = Color.Transparent,
+                focusedBorderColor = Color.Transparent,
+                cursorColor = AppTheme.colors.primaryText
             ),
-        value = field,
-        onValueChange = onFieldChange,
-        singleLine = true,
-        trailingIcon = trailingIcon,
-        visualTransformation = visualTransformation,
-        placeholder = {
+            textStyle = AppTheme.typography.bodyM,
+            keyboardOptions = KeyboardOptions(
+                imeAction = imeAction
+            ),
+            keyboardActions = KeyboardActions(onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }, onDone = {
+                focusManager.clearFocus()
+            }),
+        )
+
+        Spacer(modifier = Modifier.padding(top = 10.dp))
+
+        if (!errorStr.isNullOrEmpty()) {
             Text(
-                text = placeHolderText,
+                text = errorStr,
                 style = AppTheme.typography.bodyM,
                 color = AppTheme.colors.secondaryText
             )
-        },
-        readOnly = readOnly,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = AppTheme.colors.primaryText,
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            cursorColor = AppTheme.colors.primaryText
-        ),
-        textStyle = AppTheme.typography.bodyM,
-        keyboardOptions = KeyboardOptions(
-            imeAction = imeAction
-        ),
-        keyboardActions = KeyboardActions(
-            onNext = {
-                focusManager.moveFocus(FocusDirection.Down)
-            },
-            onDone = {
-                focusManager.clearFocus()
-            }
-        ),
-    )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerModal(
-    onDateSelected: (Long?) -> Unit,
-    onDismiss: () -> Unit
+    onDateSelected: (Long?) -> Unit, onDismiss: () -> Unit
 ) {
     val datePickerState = rememberDatePickerState()
 
-    DatePickerDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {
-            TextButton(onClick = {
-                onDateSelected(datePickerState.selectedDateMillis)
-                onDismiss()
-            }) {
-                Text("OK")
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel")
-            }
+    DatePickerDialog(onDismissRequest = onDismiss, confirmButton = {
+        TextButton(onClick = {
+            onDateSelected(datePickerState.selectedDateMillis)
+            onDismiss()
+        }) {
+            Text("OK")
         }
-    ) {
+    }, dismissButton = {
+        TextButton(onClick = onDismiss) {
+            Text("Cancel")
+        }
+    }) {
         DatePicker(state = datePickerState)
     }
 }

@@ -6,14 +6,21 @@ import androidx.compose.runtime.Immutable
 data class RegisterContent(
     val step: StepScreen,
     val name: String = "",
+    val nameError: Int? = null,
     val birthday: String = "",
+    val birthdayError: Int? = null,
     val gender: Gender = Gender.INITIAL,
     val city: String = "",
+    val cityError: Int? = null,
 
     val email: String = "",
+    val emailError: Int? = null,
     val phoneNumber: String = "",
+    val phoneNumberError: Int? = null,
     val password: String = "",
+    val passwordError: Int? = null,
     val confirmPassword: String = "",
+    val confirmPasswordError: Int? = null,
 
 )
 sealed interface RegisterStatus{
