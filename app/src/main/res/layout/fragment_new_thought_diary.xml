@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:paddingBottom="40dp"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -21,9 +21,10 @@
 
             <com.google.android.material.chip.Chip
                 style="@style/Widget.Material3.Chip.Assist.Elevated"
-                android:textColor="?attr/colorScheme"
+                android:textColor="?attr/colorOnSecondaryContainer"
                 android:id="@+id/hints_chip"
                 android:layout_marginEnd="16dp"
+                app:chipBackgroundColor="?attr/colorOnTertiaryContainer"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="end"
                 android:layout_width="wrap_content"
@@ -31,15 +32,7 @@
                 app:chipIcon="@drawable/ic_question"
                 android:text="@string/hints" />
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                style="@style/BodyL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="@string/cbt_diary_desc" />
+
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/progress_circular"

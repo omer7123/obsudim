@@ -106,7 +106,6 @@ class FragmentNewCBTDiary : Fragment() {
     private fun renderContent(data: ExerciseDetailWithDelegateItem) {
         binding.progressCircular.isVisible = false
         binding.includeToolbar.toolbar.title = data.title
-        binding.description.text = data.description
 
         dataList = data.fields
         mainAdapter = MainAdapter().apply {

@@ -25,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -156,7 +157,7 @@ fun TestItem(item: TestEntity, onItemClick: (TestEntity) -> Unit) {
             model = ImageRequest.Builder(LocalContext.current).data(item.linkToPicture).build(),
             contentDescription = item.title,
             contentScale = ContentScale.Crop,
-            placeholder = painterResource(id = R.drawable.ic_tracker_mood_practice),
+            placeholder = ColorPainter(color = AppTheme.colors.loading),
             error = painterResource(id = R.drawable.ic_diary_practice),
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(12.dp))

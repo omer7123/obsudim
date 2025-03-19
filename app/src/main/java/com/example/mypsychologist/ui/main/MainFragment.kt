@@ -21,7 +21,6 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEnti
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
-import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.diagnostics.PassingTestFragment
 import com.example.mypsychologist.ui.education.EducationFragment
 import com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary
@@ -35,7 +34,8 @@ import javax.inject.Inject
 
 class MainFragment : Fragment() {
 
-    private var binding: FragmentMainBinding by autoCleared()
+    private var _binding: FragmentMainBinding? = null
+    private val binding: FragmentMainBinding get() = requireNotNull(_binding)
 
     @Inject
     lateinit var vmFactory: MainViewModel.Factory
@@ -55,7 +55,7 @@ class MainFragment : Fragment() {
 
         setNavbarActualItem()
 
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         setupListeners()
 
