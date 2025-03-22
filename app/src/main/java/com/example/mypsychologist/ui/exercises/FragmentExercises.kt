@@ -120,7 +120,8 @@ class FragmentExercises : Fragment() {
                 RenderContent(
                     onThinkDiaryClick = { onThinkDiaryClick() },
                     onFreeDiaryClick = { onFreeDiaryClick() },
-                    modifier = Modifier.background(color = AppTheme.colors.screenBackground)
+                    modifier = Modifier.background(color = AppTheme.colors.screenBackground),
+                    onDefinitionGroupProblemClick = {findNavController().navigate(R.id.action_fragment_exercises_to_definitionProblemGroupExerciseFragment)}
                 )
             }
 
@@ -135,13 +136,14 @@ class FragmentExercises : Fragment() {
         onThinkDiaryClick: () -> Unit,
         onFreeDiaryClick: () -> Unit,
         modifier: Modifier = Modifier,
+        onDefinitionGroupProblemClick: () -> Unit,
     ) {
         LazyVerticalGrid(
             modifier = modifier.padding(horizontal = 16.dp),
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
-            contentPadding = PaddingValues(vertical = 30.dp)
+            contentPadding = PaddingValues(vertical = 30.dp),
         ) {
             item(span = {
                 GridItemSpan(2)
@@ -194,16 +196,28 @@ class FragmentExercises : Fragment() {
                 }
             }
 
-//            item(span = {
-//                GridItemSpan(2)
-//            }) {
-//                Text(
-//                    text = stringResource(id = R.string.problem_work),
-//                    style = AppTheme.typography.titleXS,
-//                    color = AppTheme.colors.primaryText
-//                )
-//            }
+            item(span = {
+                GridItemSpan(2)
+            }) {
+                Text(
+                    text = stringResource(id = R.string.problem_work),
+                    style = AppTheme.typography.titleXS,
+                    color = AppTheme.colors.primaryText
+                )
+            }
 
+            item{
+                ExerciseItem(item = ExerciseEntity(
+                    id="1",
+                    title = "Определение групп \n" +
+                            "(категорий) проблем",
+                    description = "",
+                    linkToPicture = "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/exercise/images_exercise/Определение_групп_проблем.png",
+                    closed = false
+                )) {
+                    onDefinitionGroupProblemClick()
+                }
+            }
 //            items(value) {
 //                Spacer(modifier = Modifier.padding(top = 20.dp))
 //                when (it.closed) {
@@ -292,7 +306,7 @@ class FragmentExercises : Fragment() {
     private fun RenderContent_Preview() {
         Scaffold {
             AppTheme {
-                RenderContent(modifier = Modifier.padding(it), onThinkDiaryClick = {}, onFreeDiaryClick = {},)
+                RenderContent(modifier = Modifier.padding(it), onThinkDiaryClick = {}, onFreeDiaryClick = {}, onDefinitionGroupProblemClick = {})
             }
         }
     }

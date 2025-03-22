@@ -21,6 +21,7 @@
 
     <string name="email_empty_placeholder">Укажите почту</string>
     <string name="name_empty_placeholder">Укажите имя</string>
+    <string name="field_empty_placeholder">Данное поле не может быть пустым</string>
     <string name="birthday_empty_placeholder">Укажите дату рождения</string>
     <string name="city_empty_placeholder">Укажите город</string>
     <string name="phone_empty_placeholder">Укажите номер телефона</string>
@@ -51,6 +52,21 @@
     <string name="hints">Подсказки</string>
 
     <string name="exercises">Упражнения</string>
+
+    <string name="group_problem">Группы проблем</string>
+
+    <string name="group_problem_q_1">В какой сфере вы испытываете трудности?</string>
+    <string name="group_problem_hint_1">Укажите сферу</string>
+    <string name="group_problem_desc_1">Например, работа или личная жизнь</string>
+
+    <string name="group_problem_q_2">Что вы чувствуете по этому поводу?</string>
+    <string name="group_problem_hint_2">Укажите эмоцию</string>
+    <string name="group_problem_desc_2">Одно слово, наиболее ярко, описывающее ваши ощущения</string>
+
+    <string name="group_problem_q_3">Чего вы хотите добиться, когда решите проблему?</string>
+    <string name="group_problem_hint_3">Укажите цель</string>
+
+
     <string name="exercises_signature">Прокачай себя</string>
     <string name="psychoeducation">Теория</string>
     <string name="psychoeducation_signature">Познай психологию</string>

@@ -79,8 +79,8 @@ fun PrimaryTextField(
             })
         )
 
-        Spacer(modifier = Modifier.padding(top = 10.dp))
         if (!errorStr.isNullOrEmpty()) {
+            Spacer(modifier = Modifier.padding(top = 10.dp))
             Text(
                 text = errorStr,
                 style = AppTheme.typography.bodyM,

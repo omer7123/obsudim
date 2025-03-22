@@ -16,6 +16,7 @@ import com.example.mypsychologist.presentation.authentication.registrationFragme
 import com.example.mypsychologist.presentation.diagnostics.PassingTestViewModel
 import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryViewModel
+import com.example.mypsychologist.presentation.exercises.definitionProblemGroupExerciseFragment.DefinitionProblemGroupExerciseViewModel
 import com.example.mypsychologist.presentation.exercises.trackerMoodFragment.TrackerMoodViewModel
 import dagger.Binds
 import dagger.Module
@@ -70,5 +71,9 @@ interface DomainModule {
     @Binds
     @[IntoMap ClassKey(TrackerMoodViewModel::class)]
     fun provideTrackerMoodViewModel(trackerMoodViewModel: TrackerMoodViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ClassKey(DefinitionProblemGroupExerciseViewModel::class)]
+    fun provideDefinitionProlemGroupExerciseViewModel(definitionProblemGroupExerciseViewModel: DefinitionProblemGroupExerciseViewModel): ViewModel
 
 }
