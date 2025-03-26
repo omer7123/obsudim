@@ -25,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -175,10 +176,12 @@ class EducationFragment : Fragment() {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current).data(card.linkToPicture).build(),
                     contentDescription = card.text,
+                    placeholder = ColorPainter(color = AppTheme.colors.loading),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(12.dp))
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+//                        .aspectRatio(1/0.66f),
                 )
                 Box(
                     modifier = Modifier
