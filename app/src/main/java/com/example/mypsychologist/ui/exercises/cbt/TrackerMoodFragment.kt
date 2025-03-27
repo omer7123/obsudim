@@ -52,18 +52,18 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
                 requireContext().showToast(state.msg)
                 binding.progressBar.isVisible = false
                 binding.saveBtn.isVisible = true
-                binding.specifyBtn.isVisible = true
+          //      binding.specifyBtn.isVisible = true
                 binding.saveBtn.isClickable = true
-                binding.specifyBtn.isClickable = true
+          //      binding.specifyBtn.isClickable = true
             }
 
             TrackerMoodScreenState.Initial -> {}
             TrackerMoodScreenState.Loading -> {
                 binding.progressBar.isVisible = true
                 binding.saveBtn.visibility = View.INVISIBLE
-                binding.specifyBtn.visibility = View.INVISIBLE
+           //     binding.specifyBtn.visibility = View.INVISIBLE
                 binding.saveBtn.isClickable = false
-                binding.specifyBtn.isClickable = false
+           //     binding.specifyBtn.isClickable = false
             }
 
             TrackerMoodScreenState.SuccessResp -> {
@@ -74,10 +74,10 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.specifyBtn.setOnClickListener {
+ /*       binding.specifyBtn.setOnClickListener {
             dismiss()
             findNavController().navigate(R.id.action_main_fragment_to_newFreeDiaryFragment)
-        }
+        } */
         binding.saveBtn.setOnClickListener {
             val dailyTaskId =
                 if (arguments != null) arguments?.getString(DAILY_TASK_ID, "").toString()

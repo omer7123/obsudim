@@ -196,7 +196,7 @@ class FragmentExercises : Fragment() {
                 }
             }
 
-            item(span = {
+     /*       item(span = {
                 GridItemSpan(2)
             }) {
                 Text(
@@ -204,7 +204,7 @@ class FragmentExercises : Fragment() {
                     style = AppTheme.typography.titleXS,
                     color = AppTheme.colors.primaryText
                 )
-            }
+            } */
 
             item{
                 ExerciseItem(item = ExerciseEntity(
