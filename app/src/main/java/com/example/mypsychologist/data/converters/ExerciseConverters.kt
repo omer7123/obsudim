@@ -2,6 +2,7 @@ package com.example.mypsychologist.data.converters
 
 import com.example.mypsychologist.data.model.DailyExerciseModel
 import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
+import com.example.mypsychologist.data.model.DefinitionProblemGroupExerciseModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
 import com.example.mypsychologist.data.model.ExerciseDetailResultModel
 import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
@@ -12,6 +13,7 @@ import com.example.mypsychologist.data.model.ExercisesStatusModel
 import com.example.mypsychologist.data.model.FieldExerciseModel
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
@@ -65,3 +67,5 @@ fun ExerciseDetailResultModel.toEntity() =
     ExerciseDetailResultEntity(title, date, result = result.map { ExerciseResultEntity(fieldId = it.fieldId, value = it.value) })
 
 fun ExercisesStatusModel.toEntity() = ExercisesStatusEntity(title, isClosed)
+
+fun DefinitionProblemGroupExerciseEntity.toModel() = DefinitionProblemGroupExerciseModel(sphere, emotion, target)

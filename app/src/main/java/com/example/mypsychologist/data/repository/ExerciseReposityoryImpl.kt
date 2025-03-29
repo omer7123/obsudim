@@ -6,6 +6,7 @@ import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.remote.exercises.ExerciseDataSource
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
@@ -65,6 +66,12 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
             list.map {
                 it.toEntity()
             }
+        }
+    }
+
+    override suspend fun saveDefinitionProblemGroupResult(result: DefinitionProblemGroupExerciseEntity): Flow<Resource<Boolean>> {
+        return dataSource.saveDefinitionProblemGroupResult(result.toModel()).checkResource {
+            true
         }
     }
 }

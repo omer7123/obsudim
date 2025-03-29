@@ -4,10 +4,12 @@ import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.DailyExerciseModel
 import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
+import com.example.mypsychologist.data.model.DefinitionProblemGroupExerciseModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
 import com.example.mypsychologist.data.model.ExerciseDetailResultModel
 import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
 import com.example.mypsychologist.data.model.ExerciseResultRequestModel
+import com.example.mypsychologist.data.model.ExerciseSaveResponseModel
 import com.example.mypsychologist.data.model.ExercisesModel
 import com.example.mypsychologist.data.model.ExercisesStatusModel
 import com.example.mypsychologist.data.model.SaveExerciseResultResponseModel
@@ -89,6 +91,15 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         emit(
             getResult {
                 api.getAllExerciseStatus()
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun saveDefinitionProblemGroupResult(definitionData: DefinitionProblemGroupExerciseModel): Flow<Resource<ExerciseSaveResponseModel>> = flow{
+        emit(Resource.Loading)
+        emit(
+            getResult {
+                api.saveDefinitionProblemGroupResult(definitionData)
             }
         )
     }.flowOn(Dispatchers.IO)

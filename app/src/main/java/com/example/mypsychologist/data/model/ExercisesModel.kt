@@ -92,3 +92,19 @@ data class ExercisesStatusModel(
     @SerialName("is_closed")
     val isClosed: Boolean,
 )
+
+// ниже идет работа с упражнениями как отдельными таблицами
+
+@Serializable
+data class ExerciseSaveResponseModel(
+    val message: String,
+    @SerialName("exercise_id")
+    val exerciseId: String
+)
+
+@Serializable
+data class DefinitionProblemGroupExerciseModel(
+    val sphere: String,
+    val emotion: String,
+    val target: String,
+)

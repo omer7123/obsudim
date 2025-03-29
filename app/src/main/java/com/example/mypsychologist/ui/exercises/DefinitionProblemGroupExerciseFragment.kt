@@ -3,6 +3,7 @@ package com.example.mypsychologist.ui.exercises
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,12 +26,15 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentDefinitionProblemGroupExerciseBinding
 import com.example.mypsychologist.extensions.getAppComponent
+import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.exercises.definitionProblemGroupExerciseFragment.DefinitionProblemGroupExerciseContent
 import com.example.mypsychologist.presentation.exercises.definitionProblemGroupExerciseFragment.DefinitionProblemGroupExerciseViewModel
+import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveStatus
 import com.example.mypsychologist.ui.core.PrimaryTextButton
 import com.example.mypsychologist.ui.core.PrimaryTextField
 import com.example.mypsychologist.ui.theme.AppTheme
@@ -88,6 +94,15 @@ class DefinitionProblemGroupExerciseFragment : Fragment() {
         modifier: Modifier,
         viewModel: DefinitionProblemGroupExerciseViewModel,
     ) {
+        val saveStatus = viewModel.statusSave.collectAsStateWithLifecycle()
+        when(val res =saveStatus.value){
+            is SaveStatus.Error -> {
+                Log.e("Error", res.msg)
+                requireContext().showToast(getString(R.string.unknown_error_placeholder))
+            }
+            SaveStatus.Init -> Unit
+            SaveStatus.Success -> findNavController().popBackStack()
+        }
         val viewState = viewModel.screenState.collectAsStateWithLifecycle().value
 
         ExerciseContent(modifier = modifier.padding(horizontal = 16.dp),
@@ -109,6 +124,7 @@ class DefinitionProblemGroupExerciseFragment : Fragment() {
     ) {
         Column(
             modifier = modifier
+                .verticalScroll(rememberScrollState()),
         ) {
             Spacer(modifier = Modifier.padding(top = 30.dp))
 

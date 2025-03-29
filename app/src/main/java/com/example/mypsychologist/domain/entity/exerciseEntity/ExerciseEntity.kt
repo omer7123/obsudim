@@ -27,25 +27,20 @@ data class FieldExerciseEntity(
 )
 
 sealed interface TypeOfExercise {
-    data object TextInput: TypeOfExercise
-    data object NumberInput: TypeOfExercise
+    data object TextInput : TypeOfExercise
+    data object NumberInput : TypeOfExercise
 }
 
 data class ExerciseDetailWithDelegateItem(
-    val id: String,
-    val title: String,
-    val description: String,
-    val fields: List<DelegateItem>
+    val id: String, val title: String, val description: String, val fields: List<DelegateItem>
 )
 
 data class ExerciseResultRequestEntity(
-    val id: String,
-    val result: List<ExerciseResultEntity>
+    val id: String, val result: List<ExerciseResultEntity>
 )
 
 data class ExerciseResultEntity(
-    val fieldId: String,
-    var value: String
+    val fieldId: String, var value: String
 )
 
 data class DailyExerciseEntity(
@@ -81,4 +76,10 @@ data class RecordExerciseEntity(
 data class ExercisesStatusEntity(
     val title: String,
     val isClosed: Boolean,
+)
+
+data class DefinitionProblemGroupExerciseEntity(
+    val sphere: String,
+    val emotion: String,
+    val target: String,
 )

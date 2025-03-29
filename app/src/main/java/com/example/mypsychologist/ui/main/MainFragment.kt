@@ -186,6 +186,9 @@ class MainFragment : Fragment() {
             toolbar.psychologistsIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_psychologists_with_tasks)
             }
+            homePict.setOnClickListener{
+                findNavController().navigate(R.id.definitionProblemGroupExerciseFragment)
+            }
         }
     }
 
