@@ -3,6 +3,7 @@ package com.example.mypsychologist.di
 import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.FreeDiaryTrackerMoodFragment
 import com.example.mypsychologist.ui.exercises.DefinitionProblemGroupExerciseFragment
 import com.example.mypsychologist.ui.exercises.FragmentExercises
+import com.example.mypsychologist.ui.exercises.StatementProblemsAndTargetFragment
 import com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary
 import com.example.mypsychologist.ui.exercises.cbt.FreeDiaryFragment
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
@@ -21,6 +22,7 @@ interface ExercisesComponent {
     fun inject(fragment: NewFreeDiaryFragment)
     fun inject(fragment: TrackerMoodFragment)
     fun inject(fragment: FreeDiaryTrackerMoodFragment)
+    fun inject(fragment: StatementProblemsAndTargetFragment)
 
     @Subcomponent.Factory
     interface Factory {
