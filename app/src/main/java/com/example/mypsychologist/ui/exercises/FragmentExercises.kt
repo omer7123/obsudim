@@ -196,7 +196,7 @@ class FragmentExercises : Fragment() {
                 }
             }
 
-            item(span = {
+     /*       item(span = {
                 GridItemSpan(2)
             }) {
                 Text(
@@ -204,7 +204,7 @@ class FragmentExercises : Fragment() {
                     style = AppTheme.typography.titleXS,
                     color = AppTheme.colors.primaryText
                 )
-            }
+            } */
 
             item{
                 ExerciseItem(item = ExerciseEntity(
@@ -233,7 +233,7 @@ class FragmentExercises : Fragment() {
 
     @Composable
     private fun ExerciseItem(item: ExerciseEntity, onItemClick: (ExerciseEntity) -> Unit) {
-        Column(modifier = Modifier
+   /*     Column(modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
             .clickable {
                 onItemClick(item)
@@ -255,7 +255,7 @@ class FragmentExercises : Fragment() {
                 style = AppTheme.typography.bodyM,
                 color = AppTheme.colors.primaryText,
             )
-        }
+        } */
     }
 
     @Composable
