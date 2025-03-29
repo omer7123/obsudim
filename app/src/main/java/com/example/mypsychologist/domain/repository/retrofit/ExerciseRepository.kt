@@ -8,6 +8,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailRes
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ExerciseRepository {
@@ -18,4 +19,5 @@ interface ExerciseRepository {
     suspend fun saveExerciseResult(result: ExerciseResultRequestEntity): Flow<Resource<DailyTaskMarkIdEntity>>
     suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseResultFromAPIEntity>>>
     suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultEntity>>
+    suspend fun getAllStatusExercise(): Flow<Resource<List<ExercisesStatusEntity>>>
 }

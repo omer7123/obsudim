@@ -33,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -50,11 +49,10 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentExercisesBinding
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.presentation.core.BaseStateUI
+import com.example.mypsychologist.presentation.exercises.exercisesFragment.ExercisesScreenState
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.core.DiaryTextButton
-import com.example.mypsychologist.ui.core.PlaceholderError
 import com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.FragmentDiaries
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
@@ -99,8 +97,8 @@ class FragmentExercises : Fragment() {
                     findNavController().navigate(
                         R.id.freeDiaryTrackerMoodFragment,
                     )
-                },
-                    )
+                }
+                )
 
             }
         }
@@ -114,7 +112,7 @@ class FragmentExercises : Fragment() {
     ) {
         val viewState = viewModel.screenState.collectAsState()
         when (val res = viewState.value) {
-            is BaseStateUI.Content -> {
+            is ExercisesScreenState.Content -> {
                 kptExercise = res.data.find { it.title == "КПТ-дневник" }
 
                 RenderContent(
@@ -125,9 +123,9 @@ class FragmentExercises : Fragment() {
                 )
             }
 
-            is BaseStateUI.Error -> PlaceholderError()
-            is BaseStateUI.Initial -> Unit
-            is BaseStateUI.Loading -> RenderLoading()
+            is ExercisesScreenState.Error -> Unit
+            is ExercisesScreenState.Initial -> Unit
+            is ExercisesScreenState.Loading -> RenderLoading()
         }
     }
 

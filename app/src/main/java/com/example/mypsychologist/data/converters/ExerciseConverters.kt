@@ -8,6 +8,7 @@ import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
 import com.example.mypsychologist.data.model.ExerciseResultModel
 import com.example.mypsychologist.data.model.ExerciseResultRequestModel
 import com.example.mypsychologist.data.model.ExercisesModel
+import com.example.mypsychologist.data.model.ExercisesStatusModel
 import com.example.mypsychologist.data.model.FieldExerciseModel
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
@@ -17,6 +18,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.FieldExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
 
@@ -62,3 +64,4 @@ fun ExerciseResultFromAPIModel.toEntity() = ExerciseResultFromAPIEntity(complete
 fun ExerciseDetailResultModel.toEntity() =
     ExerciseDetailResultEntity(title, date, result = result.map { ExerciseResultEntity(fieldId = it.fieldId, value = it.value) })
 
+fun ExercisesStatusModel.toEntity() = ExercisesStatusEntity(title, isClosed)

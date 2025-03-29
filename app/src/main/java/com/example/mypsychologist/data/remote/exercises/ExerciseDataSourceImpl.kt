@@ -9,6 +9,7 @@ import com.example.mypsychologist.data.model.ExerciseDetailResultModel
 import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
 import com.example.mypsychologist.data.model.ExerciseResultRequestModel
 import com.example.mypsychologist.data.model.ExercisesModel
+import com.example.mypsychologist.data.model.ExercisesStatusModel
 import com.example.mypsychologist.data.model.SaveExerciseResultResponseModel
 import com.example.mypsychologist.data.model.StatusPostResponse
 import kotlinx.coroutines.Dispatchers
@@ -79,6 +80,15 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         emit(
             getResult {
                 api.getDetailExerciseResult(id)
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getAllStatusExercises(): Flow<Resource<List<ExercisesStatusModel>>> = flow{
+        emit(Resource.Loading)
+        emit(
+            getResult {
+                api.getAllExerciseStatus()
             }
         )
     }.flowOn(Dispatchers.IO)

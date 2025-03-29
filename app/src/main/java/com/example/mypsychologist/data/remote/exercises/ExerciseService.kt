@@ -7,6 +7,7 @@ import com.example.mypsychologist.data.model.ExerciseDetailResultModel
 import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
 import com.example.mypsychologist.data.model.ExerciseResultRequestModel
 import com.example.mypsychologist.data.model.ExercisesModel
+import com.example.mypsychologist.data.model.ExercisesStatusModel
 import com.example.mypsychologist.data.model.SaveExerciseResultResponseModel
 import com.example.mypsychologist.data.model.StatusPostResponse
 import retrofit2.Response
@@ -21,6 +22,9 @@ interface ExerciseService {
 
     @GET("/exercise/get_all_exercises")
     suspend fun getAllExercises(): Response<List<ExercisesModel>>
+
+    @GET("/exercise/all")
+    suspend fun getAllExerciseStatus(): Response<List<ExercisesStatusModel>>
 
     @GET("/exercise/get_exercise")
     suspend fun getExerciseDetail(

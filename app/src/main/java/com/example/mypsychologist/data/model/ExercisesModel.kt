@@ -11,7 +11,6 @@ data class ExercisesModel(
     @SerialName("link_to_picture")
     val linkToPicture: String,
     val closed: Boolean
-
 )
 
 @Serializable
@@ -85,4 +84,11 @@ data class ExerciseDetailResultModel(
     val title: String,
     val date: String,
     val result: List<ExerciseResultModel>
+)
+
+@Serializable
+data class ExercisesStatusModel(
+    val title: String,
+    @SerialName("is_closed")
+    val isClosed: Boolean,
 )

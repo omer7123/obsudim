@@ -77,3 +77,8 @@ data class RecordExerciseEntity(
     val title: String,
     val date: String
 )
+
+data class ExercisesStatusEntity(
+    val title: String,
+    val isClosed: Boolean,
+)

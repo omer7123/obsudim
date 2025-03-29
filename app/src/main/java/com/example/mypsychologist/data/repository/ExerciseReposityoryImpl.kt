@@ -11,6 +11,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailRes
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
 import com.example.mypsychologist.domain.repository.retrofit.ExerciseRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -56,6 +57,14 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
     override suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultEntity>> {
         return dataSource.getExerciseDetailResult(id).checkResource {
             it.toEntity()
+        }
+    }
+
+    override suspend fun getAllStatusExercise(): Flow<Resource<List<ExercisesStatusEntity>>> {
+        return dataSource.getAllStatusExercises().checkResource {list->
+            list.map {
+                it.toEntity()
+            }
         }
     }
 }
