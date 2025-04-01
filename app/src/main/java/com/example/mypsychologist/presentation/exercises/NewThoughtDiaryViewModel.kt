@@ -3,6 +3,7 @@ package com.example.mypsychologist.presentation.exercises
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.InputIntExerciseEntity
 import com.example.mypsychologist.domain.entity.InputItemExerciseEntity
@@ -17,8 +18,11 @@ import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsComplete
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.SaveExerciseResultUseCase
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.NewExerciseScreenState
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveExerciseStatus
+import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegate
 import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.IntDelegateItem
+import com.example.mypsychologist.ui.exercises.cbt.SliderDelegate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -194,6 +198,68 @@ class NewThoughtDiaryViewModel(
             }
         )
     }
+
+    var items = listOf<DelegateItem>(
+        InputExerciseDelegate(
+            ThoughtDiaryItemEntity(
+                R.string.situation,
+                R.string.situation_helper,
+                R.string.situation_help,
+                ::setSituation
+            )
+        ),
+        InputExerciseDelegate(
+            ThoughtDiaryItemEntity(
+                R.string.mood,
+                R.string.mood_helper,
+                R.string.mood_help,
+                ::setMood
+            )
+        ),
+        SliderDelegate(R.string.level),
+        InputExerciseDelegate(
+            ThoughtDiaryItemEntity(
+                R.string.auto_thought,
+                R.string.auto_thought_helper,
+                R.string.auto_thought_help,
+                ::setAutoThought
+            )
+        ),
+        InputExerciseDelegate(
+            ThoughtDiaryItemEntity(
+                R.string.proofs,
+                R.string.proofs_helper,
+                R.string.proofs_help,
+                ::setProofs
+            )
+        ),
+        InputExerciseDelegate(
+            ThoughtDiaryItemEntity(
+                R.string.refutations,
+                R.string.refutations_helper,
+                R.string.refutations_help,
+                ::setRefutations
+            )
+        ),
+        InputExerciseDelegate(
+            ThoughtDiaryItemEntity(
+                R.string.alternative_thought,
+                R.string.alternative_thought_helper,
+                R.string.alternative_thought_help,
+                ::setAlternativeThought
+            )
+        ),
+        InputExerciseDelegate(
+            ThoughtDiaryItemEntity(
+                R.string.new_mood,
+                R.string.new_mood_helper,
+                R.string.new_mood_help,
+                ::setNewMood
+            )
+        ),
+        SliderDelegate(R.string.new_level)
+    )
+        private set
 
     class Factory @Inject constructor(
         private val saveExerciseResultUseCase: SaveExerciseResultUseCase,
