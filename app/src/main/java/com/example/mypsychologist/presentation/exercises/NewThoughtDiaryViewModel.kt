@@ -7,6 +7,7 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.InputIntExerciseEntity
 import com.example.mypsychologist.domain.entity.InputItemExerciseEntity
+import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
@@ -50,39 +51,45 @@ class NewThoughtDiaryViewModel(
 
     private val resultExercise = ArrayList<ExerciseResultEntity>()
 
+    private var diary = ThoughtDiaryEntity()
 
-    fun getFields(id: String) {
-        viewModelScope.launch {
-            _screenState.value = NewExerciseScreenState.Loading
 
-            getExerciseDetailUseCase(id).collect { resource ->
-                when (resource) {
-                    is Resource.Error -> _screenState.value =
-                        NewExerciseScreenState.Error(resource.msg.toString())
+    private fun setSituation(it: String) {
+        diary = diary.copy(situation = it)
+    }
 
-                    Resource.Loading -> _screenState.value = NewExerciseScreenState.Loading
-                    is Resource.Success -> {
+    private fun setMood(it: String) {
+        diary = diary.copy(mood = it)
+    }
 
-                        resultExercise.addAll(resource.data.fields.map {
-                            when (it.type) {
-                                TypeOfExercise.NumberInput -> ExerciseResultEntity(
-                                    fieldId = it.id,
-                                    value = "50"
-                                )
+    fun setLevel(titleId: Int, it: Int) {
+        when (titleId) {
+            R.string.level ->
+                diary = diary.copy(level = it)
 
-                                TypeOfExercise.TextInput -> ExerciseResultEntity(
-                                    fieldId = it.id,
-                                    value = ""
-                                )
-                            }
-
-                        })
-                        _screenState.value =
-                            NewExerciseScreenState.Content(resource.data.toDelegateItems())
-                    }
-                }
-            }
+            R.string.new_level ->
+                diary = diary.copy(newLevel = it)
         }
+    }
+
+    private fun setAutoThought(it: String) {
+        diary = diary.copy(autoThought = it)
+    }
+
+    private fun setProofs(it: String) {
+        diary = diary.copy(proofs = it)
+    }
+
+    private fun setRefutations(it: String) {
+        diary = diary.copy(refutations = it)
+    }
+
+    private fun setAlternativeThought(it: String) {
+        diary = diary.copy(alternativeThought = it)
+    }
+
+    private fun setNewMood(it: String) {
+        diary = diary.copy(newMood = it)
     }
 
     fun tryToSave(exerciseId: String, taskId: String) {
@@ -118,7 +125,7 @@ class NewThoughtDiaryViewModel(
             } else {
                 viewModelScope.launch {
                     saveCBTDiaryUseCase(
-
+                        diary
                     ).collect { resource ->
                         when (resource) {
                             is Resource.Error -> _saveStatus.value =
@@ -270,7 +277,7 @@ class NewThoughtDiaryViewModel(
         private set
 
     class Factory @Inject constructor(
-        private val saveExerciseResultUseCase: SaveExerciseResultUseCase,
+        private val saveCBTDiaryUseCase: SaveCBTDiaryUseCase,
         private val getExerciseDetailUseCase: GetExerciseDetailUseCase,
         private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
     ) :
@@ -278,7 +285,7 @@ class NewThoughtDiaryViewModel(
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return NewThoughtDiaryViewModel(
-                saveExerciseResultUseCase,
+                saveCBTDiaryUseCase,
                 getExerciseDetailUseCase,
                 markAsCompleteExerciseUseCase
             ) as T
