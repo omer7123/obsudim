@@ -4,6 +4,7 @@ import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.remote.exercises.ExerciseDataSource
+import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
@@ -65,6 +66,12 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
             list.map {
                 it.toEntity()
             }
+        }
+    }
+
+    override suspend fun saveCBTDiary(diary: ThoughtDiaryEntity): Flow<Resource<DailyTaskMarkIdEntity>> {
+        return dataSource.saveCBTDiary(diary.toModel()).checkResource {
+            DailyTaskMarkIdEntity(it.id)
         }
     }
 }

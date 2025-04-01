@@ -7,6 +7,7 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.InputIntExerciseEntity
 import com.example.mypsychologist.domain.entity.InputItemExerciseEntity
+import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWithDelegateItem
@@ -15,6 +16,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultReq
 import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.GetExerciseDetailUseCase
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.SaveCBTDiaryUseCase
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.SaveExerciseResultUseCase
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.NewExerciseScreenState
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveExerciseStatus
@@ -30,7 +32,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewThoughtDiaryViewModel(
-    private val saveExerciseResultUseCase: SaveExerciseResultUseCase,
+    private val saveCBTDiaryUseCase: SaveCBTDiaryUseCase,
     private val getExerciseDetailUseCase: GetExerciseDetailUseCase,
     private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
 ) :
@@ -86,21 +88,23 @@ class NewThoughtDiaryViewModel(
     fun tryToSave(exerciseId: String, taskId: String) {
         val currentState = _screenState.value
 
-        if(currentState is NewExerciseScreenState.Content){
+        if (currentState is NewExerciseScreenState.Content) {
             val updatesFields = currentState.data.fields.map { delegateItem ->
                 when (delegateItem) {
                     is InputExerciseDelegateItem -> {
-                        val updatedContent = if (resultExercise.find { it.fieldId == delegateItem.content().id }?.value == "") {
-                            delegateItem.content().copy(isNotCorrect = true)
-                        } else {
-                            delegateItem.content().copy(isNotCorrect = false)
-                        }
+                        val updatedContent =
+                            if (resultExercise.find { it.fieldId == delegateItem.content().id }?.value == "") {
+                                delegateItem.content().copy(isNotCorrect = true)
+                            } else {
+                                delegateItem.content().copy(isNotCorrect = false)
+                            }
                         val updateDelegateItem = InputExerciseDelegateItem(
                             updatedContent
                         )
 
                         updateDelegateItem
                     }
+
                     else -> delegateItem
                 }
             }
@@ -108,21 +112,21 @@ class NewThoughtDiaryViewModel(
             val hasErrors = updatesFields.any {
                 it is InputExerciseDelegateItem && it.content().isNotCorrect
             }
-            if (hasErrors){
-                _screenState.value = currentState.copy(data = currentState.data.copy(fields = updatesFields))
-            }else{
+            if (hasErrors) {
+                _screenState.value =
+                    currentState.copy(data = currentState.data.copy(fields = updatesFields))
+            } else {
                 viewModelScope.launch {
-                    saveExerciseResultUseCase(
-                        ExerciseResultRequestEntity(
-                            exerciseId,
-                            resultExercise
-                        )
-                    ).collect {resource->
-                        when(resource){
-                            is Resource.Error -> _saveStatus.value = SaveExerciseStatus.Error(resource.msg.toString())
+                    saveCBTDiaryUseCase(
+
+                    ).collect { resource ->
+                        when (resource) {
+                            is Resource.Error -> _saveStatus.value =
+                                SaveExerciseStatus.Error(resource.msg.toString())
+
                             Resource.Loading -> Unit
                             is Resource.Success -> {
-                                if (taskId!="") {
+                                if (taskId != "") {
                                     markAsCompleteExerciseUseCase(DailyTaskMarkIdEntity(taskId)).collect {
                                         when (it) {
                                             is Resource.Error -> _saveStatus.value =
@@ -133,7 +137,7 @@ class NewThoughtDiaryViewModel(
                                                 SaveExerciseStatus.Success
                                         }
                                     }
-                                }else{
+                                } else {
                                     _saveStatus.value =
                                         SaveExerciseStatus.Success
                                 }
@@ -150,25 +154,25 @@ class NewThoughtDiaryViewModel(
         searchItem!!.value = res.value
 
         val currentState = _screenState.value
-        if(currentState is NewExerciseScreenState.Content){
+        if (currentState is NewExerciseScreenState.Content) {
             val updatesFields = currentState.data.fields.map { delegateItem ->
                 when (delegateItem) {
                     is InputExerciseDelegateItem -> {
-                        if (delegateItem.content().id == res.fieldId){
+                        if (delegateItem.content().id == res.fieldId) {
                             delegateItem.content().text = res.value
-                        }
-                        else if (delegateItem.content().text.isNotEmpty() && delegateItem.content().isNotCorrect){
+                        } else if (delegateItem.content().text.isNotEmpty() && delegateItem.content().isNotCorrect) {
                             delegateItem.content().isNotCorrect = false
-                        }
-                        else{
+                        } else {
                             delegateItem.content()
                         }
                         delegateItem
                     }
+
                     else -> delegateItem
                 }
             }
-            _screenState.value = currentState.copy(data = currentState.data.copy(fields = updatesFields))
+            _screenState.value =
+                currentState.copy(data = currentState.data.copy(fields = updatesFields))
         }
     }
 
@@ -200,7 +204,7 @@ class NewThoughtDiaryViewModel(
     }
 
     var items = listOf<DelegateItem>(
-        InputExerciseDelegate(
+        ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.situation,
                 R.string.situation_helper,
@@ -208,7 +212,7 @@ class NewThoughtDiaryViewModel(
                 ::setSituation
             )
         ),
-        InputExerciseDelegate(
+        ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.mood,
                 R.string.mood_helper,
@@ -216,8 +220,8 @@ class NewThoughtDiaryViewModel(
                 ::setMood
             )
         ),
-        SliderDelegate(R.string.level),
-        InputExerciseDelegate(
+        IntDelegateItem(R.string.level),
+        ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.auto_thought,
                 R.string.auto_thought_helper,
@@ -225,7 +229,7 @@ class NewThoughtDiaryViewModel(
                 ::setAutoThought
             )
         ),
-        InputExerciseDelegate(
+        ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.proofs,
                 R.string.proofs_helper,
@@ -233,7 +237,7 @@ class NewThoughtDiaryViewModel(
                 ::setProofs
             )
         ),
-        InputExerciseDelegate(
+        ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.refutations,
                 R.string.refutations_helper,
@@ -241,7 +245,7 @@ class NewThoughtDiaryViewModel(
                 ::setRefutations
             )
         ),
-        InputExerciseDelegate(
+        ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.alternative_thought,
                 R.string.alternative_thought_helper,
@@ -249,7 +253,7 @@ class NewThoughtDiaryViewModel(
                 ::setAlternativeThought
             )
         ),
-        InputExerciseDelegate(
+        ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.new_mood,
                 R.string.new_mood_helper,
@@ -257,7 +261,11 @@ class NewThoughtDiaryViewModel(
                 ::setNewMood
             )
         ),
-        SliderDelegate(R.string.new_level)
+        IntDelegateItem(
+            InputIntExerciseEntity(
+                R.string.new_level
+            )
+        )
     )
         private set
 
@@ -269,7 +277,11 @@ class NewThoughtDiaryViewModel(
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return NewThoughtDiaryViewModel(saveExerciseResultUseCase, getExerciseDetailUseCase, markAsCompleteExerciseUseCase) as T
+            return NewThoughtDiaryViewModel(
+                saveExerciseResultUseCase,
+                getExerciseDetailUseCase,
+                markAsCompleteExerciseUseCase
+            ) as T
         }
     }
 }
