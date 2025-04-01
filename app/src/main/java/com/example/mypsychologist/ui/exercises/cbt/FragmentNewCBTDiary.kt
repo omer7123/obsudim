@@ -131,10 +131,21 @@ class FragmentNewCBTDiary : Fragment() {
         }
     } */
 
-    private fun setupFields() {
+    private fun setupAdapter(items: List<DelegateItem>) {
         mainAdapter = MainAdapter().apply {
-            addDelegate(ThoughtDiaryDelegate())
-            addDelegate(SliderDelegate())
+            addDelegate(
+                ThoughtDiaryDelegate()
+            )
+            addDelegate(
+                SeekBarDelegate(viewModel::setLevel)
+            )
+
+            submitList(items)
+        }
+
+        binding.itemsRw.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = mainAdapter
         }
     }
 
