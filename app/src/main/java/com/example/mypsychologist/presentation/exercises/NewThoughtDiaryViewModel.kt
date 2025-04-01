@@ -352,4 +352,17 @@ class NewThoughtDiaryViewModel(
             ) as T
         }
     }
+
+    private fun ThoughtDiaryEntity.mapOfTitles() =
+        mapOf(
+            ::situation.name to R.string.situation,
+            ::mood.name to R.string.mood,
+            ::level.name to R.string.level.toString(),
+            ::autoThought.name to R.string.auto_thought,
+            ::proofs.name to R.string.proofs,
+            ::refutations.name to R.string.refutations,
+            ::alternativeThought.name to R.string.alternative_thought,
+            ::newMood.name to R.string.new_mood,
+            ::newLevel.name to R.string.new_level.toString()
+        )
 }
