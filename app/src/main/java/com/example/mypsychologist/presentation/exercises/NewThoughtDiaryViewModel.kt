@@ -15,6 +15,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWit
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
+import com.example.mypsychologist.domain.entity.getMapOfMembers
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.GetExerciseDetailUseCase
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.SaveCBTDiaryUseCase
@@ -26,6 +27,7 @@ import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegate
 import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.IntDelegateItem
 import com.example.mypsychologist.ui.exercises.cbt.SliderDelegate
+import com.example.mypsychologist.ui.exercises.cbt.SliderDelegateItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,9 +41,9 @@ class NewThoughtDiaryViewModel(
 ) :
     ViewModel() {
 
-    private val _screenState: MutableStateFlow<NewExerciseScreenState> =
-        MutableStateFlow(NewExerciseScreenState.Init)
-    val screenState: StateFlow<NewExerciseScreenState>
+    private val _screenState: MutableStateFlow<NewThoughtDiaryScreenState> =
+        MutableStateFlow(NewThoughtDiaryScreenState.Init)
+    val screenState: StateFlow<NewThoughtDiaryScreenState>
         get() = _screenState.asStateFlow()
 
     private val _saveStatus: MutableStateFlow<SaveExerciseStatus> =
@@ -92,7 +94,70 @@ class NewThoughtDiaryViewModel(
         diary = diary.copy(newMood = it)
     }
 
-    fun tryToSave(exerciseId: String, taskId: String) {
+    fun tryToSaveDiary(taskId: String) {
+        viewModelScope.launch {
+            if (fieldsAreCorrect()) {
+                saveCBTDiaryUseCase(diary).collect { resource ->
+                    when (resource) {
+                        is Resource.Error -> _saveStatus.value =
+                            SaveExerciseStatus.Error(resource.msg.toString())
+
+                        Resource.Loading -> Unit
+                        is Resource.Success -> {
+                            if (taskId != "") {
+                                markAsCompleteExerciseUseCase(DailyTaskMarkIdEntity(taskId)).collect {
+                                    when (it) {
+                                        is Resource.Error -> _saveStatus.value =
+                                            SaveExerciseStatus.Error(it.toString())
+
+                                        Resource.Loading -> Unit
+                                        is Resource.Success -> _saveStatus.value =
+                                            SaveExerciseStatus.Success
+                                    }
+                                }
+                            } else {
+                                _saveStatus.value =
+                                    SaveExerciseStatus.Success
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun fieldsAreCorrect(): Boolean {
+        var containErrors = false
+
+        diary.getMapOfMembers().forEach { (member, value) ->
+
+            if (value.isEmpty()) {
+                containErrors = true
+
+                markAsNotCorrect(member)
+            }
+        }
+
+        if (containErrors)
+            _screenState.value = NewThoughtDiaryScreenState.ValidationError(items)
+
+        return !containErrors
+    }
+
+    private fun markAsNotCorrect(member: String) {
+        viewModelScope.launch {
+            items = items.map { item ->
+                if (item is ThoughtDiaryDelegateItem &&
+                    item.content().titleId == diary.mapOfTitles()[member]
+                )
+                    ThoughtDiaryDelegateItem(item.content().copy(isNotCorrect = true))
+                else
+                    item
+            }
+        }
+    }
+
+/*    fun tryToSave(exerciseId: String, taskId: String) {
         val currentState = _screenState.value
 
         if (currentState is NewExerciseScreenState.Content) {
@@ -154,9 +219,9 @@ class NewThoughtDiaryViewModel(
                 }
             }
         }
-    }
+    } */
 
-    private fun saveTextInput(res: ExerciseResultEntity) {
+/*    private fun saveTextInput(res: ExerciseResultEntity) {
         val searchItem = resultExercise.find { it.fieldId == res.fieldId }
         searchItem!!.value = res.value
 
@@ -208,7 +273,7 @@ class NewThoughtDiaryViewModel(
                 }
             }
         )
-    }
+    }*/
 
     var items = listOf<DelegateItem>(
         ThoughtDiaryDelegateItem(
@@ -227,7 +292,7 @@ class NewThoughtDiaryViewModel(
                 ::setMood
             )
         ),
-        IntDelegateItem(R.string.level),
+        SliderDelegateItem(R.string.level),
         ThoughtDiaryDelegateItem(
             ThoughtDiaryItemEntity(
                 R.string.auto_thought,
@@ -268,11 +333,7 @@ class NewThoughtDiaryViewModel(
                 ::setNewMood
             )
         ),
-        IntDelegateItem(
-            InputIntExerciseEntity(
-                R.string.new_level
-            )
-        )
+        SliderDelegateItem(R.string.new_level)
     )
         private set
 
