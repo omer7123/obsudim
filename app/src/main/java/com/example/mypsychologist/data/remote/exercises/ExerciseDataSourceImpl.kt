@@ -2,6 +2,7 @@ package com.example.mypsychologist.data.remote.exercises
 
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.model.CBTDiaryModel
 import com.example.mypsychologist.data.model.DailyExerciseModel
 import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
 import com.example.mypsychologist.data.model.DefinitionProblemGroupExerciseModel
@@ -100,6 +101,15 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         emit(
             getResult {
                 api.saveDefinitionProblemGroupResult(definitionData)
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun saveCBTDiary(diary: CBTDiaryModel): Flow<Resource<SaveExerciseResultResponseModel>> = flow {
+        emit(Resource.Loading)
+        emit(
+            getResult {
+                api.saveCBTDiary(diary)
             }
         )
     }.flowOn(Dispatchers.IO)

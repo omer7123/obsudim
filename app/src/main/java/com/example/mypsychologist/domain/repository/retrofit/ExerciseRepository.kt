@@ -1,6 +1,7 @@
 package com.example.mypsychologist.domain.repository.retrofit
 
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
@@ -22,4 +23,6 @@ interface ExerciseRepository {
     suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultEntity>>
     suspend fun getAllStatusExercise(): Flow<Resource<List<ExercisesStatusEntity>>>
     suspend fun saveDefinitionProblemGroupResult(result: DefinitionProblemGroupExerciseEntity): Flow<Resource<Boolean>>
+
+    suspend fun saveCBTDiary(diary: ThoughtDiaryEntity): Flow<Resource<DailyTaskMarkIdEntity>>
 }

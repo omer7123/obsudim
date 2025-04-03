@@ -1,13 +1,12 @@
 package com.example.mypsychologist.data.remote.exercises
 
+import com.example.mypsychologist.data.model.CBTDiaryModel
 import com.example.mypsychologist.data.model.DailyExerciseModel
 import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
-import com.example.mypsychologist.data.model.DefinitionProblemGroupExerciseModel
 import com.example.mypsychologist.data.model.ExerciseDetailModel
 import com.example.mypsychologist.data.model.ExerciseDetailResultModel
 import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
 import com.example.mypsychologist.data.model.ExerciseResultRequestModel
-import com.example.mypsychologist.data.model.ExerciseSaveResponseModel
 import com.example.mypsychologist.data.model.ExercisesModel
 import com.example.mypsychologist.data.model.ExercisesStatusModel
 import com.example.mypsychologist.data.model.SaveExerciseResultResponseModel
@@ -52,4 +51,7 @@ interface ExerciseService {
 
     @POST("/defining_problem_groups/save_exercise_result")
     suspend fun saveDefinitionProblemGroupResult(@Body data: DefinitionProblemGroupExerciseModel): Response<ExerciseSaveResponseModel>
+    @POST("/diary/writing_think_diary")
+    suspend fun saveCBTDiary(@Body diary: CBTDiaryModel): Response<SaveExerciseResultResponseModel>
+
 }
