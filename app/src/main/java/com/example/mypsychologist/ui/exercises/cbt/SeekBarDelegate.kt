@@ -23,7 +23,7 @@ class SeekBarDelegate(private val onChangeValue: (Int, Int) -> Unit) : AdapterDe
         (holder as ViewHolder).bind((item as SliderDelegateItem).content())
     }
 
-    override fun isOfViewType(item: DelegateItem) = item is IntDelegateItem
+    override fun isOfViewType(item: DelegateItem) = item is SliderDelegateItem
 
     class ViewHolder(
         private val binding: IncludeSeekBarBinding,

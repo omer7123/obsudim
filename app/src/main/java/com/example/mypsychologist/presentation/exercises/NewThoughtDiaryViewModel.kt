@@ -1,32 +1,21 @@
 package com.example.mypsychologist.presentation.exercises
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
-import com.example.mypsychologist.domain.entity.InputIntExerciseEntity
-import com.example.mypsychologist.domain.entity.InputItemExerciseEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.example.mypsychologist.domain.entity.ThoughtDiaryItemEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
-import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
-import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWithDelegateItem
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
-import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
-import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
 import com.example.mypsychologist.domain.entity.getMapOfMembers
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.GetExerciseDetailUseCase
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.SaveCBTDiaryUseCase
-import com.example.mypsychologist.domain.useCase.exerciseUseCases.SaveExerciseResultUseCase
-import com.example.mypsychologist.presentation.exercises.exercisesFragment.NewExerciseScreenState
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveExerciseStatus
 import com.example.mypsychologist.ui.DelegateItem
-import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegate
-import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegateItem
-import com.example.mypsychologist.ui.exercises.cbt.IntDelegateItem
-import com.example.mypsychologist.ui.exercises.cbt.SliderDelegate
 import com.example.mypsychologist.ui.exercises.cbt.SliderDelegateItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -130,7 +119,7 @@ class NewThoughtDiaryViewModel(
         var containErrors = false
 
         diary.getMapOfMembers().forEach { (member, value) ->
-
+            Log.e(member, value)
             if (value.isEmpty()) {
                 containErrors = true
 

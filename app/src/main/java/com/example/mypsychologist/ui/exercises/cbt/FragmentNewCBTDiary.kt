@@ -15,12 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentNewThoughtDiaryBinding
-import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailWithDelegateItem
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.exercises.NewThoughtDiaryViewModel
-import com.example.mypsychologist.presentation.exercises.ThoughtDiaryDelegateItem
-import com.example.mypsychologist.presentation.exercises.exercisesFragment.NewExerciseScreenState
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveExerciseStatus
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
@@ -60,10 +57,7 @@ class FragmentNewCBTDiary : Fragment() {
         binding = FragmentNewThoughtDiaryBinding.inflate(inflater, container, false)
 
         binding.includeToolbar.toolbar.title = getString(R.string.cbt_diary)
-
         setupListeners()
-
-
 
    /*     viewModel.screenState
             .flowWithLifecycle(lifecycle)
@@ -75,15 +69,20 @@ class FragmentNewCBTDiary : Fragment() {
             .onEach { renderSaveStatus(it) }
             .launchIn(lifecycleScope)
 
-    /*    if (savedInstanceState == null)
-            viewModel.getFields(requireArguments().getString(EXERCISE_ID).toString()) */
+        dataList = viewModel.items
+        setupAdapter(dataList)
+
+        /*    if (savedInstanceState == null)
+                viewModel.getFields(requireArguments().getString(EXERCISE_ID).toString()) */
 
         return binding.root
     }
 
     private fun renderSaveStatus(status: SaveExerciseStatus) {
         when(status){
-            is SaveExerciseStatus.Error -> {requireContext().showToast(status.msg)}
+            is SaveExerciseStatus.Error -> {
+                requireContext().showToast(status.msg)
+            }
             SaveExerciseStatus.Init -> Unit
             SaveExerciseStatus.Loading -> {
                 binding.progressCircular.isVisible = true
@@ -132,6 +131,7 @@ class FragmentNewCBTDiary : Fragment() {
     } */
 
     private fun setupAdapter(items: List<DelegateItem>) {
+        dataList = viewModel.items
         mainAdapter = MainAdapter().apply {
             addDelegate(
                 ThoughtDiaryDelegate()

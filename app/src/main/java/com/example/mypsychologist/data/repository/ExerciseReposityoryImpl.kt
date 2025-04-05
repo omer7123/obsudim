@@ -14,6 +14,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.example.mypsychologist.domain.repository.retrofit.ExerciseRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -79,6 +80,14 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
     override suspend fun saveCBTDiary(diary: ThoughtDiaryEntity): Flow<Resource<DailyTaskMarkIdEntity>> {
         return dataSource.saveCBTDiary(diary.toModel()).checkResource {
             DailyTaskMarkIdEntity(it.id)
+        }
+    }
+
+    override suspend fun getAllDPGResults(): Flow<Resource<List<RecordExerciseEntity>>> {
+        return dataSource.getExerciseDPGResults().checkResource {list->
+            list.map {
+                it.toEntity()
+            }
         }
     }
 }

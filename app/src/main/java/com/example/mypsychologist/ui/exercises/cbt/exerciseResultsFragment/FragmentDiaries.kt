@@ -57,6 +57,7 @@ import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
 class FragmentDiaries : Fragment() {
+    private var destinationNav: Int = R.id.action_fragment_diaries_to_fragment_new_diary
 
     @Inject
     lateinit var vmFactory: ThoughtDiariesViewModel.Factory
@@ -82,6 +83,17 @@ class FragmentDiaries : Fragment() {
             linkToPicture = requireArguments().getString(IMAGE)!!,
             closed = false
         )
+
+        when(exercise.id){
+            "DPG_ID" -> {
+                viewModel.loadDiariesDPG()
+                destinationNav = R.id.action_fragment_diaries_to_definitionProblemGroupExerciseFragment
+            }
+            "KPT_ID" -> {
+//                viewModel.loadDiariesKPT()
+            }
+        }
+
         setContent {
             AppTheme{
                 Scaffold(modifier = Modifier.fillMaxSize()) {
@@ -103,7 +115,7 @@ class FragmentDiaries : Fragment() {
             exercise = exercise,
             addNewDiaryClick = {
                 navController.navigate(
-                    R.id.action_fragment_diaries_to_fragment_new_diary,
+                    destinationNav,
                     bundleOf(
                         EXERCISE_ID to requireArguments().getString(EXERCISE_ID)
                     )
@@ -137,7 +149,7 @@ class FragmentDiaries : Fragment() {
                         .heightIn(max = screenHeight - sheetMaxHeight.value)
                 )
             },
-            sheetPeekHeight = 350.dp,
+            sheetPeekHeight = 500.dp,
             sheetShape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
             sheetBackgroundColor = AppTheme.colors.screenBackground,
             content = {
@@ -246,6 +258,8 @@ class FragmentDiaries : Fragment() {
         }
     }
 
+
+
     @Preview
     @Composable
     fun ExerciseContent_Preview() {
@@ -277,10 +291,10 @@ class FragmentDiaries : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadDiaries(requireArguments().getString(EXERCISE_ID).toString())
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        viewModel.loadDiaries(requireArguments().getString(EXERCISE_ID).toString())
+//    }
 
     companion object {
         const val IMAGE = "IMAGE"

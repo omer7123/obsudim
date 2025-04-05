@@ -191,4 +191,12 @@ fun PrimaryTextField_Preview(){
     }
 }
 
+@Composable
+@Preview(showBackground = true)
+fun TestScreen() {
+    var text by remember { mutableStateOf("Hello") }
+    Text(text = text)
+    text = "World"
+}
+
 

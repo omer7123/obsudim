@@ -25,7 +25,7 @@ class REBTViewModel(
 
     init {
         viewModelScope.launch {
-            getAllExercisesUseCase().collect{resource->
+            getAllStatusExerciseUseCase().collect{resource->
                 when(resource){
                     is Resource.Error -> _screenState.value = ExercisesScreenState.Error
                     Resource.Loading -> _screenState.value = ExercisesScreenState.Loading

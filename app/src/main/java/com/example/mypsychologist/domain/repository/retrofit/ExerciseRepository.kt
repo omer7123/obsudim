@@ -11,6 +11,7 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ExerciseRepository {
@@ -23,6 +24,6 @@ interface ExerciseRepository {
     suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultEntity>>
     suspend fun getAllStatusExercise(): Flow<Resource<List<ExercisesStatusEntity>>>
     suspend fun saveDefinitionProblemGroupResult(result: DefinitionProblemGroupExerciseEntity): Flow<Resource<Boolean>>
-
     suspend fun saveCBTDiary(diary: ThoughtDiaryEntity): Flow<Resource<DailyTaskMarkIdEntity>>
+    suspend fun getAllDPGResults(): Flow<Resource<List<RecordExerciseEntity>>>
 }

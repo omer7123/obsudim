@@ -47,9 +47,6 @@
             app:exitAnim="@anim/slide_in_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_in_right" />
-        <action
-            android:id="@+id/action_fragment_exercises_to_definitionProblemGroupExerciseFragment"
-            app:destination="@id/definitionProblemGroupExerciseFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment_diaries"
@@ -62,6 +59,9 @@
             app:exitAnim="@anim/slide_in_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_fragment_diaries_to_definitionProblemGroupExerciseFragment"
+            app:destination="@id/definitionProblemGroupExerciseFragment" />
 
     </fragment>
 

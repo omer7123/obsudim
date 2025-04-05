@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -82,24 +83,45 @@ class FragmentExercises : Fragment() {
         }
         binding.content.setContent {
             AppTheme {
-                SetupMainContent(onThinkDiaryClick = {
-                    kptExercise?.let { kpt ->
+                SetupMainContent(
+                    onThinkDiaryClick = {
                         findNavController().navigate(
                             R.id.fragment_diaries, bundleOf(
-                                FragmentDiaries.EXERCISE_ID to kpt.id,
-                                FragmentDiaries.EXERCISE_TITLE to kpt.title,
-                                FragmentDiaries.EXERCISE_DESCRIPTION to kpt.description,
-                                FragmentDiaries.IMAGE to kpt.linkToPicture,
+                                FragmentDiaries.EXERCISE_ID to "fddf",
+                                FragmentDiaries.EXERCISE_TITLE to "КПТ-дневник",
+                                FragmentDiaries.EXERCISE_DESCRIPTION to "Инструмент самоанализа, который позволяет выявлять взаимосвязи между ситуациями, эмоциями и мыслями, а затем корректировать свои убеждения.",
+                                FragmentDiaries.IMAGE to "DS",
                             )
                         )
+//                    kptExercise?.let { kpt ->
+//                        findNavController().navigate(
+//                            R.id.fragment_diaries, bundleOf(
+//                                FragmentDiaries.EXERCISE_ID to kpt.id,
+//                                FragmentDiaries.EXERCISE_TITLE to kpt.title,
+//                                FragmentDiaries.EXERCISE_DESCRIPTION to kpt.description,
+//                                FragmentDiaries.IMAGE to kpt.linkToPicture,
+//                            )
+//                        )
+//                    }
+                    },
+                    onFreeDiaryClick = {
+                        findNavController().navigate(
+                            R.id.freeDiaryTrackerMoodFragment,
+                        )
+                    },
+                    onDefinitionGroupProblemClick = {
+                        findNavController().navigate(
+                            R.id.fragment_diaries,
+                            bundleOf(
+                                FragmentDiaries.EXERCISE_ID to "DPG_ID",
+                                FragmentDiaries.EXERCISE_TITLE to "Определение проблемы, постановка цели",
+                                FragmentDiaries.EXERCISE_DESCRIPTION to "А теперь, давайте обозначим четкую форму своей проблемы, это поможет понять её суть и определить, к чему хотите прийти.",
+                                FragmentDiaries.IMAGE to "DS",
+                            )
+                        )
+//                        findNavController().navigate(R.id.action_fragment_exercises_to_definitionProblemGroupExerciseFragment)
                     }
-                }, onFreeDiaryClick = {
-                    findNavController().navigate(
-                        R.id.freeDiaryTrackerMoodFragment,
-                    )
-                }
                 )
-
             }
         }
         return binding.root
@@ -109,18 +131,20 @@ class FragmentExercises : Fragment() {
     private fun SetupMainContent(
         onThinkDiaryClick: () -> Unit,
         onFreeDiaryClick: () -> Unit,
+        onDefinitionGroupProblemClick: () -> Unit,
     ) {
         val viewState = viewModel.screenState.collectAsState()
         when (val res = viewState.value) {
             is ExercisesScreenState.Content -> {
-                kptExercise = res.data.find { it.title == "КПТ-дневник" }
+//                kptExercise = res.data.find { it.title == "КПТ-дневник" }
 
-                RenderContent(
-                    onThinkDiaryClick = { onThinkDiaryClick() },
+                RenderContent(onThinkDiaryClick = { onThinkDiaryClick() },
                     onFreeDiaryClick = { onFreeDiaryClick() },
                     modifier = Modifier.background(color = AppTheme.colors.screenBackground),
-                    onDefinitionGroupProblemClick = {findNavController().navigate(R.id.action_fragment_exercises_to_definitionProblemGroupExerciseFragment)}
-                )
+                    onDefinitionGroupProblemClick = {
+                        onDefinitionGroupProblemClick()
+
+                    })
             }
 
             is ExercisesScreenState.Error -> Unit
@@ -194,25 +218,26 @@ class FragmentExercises : Fragment() {
                 }
             }
 
-     /*       item(span = {
-                GridItemSpan(2)
-            }) {
-                Text(
-                    text = stringResource(id = R.string.problem_work),
-                    style = AppTheme.typography.titleXS,
-                    color = AppTheme.colors.primaryText
-                )
-            } */
+                   item(span = {
+                       GridItemSpan(2)
+                   }) {
+                       Text(
+                           text = stringResource(id = R.string.problem_work),
+                           style = AppTheme.typography.titleXS,
+                           color = AppTheme.colors.primaryText
+                       )
+                   }
 
-            item{
-                ExerciseItem(item = ExerciseEntity(
-                    id="1",
-                    title = "Определение групп \n" +
-                            "(категорий) проблем",
-                    description = "",
-                    linkToPicture = "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/exercise/images_exercise/Определение_групп_проблем.png",
-                    closed = false
-                )) {
+            item {
+                ExerciseItem(
+                    item = ExerciseEntity(
+                        id = "1",
+                        title = "Определение групп \n" + "(категорий) проблем",
+                        description = "",
+                        linkToPicture = "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/exercise/images_exercise/Определение_групп_проблем.png",
+                        closed = false
+                    )
+                ) {
                     onDefinitionGroupProblemClick()
                 }
             }
@@ -231,7 +256,7 @@ class FragmentExercises : Fragment() {
 
     @Composable
     private fun ExerciseItem(item: ExerciseEntity, onItemClick: (ExerciseEntity) -> Unit) {
-   /*     Column(modifier = Modifier
+        Column(modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
             .clickable {
                 onItemClick(item)
@@ -253,7 +278,7 @@ class FragmentExercises : Fragment() {
                 style = AppTheme.typography.bodyM,
                 color = AppTheme.colors.primaryText,
             )
-        } */
+        }
     }
 
     @Composable
@@ -304,7 +329,11 @@ class FragmentExercises : Fragment() {
     private fun RenderContent_Preview() {
         Scaffold {
             AppTheme {
-                RenderContent(modifier = Modifier.padding(it), onThinkDiaryClick = {}, onFreeDiaryClick = {}, onDefinitionGroupProblemClick = {})
+                RenderContent(
+                    modifier = Modifier.padding(it),
+                    onThinkDiaryClick = {},
+                    onFreeDiaryClick = {},
+                    onDefinitionGroupProblemClick = {})
             }
         }
     }

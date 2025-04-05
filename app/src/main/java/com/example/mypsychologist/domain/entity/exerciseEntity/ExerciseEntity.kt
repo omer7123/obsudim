@@ -77,9 +77,3 @@ data class ExercisesStatusEntity(
     val title: String,
     val isClosed: Boolean,
 )
-
-data class DefinitionProblemGroupExerciseEntity(
-    val sphere: String,
-    val emotion: String,
-    val target: String,
-)

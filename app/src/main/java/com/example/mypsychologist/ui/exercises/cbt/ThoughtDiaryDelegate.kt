@@ -49,11 +49,7 @@ class ThoughtDiaryDelegate(
                  //   inputLayout.error = null
                 }
 
-                editText.setText(item.text)
-
-       /*         inputLayout.setEndIconOnClickListener {
-                    onHelpClick(item.titleId, item.helperId)
-                } */
+                editText.setHint(itemView.context.getString(item.hintId))
             }
         }
     }

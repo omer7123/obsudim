@@ -1,4 +1,4 @@
-package com.example.mypsychologist.data.model
+package com.example.mypsychologist.data.model.exerciseModels
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -45,7 +45,7 @@ data class ExerciseResultModel(
 )
 @Serializable
 data class SaveExerciseResultResponseModel(
-    @SerialName("exercise_result_id")
+    @SerialName("think_diary_id")
     val id: String
 )
 @Serializable
@@ -100,11 +100,4 @@ data class ExerciseSaveResponseModel(
     val message: String,
     @SerialName("exercise_id")
     val exerciseId: String
-)
-
-@Serializable
-data class DefinitionProblemGroupExerciseModel(
-    val sphere: String,
-    val emotion: String,
-    val target: String,
 )
