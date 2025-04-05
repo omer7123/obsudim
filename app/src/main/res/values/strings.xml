@@ -10,10 +10,26 @@
     <string name="unknown_error_placeholder">Извините, произошла непредивденная ошибка. Попробуйте немного позже</string>
     <string name="after_connection">При восстановлении соединения данные загрузятся автоматически</string>
     <string name="diary_empty">Это место для заметок. Напиши, как прошёл день, как себя чувствуешь :)</string>
+    <string name="diary_empty_placeholder">Напиши, как прошёл день, как себя чувствуешь :)</string>
+    <string name="just_a_little_left">Осталось чуть-чуть</string>
 
     <string name="nothing">Ничего нет :(</string>
     <string name="need_data">Необходимы данные.</string>
     <string name="need_user_data">Пожалуйста, укажите свои данные, чтобы HR-менеджер мог вас идентифицировать. Если вы не готовы к этому, укажите псевдоним.</string>
+    <string name="enter_your_data">Укажите свои данные</string>
+    <string name="placeholder_registration">Почта и телефон нужны для напоминаний о необходимости пройти практику или записать впечатления о дне</string>
+
+    <string name="email_empty_placeholder">Укажите почту</string>
+    <string name="name_empty_placeholder">Укажите имя</string>
+    <string name="field_empty_placeholder">Данное поле не может быть пустым</string>
+    <string name="birthday_empty_placeholder">Укажите дату рождения</string>
+    <string name="city_empty_placeholder">Укажите город</string>
+    <string name="phone_empty_placeholder">Укажите номер телефона</string>
+    <string name="password_empty_placeholder">Укажите пароль</string>
+    <string name="password_confirm_empty_placeholder">Повторите пароль</string>
+    <string name="password_confirm_not_equals_placeholder">Пароли не совпадают</string>
+    <string name="email_not_valid_placeholder">Почта указана в неверном формате</string>
+    <string name="phone_not_valid_placeholder">Номер телефона указан в неверном формате</string>
 
     <string name="main">Главная</string>
     <string name="my_program">Моя программа</string>
@@ -36,13 +52,28 @@
     <string name="hints">Подсказки</string>
 
     <string name="exercises">Упражнения</string>
+
+    <string name="group_problem">Группы проблем</string>
+
+    <string name="group_problem_q_1">В какой сфере вы испытываете трудности?</string>
+    <string name="group_problem_hint_1">Укажите сферу</string>
+    <string name="group_problem_desc_1">Например, работа или личная жизнь</string>
+
+    <string name="group_problem_q_2">Что вы чувствуете по этому поводу?</string>
+    <string name="group_problem_hint_2">Укажите эмоцию</string>
+    <string name="group_problem_desc_2">Одно слово, наиболее ярко, описывающее ваши ощущения</string>
+
+    <string name="group_problem_q_3">Чего вы хотите добиться, когда решите проблему?</string>
+    <string name="group_problem_hint_3">Укажите цель</string>
+
+
     <string name="exercises_signature">Прокачай себя</string>
     <string name="psychoeducation">Теория</string>
     <string name="psychoeducation_signature">Познай психологию</string>
     <string name="diagnostics">Тестирование</string>
     <string name="diagnostics_signature">Познай себя</string>
     <string name="daily_tasks">На каждый день</string>
-    <string name="problem_work">Проработка проблемы:</string>
+    <string name="problem_work">Проработка проблемы</string>
 
     <string name="cbt">КПТ</string>
     <string name="plans">Планы</string>
@@ -281,6 +312,7 @@
     <string name="gender">Пол</string>
     <string name="man">Мужской</string>
     <string name="woman">Женский</string>
+    <string name="unknown">Не указывать</string>
     <string name="other">Другое</string>
     <string name="birthday">Дата рождения</string>
 
@@ -534,6 +566,13 @@
 
     <string name="normal">Норма</string>
 
+    <string name="normal_mood">нормально</string>
+    <string name="bad_mood">плохо</string>
+    <string name="good_mood">хорошо</string>
+    <string name="super_mood">прекрасно</string>
+    <string name="terrible_mood">ужасно</string>
+
+
     <string name="very_low">Очень низкий</string>
     <string name="low">Низкий</string>
     <string name="moderately">Умеренный</string>
@@ -709,7 +748,9 @@
     <string name="specify">Уточнить</string>
     <string name="save_without_specify">Сохранить без подробностей</string>
 
+
     <string name="register">Зарегистрироваться</string>
+    <string name="write_note">Написать заметку</string>
     <string name="log_in">Войти</string>
     <string name="coping_behavior">Совладающее поведение</string>
     <string name="restore">Восстановить</string>
@@ -744,4 +785,6 @@
 
     <string name="all_right">Все понял!</string>
     <string name="have_you_account">У вас есть аккаунт?</string>
+    <string name="kpt_desc">Это способ самоанализа, который позволяет отслеживать эмоции и чувства, выявлять взаимосвязи между ситуациями и мыслями.</string>
+    <string name="kpt_empty_placeholder">КПТ-дневник ещё не заполнялся. Самое время это сделать!</string>
 </resources>

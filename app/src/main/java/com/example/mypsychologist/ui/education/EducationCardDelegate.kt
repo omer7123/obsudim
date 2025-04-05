@@ -1,5 +1,6 @@
 package com.example.mypsychologist.ui.education
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ class EducationCardDelegate : AdapterDelegate {
         item: DelegateItem,
         position: Int
     ) {
+
         (holder as ViewHolder).bind((item as TextCardDelegateItem).content())
     }
 
@@ -31,6 +33,7 @@ class EducationCardDelegate : AdapterDelegate {
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ItemMaterialEntity) {
+            Log.e("TEXT", item.text)
             binding.textView.text = item.text
         }
     }

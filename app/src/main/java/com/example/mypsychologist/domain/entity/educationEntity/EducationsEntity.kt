@@ -7,20 +7,24 @@ data class TopicEntity(
     val theme: String,
     val score: Int,
     val maxScore: Int,
-    val linkToPicture: String
+    val linkToPicture: String,
 ) : Serializable
 
 data class EducationsEntity(
     val theme: String,
-    val score: Int,
     val maxScore: Int,
-    val materials: List<ItemMaterialEntity>
+    val materials: List<SubtopicEntity>,
+)
+data class SubtopicEntity(
+    val subtitle: String,
+    val cards: List<ItemMaterialEntity>,
 )
 data class ItemMaterialEntity(
     val id: String,
-    val text: String
+    val text: String,
+    val linkToPicture: String,
 )
 
 data class EducationMaterialForSaveProgressEntity(
-    val id: String
+    val id: String,
 )

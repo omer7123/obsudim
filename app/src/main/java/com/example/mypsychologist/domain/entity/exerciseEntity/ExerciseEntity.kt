@@ -1,12 +1,13 @@
 package com.example.mypsychologist.domain.entity.exerciseEntity
 
 import com.example.mypsychologist.ui.DelegateItem
-import kotlinx.serialization.SerialName
 
 data class ExerciseEntity(
     val id: String,
     val title: String,
-    val description: String
+    val description: String,
+    val linkToPicture: String,
+    val closed: Boolean
 )
 
 data class ExerciseDetailEntity(
@@ -26,25 +27,20 @@ data class FieldExerciseEntity(
 )
 
 sealed interface TypeOfExercise {
-    data object TextInput: TypeOfExercise
-    data object NumberInput: TypeOfExercise
+    data object TextInput : TypeOfExercise
+    data object NumberInput : TypeOfExercise
 }
 
 data class ExerciseDetailWithDelegateItem(
-    val id: String,
-    val title: String,
-    val description: String,
-    val fields: List<DelegateItem>
+    val id: String, val title: String, val description: String, val fields: List<DelegateItem>
 )
 
 data class ExerciseResultRequestEntity(
-    val id: String,
-    val result: List<ExerciseResultEntity>
+    val id: String, val result: List<ExerciseResultEntity>
 )
 
 data class ExerciseResultEntity(
-    val fieldId: String,
-    var value: String
+    val fieldId: String, var value: String
 )
 
 data class DailyExerciseEntity(
@@ -61,7 +57,6 @@ data class DailyTaskMarkIdEntity(
 )
 
 data class ExerciseResultFromAPIEntity(
-    @SerialName("completed_exercise_id")
     val completedExerciseId: String,
     val date: String
 )
@@ -70,4 +65,15 @@ data class ExerciseDetailResultEntity(
     val title: String,
     val date: String,
     val result: List<ExerciseResultEntity>
+)
+
+data class RecordExerciseEntity(
+    val id: String,
+    val title: String,
+    val date: String
+)
+
+data class ExercisesStatusEntity(
+    val title: String,
+    val isClosed: Boolean,
 )

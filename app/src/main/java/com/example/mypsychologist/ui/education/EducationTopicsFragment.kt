@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -37,7 +38,6 @@ import com.example.mypsychologist.domain.entity.educationEntity.TopicEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.education.EducationTopicsViewModel
 import com.example.mypsychologist.presentation.education.TopicsScreenState
-import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.core.PlaceholderError
 import com.example.mypsychologist.ui.diagnostics.SkeletonItem
@@ -51,8 +51,6 @@ class EducationTopicsFragment : Fragment() {
     @Inject
     lateinit var vmFactory: EducationTopicsViewModel.Factory
     private val viewModel: EducationTopicsViewModel by viewModels { vmFactory }
-
-    private lateinit var mainAdapter: MainAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -70,9 +68,6 @@ class EducationTopicsFragment : Fragment() {
             toolbar.title = getString(R.string.psychoeducation)
             profileIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_profile)
-            }
-            psychologistsIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
             }
         }
 
@@ -173,6 +168,7 @@ fun TopicItem(item: TopicEntity, onItemClick: (TopicEntity) -> Unit) {
             error = painterResource(id = R.drawable.ic_diary_practice),
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(12.dp))
+                .aspectRatio(1 / 0.67f)
 
         )
 

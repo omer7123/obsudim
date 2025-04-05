@@ -10,69 +10,95 @@
 
     <ImageView
         android:id="@+id/home_pict"
-        android:contentDescription="@string/main"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_home_fragment"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@string/main"
         android:scaleType="centerCrop"
-        android:layout_height="495dp"/>
+        android:src="@drawable/ic_home_fragment"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/toolbar"
+        layout="@layout/include_basic_toolbar_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        layout="@layout/include_basic_toolbar_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/date_tv"
-        android:layout_marginStart="16dp"
-        tools:text="Вторник, 17 декабря"
         style="@style/SubTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:text="Вторник, 17 декабря" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <View
-        android:id="@+id/line"
-        android:layout_marginBottom="125dp"
-        app:layout_constraintBottom_toBottomOf="@id/home_pict"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.53" />
 
-    <FrameLayout
-        android:id="@+id/content_container"
-        android:background="@drawable/bg_bottom_sheet_dialog_fragment"
-        app:layout_constraintTop_toBottomOf="@id/line"
-        android:layout_width="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="0dp"
-        android:orientation="vertical">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/exercises_rv"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:scrollbars="none"
-            android:paddingTop="6dp"
-            tools:listitem="@layout/item_daily_exercise"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/bottom_sheet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bottom_sheet_dialog_fragment"
+            android:backgroundTint="?attr/colorSurfaceContainerHighest"
+            android:orientation="vertical"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    </FrameLayout>
+            <View
+                android:id="@+id/bottom_handle"
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/record_card"
+                android:backgroundTint="?attr/colorSurfaceContainerHigh" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/exercises_rv"
+                android:layout_width="match_parent"
+                android:layout_marginTop="6dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="30dp"
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_daily_exercise" />
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress_circular"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:indeterminate="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

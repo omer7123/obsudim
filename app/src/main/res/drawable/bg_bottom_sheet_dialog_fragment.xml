@@ -5,5 +5,5 @@
         android:topLeftRadius="28dp"
         android:topRightRadius="28dp" />
 
-    <solid android:color="@color/cardview_light_background" />
+    <solid android:color="?attr/colorSurface" />
 </shape>

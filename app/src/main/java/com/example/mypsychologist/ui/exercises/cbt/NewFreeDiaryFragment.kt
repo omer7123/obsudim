@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.exercises.cbt
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,7 +82,8 @@ class NewFreeDiaryFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            viewModel.addDiary(NewFreeDiaryEntity(binding.field.text.toString()))
+            val date = requireArguments().getString(DATE)
+            viewModel.addDiary(NewFreeDiaryEntity(binding.field.text.toString()), date)
         }
 
         binding.includeToolbar.toolbar.setNavigationOnClickListener {
@@ -102,6 +104,7 @@ class NewFreeDiaryFragment : Fragment() {
 
             is NewFreeDiaryScreenState.Error -> {
                 requireContext().showToast(state.msg)
+                Log.e("Error", state.msg)
             }
             is NewFreeDiaryScreenState.Init -> {}
             NewFreeDiaryScreenState.Loading -> renderLoading()
@@ -128,5 +131,6 @@ class NewFreeDiaryFragment : Fragment() {
 
     companion object{
         const val KPT_ID = "kpt_id"
+        const val DATE = "date"
     }
 }

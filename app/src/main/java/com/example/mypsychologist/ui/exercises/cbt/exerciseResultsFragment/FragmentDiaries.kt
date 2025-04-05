@@ -1,43 +1,66 @@
 package com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.Scaffold
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.R
-import com.example.mypsychologist.databinding.FragmentDiariesBinding
-import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.isNetworkConnect
-import com.example.mypsychologist.extensions.showToast
-import com.example.mypsychologist.presentation.core.BaseStateUI
+import com.example.mypsychologist.presentation.exercises.diariesFragment.ThoughtDiariesScreenState
 import com.example.mypsychologist.presentation.exercises.diariesFragment.ThoughtDiariesViewModel
-import com.example.mypsychologist.ui.MainAdapter
-import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.exercises.ExerciseResultsDelegate
-import com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.example.mypsychologist.ui.core.IndicatorBottomSheet
+import com.example.mypsychologist.ui.core.PrimaryTextButton
+import com.example.mypsychologist.ui.core.RecordItem
+import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
 class FragmentDiaries : Fragment() {
-
-    private var binding: FragmentDiariesBinding by autoCleared()
-    private lateinit var adapter: MainAdapter
-
+    private var destinationNav: Int = R.id.action_fragment_diaries_to_fragment_new_diary
 
     @Inject
     lateinit var vmFactory: ThoughtDiariesViewModel.Factory
-
     private val viewModel: ThoughtDiariesViewModel by viewModels {
         vmFactory
     }
@@ -47,102 +70,237 @@ class FragmentDiaries : Fragment() {
         requireContext().getAppComponent().exercisesComponent().create().inject(this)
     }
 
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentDiariesBinding.inflate(inflater, container, false)
+    ) = ComposeView(requireContext()).apply {
+        val exercise = ExerciseEntity(
+            id = requireArguments().getString(EXERCISE_ID)!!,
+            title = requireArguments().getString(EXERCISE_TITLE)!!,
+            description = requireArguments().getString(EXERCISE_DESCRIPTION)!!,
+            linkToPicture = requireArguments().getString(IMAGE)!!,
+            closed = false
+        )
 
-        setupListener()
-        setupAdapter()
+        when(exercise.id){
+            "DPG_ID" -> {
+                viewModel.loadDiariesDPG()
+                destinationNav = R.id.action_fragment_diaries_to_definitionProblemGroupExerciseFragment
+            }
+            "KPT_ID" -> {
+//                viewModel.loadDiariesKPT()
+            }
+        }
 
-        viewModel.screenState
-            .flowWithLifecycle(lifecycle)
-            .onEach { render(it) }
-            .launchIn(lifecycleScope)
-
-
-        return binding.root
+        setContent {
+            AppTheme{
+                Scaffold(modifier = Modifier.fillMaxSize()) {
+                    DiariesScreen(viewModel = viewModel, exercise, findNavController())
+                }
+            }
+        }
     }
 
-    private fun setupListener() {
-        binding.newDiaryFab.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_fragment_diaries_to_fragment_new_diary,
-                bundleOf(
-                    EXERCISE_ID to requireArguments().getString(EXERCISE_ID)
+    @Composable
+    fun DiariesScreen(
+        viewModel: ThoughtDiariesViewModel,
+        exercise: ExerciseEntity,
+        navController: NavController
+    ){
+        val listViewState = viewModel.screenState.collectAsState()
+        ExerciseContent(
+            stateHistory = listViewState,
+            exercise = exercise,
+            addNewDiaryClick = {
+                navController.navigate(
+                    destinationNav,
+                    bundleOf(
+                        EXERCISE_ID to requireArguments().getString(EXERCISE_ID)
+                    )
                 )
-            )
-        }
-
-        binding.include.toolbar.apply {
-            title = getString(R.string.cbt_diary)
-            setNavigationOnClickListener { findNavController().popBackStack() }
-        }
+            },
+            navBackOnClick = {
+                navController.popBackStack()
+            }
+        )
     }
 
-    private fun setupAdapter() {
-        adapter = MainAdapter().apply {
-            addDelegate(
-                ExerciseResultsDelegate { id ->
-                    findNavController().navigate(
-                        R.id.action_fragment_diaries_to_fragment_diary,
-                        bundleOf(
-                            FragmentThoughtDiary.RESULT_ID to id,
+    @Composable
+    fun ExerciseContent(
+        stateHistory: State<ThoughtDiariesScreenState>,
+        exercise: ExerciseEntity,
+        addNewDiaryClick: () -> Unit,
+        navBackOnClick: () -> Unit
+    ) {
+        val sheetMaxHeight = remember { mutableStateOf(0.dp) }
+        val configuration = LocalConfiguration.current
+        val screenHeight = configuration.screenHeightDp.dp
+
+        BottomSheetScaffold(
+            sheetContent = {
+                SheetContent(
+                    recordsList = stateHistory,
+                    exerciseData = exercise,
+                    addNewDiaryClick = addNewDiaryClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = screenHeight - sheetMaxHeight.value)
+                )
+            },
+            sheetPeekHeight = 500.dp,
+            sheetShape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+            sheetBackgroundColor = AppTheme.colors.screenBackground,
+            content = {
+                Box {
+                    Image(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentScale = ContentScale.Crop,
+                        painter = painterResource(id = R.drawable.ic_kpt_diary_bg),
+                        contentDescription = ""
+                    )
+
+                    IconButton(
+                        modifier = Modifier
+                            .statusBarsPadding()
+                            .align(Alignment.TopStart)
+                            .padding(top = 20.dp, start = 16.dp)
+                            .onGloballyPositioned { coordinates ->
+                                sheetMaxHeight.value = coordinates.size.height.dp
+                            },
+                        onClick = {
+                            navBackOnClick()
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_arrow_back_white),
+                            contentDescription = "Назад",
+                            tint = AppTheme.colors.screenBackground
                         )
+                    }
+                }
+            },
+        )
+    }
+
+    @Composable
+    fun SheetContent(
+        recordsList: State<ThoughtDiariesScreenState>,
+        exerciseData: ExerciseEntity,
+        addNewDiaryClick: () -> Unit,
+        modifier: Modifier = Modifier
+    ) {
+        Column(modifier = modifier.padding(horizontal = 16.dp)) {
+            IndicatorBottomSheet(
+                modifier = Modifier
+                    .padding(top = 6.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+            Text(
+                modifier = Modifier.padding(top = 6.dp),
+                text = exerciseData.title,
+                style = AppTheme.typography.titleXS,
+                color = AppTheme.colors.primaryText
+            )
+            Text(
+                modifier = Modifier.padding(top = 10.dp),
+                text = exerciseData.description,
+                style = AppTheme.typography.bodyL,
+                color = AppTheme.colors.primaryText
+            )
+            PrimaryTextButton(
+                modifier = Modifier.padding(top = 20.dp),
+                textString = stringResource(id = R.string.begin),
+                onClick = { addNewDiaryClick() }
+            )
+            Text(
+                modifier = Modifier.padding(top = 40.dp),
+                text = stringResource(id = R.string.history),
+                style = AppTheme.typography.bodyXLBold,
+                color = AppTheme.colors.primaryText
+            )
+            when(val res = recordsList.value){
+                is ThoughtDiariesScreenState.Content -> {
+                    if (res.data.isNotEmpty()) {
+                        LazyColumn(
+                            contentPadding = PaddingValues(vertical = 10.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            items(res.data) {
+                                RecordItem(item = it)
+                            }
+                        }
+                    }else{
+                        Text(
+                            modifier = Modifier.padding(top = 10.dp),
+                            text = stringResource(R.string.kpt_empty_placeholder),
+                            style = AppTheme.typography.bodyL,
+                            color = AppTheme.colors.primaryText
+                        )
+                    }
+                }
+                ThoughtDiariesScreenState.Error -> {
+                    Text(
+                        text = stringResource(id = R.string.unknown_error_placeholder),
+                        style = AppTheme.typography.bodyL,
+                        color = AppTheme.colors.primaryText,
+                        modifier = modifier.padding(top = 10.dp)
                     )
                 }
-            )
-
-            binding.recordsRw.adapter = this
-            binding.recordsRw.layoutManager = LinearLayoutManager(requireContext())
-        }
-    }
-
-    private fun render(state: BaseStateUI<List<ExerciseResultFromAPIEntity>>) {
-        when (state) {
-            is BaseStateUI.Content -> {
-                binding.progressBar.isVisible = false
-                binding.includePlaceholder.layout.isVisible = false
-
-                if (state.data.isNotEmpty())
-                    adapter.submitList(state.data.map { it.toDelegateItems() })
-                else {
-                    showPlaceholderForEmptyList()
+                ThoughtDiariesScreenState.Initial -> Unit
+                ThoughtDiariesScreenState.Loading -> {
+                    CircularProgressIndicator(modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 10.dp))
                 }
             }
-
-            is BaseStateUI.Loading -> {
-                if (isNetworkConnect())
-                    binding.progressBar.isVisible = true
-                else
-                    binding.includePlaceholder.layout.isVisible = true
-            }
-
-            is BaseStateUI.Error -> {
-                binding.progressBar.isVisible = false
-                requireContext().showToast(state.msg)
-            }
-            is BaseStateUI.Initial -> Unit
         }
     }
 
-    private fun showPlaceholderForEmptyList() {
-        binding.includePlaceholder.apply {
-            image.setImageResource(R.drawable.placeholder_diary)
-            title.text = getString(R.string.nothing)
-            text.text = getString(R.string.no_diaries)
-            layout.isVisible = true
+
+
+    @Preview
+    @Composable
+    fun ExerciseContent_Preview() {
+        AppTheme {
+            ExerciseContent(
+                stateHistory = remember{
+                    mutableStateOf(ThoughtDiariesScreenState.Content(listOf(
+                        RecordExerciseEntity(
+                            id = "ifdfd",
+                            title = "Первое проххождение",
+                            date = "12-01-20"
+                        ),
+                        RecordExerciseEntity(
+                            id = "ifdfd",
+                            title = "Первое проххождение",
+                            date = "12-01-20"
+                        ),
+                    )))
+                },
+                addNewDiaryClick = {},
+                exercise = ExerciseEntity(
+                    "fdf", "КПТ-дневник",
+                    stringResource(R.string.kpt_desc),
+                    "ds",
+                    true
+                ),
+                navBackOnClick = {}
+            )
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadDiaries(requireArguments().getString(EXERCISE_ID).toString())
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        viewModel.loadDiaries(requireArguments().getString(EXERCISE_ID).toString())
+//    }
 
     companion object {
-        private const val EXERCISE_ID = "ID_EXERCISE"
+        const val IMAGE = "IMAGE"
+        const val EXERCISE_TITLE = "EXERCISE_TITLE"
+        const val EXERCISE_DESCRIPTION = "EXERCISE_DESCRIPTION"
+        const val EXERCISE_ID = "ID_EXERCISE"
     }
 }
+

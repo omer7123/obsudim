@@ -24,7 +24,7 @@
     <TextView
         android:id="@+id/text"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        style="@style/BodyL.Black"
+        style="@style/BodyL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -40,7 +40,7 @@
         android:layout_height="46dp"
         android:layout_marginHorizontal="16dp"
         android:background="@drawable/rounded_button"
-        style="@style/BodyM.White"
+        style="@style/BodyM"
         android:text="@string/send_message"/>
 
 
@@ -52,7 +52,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_button"
-        style="@style/BodyM.White"
+        style="@style/BodyM"
         android:text="@string/write_to_telegram"/>
 
 

@@ -1,4 +1,4 @@
-package com.example.mypsychologist.data.model
+package com.example.mypsychologist.data.model.exerciseModels
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -7,7 +7,10 @@ import kotlinx.serialization.Serializable
 data class ExercisesModel(
     val id: String,
     val title: String,
-    val description: String
+    val description: String,
+    @SerialName("link_to_picture")
+    val linkToPicture: String,
+    val closed: Boolean
 )
 
 @Serializable
@@ -42,7 +45,7 @@ data class ExerciseResultModel(
 )
 @Serializable
 data class SaveExerciseResultResponseModel(
-    @SerialName("exercise_result_id")
+    @SerialName("think_diary_id")
     val id: String
 )
 @Serializable
@@ -81,4 +84,20 @@ data class ExerciseDetailResultModel(
     val title: String,
     val date: String,
     val result: List<ExerciseResultModel>
+)
+
+@Serializable
+data class ExercisesStatusModel(
+    val title: String,
+    @SerialName("is_closed")
+    val isClosed: Boolean,
+)
+
+// ниже идет работа с упражнениями как отдельными таблицами
+
+@Serializable
+data class ExerciseSaveResponseModel(
+    val message: String,
+    @SerialName("exercise_id")
+    val exerciseId: String
 )

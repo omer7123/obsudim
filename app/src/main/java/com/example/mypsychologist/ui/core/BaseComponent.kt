@@ -4,21 +4,20 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,17 +25,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mypsychologist.R
+import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.example.mypsychologist.ui.theme.AppTheme
 import com.example.mypsychologist.ui.theme.AppTheme.typography
 
@@ -62,121 +58,145 @@ fun PlaceholderError(
                 .padding(horizontal = 16.dp),
             text = stringResource(id = text),
             style = typography.bodyL
-
         )
     }
 }
 
 @Composable
-fun PrimaryTextField(
-    field: String,
-    placeHolderText: String,
-    onFieldChange: (String) -> Unit,
-    imeAction: ImeAction,
-    modifier: Modifier = Modifier
-    ) {
-    val focusManager = LocalFocusManager.current
-
-    TextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(
-                color = AppTheme.colors.tertiaryBackground, shape = RoundedCornerShape(12.dp)
-            ), value = field, onValueChange = onFieldChange, singleLine = true, placeholder = {
-            Text(
-                text = placeHolderText,
-                style = typography.bodyM,
-                color = AppTheme.colors.secondaryText
-            )
-        }, colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = AppTheme.colors.primaryText,
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            cursorColor = AppTheme.colors.primaryText
-        ), textStyle = typography.bodyM,
-        keyboardOptions = KeyboardOptions(
-            imeAction = imeAction
-        ),
-        keyboardActions = KeyboardActions(onNext = {
-            focusManager.moveFocus(FocusDirection.Down)
-        }
-        )
-    )
-}
-
-@Composable
-fun PrimarySecurityTextField(
-    field: String,
-    placeHolderText: String,
-    onFieldChange: (String) -> Unit,
-    imeAction: ImeAction,
-    modifier: Modifier = Modifier
+fun RecordItem(
+    item: RecordExerciseEntity, modifier: Modifier = Modifier
 ) {
-    var passwordVisible by remember { mutableStateOf(false) }
-
-    val focusManager = LocalFocusManager.current
-
-    TextField(
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .background(
                 color = AppTheme.colors.tertiaryBackground,
                 shape = RoundedCornerShape(12.dp)
-            ),
-        value = field,
-        onValueChange = onFieldChange,
-        singleLine = true,
-        trailingIcon = {
-            val image = if (passwordVisible) Icons.Filled.Visibility
-            else Icons.Filled.VisibilityOff
-
-            IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                Icon(imageVector = image, contentDescription = "")
-            }
-        },
-        visualTransformation =
-            if(passwordVisible) VisualTransformation.None
-            else PasswordVisualTransformation(),
-
-        placeholder = {
-            Text(
-                text = placeHolderText,
-                style = typography.bodyM,
-                color = AppTheme.colors.secondaryText
             )
-        },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = AppTheme.colors.primaryText,
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            cursorColor = AppTheme.colors.primaryText
-        ),
-        textStyle = typography.bodyM,
-        keyboardOptions = KeyboardOptions(
-            imeAction = imeAction
-        ),
-        keyboardActions = KeyboardActions(
-            onNext = {
-                focusManager.moveFocus(FocusDirection.Down)
-            },
-            onDone = {
-                focusManager.clearFocus()
-            }
-        ),
+
+    ) {
+        Text(
+            text = item.title,
+            style = typography.bodyMBold,
+            color = AppTheme.colors.primaryText,
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+        )
+        Text(
+            text = item.date,
+            style = typography.bodyM,
+            color = AppTheme.colors.primaryText,
+            modifier = Modifier.padding(start = 16.dp, top = 6.dp, bottom = 16.dp)
+        )
+    }
+}
+
+@Composable
+fun IndicatorBottomSheet(modifier: Modifier = Modifier){
+    Box(
+        modifier = modifier
+            .size(width = 40.dp, height = 4.dp)
+            .background(
+                color = AppTheme.colors.tertiaryBackground,
+                shape = RoundedCornerShape(12.dp)
+            )
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DropdownMenu() {
+    var expandedGender by remember {
+        mutableStateOf(false)
+    }
+
+    ExposedDropdownMenuBox(
+        modifier = Modifier.fillMaxWidth(),
+        expanded = expandedGender,
+        onExpandedChange = { expandedGender = it }
+    ) {
+//        TextFieldForDropMenu(
+//            field = when (value.gender) {
+//                Gender.MALE -> stringResource(id = R.string.man)
+//                Gender.FEMALE -> stringResource(id = R.string.woman)
+//                Gender.UNKNOWN -> stringResource(id = R.string.unknown)
+//                Gender.INITIAL -> ""
+//            },
+//            placeHolderText = stringResource(id = R.string.gender),
+//            onFieldChange = {},
+//            imeAction = ImeAction.Default,
+//            isExpanded = expandedGender
+//        )
+
+        ExposedDropdownMenu(
+            expanded = expandedGender,
+            onDismissRequest = { expandedGender = false },
+        ) {
+            DropdownMenuItem(
+                text = { Text(text = stringResource(id = R.string.man)) },
+                onClick = {
+//                    onGenderChange(Gender.MALE)
+                    expandedGender = false
+                }
+            )
+            DropdownMenuItem(
+                text = { Text(text = stringResource(id = R.string.woman)) },
+                onClick = {
+//                    onGenderChange(Gender.FEMALE)
+                    expandedGender = false
+                }
+            )
+            DropdownMenuItem(
+                text = { Text(text = stringResource(id = R.string.unknown)) },
+                onClick = {
+//                    onGenderChange(Gender.UNKNOWN)
+                    expandedGender = false
+                }
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+
+
+@Composable
+fun ToolBarBasic(title: String, navigateBack: () -> Unit,){
+    TopAppBar(
+        title = {
+            Text(title,
+                style = AppTheme.typography.titleCygreFont,
+                color = AppTheme.colors.navBackground)
+        },
+        navigationIcon = {
+            IconButton(onClick = navigateBack) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.frame),
+                    contentDescription = ""
+                )
+            }
+        }
+    )
+}
+
+@Preview
+@Composable
+fun ToolbarBasicPreview() {
+
 }
 
 @Preview(showBackground = false)
 @Composable
 fun PrimaryTextField_Preview(){
     AppTheme {
-        PrimaryTextField(
-            field = stringResource(id = R.string.mail),
-            placeHolderText = stringResource(id = R.string.mail),
-            onFieldChange = {},
-            imeAction = ImeAction.Next
-        )
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun TestScreen() {
+    var text by remember { mutableStateOf("Hello") }
+    Text(text = text)
+    text = "World"
 }
 
 

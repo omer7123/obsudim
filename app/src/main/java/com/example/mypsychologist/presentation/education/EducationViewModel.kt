@@ -11,6 +11,8 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEn
 import com.example.mypsychologist.domain.useCase.educationUseCases.GetMaterialOfTopicUseCase
 import com.example.mypsychologist.domain.useCase.educationUseCases.SaveProgressUseCase
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,8 +22,8 @@ class EducationViewModel(
     private val markAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
 ) : ViewModel() {
 
-    private val _screenState: MutableLiveData<EducationScreenState> = MutableLiveData()
-    val screenState: LiveData<EducationScreenState> = _screenState
+    private val _screenState: MutableStateFlow<EducationScreenState> = MutableStateFlow(EducationScreenState.Initial)
+    val screenState: StateFlow<EducationScreenState> = _screenState
 
     private val _markAsCompleteStatus: MutableLiveData<MarsAsCompleteStatus> = MutableLiveData()
     val marsAsCompleteStatus: LiveData<MarsAsCompleteStatus> = _markAsCompleteStatus
@@ -29,14 +31,15 @@ class EducationViewModel(
     fun getMaterial(id: String){
         _screenState.value = EducationScreenState.Loading
         viewModelScope.launch {
-            getEducationMaterialUseCase(id).collect{result->
+            getEducationMaterialUseCase(id).collect{ result->
                 when (result) {
                     is Resource.Error -> _screenState.value = EducationScreenState.Error(result.msg.toString())
                     Resource.Loading -> _screenState.value = EducationScreenState.Loading
-                    is Resource.Success -> _screenState.value = EducationScreenState.Content(result.data)
+                    is Resource.Success -> {
+                        _screenState.value = EducationScreenState.Content(result.data)
+                    }
                 }
             }
-
         }
     }
 

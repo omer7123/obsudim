@@ -1,11 +1,12 @@
 package com.example.mypsychologist.data.repository
 
 import com.example.mypsychologist.core.Resource
+import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.model.AuthModel
-import com.example.mypsychologist.data.model.OldRegister
 import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.data.remote.authentication.AuthenticationDataSource
+import com.example.mypsychologist.domain.entity.authenticationEntity.RegisterEntity
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
 import com.example.mypsychologist.domain.repository.retrofit.AuthenticationRepository
 import javax.inject.Inject
@@ -16,9 +17,8 @@ class AuthenticationRepositoryImpl @Inject constructor(
 ) :
     AuthenticationRepository {
 
-
-    override suspend fun oldRegister(register: OldRegister): Resource<User> {
-        return dataSource.registerOld(register)
+    override suspend fun oldRegister(register: RegisterEntity): Resource<User> {
+        return dataSource.registerOld(register.toModel())
     }
 
     override suspend fun authOld(authModel: AuthModel): Resource<User> {

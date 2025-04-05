@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.mypsychologist.R
+import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
 import com.example.mypsychologist.ui.theme.AppTheme
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -43,6 +44,14 @@ private fun Date.formatToMonthString(): String =
         it.uppercase()
     }
 
+fun Date.formatToMonthStringInf(): String =
+    SimpleDateFormat("MMMM", Locale.getDefault()).format(this).replaceFirstChar {
+        it.uppercase()
+    }
+fun Date.formatToDayString(): String =
+    SimpleDateFormat("dd", Locale.getDefault()).format(this)
+
+
 private fun Int.getDayOfWeek3Letters(): String? =
     Calendar.getInstance().apply { set(Calendar.DAY_OF_WEEK, this@getDayOfWeek3Letters) }
         .getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault())
@@ -52,6 +61,7 @@ private fun Int.getDayOfWeek3Letters(): String? =
 private fun CalendarCell(
     date: Date,
     signal: Boolean,
+    hasDiary: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -78,6 +88,16 @@ private fun CalendarCell(
                         color = AppTheme.colors.secondaryBackground
                     )
                     .size(36.dp)
+            )
+        }else if(hasDiary){
+            Box(modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = 30.dp)
+                .size(width = 12.dp, height = 4.dp)
+                .background(
+                    color = AppTheme.colors.fiveBackground,
+                    shape = RoundedCornerShape(12.dp)
+                )
             )
         }
         Text(
@@ -109,12 +129,12 @@ private fun WeekdayCell(weekday: Int, modifier: Modifier = Modifier) {
 // Сетка календаря
 @Composable
 private fun CalendarGrid(
-    date: List<Pair<Date, Boolean>>,
+    date: List<CalendarEntity>,
     onClick: (Date) -> Unit,
     startFromSunday: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val weekdayFirstDay = Calendar.getInstance().apply { time = date.first().first }.get(Calendar.DAY_OF_WEEK)
+    val weekdayFirstDay = Calendar.getInstance().apply { time = date.first().date }.get(Calendar.DAY_OF_WEEK)
     val weekdays = getWeekDays(startFromSunday)
     CalendarCustomLayout(modifier = modifier) {
         weekdays.forEach {
@@ -124,7 +144,7 @@ private fun CalendarGrid(
             Spacer(modifier = Modifier)
         }
         date.forEach {
-            CalendarCell(date = it.first, signal = it.second, onClick = { onClick(it.first) })
+            CalendarCell(date = it.date, signal = it.signal, hasDiary = it.diary, onClick = { onClick(it.date) })
         }
     }
 }
@@ -140,7 +160,7 @@ fun getWeekDays(startFromSunday: Boolean): List<Int> {
 private fun CalendarCustomLayout(
     modifier: Modifier = Modifier,
     horizontalGapDp: Dp = 2.dp,
-    verticalGapDp: Dp = 2.dp,
+    verticalGapDp: Dp = (-10).dp,
     content: @Composable () -> Unit,
 ) {
     val horizontalGap = with(LocalDensity.current) { horizontalGapDp.roundToPx() }
@@ -183,7 +203,7 @@ private fun CalendarCustomLayout(
 fun CalendarView(
     month: Date,
     years: String,
-    date: List<Pair<Date, Boolean>>?,
+    date: List<CalendarEntity>,
     displayNext: Boolean,
     displayPrev: Boolean,
     onClickNext: () -> Unit,
@@ -213,7 +233,7 @@ fun CalendarView(
                     Icon(
                         painterResource(id = R.drawable.ic_arrow_left_calendar),
                         contentDescription = "Предыдущий месяц",
-                        tint = AppTheme.colors.tertiaryBackground
+                        tint = AppTheme.colors.screenBackground
                     )
                 }
 
@@ -222,12 +242,12 @@ fun CalendarView(
                     Icon(
                         painterResource(id = R.drawable.ic_arrow_right_calendar),
                         contentDescription = "Следующий месяц",
-                        tint = AppTheme.colors.tertiaryBackground
+                        tint = AppTheme.colors.screenBackground
                     )
                 }
         }
 
-        if (!date.isNullOrEmpty()) {
+        if (date.isNotEmpty()) {
             CalendarGrid(
                 date = date,
                 onClick = onClick,
@@ -250,14 +270,26 @@ fun CalendarPreview() {
 
         val calendar = Calendar.getInstance()
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        val dates = (1..daysInMonth).map {
+//        val dates = (1..daysInMonth).map {
+//            calendar.set(Calendar.DAY_OF_MONTH, it)
+//            Pair(calendar.time, it % 5 == 0) // Пример: сигналы для каждых 5 дней
+//        }
+        var dates = (1..daysInMonth).map {
             calendar.set(Calendar.DAY_OF_MONTH, it)
-            Pair(calendar.time, it % 5 == 0) // Пример: сигналы для каждых 5 дней
+            calendar.time
+        }
+
+        val newDates = dates.map {
+            CalendarEntity(
+                date = it,
+                signal = false,
+                diary = true
+            )
         }
         CalendarView(
             month = Date(),
             years = "2024",
-            date = dates,
+            date = newDates,
             displayNext = true,
             displayPrev = true,
             onClickNext = {},

@@ -4,8 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
+import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.domain.entity.authenticationEntity.User
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthByTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthWithDataUserUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.GetTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveUserIdUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -17,11 +20,16 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authWithDataUserUseCase: AuthWithDataUserUseCase,
     private val saveTokenUseCase: SaveTokenUseCase,
-    private val saveUserIdUseCase: SaveUserIdUseCase
+    private val saveUserIdUseCase: SaveUserIdUseCase,
+    private val authByTokenUseCase: AuthByTokenUseCase,
+    private val getTokenUseCase: GetTokenUseCase,
 ) : ViewModel() {
 
     private val _stateScreen: MutableStateFlow<AuthContent> = MutableStateFlow(AuthContent())
     val stateScreen: StateFlow<AuthContent> = _stateScreen
+
+    private val _authByTokenStatus: MutableStateFlow<AuthState> = MutableStateFlow(AuthState.Initial)
+    val authByTokenStatus: StateFlow<AuthState> = _authByTokenStatus
 
 
     private val handler = CoroutineExceptionHandler { _, error ->
@@ -43,6 +51,32 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    fun authByToken() {
+        viewModelScope.launch(handler) {
+            _authByTokenStatus.value = AuthState.Loading
+            val token = getTokenUseCase()
+            if (token == "")
+                _authByTokenStatus.value = AuthState.Error
+            else {
+                when (val result = authByTokenUseCase(Token(token))) {
+                    is Resource.Error -> _authByTokenStatus.value = AuthState.Error
+
+                    Resource.Loading -> _authByTokenStatus.value = AuthState.Loading
+                    is Resource.Success -> {
+                        saveTokenUseCase(result.data.token)
+                        _authByTokenStatus.value = AuthState.Success
+                    }
+                }
+            }
+        }
+    }
+    private suspend fun saveToken(result: User) {
+        _stateScreen.value = _stateScreen.value.copy(loading = true)
+        saveTokenUseCase(result.token)
+        saveUserIdUseCase(result.user_id)
+        _authByTokenStatus.value = AuthState.Success
+    }
+
     fun emailChange(email: String){
         _stateScreen.value = _stateScreen.value.copy(email = email)
     }
@@ -51,12 +85,6 @@ class AuthViewModel @Inject constructor(
         _stateScreen.value = _stateScreen.value.copy(password = password)
     }
 
-    private suspend fun saveToken(result: User) {
-        _stateScreen.value = _stateScreen.value.copy(loading = true)
-        saveTokenUseCase(result.token)
-        saveUserIdUseCase(result.user_id)
-        _stateScreen.value = _stateScreen.value.copy(success = true)
-    }
     fun removeError() {
         _stateScreen.value = _stateScreen.value.copy(error = null)
     }

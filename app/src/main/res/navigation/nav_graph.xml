@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/registrationFragment">
+    app:startDestination="@id/authFragment">
 
     <fragment
         android:id="@+id/main_fragment"
@@ -51,8 +51,7 @@
     <fragment
         android:id="@+id/fragment_diaries"
         android:name="com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.FragmentDiaries"
-        android:label="FragmentDiaries"
-        tools:layout="@layout/fragment_diaries">
+        android:label="FragmentDiaries">
         <action
             android:id="@+id/action_fragment_diaries_to_fragment_new_diary"
             app:destination="@id/fragment_new_diary"
@@ -61,18 +60,11 @@
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_in_right" />
         <action
-            android:id="@+id/action_fragment_diaries_to_fragment_diary"
-            app:destination="@id/fragment_diary"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right" />
+            android:id="@+id/action_fragment_diaries_to_definitionProblemGroupExerciseFragment"
+            app:destination="@id/definitionProblemGroupExerciseFragment" />
+
     </fragment>
-    <fragment
-        android:id="@+id/fragment_diary"
-        android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentThoughtDiary"
-        android:label="FragmentDiary"
-        tools:layout="@layout/fragment_thought_diary" />
+
     <fragment
         android:id="@+id/fragment_new_diary"
         android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary"
@@ -289,5 +281,14 @@
     <fragment
         android:id="@+id/freeDiaryTrackerMoodFragment"
         android:name="com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.FreeDiaryTrackerMoodFragment"
-        android:label="FreeDiaryTrackerMoodFragment" />
+        android:label="FreeDiaryTrackerMoodFragment" >
+        <action
+            android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
+            app:destination="@id/newFreeDiaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/definitionProblemGroupExerciseFragment"
+        android:name="com.example.mypsychologist.ui.exercises.DefinitionProblemGroupExerciseFragment"
+        android:label="fragment_definition_problem_group_exercise"
+        tools:layout="@layout/fragment_definition_problem_group_exercise" />
 </navigation>

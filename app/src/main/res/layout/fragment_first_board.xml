@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,108 +8,116 @@
     android:scrollbars="none"
     tools:context=".ui.authentication.boardFragment.FirstBoardFragment">
 
-
-    <ImageView
-        android:id="@+id/clev1_iv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.16"
-        app:layout_constraintWidth_percent="0.65"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_first_board_clev1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/app_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/app_name_new"
-        android:textAppearance="@style/CruinnMedTitle"
-        android:textColor="?attr/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@id/clev2_iv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clev1_iv" />
-
-    <ImageView
-        android:id="@+id/clev2_iv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintWidth_percent="0.69"
-        android:layout_marginTop="60dp"
-        android:src="@drawable/ic_first_board_board_clev2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_tv" />
-
-    <TextView
-        android:id="@+id/title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/how_everything_works"
-        android:textAppearance="@style/TitleFragmentPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clev2_iv" />
-
-    <TextView
-        android:id="@+id/desc_first_tv"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/desc_first_screen1"
-        android:textAppearance="@style/BodyXL"
-        android:textColor="?attr/colorOnSurface"
-        app:layout_constraintStart_toStartOf="@id/title_tv"
-        app:layout_constraintTop_toBottomOf="@id/title_tv" />
+        android:layout_height="match_parent"
+        android:background="?attr/colorOnPrimaryContainer"
+        android:scrollbars="none"
+        tools:context=".ui.authentication.boardFragment.FirstBoardFragment">
 
-    <TextView
-        android:id="@+id/desc_second_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/desc_first_screen2"
-        android:textAppearance="@style/BodyXL"
-        android:textColor="?attr/colorOnSurface"
-        app:layout_constraintStart_toStartOf="@id/title_tv"
-        app:layout_constraintTop_toBottomOf="@id/desc_first_tv" />
 
-    <FrameLayout
-        android:id="@+id/num_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/bg_white_rounded"
-        android:elevation="0dp"
-        app:layout_constraintBottom_toTopOf="@id/next_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+            android:id="@+id/clev1_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_first_board_clev1"
+            app:layout_constraintHeight_percent="0.16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.65" />
 
         <TextView
+            android:id="@+id/app_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="6dp"
-            android:text="1 из 7"
-            android:textAppearance="@style/BodyXSBold" />
-    </FrameLayout>
+            android:text="@string/app_name_new"
+            android:textAppearance="@style/CruinnMedTitle"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/clev2_iv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clev1_iv" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/next_btn"
-        style="@style/ButtonPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="52dp"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:paddingVertical="13dp"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/clev2_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_first_board_board_clev2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_tv"
+            />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/how_everything_works"
+            android:textAppearance="@style/TitleFragmentPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clev2_iv" />
+
+        <TextView
+            android:id="@+id/desc_first_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/desc_first_screen1"
+            android:textAppearance="@style/BodyXL"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintStart_toStartOf="@id/title_tv"
+            app:layout_constraintTop_toBottomOf="@id/title_tv" />
+
+        <TextView
+            android:id="@+id/desc_second_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/desc_first_screen2"
+            android:textAppearance="@style/BodyXL"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toTopOf="@+id/num_container"
+            app:layout_constraintStart_toStartOf="@id/title_tv"
+            app:layout_constraintTop_toBottomOf="@id/desc_first_tv" />
+
+        <FrameLayout
+            android:id="@+id/num_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_white_rounded"
+            android:elevation="0dp"
+            app:layout_constraintBottom_toTopOf="@id/next_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="6dp"
+                android:text="1 из 7"
+                android:textAppearance="@style/BodyXSBold" />
+        </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_btn"
+            style="@style/ButtonPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="52dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingVertical="13dp"
+            android:text="@string/next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

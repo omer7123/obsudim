@@ -1,27 +1,34 @@
 package com.example.mypsychologist.data.converters
 
-import com.example.mypsychologist.data.model.DailyExerciseModel
-import com.example.mypsychologist.data.model.DailyTaskMarkIdModel
-import com.example.mypsychologist.data.model.ExerciseDetailModel
-import com.example.mypsychologist.data.model.ExerciseDetailResultModel
-import com.example.mypsychologist.data.model.ExerciseResultFromAPIModel
-import com.example.mypsychologist.data.model.ExerciseResultModel
-import com.example.mypsychologist.data.model.ExerciseResultRequestModel
-import com.example.mypsychologist.data.model.ExercisesModel
-import com.example.mypsychologist.data.model.FieldExerciseModel
+import com.example.mypsychologist.data.model.exerciseModels.DailyExerciseModel
+import com.example.mypsychologist.data.model.exerciseModels.DailyTaskMarkIdModel
+import com.example.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupExerciseModel
+import com.example.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupHistoryModel
+import com.example.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
+import com.example.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
+import com.example.mypsychologist.data.model.exerciseModels.ExerciseResultFromAPIModel
+import com.example.mypsychologist.data.model.exerciseModels.ExerciseResultModel
+import com.example.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
+import com.example.mypsychologist.data.model.exerciseModels.ExercisesModel
+import com.example.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
+import com.example.mypsychologist.data.model.exerciseModels.FieldExerciseModel
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.FieldExerciseEntity
+import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
+import com.example.mypsychologist.extensions.convertLondonTimeToDeviceTime
 
 fun ExercisesModel.toEntity(): ExerciseEntity {
-    return ExerciseEntity(id, title, description)
+    return ExerciseEntity(id, title, description, "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai$linkToPicture", closed)
 }
 
 fun ExerciseDetailModel.toEntity(): ExerciseDetailEntity =
@@ -36,13 +43,13 @@ fun FieldExerciseModel.toEntity(): FieldExerciseEntity {
     return FieldExerciseEntity(description, title, major, exerciseStructureId, typeOfEntity, id)
 }
 
-fun ExerciseResultRequestEntity.toModel(): ExerciseResultRequestModel{
+fun ExerciseResultRequestEntity.toModel(): ExerciseResultRequestModel {
     return ExerciseResultRequestModel(
         id, result = result.map { it.toModel() }
     )
 }
 
-private fun ExerciseResultEntity.toModel() :ExerciseResultModel{
+private fun ExerciseResultEntity.toModel() : ExerciseResultModel {
     return ExerciseResultModel(
         fieldId = fieldId,
         value = value
@@ -61,4 +68,10 @@ fun ExerciseResultFromAPIModel.toEntity() = ExerciseResultFromAPIEntity(complete
 
 fun ExerciseDetailResultModel.toEntity() =
     ExerciseDetailResultEntity(title, date, result = result.map { ExerciseResultEntity(fieldId = it.fieldId, value = it.value) })
+
+fun ExercisesStatusModel.toEntity() = ExercisesStatusEntity(title, isClosed)
+
+fun DefinitionProblemGroupExerciseEntity.toModel() = DefinitionProblemGroupExerciseModel(sphere, emotion, target)
+
+fun DefinitionProblemGroupHistoryModel.toEntity() = RecordExerciseEntity(id, sphere, time.convertLondonTimeToDeviceTime())
 
