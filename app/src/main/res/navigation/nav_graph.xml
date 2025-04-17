@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_diaries"
-        android:name="com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.FragmentDiaries"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.RecordsExerciseFragment"
         android:label="FragmentDiaries">
         <action
             android:id="@+id/action_fragment_diaries_to_fragment_new_diary"
@@ -67,7 +67,7 @@
 
     <fragment
         android:id="@+id/fragment_new_diary"
-        android:name="com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary"
+        android:name="com.example.mypsychologist.ui.exercises.cbt.newCbtDiaryFragment.FragmentNewCBTDiary"
         android:label="FragmentNewDiary"
         tools:layout="@layout/fragment_new_thought_diary" />
     <fragment

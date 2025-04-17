@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTrackerMoodBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast

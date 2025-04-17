@@ -56,7 +56,7 @@ import com.example.mypsychologist.ui.core.RecordItem
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
-class FragmentDiaries : Fragment() {
+class RecordsExerciseFragment : Fragment() {
     private var destinationNav: Int = R.id.action_fragment_diaries_to_fragment_new_diary
 
     @Inject

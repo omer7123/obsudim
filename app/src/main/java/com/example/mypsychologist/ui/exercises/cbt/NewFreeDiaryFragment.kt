@@ -25,6 +25,7 @@ import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryScreenState
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryViewModel
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.exercises.cbt.newCbtDiaryFragment.FragmentNewCBTDiary
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.text.SimpleDateFormat

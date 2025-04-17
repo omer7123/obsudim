@@ -4,11 +4,10 @@ import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoo
 import com.example.mypsychologist.ui.exercises.DefinitionProblemGroupExerciseFragment
 import com.example.mypsychologist.ui.exercises.FragmentExercises
 import com.example.mypsychologist.ui.exercises.StatementProblemsAndTargetFragment
-import com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary
-import com.example.mypsychologist.ui.exercises.cbt.FreeDiaryFragment
 import com.example.mypsychologist.ui.exercises.cbt.NewFreeDiaryFragment
 import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
-import com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.FragmentDiaries
+import com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.RecordsExerciseFragment
+import com.example.mypsychologist.ui.exercises.cbt.newCbtDiaryFragment.FragmentNewCBTDiary
 import dagger.Subcomponent
 
 @FragmentScope
@@ -16,9 +15,8 @@ import dagger.Subcomponent
 interface ExercisesComponent {
     fun inject(fragment: FragmentExercises)
     fun inject(fragment: DefinitionProblemGroupExerciseFragment)
-    fun inject(fragment: FragmentDiaries)
+    fun inject(fragment: RecordsExerciseFragment)
     fun inject(fragment: FragmentNewCBTDiary)
-    fun inject(fragment: FreeDiaryFragment)
     fun inject(fragment: NewFreeDiaryFragment)
     fun inject(fragment: TrackerMoodFragment)
     fun inject(fragment: FreeDiaryTrackerMoodFragment)

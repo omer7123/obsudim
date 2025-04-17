@@ -54,7 +54,7 @@ import com.example.mypsychologist.presentation.exercises.exercisesFragment.Exerc
 import com.example.mypsychologist.presentation.exercises.exercisesFragment.REBTViewModel
 import com.example.mypsychologist.ui.autoCleared
 import com.example.mypsychologist.ui.core.DiaryTextButton
-import com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.FragmentDiaries
+import com.example.mypsychologist.ui.exercises.cbt.exerciseResultsFragment.RecordsExerciseFragment
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -87,10 +87,10 @@ class FragmentExercises : Fragment() {
                     onThinkDiaryClick = {
                         findNavController().navigate(
                             R.id.fragment_diaries, bundleOf(
-                                FragmentDiaries.EXERCISE_ID to "fddf",
-                                FragmentDiaries.EXERCISE_TITLE to "КПТ-дневник",
-                                FragmentDiaries.EXERCISE_DESCRIPTION to "Инструмент самоанализа, который позволяет выявлять взаимосвязи между ситуациями, эмоциями и мыслями, а затем корректировать свои убеждения.",
-                                FragmentDiaries.IMAGE to "DS",
+                                RecordsExerciseFragment.EXERCISE_ID to "fddf",
+                                RecordsExerciseFragment.EXERCISE_TITLE to "КПТ-дневник",
+                                RecordsExerciseFragment.EXERCISE_DESCRIPTION to "Инструмент самоанализа, который позволяет выявлять взаимосвязи между ситуациями, эмоциями и мыслями, а затем корректировать свои убеждения.",
+                                RecordsExerciseFragment.IMAGE to "DS",
                             )
                         )
 //                    kptExercise?.let { kpt ->
@@ -113,10 +113,10 @@ class FragmentExercises : Fragment() {
                         findNavController().navigate(
                             R.id.fragment_diaries,
                             bundleOf(
-                                FragmentDiaries.EXERCISE_ID to "DPG_ID",
-                                FragmentDiaries.EXERCISE_TITLE to "Определение проблемы, постановка цели",
-                                FragmentDiaries.EXERCISE_DESCRIPTION to "А теперь, давайте обозначим четкую форму своей проблемы, это поможет понять её суть и определить, к чему хотите прийти.",
-                                FragmentDiaries.IMAGE to "DS",
+                                RecordsExerciseFragment.EXERCISE_ID to "DPG_ID",
+                                RecordsExerciseFragment.EXERCISE_TITLE to "Определение проблемы, постановка цели",
+                                RecordsExerciseFragment.EXERCISE_DESCRIPTION to "А теперь, давайте обозначим четкую форму своей проблемы, это поможет понять её суть и определить, к чему хотите прийти.",
+                                RecordsExerciseFragment.IMAGE to "DS",
                             )
                         )
 //                        findNavController().navigate(R.id.action_fragment_exercises_to_definitionProblemGroupExerciseFragment)

@@ -1,4 +1,4 @@
-package com.example.mypsychologist.ui.exercises.cbt
+package com.example.mypsychologist.ui.exercises.cbt.newCbtDiaryFragment
 
 import android.content.Context
 import android.os.Bundle
@@ -22,6 +22,9 @@ import com.example.mypsychologist.presentation.exercises.exercisesFragment.SaveE
 import com.example.mypsychologist.ui.DelegateItem
 import com.example.mypsychologist.ui.MainAdapter
 import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.exercises.cbt.HintDelegateItem
+import com.example.mypsychologist.ui.exercises.cbt.InputExerciseDelegateItem
+import com.example.mypsychologist.ui.exercises.cbt.SeekBarDelegate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

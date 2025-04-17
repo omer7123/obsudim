@@ -14,7 +14,6 @@ import com.example.mypsychologist.domain.repository.retrofit.TestsDiagnosticRepo
 import com.example.mypsychologist.presentation.authentication.authFragment.AuthViewModel
 import com.example.mypsychologist.presentation.authentication.registrationFragment.RegisterViewModel
 import com.example.mypsychologist.presentation.diagnostics.PassingTestViewModel
-import com.example.mypsychologist.presentation.exercises.FreeDiariesViewModel
 import com.example.mypsychologist.presentation.exercises.NewFreeDiaryViewModel
 import com.example.mypsychologist.presentation.exercises.definitionProblemGroupExerciseFragment.DefinitionProblemGroupExerciseViewModel
 import com.example.mypsychologist.presentation.exercises.statementProblemsAndTargetFragment.StatementProblemsAndTargetViewModel
@@ -56,10 +55,6 @@ interface DomainModule {
     @Binds
     @[IntoMap ClassKey(AuthViewModel::class)]
     fun provideAuthViewModel(authViewModel: AuthViewModel): ViewModel
-
-    @Binds
-    @[IntoMap ClassKey(FreeDiariesViewModel::class)]
-    fun provideFreeDiariesViewModel(freeDiariesViewModel: FreeDiariesViewModel): ViewModel
 
     @Binds
     @[IntoMap ClassKey(NewFreeDiaryViewModel::class)]
