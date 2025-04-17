@@ -1,7 +1,7 @@
 package com.example.mypsychologist.ui.education
 
 import com.example.mypsychologist.domain.entity.educationEntity.TopicEntity
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 class TopicDelegateItem(private val value: TopicEntity) : DelegateItem {
 

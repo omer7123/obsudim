@@ -23,7 +23,7 @@ import com.example.mypsychologist.extensions.toPercent
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestHistoryViewModel
 import com.example.mypsychologist.presentation.diagnostics.TestResultViewModel
-import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.core.autoCleared
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.RadarEntry
 import kotlinx.coroutines.flow.launchIn

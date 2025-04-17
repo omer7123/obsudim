@@ -1,13 +1,12 @@
 package com.example.mypsychologist.ui.diagnostics
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.TestGroupItemBinding
 import com.example.mypsychologist.domain.entity.TestGroupEntity
-import com.example.mypsychologist.ui.AdapterDelegate
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.core.adapter.AdapterDelegate
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 class TestGroupDelegate(
     private val onClick: (TestGroupEntity, Boolean) -> Unit

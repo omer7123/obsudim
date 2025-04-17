@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.databinding.ItemTestScaleRecommendationBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ScaleResultForHistoryEntity
-import com.example.mypsychologist.ui.AdapterDelegate
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.core.adapter.AdapterDelegate
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 class DescScaleResultDelegate : AdapterDelegate {
     override fun onCreateViewHolder(parent: ViewGroup) =

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypsychologist.databinding.TestItemBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
-import com.example.mypsychologist.ui.AdapterDelegate
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.core.adapter.AdapterDelegate
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 class TestDelegate(private val onClick: (String, String, String) -> Unit) : AdapterDelegate {
     override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(

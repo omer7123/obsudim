@@ -1,10 +1,10 @@
 package com.example.mypsychologist.di
 
-import com.example.mypsychologist.ui.main.EditFragment
-import com.example.mypsychologist.ui.main.FeedbackFragment
 import com.example.mypsychologist.ui.main.MainFragment
-import com.example.mypsychologist.ui.main.ProfileFragment
-import com.example.mypsychologist.ui.psychologist.RequestToPsychologistFragment
+import com.example.mypsychologist.ui.profile.editFragment.EditFragment
+import com.example.mypsychologist.ui.profile.feedBackFragment.FeedbackFragment
+import com.example.mypsychologist.ui.profile.profileFragment.ProfileFragment
+import com.example.mypsychologist.ui.psychologist.requestToPsychologistFragment.RequestToPsychologistFragment
 import dagger.Subcomponent
 
 @FragmentScope

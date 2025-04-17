@@ -2,7 +2,7 @@ package com.example.mypsychologist.ui.education
 
 import com.example.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
 import com.example.mypsychologist.domain.entity.educationEntity.SubtopicEntity
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 class TextCardDelegateItem(private val value: ItemMaterialEntity) : DelegateItem {
     override fun content(): ItemMaterialEntity =

@@ -8,9 +8,8 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.ItemTestScaleResultBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ScaleResultForHistoryEntity
 import com.example.mypsychologist.extensions.toPercent
-import com.example.mypsychologist.ui.AdapterDelegate
-import com.example.mypsychologist.ui.DelegateItem
-import com.google.android.material.color.utilities.ColorUtils
+import com.example.mypsychologist.ui.core.adapter.AdapterDelegate
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 class TestScaleResultDelegate : AdapterDelegate {
     override fun onCreateViewHolder(parent: ViewGroup) =

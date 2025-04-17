@@ -2,7 +2,7 @@ package com.example.mypsychologist.ui.diagnostics
 
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ScaleResultForHistoryEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 
 class TestScaleResultDelegateItem (private val value: ScaleResultForHistoryEntity) : DelegateItem {

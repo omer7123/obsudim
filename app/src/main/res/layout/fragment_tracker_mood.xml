@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/bottom_sheet_background"
     android:layout_height="wrap_content"
-    tools:context=".ui.exercises.cbt.TrackerMoodFragment">
+    tools:context=".ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress_bar"

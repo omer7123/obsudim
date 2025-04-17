@@ -12,10 +12,10 @@ import com.example.mypsychologist.domain.useCase.psychologistsUseCases.GetOwnPsy
 import com.example.mypsychologist.domain.useCase.psychologistsUseCases.GetStatusRequestToManagerUseCase
 import com.example.mypsychologist.domain.useCase.psychologistsUseCases.GetTasksUseCase
 import com.example.mypsychologist.domain.useCase.psychologistsUseCases.GetYourPsychologistsUseCase
-import com.example.mypsychologist.presentation.ListScreenState
-import com.example.mypsychologist.ui.DelegateItem
-import com.example.mypsychologist.ui.psychologist.OwnPsychologistDelegateItem
-import com.example.mypsychologist.ui.psychologist.TaskFromPsychologistDelegateItem
+import com.example.mypsychologist.presentation.core.ListScreenState
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
+import com.example.mypsychologist.ui.psychologist.psychologistWithTasksFragment.OwnPsychologistDelegateItem
+import com.example.mypsychologist.ui.psychologist.psychologistWithTasksFragment.TaskFromPsychologistDelegateItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

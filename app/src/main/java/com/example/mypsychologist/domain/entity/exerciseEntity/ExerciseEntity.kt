@@ -1,6 +1,6 @@
 package com.example.mypsychologist.domain.entity.exerciseEntity
 
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 data class ExerciseEntity(
     val id: String,

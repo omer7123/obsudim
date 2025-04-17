@@ -43,8 +43,8 @@ import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.diagnostics.TestsScreenState
 import com.example.mypsychologist.presentation.diagnostics.TestsViewModel
-import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.core.PlaceholderError
+import com.example.mypsychologist.ui.core.autoCleared
+import com.example.mypsychologist.ui.core.composeComponents.PlaceholderError
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 

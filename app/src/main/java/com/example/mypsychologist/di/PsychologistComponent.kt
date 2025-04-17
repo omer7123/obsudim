@@ -1,6 +1,6 @@
 package com.example.mypsychologist.di
 
-import com.example.mypsychologist.ui.psychologist.PsychologistsWithTasksFragment
+import com.example.mypsychologist.ui.psychologist.psychologistWithTasksFragment.PsychologistsWithTasksFragment
 import dagger.Subcomponent
 
 @FragmentScope

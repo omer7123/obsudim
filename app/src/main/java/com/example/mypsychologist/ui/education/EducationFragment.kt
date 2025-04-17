@@ -46,9 +46,9 @@ import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.education.EducationScreenState
 import com.example.mypsychologist.presentation.education.EducationViewModel
 import com.example.mypsychologist.presentation.education.MarsAsCompleteStatus
-import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.core.PlaceholderError
-import com.example.mypsychologist.ui.core.PrimaryTextButton
+import com.example.mypsychologist.ui.core.autoCleared
+import com.example.mypsychologist.ui.core.composeComponents.PlaceholderError
+import com.example.mypsychologist.ui.core.composeComponents.PrimaryTextButton
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 

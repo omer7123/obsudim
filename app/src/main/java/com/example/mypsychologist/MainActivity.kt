@@ -128,11 +128,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                     bottomNav.isVisible = false
                     setLightStatusBarIcons(false)
                 }
-                R.id.freeDiaryFragment -> {
-                    transparentStatusBar()
-                    bottomNav.isVisible = false
-                    setLightStatusBarIcons(false)
-                }
 
                 R.id.freeDiaryTrackerMoodFragment -> {
                     transparentStatusBar()

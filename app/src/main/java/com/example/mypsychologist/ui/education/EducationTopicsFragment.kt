@@ -37,8 +37,8 @@ import com.example.mypsychologist.domain.entity.educationEntity.TopicEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.education.EducationTopicsViewModel
 import com.example.mypsychologist.presentation.education.TopicsScreenState
-import com.example.mypsychologist.ui.autoCleared
-import com.example.mypsychologist.ui.core.PlaceholderError
+import com.example.mypsychologist.ui.core.autoCleared
+import com.example.mypsychologist.ui.core.composeComponents.PlaceholderError
 import com.example.mypsychologist.ui.diagnostics.SkeletonItem
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject

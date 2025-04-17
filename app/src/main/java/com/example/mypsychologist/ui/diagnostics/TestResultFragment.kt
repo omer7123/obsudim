@@ -19,8 +19,8 @@ import com.example.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetE
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.diagnostics.TestResultViewModel
-import com.example.mypsychologist.ui.MainAdapter
-import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.core.adapter.MainAdapter
+import com.example.mypsychologist.ui.core.autoCleared
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

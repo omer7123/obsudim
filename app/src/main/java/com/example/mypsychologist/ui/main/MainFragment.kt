@@ -23,8 +23,8 @@ import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
 import com.example.mypsychologist.ui.diagnostics.PassingTestFragment
 import com.example.mypsychologist.ui.education.EducationFragment
-import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
-import com.example.mypsychologist.ui.exercises.cbt.newCbtDiaryFragment.FragmentNewCBTDiary
+import com.example.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary
+import com.example.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

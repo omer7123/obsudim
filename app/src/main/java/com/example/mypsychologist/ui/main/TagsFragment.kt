@@ -17,7 +17,7 @@ import com.example.mypsychologist.domain.entity.TagEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.TagsScreenState
 import com.example.mypsychologist.presentation.TagsViewModel
-import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.core.autoCleared
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.launchIn

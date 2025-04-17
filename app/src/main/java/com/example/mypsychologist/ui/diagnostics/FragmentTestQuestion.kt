@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentTestQuestionBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.extensions.parcelable
-import com.example.mypsychologist.ui.autoCleared
+import com.example.mypsychologist.ui.core.autoCleared
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class FragmentTestQuestion : BottomSheetDialogFragment() {

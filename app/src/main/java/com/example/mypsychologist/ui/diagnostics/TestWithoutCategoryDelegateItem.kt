@@ -1,7 +1,7 @@
 package com.example.mypsychologist.ui.diagnostics
 
 import com.example.mypsychologist.domain.entity.diagnosticEntity.TestEntity
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 class TestWithoutCategoryDelegateItem(
     private val value: TestEntity

@@ -1,6 +1,6 @@
 package com.example.mypsychologist.presentation.psychologist.psychologistWithTaskFragment
 
-import com.example.mypsychologist.ui.DelegateItem
+import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
 
 sealed class PsychologistWithTaskScreenState {
     data object Init: PsychologistWithTaskScreenState()
