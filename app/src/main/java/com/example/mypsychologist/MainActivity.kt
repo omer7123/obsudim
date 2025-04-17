@@ -25,14 +25,12 @@ import com.example.mypsychologist.databinding.ActivityMainBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.ui.psychologist.TasksWorker
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.kirich1409.androidnotificationdsl.channels.createNotificationChannels
 import com.kirich1409.androidnotificationdsl.notification
 
 class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var auth: FirebaseAuth
     private var isConnection = false
 
 
@@ -56,12 +54,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
-
         registerNetworkCallback()
-
-
-
         setupNavigationListener()
     }
 

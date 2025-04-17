@@ -6,12 +6,9 @@ import com.example.mypsychologist.data.converters.toEntity
 import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.remote.profile.UserDataSource
-import com.example.mypsychologist.di.AppModule
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
 import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
 import com.example.mypsychologist.domain.repository.ProfileRepository
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
@@ -44,22 +41,5 @@ class ProfileRepositoryImpl @Inject constructor(
                 Resource.Success(result.data)
             }
         }
-    }
-
-    override suspend fun sendFeedback(text: String): Boolean =
-        try {
-            val ref = Firebase.database(AppModule.URL).reference.child(FEEDBACK)
-            val key = ref.push().key!!
-
-            ref.child(key).setValue(text)
-            true
-        } catch (t: Throwable) {
-            false
-        }
-
-
-    companion object {
-        private const val FEEDBACK = "feedback"
-        const val NAME = "name"
     }
 }
