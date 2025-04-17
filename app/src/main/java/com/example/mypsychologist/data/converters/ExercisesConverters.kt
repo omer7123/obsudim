@@ -44,15 +44,8 @@ fun ThoughtDiaryEntity.toModel() =
 fun CBTDiaryCardModel.toEntity() =
     DiaryRecordEntity(id, situation)
 
-fun List<CBTDiaryCardModel>.toDiaryEntities() =
-    map { it.toEntity() }
-
 fun GetProblemModel.toEntity() =
     ProblemEntity(title = description, goal = goal, id = userId)
-
-fun List<GetProblemModel>.toEntities() =
-    this.map { it.toEntity() }
-
 fun ProblemEntity.toModel() =
     SaveProblemModel(title, goal)
 
