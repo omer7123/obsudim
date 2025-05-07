@@ -21,8 +21,8 @@ import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEnti
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.core.BaseStateUI
 import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
-import com.example.mypsychologist.ui.diagnostics.PassingTestFragment
-import com.example.mypsychologist.ui.education.EducationFragment
+import com.example.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment
+import com.example.mypsychologist.ui.education.educationFragment.EducationFragment
 import com.example.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary
 import com.example.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior

@@ -1,9 +1,9 @@
 package com.example.mypsychologist.di
 
-import com.example.mypsychologist.ui.diagnostics.FragmentTestHistory
-import com.example.mypsychologist.ui.diagnostics.FragmentTests
-import com.example.mypsychologist.ui.diagnostics.PassingTestFragment
-import com.example.mypsychologist.ui.diagnostics.TestResultFragment
+import com.example.mypsychologist.ui.diagnostics.historyTestFragment.FragmentTestHistory
+import com.example.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment
+import com.example.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment
+import com.example.mypsychologist.ui.diagnostics.testsFragment.FragmentTests
 import dagger.Subcomponent
 
 @FragmentScope

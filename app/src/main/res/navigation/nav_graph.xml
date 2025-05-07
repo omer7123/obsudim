@@ -66,7 +66,7 @@
         tools:layout="@layout/fragment_new_thought_diary" />
     <fragment
         android:id="@+id/fragment_tests"
-        android:name="com.example.mypsychologist.ui.diagnostics.FragmentTests"
+        android:name="com.example.mypsychologist.ui.diagnostics.testsFragment.FragmentTests"
         android:label="FragmentTests"
         tools:layout="@layout/fragment_tests">
         <action
@@ -76,7 +76,7 @@
 
     <fragment
         android:id="@+id/fragment_test_history"
-        android:name="com.example.mypsychologist.ui.diagnostics.FragmentTestHistory"
+        android:name="com.example.mypsychologist.ui.diagnostics.historyTestFragment.FragmentTestHistory"
         android:label="FragmentTestHistory"
         tools:layout="@layout/fragment_test_history" />
     <fragment
@@ -125,7 +125,7 @@
         android:label="FeedFragment" />
     <fragment
         android:id="@+id/fragment_education_topics"
-        android:name="com.example.mypsychologist.ui.education.EducationTopicsFragment"
+        android:name="com.example.mypsychologist.ui.education.educationTopicsFragment.EducationTopicsFragment"
         android:label="EducationFragment">
         <action
             android:id="@+id/action_fragment_education_topics_to_fragment_education"
@@ -133,7 +133,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_education"
-        android:name="com.example.mypsychologist.ui.education.EducationFragment"
+        android:name="com.example.mypsychologist.ui.education.educationFragment.EducationFragment"
         android:label="EducationFragment" />
 
     <fragment
@@ -194,7 +194,7 @@
     </fragment>
     <fragment
         android:id="@+id/passingTestFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.PassingTestFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment"
         android:label="fragment_passing_test"
         tools:layout="@layout/fragment_passing_test">
         <action
@@ -219,7 +219,7 @@
 
     <fragment
         android:id="@+id/testResultFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.TestResultFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment"
         android:label="fragment_test_result"
         tools:layout="@layout/fragment_test_result" />
     <fragment
@@ -258,7 +258,7 @@
     </fragment>
     <dialog
         android:id="@+id/diagnosticDialogFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.DiagnosticDialogFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.testsFragment.DiagnosticDialogFragment"
         android:label="DiagnosticDialogFragment">
         <action
             android:id="@+id/action_diagnosticDialogFragment_to_passingTestFragment"

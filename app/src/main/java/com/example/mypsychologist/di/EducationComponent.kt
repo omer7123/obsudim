@@ -1,7 +1,7 @@
 package com.example.mypsychologist.di
 
-import com.example.mypsychologist.ui.education.EducationFragment
-import com.example.mypsychologist.ui.education.EducationTopicsFragment
+import com.example.mypsychologist.ui.education.educationFragment.EducationFragment
+import com.example.mypsychologist.ui.education.educationTopicsFragment.EducationTopicsFragment
 import dagger.Module
 import dagger.Subcomponent
 

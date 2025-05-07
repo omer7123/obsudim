@@ -22,7 +22,7 @@ import com.example.mypsychologist.presentation.psychologist.psychologistWithTask
 import com.example.mypsychologist.ui.core.adapter.MainAdapter
 import com.example.mypsychologist.ui.core.autoCleared
 import com.example.mypsychologist.ui.core.delegateItems.DelegateItem
-import com.example.mypsychologist.ui.diagnostics.DiagnosticDialogFragment
+import com.example.mypsychologist.ui.diagnostics.testsFragment.DiagnosticDialogFragment
 import com.example.mypsychologist.ui.psychologist.requestToPsychologistFragment.RequestToPsychologistFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
