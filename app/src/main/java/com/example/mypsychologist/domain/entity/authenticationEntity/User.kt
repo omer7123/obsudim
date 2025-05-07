@@ -1,6 +1,7 @@
 package com.example.mypsychologist.domain.entity.authenticationEntity
 
 import com.example.mypsychologist.presentation.authentication.registrationFragment.Gender
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 data class Auth(
@@ -8,10 +9,6 @@ data class Auth(
     val password: String,
 )
 
-data class Register(
-    val auth: Auth,
-    val checkPassword: String,
-)
 data class RegisterEntity(
     val username: String,
     val birthDate: String,
@@ -25,9 +22,6 @@ data class RegisterEntity(
 
 @Serializable
 data class User(
-    val user_id: String,
-    val email: String,
-    val username: String,
-    val token: String,
-    val role: Int
+    @SerialName("access_token")
+    val accessToken: String,
 )

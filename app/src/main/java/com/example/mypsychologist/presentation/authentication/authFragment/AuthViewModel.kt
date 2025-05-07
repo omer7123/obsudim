@@ -63,7 +63,7 @@ class AuthViewModel @Inject constructor(
 
                     Resource.Loading -> _authByTokenStatus.value = AuthState.Loading
                     is Resource.Success -> {
-                        saveTokenUseCase(result.data.token)
+                        saveTokenUseCase(result.data.accessToken)
                         _authByTokenStatus.value = AuthState.Success
                     }
                 }
@@ -72,8 +72,8 @@ class AuthViewModel @Inject constructor(
     }
     private suspend fun saveToken(result: User) {
         _stateScreen.value = _stateScreen.value.copy(loading = true)
-        saveTokenUseCase(result.token)
-        saveUserIdUseCase(result.user_id)
+        saveTokenUseCase(result.accessToken)
+//        saveUserIdUseCase(result.userId)
         _authByTokenStatus.value = AuthState.Success
     }
 

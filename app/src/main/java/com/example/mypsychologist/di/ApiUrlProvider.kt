@@ -9,5 +9,5 @@ interface ApiUrlProvider {
 class ApiUrlProviderImpl @Inject constructor() : ApiUrlProvider {
 
     override var url =
-        "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/"
+        "https://d311-107-181-151-123.ngrok-free.app/"
 }

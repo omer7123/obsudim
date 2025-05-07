@@ -37,8 +37,8 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun saveToken(result: Resource.Success<User>) {
-        saveTokenUseCase(result.data.token)
-        saveUserIdUseCase(result.data.user_id)
+        saveTokenUseCase(result.data.accessToken)
+//        saveUserIdUseCase(result.data.userId)
         _statusRegistration.value = RegisterStatus.Success
     }
 
