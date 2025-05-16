@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -39,7 +41,7 @@ import com.example.mypsychologist.presentation.education.educationTopicsFragment
 import com.example.mypsychologist.presentation.education.educationTopicsFragment.TopicsScreenState
 import com.example.mypsychologist.ui.core.autoCleared
 import com.example.mypsychologist.ui.core.composeComponents.PlaceholderError
-import com.example.mypsychologist.ui.diagnostics.testsFragment.SkeletonItem
+import com.example.mypsychologist.ui.core.composeComponents.SkeletonItem
 import com.example.mypsychologist.ui.education.educationFragment.EducationFragment
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
@@ -96,9 +98,7 @@ class EducationTopicsFragment : Fragment() {
         viewModel: EducationTopicsViewModel
     ) {
         val viewState = viewModel.screenState.collectAsState()
-
         when (val state = viewState.value) {
-
             is TopicsScreenState.Content -> TopicsContent(data = state.data) { topic ->
                 findNavController().navigate(
                     R.id.fragment_education, bundleOf(
@@ -106,15 +106,12 @@ class EducationTopicsFragment : Fragment() {
                     )
                 )
             }
-
             is TopicsScreenState.Error -> {
                 PlaceholderError()
             }
-
             TopicsScreenState.Loading -> {
                 TopicsLoading()
             }
-
             TopicsScreenState.Initial -> {}
         }
     }
@@ -124,17 +121,17 @@ class EducationTopicsFragment : Fragment() {
 @Preview(showBackground = true)
 @Composable
 fun TopicsLoading() {
-    LazyVerticalGrid(
-        modifier = Modifier.fillMaxWidth(),
-        columns = GridCells.Fixed(1),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-        contentPadding = PaddingValues(vertical = 20.dp, horizontal = 16.dp)
-    ) {
-        items(7) {
-            SkeletonItem()
+        LazyVerticalGrid(
+            modifier = Modifier.fillMaxWidth(),
+            columns = GridCells.Fixed(1),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            contentPadding = PaddingValues(vertical = 20.dp, horizontal = 16.dp)
+        ) {
+            items(7) {
+                SkeletonItem()
+            }
         }
-    }
 }
 
 @Composable
@@ -166,9 +163,10 @@ fun TopicItem(item: TopicEntity, onItemClick: (TopicEntity) -> Unit) {
             model = ImageRequest.Builder(LocalContext.current).data(item.linkToPicture).build(),
             contentDescription = item.theme,
             contentScale = ContentScale.Crop,
-            placeholder = painterResource(id = R.drawable.ic_tracker_mood_practice),
+            placeholder = ColorPainter(color = AppTheme.colors.loading),
             error = painterResource(id = R.drawable.ic_diary_practice),
             modifier = Modifier
+                .aspectRatio(1 / 0.8f)
                 .clip(shape = RoundedCornerShape(12.dp))
 
 

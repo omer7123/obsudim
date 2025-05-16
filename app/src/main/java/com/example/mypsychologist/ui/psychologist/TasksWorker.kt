@@ -19,7 +19,7 @@ class TasksWorker(private val context: Context, workerParams: WorkerParameters) 
         TASK_CHANNEL_ID,
         smallIcon = R.drawable.ic_cognition
     ) {
-        contentTitle = context.getString(R.string.tasks)
+        contentTitle = context.getString(R.string.assignments)
 
         val pendingIntent = NavDeepLinkBuilder(context)
             .setComponentName(MainActivity::class.java)

@@ -96,6 +96,7 @@
     <string name="add">Добавить</string>
 
     <string name="cbt_diary">КПТ-дневник</string>
+    <string name="cbt_diary_new_name">Что случилось?</string>
     <string name="cbt_diary_desc">Это способ самоанализа, который позволяет отслеживать эмоции и чувства, выявлять взаимосвязи между ситуациями и мыслями</string>
     <string name="free_diary">Заметки</string>
     <string name="free_diary_desc">Заметки помогают отслеживать, как прошёл день, как себя чувствуешь и так далее :)</string>
@@ -355,7 +356,8 @@
     <string name="clients">Клиенты</string>
     <string name="schedule">Расписание</string>
     <string name="notes">Заметки</string>
-    <string name="tasks">Задания</string>
+    <string name="assignments">Задания</string>
+    <string name="tasks">Задачи</string>
 
     <string name="rejection">Отказать</string>
 

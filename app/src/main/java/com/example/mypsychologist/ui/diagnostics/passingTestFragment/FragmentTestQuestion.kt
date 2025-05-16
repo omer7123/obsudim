@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mypsychologist.databinding.FragmentTestQuestionBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.extensions.parcelable
@@ -17,7 +17,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class FragmentTestQuestion : BottomSheetDialogFragment() {
 
     private var binding: FragmentTestQuestionBinding by autoCleared()
-
     private lateinit var question: QuestionOfTestEntity
 
     override fun onCreateView(
@@ -26,10 +25,7 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         question = requireArguments().parcelable(ANSWER_VARIANTS)!!
-
         binding = FragmentTestQuestionBinding.inflate(inflater, container, false)
-
-
 
         if (question.number != 0) {
             binding.question.apply {
@@ -37,31 +33,20 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
                 isVisible = true
             }
         }
-
-        setupListeners()
-
         setupAdapter()
-
         return binding.root
     }
 
-    private fun setupListeners() {
-    }
-
     private fun setupAdapter() {
-
         binding.answerVariantsRw.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-
+            layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = AnswersAdapter(question.answerOptions) { score ->
                 setFragmentResult(ANSWER, bundleOf(SCORE to score))
                 dismiss()
             }
-
             setHasFixedSize(true)
         }
     }
-
 
     companion object {
         const val GO_BACK = "go back"

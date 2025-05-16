@@ -88,7 +88,7 @@ class ExercisesFragment : Fragment() {
                         findNavController().navigate(
                             R.id.fragment_diaries, bundleOf(
                                 RecordsExerciseFragment.EXERCISE_ID to "fddf",
-                                RecordsExerciseFragment.EXERCISE_TITLE to "КПТ-дневник",
+                                RecordsExerciseFragment.EXERCISE_TITLE to "Что случилось?",
                                 RecordsExerciseFragment.EXERCISE_DESCRIPTION to "Инструмент самоанализа, который позволяет выявлять взаимосвязи между ситуациями, эмоциями и мыслями, а затем корректировать свои убеждения.",
                                 RecordsExerciseFragment.IMAGE to "DS",
                             )
@@ -141,7 +141,8 @@ class ExercisesFragment : Fragment() {
 
                 RenderContent(onThinkDiaryClick = { onThinkDiaryClick() },
                     onFreeDiaryClick = { onFreeDiaryClick() },
-                    modifier = Modifier.background(color = AppTheme.colors.screenBackground),
+                    modifier = Modifier.background(
+                        color = AppTheme.colors.screenBackground),
                     onDefinitionGroupProblemClick = {
                         onDefinitionGroupProblemClick()
 
@@ -205,7 +206,7 @@ class ExercisesFragment : Fragment() {
                     Spacer(modifier = Modifier.padding(top = 10.dp))
 
                     Text(
-                        text = stringResource(id = R.string.cbt_diary),
+                        text = stringResource(id = R.string.cbt_diary_new_name),
                         style = AppTheme.typography.bodyXLBold,
                         color = AppTheme.colors.primaryText
                     )

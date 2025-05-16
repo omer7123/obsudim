@@ -308,6 +308,11 @@ class TrackerMoodViewModel @Inject constructor(
         )
     }
 
+    fun changeMoodInMainFragment(mood: Float){
+        val newTitleMood = calculateMoodTitle(mood.toInt())
+
+        _stateScreen.value = TrackerMoodScreenState.Content(newTitleMood)
+    }
     private fun calculateMoodTitle(mood: Int): Int {
         return when (mood) {
             in 0..20 -> R.string.terrible_mood
