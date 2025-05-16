@@ -5,8 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/selected_problem_back"
     android:padding="16dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_marginBottom="16dp">
-
 
     <TextView
         android:id="@+id/text"

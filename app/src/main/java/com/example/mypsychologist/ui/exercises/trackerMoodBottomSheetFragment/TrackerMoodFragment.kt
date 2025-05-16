@@ -44,43 +44,46 @@ class TrackerMoodFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initListener()
+    }
+
     private fun render(state: TrackerMoodScreenState) {
         when (state) {
             is TrackerMoodScreenState.Error -> {
                 requireContext().showToast(state.msg)
                 binding.progressBar.isVisible = false
                 binding.saveBtn.isVisible = true
-          //      binding.specifyBtn.isVisible = true
                 binding.saveBtn.isClickable = true
-          //      binding.specifyBtn.isClickable = true
             }
 
             TrackerMoodScreenState.Initial -> {}
             TrackerMoodScreenState.Loading -> {
                 binding.progressBar.isVisible = true
                 binding.saveBtn.visibility = View.INVISIBLE
-           //     binding.specifyBtn.visibility = View.INVISIBLE
                 binding.saveBtn.isClickable = false
-           //     binding.specifyBtn.isClickable = false
             }
 
             TrackerMoodScreenState.SuccessResp -> {
                 dismiss()
             }
+
+            is TrackerMoodScreenState.Content -> {
+                binding.moodTv.text = getString(state.titleMoodResId)
+            }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
- /*       binding.specifyBtn.setOnClickListener {
-            dismiss()
-            findNavController().navigate(R.id.action_main_fragment_to_newFreeDiaryFragment)
-        } */
+    private fun initListener() {
         binding.saveBtn.setOnClickListener {
             val dailyTaskId =
                 if (arguments != null) arguments?.getString(DAILY_TASK_ID, "").toString()
                 else ""
             viewModel.saveMood(binding.moodSb.value.toInt(), dailyTaskId)
+        }
+        binding.moodSb.addOnChangeListener{ _, value, _->
+            viewModel.changeMoodInMainFragment(value)
         }
     }
 

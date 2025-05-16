@@ -5,15 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -24,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +41,7 @@ import com.example.mypsychologist.presentation.diagnostics.testsFragment.TestsSc
 import com.example.mypsychologist.presentation.diagnostics.testsFragment.TestsViewModel
 import com.example.mypsychologist.ui.core.autoCleared
 import com.example.mypsychologist.ui.core.composeComponents.PlaceholderError
+import com.example.mypsychologist.ui.core.composeComponents.SkeletonItem
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -172,30 +169,6 @@ fun TestItem(item: TestEntity, onItemClick: (TestEntity) -> Unit) {
         )
     }
 }
-
-@Composable
-fun SkeletonItem() {
-    Column {
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .aspectRatio(1 / 0.89f)
-                .background(color = Color.LightGray.copy(alpha = 0.3f))
-
-        )
-
-        Box(
-            modifier = Modifier
-                .padding(vertical = 20.dp)
-                .height(16.dp)
-                .fillMaxWidth(0.6f)
-                .clip(RoundedCornerShape(4.dp))
-                .background(color = Color.LightGray.copy(alpha = 0.3f))
-
-        )
-    }
-}
-
 
 @Composable
 @Preview(showBackground = true)
