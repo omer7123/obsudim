@@ -24,6 +24,7 @@ import com.example.mypsychologist.extensions.convertLondonTimeToDeviceTime
 import com.example.mypsychologist.extensions.convertToISO8601
 import com.example.mypsychologist.extensions.isSameDay
 import com.example.mypsychologist.presentation.exercises.trackerMoodFragment.TrackerMoodScreenState
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -69,8 +70,10 @@ class TrackerMoodViewModel @Inject constructor(
         _moodsViewState.value = MoodsTrackerViewState.Loading
 
         getDatesList()
-        getNotes(Date())
-        getMoodTrackers(Date())
+        viewModelScope.launch(SupervisorJob()) {
+            launch { getNotes(Date())}
+            launch { getMoodTrackers(Date())}
+        }
     }
 
 
@@ -150,8 +153,10 @@ class TrackerMoodViewModel @Inject constructor(
         _freeDiaryViewState.value = FreeDiaryViewState.Loading
         _moodsViewState.value = MoodsTrackerViewState.Loading
 
-        getNotes(currentDateAfterPrev!!.date)
-        getMoodTrackers(currentDateAfterPrev.date)
+        viewModelScope.launch(SupervisorJob()) {
+            launch { getNotes(currentDateAfterPrev!!.date)}
+            launch { getMoodTrackers(currentDateAfterPrev!!.date)}
+        }
     }
 
     fun onClickDate(selectedDate: Date) {
@@ -169,58 +174,54 @@ class TrackerMoodViewModel @Inject constructor(
         _freeDiaryViewState.value = FreeDiaryViewState.Loading
         _moodsViewState.value = MoodsTrackerViewState.Loading
 
-        getNotes(selectedDate)
-        getMoodTrackers(selectedDate)
+        viewModelScope.launch(SupervisorJob()) {
+            launch { getNotes(selectedDate)}
+            launch { getMoodTrackers(selectedDate)}
+        }
     }
 
-    private fun getNotes(selectedDate: Date) {
-        viewModelScope.launch {
-            getFreeDiariesByDayUseCase(selectedDate.convertDateToString()).collect { resource ->
-                when (resource) {
-                    is Resource.Error -> {
-                        _freeDiaryViewState.value = FreeDiaryViewState.Error
-                    }
+    private suspend fun getNotes(selectedDate: Date) {
+        getFreeDiariesByDayUseCase(selectedDate.convertDateToString()).collect { resource ->
+            when (resource) {
+                is Resource.Error -> {
+                    _freeDiaryViewState.value = FreeDiaryViewState.Error
+                }
 
-                    Resource.Loading -> {
-                        _freeDiaryViewState.value = FreeDiaryViewState.Loading
-                    }
-
-                    is Resource.Success -> {
-                        _freeDiaryViewState.value = FreeDiaryViewState.Content(
-                            freeDiaries = resource.data.map {
-                                RecordExerciseEntity(
-                                    it.id, it.text, it.createdAt.convertLondonTimeToDeviceTime()
-                                )
-                            }
-                        )
-                    }
+                Resource.Loading -> {
+                    _freeDiaryViewState.value = FreeDiaryViewState.Loading
+                }
+                is Resource.Success -> {
+                    _freeDiaryViewState.value = FreeDiaryViewState.Content(
+                        freeDiaries = resource.data.map {
+                            RecordExerciseEntity(
+                                it.id, it.text, it.createdAt.convertLondonTimeToDeviceTime()
+                            )
+                        }
+                    )
                 }
             }
         }
     }
 
-    private fun getMoodTrackers(selectedDate: Date) {
-        viewModelScope.launch {
-            getAllMoodTrackersUseCase(selectedDate.convertToISO8601()).collect { resource ->
-                when (resource) {
-                    is Resource.Error -> _moodsViewState.value = MoodsTrackerViewState.Error
+    private suspend fun getMoodTrackers(selectedDate: Date) {
+        getAllMoodTrackersUseCase(selectedDate.convertToISO8601()).collect { resource ->
+            when (resource) {
+                is Resource.Error -> _moodsViewState.value = MoodsTrackerViewState.Error
+                Resource.Loading -> _moodsViewState.value = MoodsTrackerViewState.Loading
 
-                    Resource.Loading -> _moodsViewState.value = MoodsTrackerViewState.Loading
-
-                    is Resource.Success -> {
-                        _moodsViewState.value = MoodsTrackerViewState.Content(
-                            moods = resource.data.map {
-                                MoodPresentEntity(
-                                    id = it.id,
-                                    score = it.score,
-                                    moodTitleResStr = calculateMoodTitle(it.score),
-                                    date = it.date.convertLondonTimeToDeviceTime()
-                                )
-                            }
-                        )
-                        if (resource.data.isNotEmpty()) changeStatusAddNewMood(false)
-                        else changeStatusAddNewMood(true)
-                    }
+                is Resource.Success -> {
+                    _moodsViewState.value = MoodsTrackerViewState.Content(
+                        moods = resource.data.map {
+                            MoodPresentEntity(
+                                id = it.id,
+                                score = it.score,
+                                moodTitleResStr = calculateMoodTitle(it.score),
+                                date = it.date.convertLondonTimeToDeviceTime()
+                            )
+                        }
+                    )
+                    if (resource.data.isNotEmpty()) changeStatusAddNewMood(false)
+                    else changeStatusAddNewMood(true)
                 }
             }
         }
