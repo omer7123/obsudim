@@ -1,6 +1,7 @@
 package com.example.mypsychologist.ui.diagnostics.passingTestFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypsychologist.databinding.FragmentTestQuestionBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.extensions.parcelable
@@ -33,20 +35,12 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
                 isVisible = true
             }
         }
-        setupAdapter()
         return binding.root
     }
 
-    private fun setupAdapter() {
-        binding.answerVariantsRw.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2)
-            adapter = AnswersAdapter(question.answerOptions) { score ->
-                setFragmentResult(ANSWER, bundleOf(SCORE to score))
-                dismiss()
-            }
-            setHasFixedSize(true)
-        }
-    }
+
+
+
 
     companion object {
         const val GO_BACK = "go back"
@@ -55,6 +49,8 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
         private const val ANSWER_VARIANTS = "answer variants"
         private const val NUMBER = "number"
         private const val COUNT = "count"
+
+
 
         fun newInstance(question: QuestionOfTestEntity, number: Int, count: Int) =
             FragmentTestQuestion().apply {

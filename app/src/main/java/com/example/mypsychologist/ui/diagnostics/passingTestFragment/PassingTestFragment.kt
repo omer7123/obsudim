@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -77,13 +78,7 @@ class PassingTestFragment : Fragment() {
 
             is PassingTestScreenState.Result -> {
                 if (!isNetworkConnect()) {
-                    Snackbar.make(
-                        binding.coordinator,
-                        R.string.save_after_connect,
-                        Snackbar.LENGTH_LONG
-                    ).setAction(R.string.show_result) {
-                        showResult(state.result)
-                    }.show()
+                    Toast.makeText(requireContext(), getString(R.string.network_error), Toast.LENGTH_LONG).show()
                 } else {
                     showResult(state.result)
                 }

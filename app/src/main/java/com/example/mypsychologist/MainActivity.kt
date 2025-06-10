@@ -33,45 +33,17 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     private lateinit var binding: ActivityMainBinding
     private var isConnection = false
 
-
-    private lateinit var notification: Notification
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
         getAppComponent().inject(this)
 
-        notification = notification(
-            this, TASK_CHANNEL_ID, smallIcon = R.drawable.ic_cognition
-        ) {
-            contentTitle = "Мяу"
-
-        }
-
-        startNotificationWorkManager()
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         registerNetworkCallback()
         setupNavigationListener()
-    }
-
-    private fun startNotificationWorkManager() {
-        createNotificationChannels(this) {
-            channel(TASK_CHANNEL_ID, TASK_CHANNEL_NAME)
-        }
-
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE)
-
-        (notificationManager as NotificationManager).notify(
-            TasksWorker.TASK_NOTIFICATION_ID, notification
-        )
-
-        val taskWorkRequest = OneTimeWorkRequest.Builder(TasksWorker::class.java).build()
-
-        WorkManager.getInstance(this).enqueue(taskWorkRequest)
     }
 
 
