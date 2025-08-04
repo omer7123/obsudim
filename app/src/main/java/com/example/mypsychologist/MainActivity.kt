@@ -39,10 +39,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         findViewById<BottomNavigationView>(R.id.navigation).setupWithNavController(navController)
 
 
-//        bottomNav.setOnItemReselectedListener { item ->
-//            navController.popBackStack(item.itemId, inclusive = false)
-//        }
-
         bottomNav.setOnItemReselectedListener {item->
             navController.popBackStack(item.itemId, inclusive = true)
             navController.navigate(item.itemId)
