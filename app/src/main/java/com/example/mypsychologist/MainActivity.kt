@@ -1,17 +1,10 @@
 package com.example.mypsychologist
 
-import android.app.Notification
-import android.app.NotificationManager
-import android.content.Context
 import android.graphics.Color.WHITE
-import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkRequest
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -19,14 +12,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import com.example.mypsychologist.databinding.ActivityMainBinding
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.ui.psychologist.TasksWorker
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.kirich1409.androidnotificationdsl.channels.createNotificationChannels
-import com.kirich1409.androidnotificationdsl.notification
 
 class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
@@ -34,46 +22,13 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     private var isConnection = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
         getAppComponent().inject(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        registerNetworkCallback()
         setupNavigationListener()
-    }
-
-
-    private fun registerNetworkCallback() {
-        var firstFlag = true
-
-        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        val networkRequest = NetworkRequest.Builder().build()
-
-        cm.registerNetworkCallback(networkRequest, object : ConnectivityManager.NetworkCallback() {
-            override fun onAvailable(network: Network) {
-                isConnection = true
-
-                firstFlag = false
-            }
-
-
-            override fun onLost(network: Network) {
-                isConnection = false
-            }
-
-            override fun onUnavailable() {
-                Toast.makeText(
-                    this@MainActivity, getString(R.string.network_error), Toast.LENGTH_LONG
-                ).show()
-
-                firstFlag = false
-            }
-        })
     }
 
     private fun setupNavigationListener() {
@@ -82,6 +37,11 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         findViewById<BottomNavigationView>(R.id.navigation).setupWithNavController(navController)
+
+        bottomNav.setOnItemReselectedListener {item->
+            navController.popBackStack(item.itemId, inclusive = true)
+            navController.navigate(item.itemId)
+        }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
@@ -144,38 +104,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
             }
         }
-
-
-        binding.navigation.setOnItemSelectedListener { item ->
-            val navController =
-                (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
-
-            when (item.itemId) {
-                R.id.plan_item -> {
-                    navController.navigate(R.id.main_fragment)
-                    true
-                }
-
-                R.id.practice_item -> {
-                    navController.navigate(R.id.fragment_exercises)
-                    true
-                }
-
-                R.id.theory_item -> {
-                    navController.navigate(R.id.fragment_education_topics)
-                    true
-                }
-
-                R.id.tests_item -> {
-                    navController.navigate(R.id.fragment_tests)
-                    true
-                }
-
-                else -> {
-                    false
-                }
-            }
-        }
     }
 
     private fun transparentStatusBar(){
@@ -220,7 +148,6 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
     companion object {
         const val TASK_CHANNEL_ID = "CHANNEL TASK"
-        private const val TASK_CHANNEL_NAME = "CHANNEL TASK"
     }
 }
 

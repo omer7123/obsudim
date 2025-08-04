@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/passing_test_graph"
+    app:startDestination="@id/passingTestFragment">
+
+
+    <fragment
+        android:id="@+id/passingTestFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment"
+        tools:layout="@layout/fragment_passing_test"
+        android:label="fragment_passing_test">
+        <action
+            android:id="@+id/action_passingTestFragment_to_fragment_test_history"
+            app:destination="@id/test_history_graph"
+            app:popUpTo="@id/passingTestFragment"
+            app:popUpToInclusive="true" />
+        <action
+            app:popUpTo="@id/passingTestFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_passingTestFragment_to_result_test_graph"
+            app:destination="@id/result_test_graph" />
+    </fragment>
+
+
+    <include app:graph="@navigation/test_history_graph" />
+    <include app:graph="@navigation/result_test_graph" />
+</navigation>

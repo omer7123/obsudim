@@ -81,12 +81,10 @@ class PassingTestViewModel @Inject constructor(
         viewModelScope.launch {
 
             if (questionNumber < questions.size) {
-
                 _screenState.value = PassingTestScreenState.Question(
                     questionNumber
                 )
             } else {
-
                 saveTestResult(testId, taskId)
             }
         }
@@ -106,11 +104,7 @@ class PassingTestViewModel @Inject constructor(
             is Resource.Error -> PassingTestScreenState.Error(res.msg.toString())
             Resource.Loading -> PassingTestScreenState.Loading
             is Resource.Success -> {
-                if (taskId == "") {
-                    _screenState.value = PassingTestScreenState.Result(res.data)
-                } else {
-                    markAsComplete(taskId, res.data)
-                }
+                _screenState.value = PassingTestScreenState.Result(res.data)
             }
         }
     }

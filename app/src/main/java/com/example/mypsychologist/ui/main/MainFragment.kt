@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,7 +14,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentMainBinding
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
@@ -67,9 +67,9 @@ class MainFragment : Fragment() {
     }
 
     private fun setNavbarActualItem() {
-        if (activity is NavbarHider) {
-            (activity as NavbarHider).setActualItem(R.id.plan_item)
-        }
+//        if (activity is NavbarHider) {
+//            (activity as NavbarHider).setActualItem(R.id.plan_item)
+//        }
     }
 
     private fun initView() {
@@ -92,6 +92,13 @@ class MainFragment : Fragment() {
         }
 
         binding.toolbar.toolbar.title = getString(R.string.tasks)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
+            requireActivity().finish()
+        }
     }
 
     override fun onResume() {
@@ -124,7 +131,7 @@ class MainFragment : Fragment() {
         when (dailyExerciseEntity.type) {
             1 -> {
                 findNavController().navigate(
-                    R.id.fragment_education,
+                    R.id.action_main_fragment_to_reading_theory_graph,
                     bundleOf(
                         EducationFragment.TOPIC_TAG to dailyExerciseEntity.destinationId,
                         EducationFragment.TASK_ID to dailyExerciseEntity.id
@@ -153,7 +160,7 @@ class MainFragment : Fragment() {
 
             3 -> {
                 findNavController().navigate(
-                    R.id.action_main_fragment_to_passingTestFragment,
+                    R.id.action_main_fragment_to_passing_test_graph,
                     bundleOf(
                         PassingTestFragment.TEST_ID to dailyExerciseEntity.destinationId,
                         PassingTestFragment.TASK_ID to dailyExerciseEntity.id
@@ -163,7 +170,7 @@ class MainFragment : Fragment() {
 
             4 -> {
                 findNavController().navigate(
-                    R.id.action_main_fragment_to_fragment_new_diary,
+                    R.id.fragment_new_diary,
                     bundleOf(
                         FragmentNewCBTDiary.EXERCISE_ID to dailyExerciseEntity.destinationId,
                         FragmentNewCBTDiary.TASK_ID to dailyExerciseEntity.id
@@ -176,10 +183,10 @@ class MainFragment : Fragment() {
     private fun setupListeners() {
         binding.apply {
             toolbar.profileIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_profile)
+                findNavController().navigate(R.id.action_main_fragment_to_profile_graph)
             }
             toolbar.psychologistsIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
+                findNavController().navigate(R.id.action_main_fragment_to_psychologists_with_tasks_graph)
             }
         }
     }

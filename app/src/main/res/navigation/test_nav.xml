@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/test_nav"
+    app:startDestination="@id/fragment_tests">
+
+    <dialog
+        android:id="@+id/diagnosticDialogFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.testsFragment.DiagnosticDialogFragment"
+        android:label="DiagnosticDialogFragment">
+
+        <action
+            android:id="@+id/action_diagnosticDialogFragment_to_passing_test_graph"
+            app:destination="@id/passing_test_graph" />
+        <action
+            android:id="@+id/action_diagnosticDialogFragment_to_test_history_graph"
+            app:destination="@id/test_history_graph" />
+    </dialog>
+    <action
+        android:id="@+id/action_fragment_tests_to_diagnosticDialogFragment"
+        app:destination="@id/diagnosticDialogFragment" />
+    <fragment
+        android:id="@+id/fragment_tests"
+        android:name="com.example.mypsychologist.ui.diagnostics.testsFragment.FragmentTests"
+        tools:layout="@layout/fragment_tests"
+        android:label="FragmentTests">
+        <action
+            android:id="@+id/action_fragment_tests_to_diagnosticDialogFragment"
+            app:destination="@id/diagnosticDialogFragment" />
+        <action
+            android:id="@+id/action_fragment_tests_to_profile_graph"
+            app:destination="@id/profile_graph" />
+    </fragment>
+
+    <include app:graph="@navigation/passing_test_graph" />
+    <include app:graph="@navigation/test_history_graph" />
+    <include app:graph="@navigation/profile_graph" />
+</navigation>
