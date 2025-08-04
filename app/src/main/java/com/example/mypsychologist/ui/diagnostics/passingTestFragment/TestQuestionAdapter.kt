@@ -2,6 +2,7 @@ package com.example.mypsychologist.ui.diagnostics.passingTestFragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypsychologist.R
@@ -41,7 +42,7 @@ class TestQuestionAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(question: QuestionOfTestEntity, position: Int) {
-            binding.toolbar.toolbar.title =
+            binding.score.text =
                 itemView.context.getString(
                     R.string.test_progress,
                     (position + 1).toString(),
@@ -58,12 +59,25 @@ class TestQuestionAdapter(
         private fun setupAdapter(question: QuestionOfTestEntity) {
 
             binding.answerVariantsRw.apply {
-                layoutManager = LinearLayoutManager(itemView.context)
+                layoutManager = setupLayoutManager(question.answerOptions.size)
 
                 adapter = AnswersAdapter(question.answerOptions, onAnswerClick)
 
                 setHasFixedSize(true)
             }
+        }
+
+        private fun setupLayoutManager(optionsSize: Int) =
+            if (optionsSize > MAX_OPTIONS_SIZE) {
+
+                GridLayoutManager(itemView.context, SPAN_COUNT)
+            }
+            else
+                LinearLayoutManager(itemView.context)
+
+        companion object {
+            private const val SPAN_COUNT = 2
+            private const val MAX_OPTIONS_SIZE = 5
         }
 
     }

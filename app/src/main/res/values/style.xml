@@ -42,7 +42,7 @@
     <style name="BodyL">
         <item name="fontFamily">@font/inter_medium</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?attr/colorOnSecondaryContainer</item>
     </style>
 
     <style name="BodyL.Black">
@@ -78,6 +78,12 @@
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
+    <style name="TestQuestion">
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">?attr/colorOnSecondaryContainer</item>
+    </style>
+
     <style name="BodyXLBold">
         <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/inter_bold</item>
@@ -95,7 +101,7 @@
     </style>
 
     <style name="Theme.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">?attr/colorSurfaceInverse</item>
+        <item name="android:color">?attr/colorOnSurfaceInverse</item>
     </style>
 
     <style name="CustomImageShape">
