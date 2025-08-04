@@ -38,6 +38,11 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         val navController = navHostFragment.navController
         findViewById<BottomNavigationView>(R.id.navigation).setupWithNavController(navController)
 
+        bottomNav.setOnItemReselectedListener {item->
+            navController.popBackStack(item.itemId, inclusive = true)
+            navController.navigate(item.itemId)
+        }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.authFragment -> {
