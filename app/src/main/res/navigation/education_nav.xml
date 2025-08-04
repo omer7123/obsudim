@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/education_nav"
+    app:startDestination="@id/fragment_education_topics">
+
+    <fragment
+        android:id="@+id/fragment_education_topics"
+        android:name="com.example.mypsychologist.ui.education.educationTopicsFragment.EducationTopicsFragment"
+        android:label="EducationFragment">
+        <action
+            android:id="@+id/action_fragment_education_topics_to_fragment_education"
+            app:destination="@id/fragment_education" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_education"
+        android:name="com.example.mypsychologist.ui.education.educationFragment.EducationFragment"
+        android:label="EducationFragment" />
+</navigation>

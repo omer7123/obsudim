@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentMainBinding
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
@@ -67,9 +66,9 @@ class MainFragment : Fragment() {
     }
 
     private fun setNavbarActualItem() {
-        if (activity is NavbarHider) {
-            (activity as NavbarHider).setActualItem(R.id.plan_item)
-        }
+//        if (activity is NavbarHider) {
+//            (activity as NavbarHider).setActualItem(R.id.plan_item)
+//        }
     }
 
     private fun initView() {
@@ -124,7 +123,7 @@ class MainFragment : Fragment() {
         when (dailyExerciseEntity.type) {
             1 -> {
                 findNavController().navigate(
-                    R.id.fragment_education,
+                    R.id.action_main_fragment_to_educationFragment,
                     bundleOf(
                         EducationFragment.TOPIC_TAG to dailyExerciseEntity.destinationId,
                         EducationFragment.TASK_ID to dailyExerciseEntity.id
@@ -153,7 +152,7 @@ class MainFragment : Fragment() {
 
             3 -> {
                 findNavController().navigate(
-                    R.id.action_main_fragment_to_passingTestFragment,
+                    R.id.action_main_fragment_to_passing_test_graph,
                     bundleOf(
                         PassingTestFragment.TEST_ID to dailyExerciseEntity.destinationId,
                         PassingTestFragment.TASK_ID to dailyExerciseEntity.id
@@ -163,7 +162,7 @@ class MainFragment : Fragment() {
 
             4 -> {
                 findNavController().navigate(
-                    R.id.action_main_fragment_to_fragment_new_diary,
+                    R.id.fragment_new_diary,
                     bundleOf(
                         FragmentNewCBTDiary.EXERCISE_ID to dailyExerciseEntity.destinationId,
                         FragmentNewCBTDiary.TASK_ID to dailyExerciseEntity.id

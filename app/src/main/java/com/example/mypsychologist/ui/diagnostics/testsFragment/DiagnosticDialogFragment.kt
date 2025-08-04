@@ -27,7 +27,6 @@ class DiagnosticDialogFragment : DialogFragment() {
         binding = FragmentDiagnosticDialogBinding.inflate(inflater, container, false)
 
         setupTitleAndText()
-
         setupListeners()
 
         return binding.root
@@ -43,7 +42,7 @@ class DiagnosticDialogFragment : DialogFragment() {
     private fun setupListeners() {
         binding.historyButton.setOnClickListener {
             findNavController().navigate(
-                R.id.fragment_test_history, bundleOf(
+                R.id.test_history_graph, bundleOf(
                     FragmentTestHistory.TEST_ID to requireArguments().getString(TEST_ID),
                     FragmentTestHistory.TEST_TITLE to requireArguments().getString(TITLE_ID)
                 )
@@ -60,7 +59,7 @@ class DiagnosticDialogFragment : DialogFragment() {
         val testId = requireArguments().getString(TEST_ID)
 
         findNavController().navigate(
-            R.id.passingTestFragment, bundleOf(
+            R.id.passing_test_graph, bundleOf(
                 PassingTestFragment.TEST_ID to testId,
             )
         )

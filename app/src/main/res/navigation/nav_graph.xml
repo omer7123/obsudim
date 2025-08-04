@@ -11,74 +11,13 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_main_fragment_to_fragment_new_diary"
-            app:destination="@id/fragment_new_diary"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right" />
+            android:id="@+id/action_main_fragment_to_passing_test_graph"
+            app:destination="@id/passing_test_graph" />
         <action
-            android:id="@+id/action_main_fragment_to_passingTestFragment"
-            app:destination="@id/passingTestFragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right" />
-        <action
-            android:id="@+id/action_main_fragment_to_newFreeDiaryFragment"
-            app:destination="@id/newFreeDiaryFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_exercises"
-        android:name="com.example.mypsychologist.ui.exercises.exercisesFragment.ExercisesFragment"
-        android:label="FragmentExercises"
-        tools:layout="@layout/fragment_exercises">
-
-        <action
-            android:id="@+id/action_fragment_exercises_to_fragment_diaries"
-            app:destination="@id/fragment_diaries"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_diaries"
-        android:name="com.example.mypsychologist.ui.exercises.recordsExerciseFragment.RecordsExerciseFragment"
-        android:label="FragmentDiaries">
-        <action
-            android:id="@+id/action_fragment_diaries_to_fragment_new_diary"
-            app:destination="@id/fragment_new_diary"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right" />
-        <action
-            android:id="@+id/action_fragment_diaries_to_definitionProblemGroupExerciseFragment"
-            app:destination="@id/definitionProblemGroupExerciseFragment" />
-
+            android:id="@+id/action_main_fragment_to_educationFragment"
+            app:destination="@id/educationFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/fragment_new_diary"
-        android:name="com.example.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary"
-        android:label="FragmentNewDiary"
-        tools:layout="@layout/fragment_new_thought_diary" />
-    <fragment
-        android:id="@+id/fragment_tests"
-        android:name="com.example.mypsychologist.ui.diagnostics.testsFragment.FragmentTests"
-        android:label="FragmentTests"
-        tools:layout="@layout/fragment_tests">
-        <action
-            android:id="@+id/action_fragment_tests_to_diagnosticDialogFragment"
-            app:destination="@id/diagnosticDialogFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/fragment_test_history"
-        android:name="com.example.mypsychologist.ui.diagnostics.historyTestFragment.FragmentTestHistory"
-        android:label="FragmentTestHistory"
-        tools:layout="@layout/fragment_test_history" />
     <fragment
         android:id="@+id/fragment_profile"
         android:name="com.example.mypsychologist.ui.profile.profileFragment.ProfileFragment"
@@ -123,35 +62,7 @@
         android:id="@+id/fragment_feed"
         android:name="com.example.mypsychologist.ui.profile.feedBackFragment.FeedbackFragment"
         android:label="FeedFragment" />
-    <fragment
-        android:id="@+id/fragment_education_topics"
-        android:name="com.example.mypsychologist.ui.education.educationTopicsFragment.EducationTopicsFragment"
-        android:label="EducationFragment">
-        <action
-            android:id="@+id/action_fragment_education_topics_to_fragment_education"
-            app:destination="@id/fragment_education" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_education"
-        android:name="com.example.mypsychologist.ui.education.educationFragment.EducationFragment"
-        android:label="EducationFragment" />
 
-    <fragment
-        android:id="@+id/newFreeDiaryFragment"
-        android:name="com.example.mypsychologist.ui.exercises.newFreeDiaryFragment.NewFreeDiaryFragment"
-        android:label="fragment_new_free_diary"
-        tools:layout="@layout/fragment_new_free_diary" />
-    <fragment
-        android:id="@+id/trackerMoodFragment"
-        android:name="com.example.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment"
-        android:label="fragment_tracker_mood"
-        tools:layout="@layout/fragment_tracker_mood">
-        <action
-            android:id="@+id/action_trackerMoodFragment_to_newFreeDiaryFragment"
-            app:destination="@id/newFreeDiaryFragment"
-            app:popUpTo="@id/main_fragment"
-            app:popUpToInclusive="true" />
-    </fragment>
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.mypsychologist.ui.authentication.registrationFragment.RegistrationFragment"
@@ -192,36 +103,7 @@
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_in_right" />
     </fragment>
-    <fragment
-        android:id="@+id/passingTestFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment"
-        android:label="fragment_passing_test"
-        tools:layout="@layout/fragment_passing_test">
-        <action
-            android:id="@+id/action_passingTestFragment_to_fragment_test_history"
-            app:destination="@id/fragment_test_history"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right"
-            app:popUpTo="@id/passingTestFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_passingTestFragment_to_testResultFragment"
-            app:destination="@id/testResultFragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right"
-            app:popUpTo="@id/passingTestFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
 
-    <fragment
-        android:id="@+id/testResultFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment"
-        android:label="fragment_test_result"
-        tools:layout="@layout/fragment_test_result" />
     <fragment
         android:id="@+id/startBoardFragment"
         android:name="com.example.mypsychologist.ui.authentication.boardFragment.StartBoardFragment"
@@ -256,25 +138,13 @@
             app:popUpTo="@id/startBoardFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <dialog
-        android:id="@+id/diagnosticDialogFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.testsFragment.DiagnosticDialogFragment"
-        android:label="DiagnosticDialogFragment">
-        <action
-            android:id="@+id/action_diagnosticDialogFragment_to_passingTestFragment"
-            app:destination="@id/passingTestFragment" />
-    </dialog>
+    <include app:graph="@navigation/home_nav" />
+    <include app:graph="@navigation/test_nav" />
+    <include app:graph="@navigation/education_nav" />
+    <include app:graph="@navigation/practice_nav" />
+    <include app:graph="@navigation/passing_test_graph" />
     <fragment
-        android:id="@+id/freeDiaryTrackerMoodFragment"
-        android:name="com.example.mypsychologist.ui.exercises.freeDiaryTrackerMoodFragment.FreeDiaryTrackerMoodFragment"
-        android:label="FreeDiaryTrackerMoodFragment" >
-        <action
-            android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
-            app:destination="@id/newFreeDiaryFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/definitionProblemGroupExerciseFragment"
-        android:name="com.example.mypsychologist.ui.exercises.definitionPGExerciseFragment.DefinitionProblemGroupExerciseFragment"
-        android:label="fragment_definition_problem_group_exercise"
-        tools:layout="@layout/fragment_definition_problem_group_exercise" />
+        android:id="@+id/educationFragment"
+        android:name="com.example.mypsychologist.ui.education.educationFragment.EducationFragment"
+        android:label="EducationFragment" />
 </navigation>

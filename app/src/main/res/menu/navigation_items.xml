@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/plan_item"
+    <item android:id="@+id/nav_graph"
         android:title="@string/plan"
         android:icon="@drawable/ic_plan"/>
 
-    <item android:id="@+id/theory_item"
+    <item android:id="@+id/education_nav"
         android:title="@string/theory"
         android:icon="@drawable/ic_theory"/>
 
-    <item android:id="@+id/practice_item"
+    <item android:id="@+id/practice_nav"
         android:title="@string/practice"
         android:icon="@drawable/ic_drop"/>
 
-    <item android:id="@+id/tests_item"
+    <item android:id="@+id/test_nav"
         android:title="@string/tests"
         android:icon="@drawable/ic_diagram"/>
 </menu>
