@@ -131,7 +131,7 @@ class MainFragment : Fragment() {
         when (dailyExerciseEntity.type) {
             1 -> {
                 findNavController().navigate(
-                    R.id.action_main_fragment_to_education_nav,
+                    R.id.action_main_fragment_to_reading_theory_graph,
                     bundleOf(
                         EducationFragment.TOPIC_TAG to dailyExerciseEntity.destinationId,
                         EducationFragment.TASK_ID to dailyExerciseEntity.id

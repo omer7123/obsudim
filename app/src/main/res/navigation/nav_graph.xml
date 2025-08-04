@@ -14,8 +14,8 @@
             android:id="@+id/action_main_fragment_to_passing_test_graph"
             app:destination="@id/passing_test_graph" />
         <action
-            android:id="@+id/action_main_fragment_to_education_nav"
-            app:destination="@id/education_nav" />
+            android:id="@+id/action_main_fragment_to_reading_theory_graph"
+            app:destination="@id/reading_theory_graph" />
         <action
             android:id="@+id/action_main_fragment_to_profile_graph"
             app:destination="@id/profile_graph" />
@@ -120,4 +120,5 @@
         </fragment>
     </navigation>
     <include app:graph="@navigation/profile_graph" />
+    <include app:graph="@navigation/reading_theory_graph" />
 </navigation>
