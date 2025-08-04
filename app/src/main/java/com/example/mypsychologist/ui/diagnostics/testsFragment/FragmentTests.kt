@@ -68,7 +68,7 @@ class FragmentTests : Fragment() {
         binding.include.apply {
             toolbar.title = getString(R.string.tests)
             profileIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_profile)
+                findNavController().navigate(R.id.action_fragment_tests_to_profile_graph)
             }
         }
 

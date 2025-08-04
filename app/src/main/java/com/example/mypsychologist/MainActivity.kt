@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 //            navController.popBackStack(item.itemId, inclusive = false)
 //        }
 
+        bottomNav.setOnItemReselectedListener {item->
+            navController.popBackStack(item.itemId, inclusive = true)
+            navController.navigate(item.itemId)
+        }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.authFragment -> {

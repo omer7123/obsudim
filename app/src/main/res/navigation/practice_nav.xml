@@ -5,6 +5,16 @@
     android:id="@+id/practice_nav"
     app:startDestination="@id/fragment_exercises">
 
+    <action
+        android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
+        app:destination="@id/newFreeDiaryFragment" />
+    <action
+        android:id="@+id/action_fragment_diaries_to_fragment_new_diary"
+        app:destination="@id/fragment_new_diary"
+        app:enterAnim="@anim/slide_from_right"
+        app:exitAnim="@anim/slide_in_left"
+        app:popEnterAnim="@anim/slide_from_left"
+        app:popExitAnim="@anim/slide_in_right" />
     <fragment
         android:id="@+id/fragment_exercises"
         android:name="com.example.mypsychologist.ui.exercises.exercisesFragment.ExercisesFragment"
@@ -19,8 +29,8 @@
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_in_right" />
         <action
-            android:id="@+id/action_fragment_exercises_to_freeDiaryTrackerMoodFragment"
-            app:destination="@id/freeDiaryTrackerMoodFragment" />
+            android:id="@+id/action_fragment_exercises_to_profile_graph"
+            app:destination="@id/profile_graph" />
     </fragment>
     <fragment
         android:id="@+id/freeDiaryTrackerMoodFragment"
@@ -30,6 +40,9 @@
             android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
             app:destination="@id/newFreeDiaryFragment" />
     </fragment>
+    <action
+        android:id="@+id/action_fragment_diaries_to_definitionProblemGroupExerciseFragment"
+        app:destination="@id/definitionProblemGroupExerciseFragment" />
     <fragment
         android:id="@+id/fragment_new_diary"
         android:name="com.example.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary"
@@ -56,6 +69,11 @@
             app:destination="@id/definitionProblemGroupExerciseFragment" />
 
     </fragment>
+    <action
+        android:id="@+id/action_trackerMoodFragment_to_newFreeDiaryFragment"
+        app:destination="@id/newFreeDiaryFragment"
+        app:popUpTo="@id/main_fragment"
+        app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/trackerMoodFragment"
         android:name="com.example.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment"
@@ -72,4 +90,5 @@
         android:name="com.example.mypsychologist.ui.exercises.newFreeDiaryFragment.NewFreeDiaryFragment"
         tools:layout="@layout/fragment_new_free_diary"
         android:label="fragment_new_free_diary" />
+    <include app:graph="@navigation/profile_graph" />
 </navigation>

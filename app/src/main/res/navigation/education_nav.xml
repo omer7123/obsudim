@@ -9,11 +9,12 @@
         android:name="com.example.mypsychologist.ui.education.educationTopicsFragment.EducationTopicsFragment"
         android:label="EducationFragment">
         <action
-            android:id="@+id/action_fragment_education_topics_to_fragment_education"
-            app:destination="@id/fragment_education" />
+            android:id="@+id/action_fragment_education_topics_to_reading_theory_graph"
+            app:destination="@id/reading_theory_graph" />
+        <action
+            android:id="@+id/action_fragment_education_topics_to_profile_graph"
+            app:destination="@id/profile_graph" />
     </fragment>
-    <fragment
-        android:id="@+id/fragment_education"
-        android:name="com.example.mypsychologist.ui.education.educationFragment.EducationFragment"
-        android:label="EducationFragment" />
+    <include app:graph="@navigation/profile_graph" />
+    <include app:graph="@navigation/reading_theory_graph" />
 </navigation>

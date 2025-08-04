@@ -71,7 +71,7 @@ class EducationTopicsFragment : Fragment() {
         binding.include.apply {
             toolbar.title = getString(R.string.psychoeducation)
             profileIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_profile)
+                findNavController().navigate(R.id.action_fragment_education_topics_to_profile_graph)
             }
         }
 
@@ -101,7 +101,7 @@ class EducationTopicsFragment : Fragment() {
         when (val state = viewState.value) {
             is TopicsScreenState.Content -> TopicsContent(data = state.data) { topic ->
                 findNavController().navigate(
-                    R.id.action_fragment_education_topics_to_fragment_education, bundleOf(
+                    R.id.action_fragment_education_topics_to_reading_theory_graph, bundleOf(
                         EducationFragment.TOPIC_TAG to topic.id,
                     )
                 )

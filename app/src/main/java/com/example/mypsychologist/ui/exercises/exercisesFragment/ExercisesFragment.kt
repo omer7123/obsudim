@@ -79,7 +79,7 @@ class ExercisesFragment : Fragment() {
         binding = FragmentExercisesBinding.inflate(inflater, container, false)
 
         binding.include.profileIcon.setOnClickListener {
-            findNavController().navigate(R.id.fragment_profile)
+            findNavController().navigate(R.id.action_fragment_exercises_to_profile_graph)
         }
         binding.content.setContent {
             AppTheme {

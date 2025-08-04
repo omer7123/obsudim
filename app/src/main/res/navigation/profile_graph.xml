@@ -6,13 +6,6 @@
     app:startDestination="@id/fragment_profile">
 
     <fragment
-        android:id="@+id/fragment_edit"
-        android:name="com.example.mypsychologist.ui.profile.editFragment.EditFragment"
-        android:label="EditFragment" />
-    <action
-        android:id="@+id/action_fragment_profile_to_fragment_feedback"
-        app:destination="@id/fragment_feedback" />
-    <fragment
         android:id="@+id/fragment_feedback"
         android:name="com.example.mypsychologist.ui.profile.feedBackFragment.FeedbackFragment"
         tools:layout="@layout/fragment_feedback"
@@ -30,6 +23,13 @@
             app:destination="@id/fragment_edit" />
     </fragment>
     <action
+        android:id="@+id/action_fragment_profile_to_fragment_feedback"
+        app:destination="@id/fragment_feedback" />
+    <action
         android:id="@+id/action_fragment_profile_to_fragment_edit"
         app:destination="@id/fragment_edit" />
+    <fragment
+        android:id="@+id/fragment_edit"
+        android:name="com.example.mypsychologist.ui.profile.editFragment.EditFragment"
+        android:label="EditFragment" />
 </navigation>
