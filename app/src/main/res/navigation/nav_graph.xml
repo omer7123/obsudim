@@ -19,22 +19,11 @@
         <action
             android:id="@+id/action_main_fragment_to_profile_graph"
             app:destination="@id/profile_graph" />
+        <action
+            android:id="@+id/action_main_fragment_to_psychologists_with_tasks_graph"
+            app:destination="@id/psychologists_with_tasks_graph" />
     </fragment>
 
-
-    <fragment
-        android:id="@+id/fragment_request_to_psychologist"
-        android:name="com.example.mypsychologist.ui.psychologist.requestToPsychologistFragment.RequestToPsychologistFragment"
-        android:label="RequestToPsychologistFragment" />
-
-    <fragment
-        android:id="@+id/fragment_psychologists_with_tasks"
-        android:name="com.example.mypsychologist.ui.psychologist.psychologistWithTasksFragment.PsychologistsWithTasksFragment"
-        android:label="PsychologistsWithTasksFragment" />
-    <fragment
-        android:id="@+id/fragment_feed"
-        android:name="com.example.mypsychologist.ui.profile.feedBackFragment.FeedbackFragment"
-        android:label="FeedFragment" />
 
     <fragment
         android:id="@+id/registrationFragment"
@@ -121,4 +110,5 @@
     </navigation>
     <include app:graph="@navigation/profile_graph" />
     <include app:graph="@navigation/reading_theory_graph" />
+    <include app:graph="@navigation/psychologists_with_tasks_graph" />
 </navigation>

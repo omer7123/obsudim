@@ -186,7 +186,7 @@ class MainFragment : Fragment() {
                 findNavController().navigate(R.id.action_main_fragment_to_profile_graph)
             }
             toolbar.psychologistsIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
+                findNavController().navigate(R.id.action_main_fragment_to_psychologists_with_tasks_graph)
             }
         }
     }

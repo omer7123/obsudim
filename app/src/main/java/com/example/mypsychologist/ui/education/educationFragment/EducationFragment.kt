@@ -64,6 +64,7 @@ class EducationFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireContext().getAppComponent().educationComponent().create().inject(this)
+        viewModel.getMaterial(requireArguments().getString(TOPIC_TAG).toString())
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -107,11 +108,6 @@ class EducationFragment : Fragment() {
             is MarsAsCompleteStatus.Error -> requireContext().showToast(status.msg)
             MarsAsCompleteStatus.Success -> findNavController().popBackStack()
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getMaterial(requireArguments().getString(TOPIC_TAG).toString())
     }
 
     @Composable
