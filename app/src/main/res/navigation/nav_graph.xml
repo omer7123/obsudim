@@ -5,42 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/authFragment">
 
-    <fragment
-        android:id="@+id/main_fragment"
-        android:name="com.example.mypsychologist.ui.main.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main">
-        <action
-            android:id="@+id/action_main_fragment_to_passing_test_graph"
-            app:destination="@id/passing_test_graph" />
-        <action
-            android:id="@+id/action_main_fragment_to_education_nav"
-            app:destination="@id/education_nav" />
-    </fragment>
 
-    <fragment
-        android:id="@+id/fragment_profile"
-        android:name="com.example.mypsychologist.ui.profile.profileFragment.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile">
-        <action
-            android:id="@+id/action_fragment_profile_to_fragment_feedback"
-            app:destination="@id/fragment_feedback" />
-        <action
-            android:id="@+id/action_fragment_profile_to_fragment_edit"
-            app:destination="@id/fragment_edit" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_feedback"
-        android:name="com.example.mypsychologist.ui.profile.feedBackFragment.FeedbackFragment"
-        android:label="FeedbackFragment"
-        tools:layout="@layout/fragment_feedback" />
-
-
-    <fragment
-        android:id="@+id/fragment_edit"
-        android:name="com.example.mypsychologist.ui.profile.editFragment.EditFragment"
-        android:label="EditFragment" />
     <fragment
         android:id="@+id/fragment_request_to_psychologist"
         android:name="com.example.mypsychologist.ui.psychologist.requestToPsychologistFragment.RequestToPsychologistFragment"
@@ -68,12 +33,12 @@
             app:popExitAnim="@anim/slide_in_right" />
         <action
             android:id="@+id/action_registrationFragment_to_startBoardFragment"
-            app:destination="@id/startBoardFragment"
+            app:destination="@id/boarding_graph"
             app:popUpTo="@id/registrationFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_registrationFragment_to_main_fragment"
-            app:destination="@id/main_fragment"
+            app:destination="@id/home_nav"
             app:popUpTo="@id/registrationFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -84,8 +49,8 @@
         >
         <action
             android:id="@+id/action_authFragment_to_main_fragment"
-            app:destination="@id/main_fragment"
-            app:popUpTo="@id/registrationFragment"
+            app:destination="@id/home_nav"
+            app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_authFragment_to_registrationFragment"
@@ -96,43 +61,45 @@
             app:popExitAnim="@anim/slide_in_right" />
     </fragment>
 
-    <fragment
-        android:id="@+id/startBoardFragment"
-        android:name="com.example.mypsychologist.ui.authentication.boardFragment.StartBoardFragment"
-        android:label="fragment_start_board"
-        tools:layout="@layout/fragment_start_board">
-        <action
-            android:id="@+id/action_startBoardFragment_to_main_fragment"
-            app:destination="@id/main_fragment"
-            app:popUpTo="@id/startBoardFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_startBoardFragment_to_firstBoardFragment"
-            app:destination="@id/firstBoardFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/firstBoardFragment"
-        android:name="com.example.mypsychologist.ui.authentication.boardFragment.FirstBoardFragment"
-        android:label="fragment_first_board"
-        tools:layout="@layout/fragment_first_board">
-        <action
-            android:id="@+id/action_firstBoardFragment_to_boardFragment"
-            app:destination="@id/boardFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/boardFragment"
-        android:name="com.example.mypsychologist.ui.authentication.boardFragment.BoardFragment"
-        android:label="fragment_board"
-        tools:layout="@layout/fragment_board">
-        <action
-            android:id="@+id/action_boardFragment_to_main_fragment"
-            app:destination="@id/main_fragment"
-            app:popUpTo="@id/startBoardFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
     <include app:graph="@navigation/home_nav" />
+    <include app:graph="@navigation/practice_nav" />
+    <navigation android:id="@+id/boarding_graph"
+        app:startDestination="@id/startBoardFragment">
+        <fragment
+            android:id="@+id/startBoardFragment"
+            android:name="com.example.mypsychologist.ui.authentication.boardFragment.StartBoardFragment"
+            android:label="fragment_start_board"
+            tools:layout="@layout/fragment_start_board">
+            <action
+                android:id="@+id/action_startBoardFragment_to_main_fragment"
+                app:destination="@id/home_nav"
+                app:popUpTo="@id/startBoardFragment"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_startBoardFragment_to_firstBoardFragment"
+                app:destination="@id/firstBoardFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/firstBoardFragment"
+            android:name="com.example.mypsychologist.ui.authentication.boardFragment.FirstBoardFragment"
+            android:label="fragment_first_board"
+            tools:layout="@layout/fragment_first_board">
+            <action
+                android:id="@+id/action_firstBoardFragment_to_boardFragment"
+                app:destination="@id/boardFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/boardFragment"
+            android:name="com.example.mypsychologist.ui.authentication.boardFragment.BoardFragment"
+            android:label="fragment_board"
+            tools:layout="@layout/fragment_board">
+            <action
+                android:id="@+id/action_boardFragment_to_main_fragment"
+                app:destination="@id/home_nav"
+                app:popUpTo="@id/startBoardFragment"
+                app:popUpToInclusive="true" />
+        </fragment>
+    </navigation>
     <include app:graph="@navigation/test_nav" />
     <include app:graph="@navigation/education_nav" />
-    <include app:graph="@navigation/practice_nav" />
-    <include app:graph="@navigation/passing_test_graph" />
 </navigation>

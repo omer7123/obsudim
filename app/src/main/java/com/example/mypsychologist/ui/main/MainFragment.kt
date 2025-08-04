@@ -20,7 +20,6 @@ import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.main.mainFragment.MainScreenState
 import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
 import com.example.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment
-import com.example.mypsychologist.ui.education.educationFragment.EducationFragment
 import com.example.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary
 import com.example.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -65,6 +64,13 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+//            requireActivity().finish()
+//        }
+    }
     private fun setNavbarActualItem() {
 //        if (activity is NavbarHider) {
 //            (activity as NavbarHider).setActualItem(R.id.plan_item)
@@ -122,13 +128,13 @@ class MainFragment : Fragment() {
     private fun clickListener(dailyExerciseEntity: DailyExerciseEntity) {
         when (dailyExerciseEntity.type) {
             1 -> {
-                findNavController().navigate(
-                    R.id.action_main_fragment_to_education_nav,
-                    bundleOf(
-                        EducationFragment.TOPIC_TAG to dailyExerciseEntity.destinationId,
-                        EducationFragment.TASK_ID to dailyExerciseEntity.id
-                    )
-                )
+//                findNavController().navigate(
+//                    R.id.action_main_fragment_to_education_nav,
+//                    bundleOf(
+//                        EducationFragment.TOPIC_TAG to dailyExerciseEntity.destinationId,
+//                        EducationFragment.TASK_ID to dailyExerciseEntity.id
+//                    )
+//                )
             }
 
             2 -> {

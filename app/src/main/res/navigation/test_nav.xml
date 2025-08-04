@@ -17,9 +17,6 @@
             android:id="@+id/action_diagnosticDialogFragment_to_test_history_graph"
             app:destination="@id/test_history_graph" />
     </dialog>
-    <action
-        android:id="@+id/action_fragment_tests_to_diagnosticDialogFragment"
-        app:destination="@id/diagnosticDialogFragment" />
     <fragment
         android:id="@+id/fragment_tests"
         android:name="com.example.mypsychologist.ui.diagnostics.testsFragment.FragmentTests"
