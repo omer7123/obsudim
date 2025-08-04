@@ -28,8 +28,12 @@
         <action
             android:id="@+id/action_fragment_tests_to_diagnosticDialogFragment"
             app:destination="@id/diagnosticDialogFragment" />
+        <action
+            android:id="@+id/action_fragment_tests_to_profile_graph"
+            app:destination="@id/profile_graph" />
     </fragment>
 
     <include app:graph="@navigation/passing_test_graph" />
     <include app:graph="@navigation/test_history_graph" />
+    <include app:graph="@navigation/profile_graph" />
 </navigation>

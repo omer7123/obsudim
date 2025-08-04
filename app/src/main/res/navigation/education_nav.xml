@@ -11,9 +11,13 @@
         <action
             android:id="@+id/action_fragment_education_topics_to_fragment_education"
             app:destination="@id/fragment_education" />
+        <action
+            android:id="@+id/action_fragment_education_topics_to_profile_graph"
+            app:destination="@id/profile_graph" />
     </fragment>
     <fragment
         android:id="@+id/fragment_education"
         android:name="com.example.mypsychologist.ui.education.educationFragment.EducationFragment"
         android:label="EducationFragment" />
+    <include app:graph="@navigation/profile_graph" />
 </navigation>

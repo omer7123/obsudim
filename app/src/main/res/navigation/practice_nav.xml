@@ -28,6 +28,9 @@
             app:exitAnim="@anim/slide_in_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_fragment_exercises_to_profile_graph"
+            app:destination="@id/profile_graph" />
     </fragment>
     <fragment
         android:id="@+id/freeDiaryTrackerMoodFragment"
@@ -87,4 +90,5 @@
         android:name="com.example.mypsychologist.ui.exercises.newFreeDiaryFragment.NewFreeDiaryFragment"
         tools:layout="@layout/fragment_new_free_diary"
         android:label="fragment_new_free_diary" />
+    <include app:graph="@navigation/profile_graph" />
 </navigation>

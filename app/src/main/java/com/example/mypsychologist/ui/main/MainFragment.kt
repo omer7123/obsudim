@@ -175,7 +175,7 @@ class MainFragment : Fragment() {
     private fun setupListeners() {
         binding.apply {
             toolbar.profileIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_profile)
+                findNavController().navigate(R.id.action_main_fragment_to_profile_graph)
             }
             toolbar.psychologistsIcon.setOnClickListener {
                 findNavController().navigate(R.id.fragment_psychologists_with_tasks)
