@@ -106,7 +106,7 @@ class ExercisesFragment : Fragment() {
                     },
                     onFreeDiaryClick = {
                         findNavController().navigate(
-                            R.id.action_fragment_exercises_to_freeDiaryTrackerMoodFragment,
+                            R.id.freeDiaryTrackerMoodFragment,
                         )
                     },
                     onDefinitionGroupProblemClick = {

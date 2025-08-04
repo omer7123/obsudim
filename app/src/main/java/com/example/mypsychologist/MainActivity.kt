@@ -11,7 +11,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.mypsychologist.databinding.ActivityMainBinding
 import com.example.mypsychologist.extensions.getAppComponent
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        NavigationUI.setupWithNavController(bottomNav, navController)
+        findViewById<BottomNavigationView>(R.id.navigation).setupWithNavController(navController)
 
 
 //        bottomNav.setOnItemReselectedListener { item ->
