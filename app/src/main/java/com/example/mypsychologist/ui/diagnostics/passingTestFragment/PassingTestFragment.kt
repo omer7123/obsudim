@@ -3,7 +3,6 @@ package com.example.mypsychologist.ui.diagnostics.passingTestFragment
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,14 +16,12 @@ import com.example.mypsychologist.databinding.FragmentPassingTestBinding
 import com.example.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.example.mypsychologist.domain.entity.diagnosticEntity.ResultAfterSaveEntity
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.extensions.isNetworkConnect
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
 import com.example.mypsychologist.presentation.diagnostics.passingTestFragment.PassingTestScreenState
 import com.example.mypsychologist.presentation.diagnostics.passingTestFragment.PassingTestViewModel
 import com.example.mypsychologist.presentation.diagnostics.testResultFragment.TestResultViewModel
 import com.example.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment
-import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 
@@ -67,7 +64,6 @@ class PassingTestFragment : Fragment() {
             PassingTestScreenState.Initial -> {}
             PassingTestScreenState.Loading -> {}
             is PassingTestScreenState.Questions -> {
-
                 setupViewPager(state.list, state.list.size)
             }
 
@@ -76,22 +72,11 @@ class PassingTestFragment : Fragment() {
             }
 
             is PassingTestScreenState.Result -> {
-                if (!isNetworkConnect()) {
-                    Snackbar.make(
-                        binding.coordinator,
-                        R.string.save_after_connect,
-                        Snackbar.LENGTH_LONG
-                    ).setAction(R.string.show_result) {
-                        showResult(state.result)
-                    }.show()
-                } else {
-                    showResult(state.result)
-                }
+                showResult(state.result)
             }
 
             is PassingTestScreenState.Error -> {
                 requireContext().showToast(state.msg)
-                Log.e("Error", state.msg)
             }
         }
     }
@@ -117,13 +102,13 @@ class PassingTestFragment : Fragment() {
     }
 
     private fun showResult(conclusions: ResultAfterSaveEntity) {
-        findNavController().navigate(
-            R.id.action_passingTestFragment_to_testResultFragment, bundleOf(
+       findNavController()
+            .navigate(
+            R.id.action_passingTestFragment_to_result_test_graph, bundleOf(
                 TestResultFragment.TEST_TITLE to testTitle,
                 TestResultViewModel.TEST_RESULT_ID to conclusions.testResultId
             )
         )
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

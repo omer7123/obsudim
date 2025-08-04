@@ -22,14 +22,12 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
     private var isConnection = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
         getAppComponent().inject(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setupNavigationListener()
     }
 

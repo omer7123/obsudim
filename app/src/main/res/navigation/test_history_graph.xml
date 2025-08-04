@@ -12,11 +12,8 @@
         tools:layout="@layout/fragment_test_history"
         android:label="FragmentTestHistory" >
         <action
-            android:id="@+id/action_fragment_test_history_to_testResultFragment2"
-            app:destination="@id/testResultFragment2" />
+            android:id="@+id/action_fragment_test_history_to_result_test_graph"
+            app:destination="@id/result_test_graph" />
     </fragment>
-    <fragment
-        android:id="@+id/testResultFragment2"
-        android:name="com.example.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment"
-        android:label="TestResultFragment" />
+    <include app:graph="@navigation/result_test_graph" />
 </navigation>

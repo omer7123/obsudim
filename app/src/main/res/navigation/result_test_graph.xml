@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/result_test_graph"
+    app:startDestination="@id/testResultFragment">
+
+    <fragment
+        android:id="@+id/testResultFragment"
+        android:name="com.example.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment"
+        tools:layout="@layout/fragment_test_result"
+        android:label="fragment_test_result" />
+</navigation>

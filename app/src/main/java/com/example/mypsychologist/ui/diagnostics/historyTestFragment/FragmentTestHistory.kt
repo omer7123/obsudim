@@ -48,7 +48,7 @@ class FragmentTestHistory : Fragment() {
 
     private fun clickListener(testResultId: String) {
         findNavController().navigate(
-            R.id.action_fragment_test_history_to_testResultFragment2, bundleOf(
+            R.id.action_fragment_test_history_to_result_test_graph, bundleOf(
                 TestResultFragment.TEST_TITLE to binding.title.text,
                 TestResultViewModel.TEST_RESULT_ID to testResultId
             )

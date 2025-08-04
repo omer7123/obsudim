@@ -14,8 +14,8 @@
             android:id="@+id/action_main_fragment_to_passing_test_graph"
             app:destination="@id/passing_test_graph" />
         <action
-            android:id="@+id/action_main_fragment_to_educationFragment"
-            app:destination="@id/educationFragment" />
+            android:id="@+id/action_main_fragment_to_education_nav"
+            app:destination="@id/education_nav" />
     </fragment>
 
     <fragment
@@ -36,14 +36,6 @@
         android:label="FeedbackFragment"
         tools:layout="@layout/fragment_feedback" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/fragment_psychologists"-->
-<!--        android:name="com.example.mypsychologist.ui.psychologist.psychologistWithTasksFragment.PsychologistsWithTasksFragment"-->
-<!--        android:label="PsychologistsFragment">-->
-<!--        <action-->
-<!--            android:id="@+id/action_fragment_psychologists_to_fragment_request_to_psychologist"-->
-<!--            app:destination="@id/fragment_request_to_psychologist" />-->
-<!--    </fragment>-->
 
     <fragment
         android:id="@+id/fragment_edit"
@@ -143,8 +135,4 @@
     <include app:graph="@navigation/education_nav" />
     <include app:graph="@navigation/practice_nav" />
     <include app:graph="@navigation/passing_test_graph" />
-    <fragment
-        android:id="@+id/educationFragment"
-        android:name="com.example.mypsychologist.ui.education.educationFragment.EducationFragment"
-        android:label="EducationFragment" />
 </navigation>

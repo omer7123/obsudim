@@ -5,21 +5,7 @@
     android:id="@+id/passing_test_graph"
     app:startDestination="@id/passingTestFragment">
 
-    <action
-        android:id="@+id/action_passingTestFragment_to_testResultFragment"
-        app:destination="@id/testResultFragment"
-        app:enterAnim="@anim/slide_from_right"
-        app:exitAnim="@anim/slide_in_left"
-        app:popEnterAnim="@anim/slide_from_left"
-        app:popExitAnim="@anim/slide_in_right"
-        app:popUpTo="@id/passingTestFragment"
-        app:popUpToInclusive="true" />
 
-    <fragment
-        android:id="@+id/testResultFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment"
-        tools:layout="@layout/fragment_test_result"
-        android:label="fragment_test_result" />
     <fragment
         android:id="@+id/passingTestFragment"
         android:name="com.example.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment"
@@ -28,31 +14,16 @@
         <action
             android:id="@+id/action_passingTestFragment_to_fragment_test_history"
             app:destination="@id/test_history_graph"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right"
             app:popUpTo="@id/passingTestFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_passingTestFragment_to_testResultFragment"
-            app:destination="@id/testResultFragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right"
             app:popUpTo="@id/passingTestFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            android:id="@+id/action_passingTestFragment_to_result_test_graph"
+            app:destination="@id/result_test_graph" />
     </fragment>
-    <action
-        android:id="@+id/action_passingTestFragment_to_testResultFragment"
-        app:destination="@id/testResultFragment"
-        app:enterAnim="@anim/slide_from_right"
-        app:exitAnim="@anim/slide_in_left"
-        app:popEnterAnim="@anim/slide_from_left"
-        app:popExitAnim="@anim/slide_in_right"
-        app:popUpTo="@id/passingTestFragment"
-        app:popUpToInclusive="true" />
+
 
     <include app:graph="@navigation/test_history_graph" />
+    <include app:graph="@navigation/result_test_graph" />
 </navigation>
