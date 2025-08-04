@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_fragment_exercises_to_profile_graph"
             app:destination="@id/profile_graph" />
+        <action
+            android:id="@+id/action_fragment_exercises_to_freeDiaryTrackerMoodFragment"
+            app:destination="@id/freeDiaryTrackerMoodFragment" />
     </fragment>
     <fragment
         android:id="@+id/freeDiaryTrackerMoodFragment"
