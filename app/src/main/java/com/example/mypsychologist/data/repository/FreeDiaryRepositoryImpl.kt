@@ -10,7 +10,6 @@ import com.example.mypsychologist.domain.entity.diaryEntity.CalendarResponseEnti
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerRespEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerResultEntity
-import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryWithDateEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodWithDateEntity
@@ -32,7 +31,7 @@ class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDi
         }
     }
 
-    override suspend fun addFreeDiary(freeDiary: NewFreeDiaryEntity): Resource<String> {
+    override suspend fun addFreeDiary(freeDiary: NewFreeDiaryWithDateEntity): Resource<Unit> {
         return dataSource.addFreeDiary(freeDiary.toNewFreeDiaryModel())
     }
 
@@ -65,10 +64,6 @@ class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDi
                 it.toEntity()
             }
         }
-    }
-
-    override suspend fun addFreeDiaryWithDate(data: NewFreeDiaryWithDateEntity): Flow<Resource<String>> {
-        return dataSource.addFreeDiaryWithDate(data.toNewFreeDiaryModel())
     }
 
     override suspend fun getDatesWithDiaries(month: Int): Flow<Resource<List<CalendarResponseEntity>>> {

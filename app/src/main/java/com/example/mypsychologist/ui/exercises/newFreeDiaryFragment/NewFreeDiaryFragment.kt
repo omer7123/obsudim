@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentNewFreeDiaryBinding
-import com.example.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryEntity
 import com.example.mypsychologist.extensions.bounce
 import com.example.mypsychologist.extensions.expand
 import com.example.mypsychologist.extensions.getAppComponent
@@ -84,7 +83,7 @@ class NewFreeDiaryFragment : Fragment() {
 
         binding.saveButton.setOnClickListener {
             val date = requireArguments().getString(DATE)
-            viewModel.addDiary(NewFreeDiaryEntity(binding.field.text.toString()), date)
+            viewModel.addDiary(binding.field.text.toString(), date)
         }
 
         binding.includeToolbar.toolbar.setNavigationOnClickListener {

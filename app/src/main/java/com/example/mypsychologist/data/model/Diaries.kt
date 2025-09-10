@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FreeDiaryModel(
-    @SerialName("free_diary_id")
+    @SerialName("id")
     val freeDiaryId: String,
     val text: String,
     @SerialName("created_at")
@@ -18,6 +18,7 @@ data class FreeDiaryModel(
 data class NewFreeDiaryModel (
     val text: String
 )
+
 @Serializable
 data class NewFreeDiaryWithDateModel(
     val text: String,
@@ -58,3 +59,4 @@ data class CalendarResponseModel(
     val date: Int,
     val diary: Boolean,
 )
+

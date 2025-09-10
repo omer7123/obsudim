@@ -109,7 +109,8 @@ class MainFragment : Fragment() {
     private fun render(state: MainScreenState) {
         when (state) {
             is MainScreenState.Error -> {
-                findNavController().navigate(R.id.registrationFragment)
+                binding.progressCircular.isVisible = false
+//                findNavController().navigate(R.id.registrationFragment)
             }
             MainScreenState.Initial -> {}
             MainScreenState.Loading -> {

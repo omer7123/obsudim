@@ -6,7 +6,6 @@ import com.example.mypsychologist.data.model.CalendarResponseModel
 import com.example.mypsychologist.data.model.FreeDiaryModel
 import com.example.mypsychologist.data.model.MoodTrackerPresentModel
 import com.example.mypsychologist.data.model.MoodTrackerRespModel
-import com.example.mypsychologist.data.model.NewFreeDiaryModel
 import com.example.mypsychologist.data.model.NewFreeDiaryWithDateModel
 import com.example.mypsychologist.data.model.SaveMoodModel
 import com.example.mypsychologist.data.model.SaveMoodWithDateModel
@@ -35,7 +34,7 @@ class FreeDiaryDataSourceImpl @Inject constructor(private val api: FreeDiaryServ
             })
         }.flowOn(Dispatchers.IO)
 
-    override suspend fun addFreeDiary(freeDiary: NewFreeDiaryModel): Resource<String> = getResult {
+    override suspend fun addFreeDiary(freeDiary: NewFreeDiaryWithDateModel): Resource<Unit> = getResult {
         withContext(Dispatchers.IO) {
             api.addFreeDiary(freeDiary = freeDiary)
         }
@@ -53,13 +52,6 @@ class FreeDiaryDataSourceImpl @Inject constructor(private val api: FreeDiaryServ
             }
         )
     }.flowOn(Dispatchers.IO)
-
-    override suspend fun addFreeDiaryWithDate(freeDiaryModel: NewFreeDiaryWithDateModel): Flow<Resource<String>> =
-        flow {
-            emit(getResult {
-                api.addFreeDiaryWithDate(freeDiaryModel)
-            })
-        }.flowOn(Dispatchers.IO)
 
     override suspend fun getAllMoodTrackers(date: String): Flow<Resource<List<MoodTrackerPresentModel>>> =
         flow {
