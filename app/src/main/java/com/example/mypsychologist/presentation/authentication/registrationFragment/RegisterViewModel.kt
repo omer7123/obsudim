@@ -1,13 +1,14 @@
 package com.example.mypsychologist.presentation.authentication.registrationFragment
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.authenticationEntity.RegisterEntity
-import com.example.mypsychologist.domain.entity.authenticationEntity.User
+import com.example.mypsychologist.domain.entity.authenticationEntity.Tokens
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.RegisterUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveUserIdUseCase
@@ -36,9 +37,8 @@ class RegisterViewModel @Inject constructor(
         _statusRegistration.value = RegisterStatus.Error(error.message.toString())
     }
 
-    private suspend fun saveToken(result: Resource.Success<User>) {
-        saveTokenUseCase(result.data.token)
-        saveUserIdUseCase(result.data.user_id)
+    private suspend fun saveToken(result: Resource.Success<Tokens>) {
+        saveTokenUseCase(result.data.accessToken)
         _statusRegistration.value = RegisterStatus.Success
     }
 
@@ -93,8 +93,11 @@ class RegisterViewModel @Inject constructor(
             viewModelScope.launch(handler) {
                 _statusRegistration.value = RegisterStatus.Loading
                 when (val result = registerUseCase(registerEntity)) {
-                    is Resource.Error -> _statusRegistration.value =
-                        RegisterStatus.Error(result.msg.toString())
+                    is Resource.Error -> {
+                        Log.e("Error", result.msg.toString())
+                        _statusRegistration.value =
+                            RegisterStatus.Error(result.msg.toString())
+                    }
 
                     Resource.Loading -> _statusRegistration.value = RegisterStatus.Loading
 

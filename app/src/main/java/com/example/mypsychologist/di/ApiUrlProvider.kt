@@ -9,5 +9,6 @@ interface ApiUrlProvider {
 class ApiUrlProviderImpl @Inject constructor() : ApiUrlProvider {
 
     override var url =
-        "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/"
+
+        "https://xn--2-ctbib7ccc.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/"
 }
