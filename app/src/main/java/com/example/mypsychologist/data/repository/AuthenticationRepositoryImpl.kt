@@ -8,7 +8,6 @@ import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.data.remote.authentication.AuthenticationDataSource
 import com.example.mypsychologist.domain.entity.authenticationEntity.RegisterEntity
 import com.example.mypsychologist.domain.entity.authenticationEntity.Tokens
-import com.example.mypsychologist.domain.entity.authenticationEntity.User
 import com.example.mypsychologist.domain.repository.retrofit.AuthenticationRepository
 import javax.inject.Inject
 
@@ -22,12 +21,12 @@ class AuthenticationRepositoryImpl @Inject constructor(
         return dataSource.registerOld(register.toModel())
     }
 
-    override suspend fun authOld(authModel: AuthModel): Resource<User> {
+    override suspend fun authOld(authModel: AuthModel): Resource<Tokens> {
         return dataSource.authOld(authModel)
     }
 
-    override suspend fun authByToken(token: Token): Resource<User> {
-       return dataSource.authByToken(token)
+    override suspend fun authByToken(token: Token): Resource<Tokens> {
+       return dataSource.authByToken(token.token)
     }
 
     override suspend fun saveUserId(userId: String) {

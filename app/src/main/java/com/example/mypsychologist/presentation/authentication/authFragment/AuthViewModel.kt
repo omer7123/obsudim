@@ -5,12 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
 import com.example.mypsychologist.data.model.Token
-import com.example.mypsychologist.domain.entity.authenticationEntity.User
+import com.example.mypsychologist.domain.entity.authenticationEntity.Tokens
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthByTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthWithDataUserUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.GetTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
-import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveUserIdUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +19,6 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authWithDataUserUseCase: AuthWithDataUserUseCase,
     private val saveTokenUseCase: SaveTokenUseCase,
-    private val saveUserIdUseCase: SaveUserIdUseCase,
     private val authByTokenUseCase: AuthByTokenUseCase,
     private val getTokenUseCase: GetTokenUseCase,
 ) : ViewModel() {
@@ -60,20 +58,18 @@ class AuthViewModel @Inject constructor(
             else {
                 when (val result = authByTokenUseCase(Token(token))) {
                     is Resource.Error -> _authByTokenStatus.value = AuthState.Error
-
                     Resource.Loading -> _authByTokenStatus.value = AuthState.Loading
                     is Resource.Success -> {
-                        saveTokenUseCase(result.data.token)
+                        saveTokenUseCase(result.data.accessToken)
                         _authByTokenStatus.value = AuthState.Success
                     }
                 }
             }
         }
     }
-    private suspend fun saveToken(result: User) {
+    private suspend fun saveToken(result: Tokens) {
         _stateScreen.value = _stateScreen.value.copy(loading = true)
-        saveTokenUseCase(result.token)
-        saveUserIdUseCase(result.user_id)
+        saveTokenUseCase(result.accessToken)
         _authByTokenStatus.value = AuthState.Success
     }
 

@@ -4,9 +4,7 @@ import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
 import com.example.mypsychologist.data.model.RegisterModel
-import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.domain.entity.authenticationEntity.Tokens
-import com.example.mypsychologist.domain.entity.authenticationEntity.User
 import javax.inject.Inject
 
 class AuthenticationDataSourceImpl @Inject constructor(val api: AuthenticationService) :
@@ -16,11 +14,11 @@ class AuthenticationDataSourceImpl @Inject constructor(val api: AuthenticationSe
         api.register(registerModel)
     }
 
-    override suspend fun authOld(authModel: AuthModel): Resource<User> = getResult {
+    override suspend fun authOld(authModel: AuthModel): Resource<Tokens> = getResult {
         api.authOld(authModel)
     }
 
-    override suspend fun authByToken(token: Token): Resource<User> = getResult {
+    override suspend fun authByToken(token: String): Resource<Tokens> = getResult {
         api.authByToken(token)
     }
 }
