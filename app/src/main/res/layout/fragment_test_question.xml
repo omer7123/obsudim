@@ -14,10 +14,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/question"
-        style="@style/TitleXS"
+        style="@style/TestQuestion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -30,29 +29,32 @@
         android:id="@+id/answer_variants_rw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@id/score"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/question"
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/answer_variant_item" />
 
-   <!-- <TextView
-        android:id="@+id/progress"
-        android:background="@drawable/selected_problem_back"
-        android:gravity="center"
+
+    <TextView
+        android:id="@+id/score"
         style="@style/BodyMBold"
         android:layout_width="0dp"
         android:layout_height="46dp"
-        tools:text="1/20"
-        android:layout_marginBottom="20dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/selected_problem_back"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" /> -->
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="2 из 40" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

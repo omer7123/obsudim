@@ -2,11 +2,11 @@ package com.example.mypsychologist.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,21 +14,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.mypsychologist.NavbarHider
 import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentMainBinding
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.example.mypsychologist.extensions.getAppComponent
-import com.example.mypsychologist.presentation.core.BaseStateUI
+import com.example.mypsychologist.presentation.main.mainFragment.MainScreenState
 import com.example.mypsychologist.presentation.main.mainFragment.MainViewModel
-import com.example.mypsychologist.ui.diagnostics.PassingTestFragment
-import com.example.mypsychologist.ui.education.EducationFragment
-import com.example.mypsychologist.ui.exercises.cbt.FragmentNewCBTDiary
-import com.example.mypsychologist.ui.exercises.cbt.TrackerMoodFragment
+import com.example.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment
+import com.example.mypsychologist.ui.education.educationFragment.EducationFragment
+import com.example.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary
+import com.example.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.util.Date
 import javax.inject.Inject
 
 
@@ -69,9 +67,9 @@ class MainFragment : Fragment() {
     }
 
     private fun setNavbarActualItem() {
-        if (activity is NavbarHider) {
-            (activity as NavbarHider).setActualItem(R.id.plan_item)
-        }
+//        if (activity is NavbarHider) {
+//            (activity as NavbarHider).setActualItem(R.id.plan_item)
+//        }
     }
 
     private fun initView() {
@@ -93,34 +91,38 @@ class MainFragment : Fragment() {
             })
         }
 
-        var formattedDate: String = DateFormat.format("EEEE, d MMMM", Date()).toString()
-        val formattedDateSplit = formattedDate.split(" ").toMutableList()
-        formattedDateSplit[2] = formattedDateSplit[2].lowercase()
-        formattedDate = formattedDateSplit.joinToString(" ")
-        binding.dateTv.text = formattedDate
+        binding.toolbar.toolbar.title = getString(R.string.tasks)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
+            requireActivity().finish()
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAllExercises()
+        viewModel.getInitialData()
     }
 
-    private fun render(state: BaseStateUI<List<DailyExerciseEntity>>) {
+    private fun render(state: MainScreenState) {
         when (state) {
-            is BaseStateUI.Error -> {
+            is MainScreenState.Error -> {
                 findNavController().navigate(R.id.registrationFragment)
             }
-            is BaseStateUI.Initial -> {}
-            is BaseStateUI.Loading -> {
+            MainScreenState.Initial -> {}
+            MainScreenState.Loading -> {
                 binding.exercisesRv.isVisible = false
                 binding.progressCircular.isVisible = true
             }
-
-            is BaseStateUI.Content -> {
+            is MainScreenState.Content -> {
                 binding.exercisesRv.isVisible = true
                 binding.progressCircular.isVisible = false
                 binding.exercisesRv.adapter = adapter
-                adapter.submitList(state.data)
+                adapter.submitList(state.tasks)
+
+                binding.dateTv.text = state.date
             }
         }
     }
@@ -129,7 +131,7 @@ class MainFragment : Fragment() {
         when (dailyExerciseEntity.type) {
             1 -> {
                 findNavController().navigate(
-                    R.id.fragment_education,
+                    R.id.action_main_fragment_to_reading_theory_graph,
                     bundleOf(
                         EducationFragment.TOPIC_TAG to dailyExerciseEntity.destinationId,
                         EducationFragment.TASK_ID to dailyExerciseEntity.id
@@ -146,7 +148,7 @@ class MainFragment : Fragment() {
                     ) { _, res ->
                         val key = res.getString(TrackerMoodFragment.RESULT_KEY)
                         if (key == TrackerMoodFragment.CLOSE)
-                            viewModel.getAllExercises()
+                            viewModel.getInitialData()
                     }
 
                     fragment.show(childFragmentManager, TrackerMoodFragment.SHOW)
@@ -158,7 +160,7 @@ class MainFragment : Fragment() {
 
             3 -> {
                 findNavController().navigate(
-                    R.id.action_main_fragment_to_passingTestFragment,
+                    R.id.action_main_fragment_to_passing_test_graph,
                     bundleOf(
                         PassingTestFragment.TEST_ID to dailyExerciseEntity.destinationId,
                         PassingTestFragment.TASK_ID to dailyExerciseEntity.id
@@ -168,7 +170,7 @@ class MainFragment : Fragment() {
 
             4 -> {
                 findNavController().navigate(
-                    R.id.action_main_fragment_to_fragment_new_diary,
+                    R.id.fragment_new_diary,
                     bundleOf(
                         FragmentNewCBTDiary.EXERCISE_ID to dailyExerciseEntity.destinationId,
                         FragmentNewCBTDiary.TASK_ID to dailyExerciseEntity.id
@@ -181,10 +183,10 @@ class MainFragment : Fragment() {
     private fun setupListeners() {
         binding.apply {
             toolbar.profileIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_profile)
+                findNavController().navigate(R.id.action_main_fragment_to_profile_graph)
             }
             toolbar.psychologistsIcon.setOnClickListener {
-                findNavController().navigate(R.id.fragment_psychologists_with_tasks)
+                findNavController().navigate(R.id.action_main_fragment_to_psychologists_with_tasks_graph)
             }
         }
     }

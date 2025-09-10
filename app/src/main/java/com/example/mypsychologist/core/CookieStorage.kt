@@ -18,7 +18,4 @@ object CookieStorage {
         return cookieStore.map { "${it.key}=${it.value}" }
     }
 
-    fun clearCookies() {
-        cookieStore.clear()
-    }
 }

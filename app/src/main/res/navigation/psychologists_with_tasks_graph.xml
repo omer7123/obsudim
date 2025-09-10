@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/psychologists_with_tasks_graph"
+    app:startDestination="@id/fragment_psychologists_with_tasks">
+
+    <fragment
+        android:id="@+id/fragment_psychologists_with_tasks"
+        android:name="com.example.mypsychologist.ui.psychologist.psychologistWithTasksFragment.PsychologistsWithTasksFragment"
+        android:label="PsychologistsWithTasksFragment" />
+    <fragment
+        android:id="@+id/fragment_request_to_psychologist"
+        android:name="com.example.mypsychologist.ui.psychologist.requestToPsychologistFragment.RequestToPsychologistFragment"
+        android:label="RequestToPsychologistFragment" />
+    <fragment
+        android:id="@+id/fragment_feed"
+        android:name="com.example.mypsychologist.ui.profile.feedBackFragment.FeedbackFragment"
+        android:label="FeedFragment" />
+</navigation>

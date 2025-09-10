@@ -52,10 +52,10 @@ import com.example.mypsychologist.presentation.authentication.authFragment.AuthC
 import com.example.mypsychologist.presentation.authentication.authFragment.AuthState
 import com.example.mypsychologist.presentation.authentication.authFragment.AuthViewModel
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
-import com.example.mypsychologist.ui.core.PrimaryPickerTextField
-import com.example.mypsychologist.ui.core.PrimaryTextButton
-import com.example.mypsychologist.ui.core.PrimaryTextField
-import com.example.mypsychologist.ui.core.SecondaryTextButton
+import com.example.mypsychologist.ui.core.composeComponents.PrimaryPickerTextField
+import com.example.mypsychologist.ui.core.composeComponents.PrimaryTextButton
+import com.example.mypsychologist.ui.core.composeComponents.PrimaryTextField
+import com.example.mypsychologist.ui.core.composeComponents.SecondaryTextButton
 import com.example.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
