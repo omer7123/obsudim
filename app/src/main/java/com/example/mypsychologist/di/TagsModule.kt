@@ -19,6 +19,6 @@ class TagsModule {
     fun provideDataSource(impl: TagsDataSourceImpl): TagsDataSource = impl
 
     @Provides
-    fun provideService(retrofit: Retrofit): TagsService =
+    fun provideService(@AuthRetrofit retrofit: Retrofit): TagsService =
         retrofit.create(TagsService::class.java)
 }

@@ -28,6 +28,19 @@ class AuthenticationSharedPrefDataSourceImpl @Inject constructor(context: Contex
         }
     }
 
+    override suspend fun saveRefreshToken(refToken: String) {
+        withContext(Dispatchers.IO){
+            sharedPref.edit().apply{
+                putString(REF_TOKEN, refToken)
+                apply()
+            }
+        }
+    }
+
+    override suspend fun getRefreshToken(): String {
+        return sharedPref.getString(REF_TOKEN, "").toString()
+    }
+
     override suspend fun getToken(): String {
         return sharedPref.getString(TOKEN, "").toString()
     }
@@ -72,6 +85,7 @@ class AuthenticationSharedPrefDataSourceImpl @Inject constructor(context: Contex
 
     companion object {
         private const val TOKEN = "token"
+        private const val REF_TOKEN = "ref_token"
         private const val FILE_NAME = "auth_pref"
         private const val USER_ID = "user_id"
         private const val REQUEST_TO_MANAGER_STATUS = "status"

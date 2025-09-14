@@ -10,6 +10,7 @@ interface AuthenticationRepository {
     suspend fun oldRegister(register: RegisterEntity): Resource<Tokens>
     suspend fun authOld(authModel: AuthModel): Resource<Tokens>
     suspend fun saveToken(token: String)
+    suspend fun saveRefToken(refToken: String)
     suspend fun getToken(): String
     suspend fun deleteToken()
     suspend fun deleteUserId()

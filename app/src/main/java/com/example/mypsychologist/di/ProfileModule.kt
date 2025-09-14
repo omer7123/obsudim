@@ -5,7 +5,6 @@ import com.example.mypsychologist.data.remote.profile.UserDataSourceImpl
 import com.example.mypsychologist.data.remote.profile.UserService
 import com.example.mypsychologist.data.repository.ProfileRepositoryImpl
 import com.example.mypsychologist.domain.repository.ProfileRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -19,7 +18,7 @@ class ProfileModule {
     fun provideUserDataSource(impl: UserDataSourceImpl): UserDataSource = impl
 
     @Provides
-    fun provideUserService(retrofit: Retrofit): UserService =
+    fun provideUserService(@AuthRetrofit retrofit: Retrofit): UserService =
         retrofit.create(UserService::class.java)
 
 }

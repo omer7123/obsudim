@@ -16,7 +16,7 @@ class PsychologistModule {
         impl
 
     @Provides
-    fun providesPsychologistService(retrofit: Retrofit): PsychologistService =
+    fun providesPsychologistService(@AuthRetrofit retrofit: Retrofit): PsychologistService =
         retrofit.create(PsychologistService::class.java)
 
     @Provides

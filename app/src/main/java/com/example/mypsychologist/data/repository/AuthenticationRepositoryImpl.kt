@@ -41,6 +41,10 @@ class AuthenticationRepositoryImpl @Inject constructor(
         localDataSource.saveToken(token)
     }
 
+    override suspend fun saveRefToken(refToken: String) {
+        localDataSource.saveRefreshToken(refToken)
+    }
+
     override suspend fun getToken(): String {
         return localDataSource.getToken()
     }

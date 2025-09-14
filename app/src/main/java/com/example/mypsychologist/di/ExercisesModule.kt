@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 @Module
 class ExercisesModule {
     @Provides
-    fun providesProblemService(retrofit: Retrofit): ProblemService =
+    fun providesProblemService(@AuthRetrofit retrofit: Retrofit): ProblemService =
         retrofit.create(ProblemService::class.java)
 
     @Provides

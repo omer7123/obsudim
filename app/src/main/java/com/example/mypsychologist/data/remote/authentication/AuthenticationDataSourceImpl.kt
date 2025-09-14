@@ -4,7 +4,9 @@ import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
 import com.example.mypsychologist.data.model.RegisterModel
+import com.example.mypsychologist.domain.entity.authenticationEntity.RefreshToken
 import com.example.mypsychologist.domain.entity.authenticationEntity.Tokens
+import retrofit2.Response
 import javax.inject.Inject
 
 class AuthenticationDataSourceImpl @Inject constructor(val api: AuthenticationService) :
@@ -20,5 +22,9 @@ class AuthenticationDataSourceImpl @Inject constructor(val api: AuthenticationSe
 
     override suspend fun authByToken(token: String): Resource<Tokens> = getResult {
         api.authByToken(token)
+    }
+
+    override suspend fun refreshToken(refreshToken: RefreshToken): Response<Tokens> {
+        return api.refreshToken(refreshToken)
     }
 }

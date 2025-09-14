@@ -40,3 +40,9 @@ data class Tokens(
     @SerialName("refresh_token")
     val refreshToken: String,
 )
+
+@Serializable
+data class RefreshToken(
+    @SerialName("refresh_token")
+    val refreshToken: String,
+)

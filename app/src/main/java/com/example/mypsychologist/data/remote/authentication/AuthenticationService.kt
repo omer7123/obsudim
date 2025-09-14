@@ -2,6 +2,7 @@ package com.example.mypsychologist.data.remote.authentication
 
 import com.example.mypsychologist.data.model.AuthModel
 import com.example.mypsychologist.data.model.RegisterModel
+import com.example.mypsychologist.domain.entity.authenticationEntity.RefreshToken
 import com.example.mypsychologist.domain.entity.authenticationEntity.Tokens
 import retrofit2.Response
 import retrofit2.http.Body
@@ -15,4 +16,7 @@ interface AuthenticationService {
     suspend fun authOld(@Body auhModel: AuthModel): Response<Tokens>
     @POST("/auth/token-auth")
     suspend fun authByToken(@Query("token") token: String): Response<Tokens>
+
+    @POST("/auth/refresh-token")
+    suspend fun refreshToken(@Body refreshToken: RefreshToken): Response<Tokens>
 }

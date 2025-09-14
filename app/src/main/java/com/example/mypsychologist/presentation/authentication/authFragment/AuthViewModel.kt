@@ -4,12 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.AuthModel
-import com.example.mypsychologist.data.model.Token
 import com.example.mypsychologist.domain.entity.authenticationEntity.Tokens
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthByTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.AuthWithDataUserUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.GetTokenUseCase
+import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveRefreshTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
+import com.example.mypsychologist.domain.useCase.exerciseUseCases.GetAllDailyExercisesUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,8 +20,10 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authWithDataUserUseCase: AuthWithDataUserUseCase,
     private val saveTokenUseCase: SaveTokenUseCase,
+    private val saveRefreshTokenUseCase: SaveRefreshTokenUseCase,
     private val authByTokenUseCase: AuthByTokenUseCase,
     private val getTokenUseCase: GetTokenUseCase,
+    private val getAllDailyExercisesUseCase: GetAllDailyExercisesUseCase
 ) : ViewModel() {
 
     private val _stateScreen: MutableStateFlow<AuthContent> = MutableStateFlow(AuthContent())
@@ -56,12 +59,13 @@ class AuthViewModel @Inject constructor(
             if (token == "")
                 _authByTokenStatus.value = AuthState.Error
             else {
-                when (val result = authByTokenUseCase(Token(token))) {
-                    is Resource.Error -> _authByTokenStatus.value = AuthState.Error
-                    Resource.Loading -> _authByTokenStatus.value = AuthState.Loading
-                    is Resource.Success -> {
-                        saveTokenUseCase(result.data.accessToken)
-                        _authByTokenStatus.value = AuthState.Success
+                getAllDailyExercisesUseCase().collect {result->
+                    when(result){
+                        is Resource.Error -> _authByTokenStatus.value = AuthState.Error
+                        Resource.Loading -> _authByTokenStatus.value = AuthState.Loading
+                        is Resource.Success -> {
+                            _authByTokenStatus.value = AuthState.Success
+                        }
                     }
                 }
             }
@@ -70,6 +74,7 @@ class AuthViewModel @Inject constructor(
     private suspend fun saveToken(result: Tokens) {
         _stateScreen.value = _stateScreen.value.copy(loading = true)
         saveTokenUseCase(result.accessToken)
+        saveRefreshTokenUseCase(result.refreshToken)
         _authByTokenStatus.value = AuthState.Success
     }
 
