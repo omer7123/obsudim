@@ -179,6 +179,7 @@ class RegistrationFragment : Fragment() {
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
             }
+
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -186,10 +187,12 @@ class RegistrationFragment : Fragment() {
                         color = AppTheme.colors.screenBackground,
                         shape = RoundedCornerShape(topEnd = 28.dp, topStart = 28.dp)
                     )
-                    .imePadding()
                     .padding(horizontal = 16.dp)
                     .padding(top = 16.dp)
                     .padding(bottom = 52.dp)
+                    .imePadding()
+
+
             ) {
                 ChangeScreen(
                     viewState = viewState,
