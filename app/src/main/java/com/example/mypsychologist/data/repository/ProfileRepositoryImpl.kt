@@ -7,8 +7,10 @@ import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.remote.profile.UserDataSource
 import com.example.mypsychologist.domain.entity.ClientInfoEntity
+import com.example.mypsychologist.domain.entity.priofileEntity.UserDataEntity
 import com.example.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
 import com.example.mypsychologist.domain.repository.ProfileRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
@@ -41,5 +43,9 @@ class ProfileRepositoryImpl @Inject constructor(
                 Resource.Success(result.data)
             }
         }
+    }
+
+    override suspend fun getAuthMe(): Flow<Resource<UserDataEntity>> {
+        return dataSource.getAuthMe().checkResource { it.toEntity() }
     }
 }

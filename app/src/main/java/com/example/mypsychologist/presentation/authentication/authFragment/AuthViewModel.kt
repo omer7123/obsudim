@@ -1,5 +1,6 @@
 package com.example.mypsychologist.presentation.authentication.authFragment
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypsychologist.core.Resource
@@ -11,6 +12,7 @@ import com.example.mypsychologist.domain.useCase.authenticationUseCases.GetToken
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveRefreshTokenUseCase
 import com.example.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.GetAllDailyExercisesUseCase
+import com.example.mypsychologist.domain.useCase.profile.GetInfoMeUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +25,8 @@ class AuthViewModel @Inject constructor(
     private val saveRefreshTokenUseCase: SaveRefreshTokenUseCase,
     private val authByTokenUseCase: AuthByTokenUseCase,
     private val getTokenUseCase: GetTokenUseCase,
-    private val getAllDailyExercisesUseCase: GetAllDailyExercisesUseCase
+    private val getAllDailyExercisesUseCase: GetAllDailyExercisesUseCase,
+    private val getAuthMeUseCase: GetInfoMeUseCase,
 ) : ViewModel() {
 
     private val _stateScreen: MutableStateFlow<AuthContent> = MutableStateFlow(AuthContent())
@@ -59,15 +62,19 @@ class AuthViewModel @Inject constructor(
             if (token == "")
                 _authByTokenStatus.value = AuthState.Error
             else {
-                getAllDailyExercisesUseCase().collect {result->
-                    when(result){
-                        is Resource.Error -> _authByTokenStatus.value = AuthState.Error
-                        Resource.Loading -> _authByTokenStatus.value = AuthState.Loading
-                        is Resource.Success -> {
-                            _authByTokenStatus.value = AuthState.Success
+                getAuthMeUseCase()
+                    .collect { result ->
+                        Log.e("SAuth", "Auth states: $result")
+                        Log.e("SAuth", "Auth states Code: ${result.toString()}")
+                        _authByTokenStatus.value = when (result) {
+                            is Resource.Error -> AuthState.Error
+                            Resource.Loading -> AuthState.Loading
+                            is Resource.Success -> {
+                                Log.e("SAuth", "Auth success")
+                                AuthState.Success
+                            }
                         }
                     }
-                }
             }
         }
     }

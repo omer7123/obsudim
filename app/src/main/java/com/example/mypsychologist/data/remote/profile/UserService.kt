@@ -1,6 +1,7 @@
 package com.example.mypsychologist.data.remote.profile
 
 import com.example.mypsychologist.data.model.SendRequestToPsychologistModel
+import com.example.mypsychologist.data.model.UserDataModel
 import com.example.mypsychologist.data.model.UserInfoModel
 import retrofit2.Response
 import retrofit2.http.Body
@@ -17,4 +18,7 @@ interface UserService {
 
     @POST("/client/send_application")
     suspend fun sendRequestToManager(@Body requestToPsychologist: SendRequestToPsychologistModel): Response<String>
+
+    @GET("/auth/me")
+    suspend fun getAuthMe(): Response<UserDataModel>
 }

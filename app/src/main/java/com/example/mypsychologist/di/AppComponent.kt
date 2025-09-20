@@ -8,7 +8,7 @@ import javax.inject.Scope
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [DataModule::class, DomainModule::class, DataSourceModule::class])
+@Component(modules = [DataModule::class, DomainModule::class, DataSourceModule::class, ProfileModule::class])
 interface AppComponent {
     fun inject(activity: MainActivity)
 

@@ -11,17 +11,13 @@ abstract class BaseDataSource {
     data class ErrorResponse(val detail: String)
 
     protected suspend fun <T : Any> getResult(call: suspend () -> Response<T>): Resource<T> {
-        try {
+        return try {
             val response = call()
 
             if (response.isSuccessful) {
-                val body = response.body()
-
-                return if (body != null || response.code() in 200..299) {
-                    Resource.Success(body!!)
-                } else {
-                    Resource.Error(response.message(), response.body())
-                }
+                response.body()?.let {
+                    Resource.Success(it)
+                } ?: Resource.Error(response.message(), null)
             } else {
                 val errorBody = response.errorBody()?.string() ?: "Unknown error"
                 val errorResponse = try {
@@ -30,10 +26,10 @@ abstract class BaseDataSource {
                     ErrorResponse("Unknown error")
                 }
 
-                return Resource.Error(errorResponse.detail, null)
+                Resource.Error(errorResponse.detail, null)
             }
         } catch (e: Exception) {
-            return Resource.Error(e.message ?: e.toString(), null)
+            Resource.Error(e.message ?: e.toString(), null)
         }
     }
 }

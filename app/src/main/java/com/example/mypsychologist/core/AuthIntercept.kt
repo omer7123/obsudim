@@ -19,32 +19,39 @@ class AuthInterceptor @Inject constructor(
         val request = chain.request()
         val response = chain.proceed(request)
 
-        if (response.code == 404) {
-            response.close()
+        if (response.code == 401) {
+                response.close()
 
-            Log.e("ER", "Yes")
-            val refToken = runBlocking {
-                sharedPrefDataSource.getRefreshToken()
-            }
-
-            Log.e("ER", refToken)
-            if(refToken.isNotEmpty()) {
-                try {
-                    val refreshResponse = runBlocking { authApi.refreshToken(RefreshToken(refToken))}
-                    if (refreshResponse.isSuccessful) {
-                        val body = refreshResponse.body()
-                        if(body!=null){
-                            runBlocking {
-                                sharedPrefDataSource.saveToken(body.accessToken)
-                                sharedPrefDataSource.saveRefreshToken(body.refreshToken)
-                            }
-                        }
-
-                        return chain.proceed(request.newBuilder().build())
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                Log.e("ER", "Yes")
+                val refToken = runBlocking {
+                    sharedPrefDataSource.getRefreshToken()
                 }
+
+                if (refToken.isNotEmpty()) {
+                    try {
+                        val refreshResponse =
+                            runBlocking { authApi.refreshToken(RefreshToken(refToken)) }
+                        if (refreshResponse.isSuccessful) {
+                            val body = refreshResponse.body()
+                            if (body != null) {
+                                runBlocking {
+                                    sharedPrefDataSource.saveToken(body.accessToken)
+                                    sharedPrefDataSource.saveRefreshToken(body.refreshToken)
+                                }
+
+                                    val newCookies = refreshResponse.headers().values("Set-Cookie")
+                                    if (newCookies.isNotEmpty()) {
+                                        CookieStorage.saveCookies(newCookies)
+                                    }
+
+                            }
+
+                            return chain.proceed(request.newBuilder().addHeader("Cookie",
+                                CookieStorage.getCookies().joinToString("; ")).build())
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
             }
         }
 

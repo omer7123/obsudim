@@ -95,6 +95,7 @@ class AuthFragment : Fragment() {
         }
         val viewState = viewModel.stateScreen.collectAsState()
         val authByTokenState = viewModel.authByTokenStatus.collectAsState()
+
         when(authByTokenState.value){
             AuthState.Error -> {
                 AuthInitial(

@@ -1,11 +1,6 @@
-package com.example.mypsychologist.data.model
+package com.example.mypsychologist.domain.entity.priofileEntity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class UserInfoModel(
-    @SerialName("birth_date")
+data class UserInfoEntity(
     val birthDate: String,
     val gender: String,
     val username: String,
@@ -15,8 +10,7 @@ data class UserInfoModel(
     val type: Int
 )
 
-@Serializable
-data class UserDataModel(
+data class UserDataEntity(
     val id: String,
     val username: String,
     val email: String,
@@ -24,16 +18,11 @@ data class UserDataModel(
     val company: String?,
     val online: String?,
     val gender: String,
-    @SerialName("birth_date")
     val birthDate: String,
-    @SerialName("phone_number")
     val phoneNumber: String,
     val description: String?,
-    @SerialName("is_active")
     val isActive: String?,
     val department: String?,
-    @SerialName("face_to_face")
     val faceToFace: Boolean?,
-    @SerialName("role_id")
     val roleId: Int,
 )
