@@ -4,10 +4,10 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 data class TestEntity(
+    val testId: String,
     val title: String,
     val description: String,
     val descShort: String,
-    val testId: String,
     val linkToPicture: String
 )
 

@@ -5,14 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TestModel(
+    val id: String,
     val title: String,
     val description: String,
     @SerialName("short_desc")
     val shortDesc: String,
-    @SerialName("test_id")
-    val testId: String,
-    @SerialName("link_to_picture")
-    val linkToPicture: String
+    val link: String,
 )
 
 @Serializable

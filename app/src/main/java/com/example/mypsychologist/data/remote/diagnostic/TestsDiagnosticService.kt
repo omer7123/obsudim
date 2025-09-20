@@ -15,7 +15,7 @@ import retrofit2.http.Query
 
 interface TestsDiagnosticService {
 
-    @GET("/test/get_all_tests")
+    @GET("/tests")
     suspend fun getAllTests(): Response<List<TestModel>>
 
     @POST("/test/save_test_result")
