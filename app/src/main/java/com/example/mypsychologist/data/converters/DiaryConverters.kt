@@ -1,6 +1,7 @@
 package com.example.mypsychologist.data.converters
 
 import com.example.mypsychologist.data.model.CalendarResponseModel
+import com.example.mypsychologist.data.model.EmojiModel
 import com.example.mypsychologist.data.model.FreeDiaryModel
 import com.example.mypsychologist.data.model.MoodTrackerPresentModel
 import com.example.mypsychologist.data.model.MoodTrackerRespModel
@@ -9,6 +10,7 @@ import com.example.mypsychologist.data.model.NewFreeDiaryWithDateModel
 import com.example.mypsychologist.data.model.SaveMoodModel
 import com.example.mypsychologist.data.model.SaveMoodWithDateModel
 import com.example.mypsychologist.domain.entity.diaryEntity.CalendarResponseEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.EmojiEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerRespEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerResultEntity
@@ -32,18 +34,19 @@ fun NewFreeDiaryWithDateEntity.toNewFreeDiaryModel(): NewFreeDiaryWithDateModel 
 }
 
 fun SaveMoodEntity.toModel(): SaveMoodModel =
-    SaveMoodModel(score, freeDiaryId, thinkDiaryId, diaryType)
+    SaveMoodModel(score = score, emojiIds = emojiIds)
 
-fun MoodTrackerRespModel.toEntity(): MoodTrackerRespEntity = MoodTrackerRespEntity(moodTrackerId)
+fun MoodTrackerRespModel.toEntity(): MoodTrackerRespEntity = MoodTrackerRespEntity(status)
+
 fun SaveMoodWithDateEntity.toModel(): SaveMoodWithDateModel {
     return SaveMoodWithDateModel(
-        score = this.score, date = this.date
+        score = this.score, day = this.date, emojiIds = emojiIds
     )
 }
 
 fun MoodTrackerPresentModel.toEntity() =
     MoodTrackerResultEntity(
-        id = id, score = score, date = date
+        id = id, score = score, date = date, emojiIds = emojiIds, emojiTexts = emojiTexts
     )
 
 fun CalendarResponseModel.toEntity(): CalendarResponseEntity =
@@ -51,3 +54,10 @@ fun CalendarResponseModel.toEntity(): CalendarResponseEntity =
         date = date,
         diary = diary
     )
+
+fun EmojiModel.toEntity(): EmojiEntity{
+    return EmojiEntity(
+        id = id,
+        text = text,
+    )
+}

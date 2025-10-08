@@ -7,6 +7,7 @@ import com.example.mypsychologist.data.converters.toModel
 import com.example.mypsychologist.data.converters.toNewFreeDiaryModel
 import com.example.mypsychologist.data.remote.freeDiary.FreeDiaryDataSource
 import com.example.mypsychologist.domain.entity.diaryEntity.CalendarResponseEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.EmojiEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerRespEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerResultEntity
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDiaryDataSource) :
     FreeDiaryRepository {
+
     override suspend fun getFreeDiaries(): Resource<List<FreeDiaryEntity>> {
 
         return when (val listModel = dataSource.getFreeDiaries()) {
@@ -44,12 +46,11 @@ class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDi
         }
     }
 
-    override suspend fun saveMoodTracker(saveMoodEntity: SaveMoodEntity): Resource<MoodTrackerRespEntity> {
-        return when (val res = dataSource.saveMoodTracker(saveMoodEntity.toModel())) {
-            is Resource.Success -> Resource.Success(res.data.toEntity())
-            is Resource.Error -> Resource.Error(res.msg.toString(), null)
-            Resource.Loading -> Resource.Loading
+    override suspend fun saveMoodTracker(saveMoodEntity: SaveMoodEntity): Flow<Resource<MoodTrackerRespEntity>> {
+        return dataSource.saveMoodTracker(saveMoodEntity.toModel()).checkResource { respModel ->
+            respModel.toEntity()
         }
+
     }
 
     override suspend fun saveMoodTrackerWithDate(moodTrack: SaveMoodWithDateEntity): Flow<Resource<MoodTrackerRespEntity>>{
@@ -69,6 +70,14 @@ class FreeDiaryRepositoryImpl @Inject constructor(private val dataSource: FreeDi
     override suspend fun getDatesWithDiaries(month: Int): Flow<Resource<List<CalendarResponseEntity>>> {
         return dataSource.getDatesWithDiaries(month).checkResource {listOfDates->
             listOfDates.map {
+                it.toEntity()
+            }
+        }
+    }
+
+    override suspend fun getAllEmojies(): Flow<Resource<List<EmojiEntity>>> {
+        return dataSource.getAllEmojies().checkResource { listEmojies->
+            listEmojies.map {
                 it.toEntity()
             }
         }

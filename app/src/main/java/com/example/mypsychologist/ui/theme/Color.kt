@@ -10,6 +10,7 @@ data class AppThemeColor(
     val primaryText: Color, // черный 100
     val primaryTextInvert: Color, // белый 100
     val secondaryText: Color, //черный 60
+    val tertiaryText: Color, //синий 40
     //Background
     val primaryBackground: Color, // синий 80
     val secondaryBackground: Color, // синий 30
@@ -30,6 +31,7 @@ val lightShema = AppThemeColor(
     primaryText = Color(0xFF1C1A1A),
     primaryTextInvert = Color(0xFFFFFFFF), // белый 100
     secondaryText = Color(0xFF545454),  //черный 60
+    tertiaryText = Color(0xFFCDD7FF), //синий 40
     //Background
     primaryBackground = Color(0xFF3555D4), // синий 80
     secondaryBackground = Color(0xFFEBEEFF), // синий 30
@@ -61,6 +63,7 @@ val darkShema = AppThemeColor(
     errorContainer = Color(0XFFFEECEC),//Красный 20
 
     loading =  Color(0xFF787777), // синий 100
+    tertiaryText = Color(0xFF3555D4), //синий 40
 )
 
 object AppTheme {

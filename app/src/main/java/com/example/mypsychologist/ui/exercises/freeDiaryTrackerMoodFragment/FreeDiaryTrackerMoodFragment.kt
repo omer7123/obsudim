@@ -20,6 +20,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
@@ -41,6 +44,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
@@ -54,15 +58,16 @@ import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.presentation.di.MultiViewModelFactory
-    import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.CalendarContent
-    import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.FreeDiaryViewState
-    import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.MoodsTrackerViewState
-    import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.NewMoodStatusViewState
-    import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.TrackerMoodViewModel
+import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.CalendarContent
+import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.FreeDiaryViewState
+import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.MoodsTrackerViewState
+import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.NewMoodStatusViewState
+import com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.TrackerMoodViewModel
 import com.example.mypsychologist.ui.core.composeComponents.CalendarView
-    import com.example.mypsychologist.ui.core.composeComponents.IndicatorBottomSheet
-    import com.example.mypsychologist.ui.core.composeComponents.PrimaryTextButton
+import com.example.mypsychologist.ui.core.composeComponents.IndicatorBottomSheet
+import com.example.mypsychologist.ui.core.composeComponents.PrimaryTextButton
 import com.example.mypsychologist.ui.core.composeComponents.RecordItem
+import com.example.mypsychologist.ui.core.composeComponents.SmileItem
 import com.example.mypsychologist.ui.core.composeComponents.formatToDayString
 import com.example.mypsychologist.ui.core.composeComponents.formatToMonthStringInf
 import com.example.mypsychologist.ui.exercises.newFreeDiaryFragment.NewFreeDiaryFragment
@@ -133,7 +138,9 @@ import javax.inject.Inject
                 },
                 onNavIconClick = { navController.popBackStack() },
                 onIconAddClick = { viewModel.changeStatusAddNewMood(it) },
-                onClickSaveMood = { viewModel.saveMoodTrack() })
+                onClickSaveMood = { viewModel.saveMoodTrack() },
+                onSmileClick = viewModel::onSmileClick,
+                )
         }
 
 
@@ -150,6 +157,7 @@ import javax.inject.Inject
             onNavIconClick: () -> Unit,
             onIconAddClick: (Boolean) -> Unit,
             onClickSaveMood: () -> Unit,
+            onSmileClick: (Int) -> Unit,
         ) {
             val configuration = LocalConfiguration.current
             val screenHeight = configuration.screenHeightDp.dp
@@ -165,7 +173,8 @@ import javax.inject.Inject
                         moodsViewState,
                         writeNoteClick,
                         onIconAddClick,
-                        onClickSaveMood
+                        onClickSaveMood,
+                        onSmileClick = onSmileClick
                     )
                 },
                 sheetPeekHeight = screenHeight - 400.dp,
@@ -253,7 +262,8 @@ import javax.inject.Inject
             moodsViewState: State<MoodsTrackerViewState>,
             writeNoteClick: () -> Unit,
             onIconAddClick: (Boolean) -> Unit,
-            onClickSaveMood: () -> Unit
+            onClickSaveMood: () -> Unit,
+            onSmileClick: (Int) -> Unit,
         ) {
             Column(
                 modifier = Modifier
@@ -290,6 +300,7 @@ import javax.inject.Inject
                     onClickSaveMood = { onClickSaveMood() },
                     onIconAddClick = { onIconAddClick(it) },
                     modifier = Modifier.padding(top = 40.dp),
+                    onSmileClick = onSmileClick
                 )
                 val contentPaddingTopForMoods =
                     if (newMoodViewState.value is NewMoodStatusViewState.Content) 40
@@ -344,6 +355,7 @@ import javax.inject.Inject
             newMoodViewState: State<NewMoodStatusViewState>,
             onClickSaveMood: () -> Unit,
             onIconAddClick: (Boolean) -> Unit,
+            onSmileClick: (Int) -> Unit,
             modifier: Modifier = Modifier
         ) {
             when (val state = newMoodViewState.value) {
@@ -382,6 +394,33 @@ import javax.inject.Inject
                                 .padding(horizontal = 10.dp, vertical = 8.dp)
                                 .align(Alignment.CenterHorizontally)
                         )
+
+                        Spacer(modifier = Modifier.padding(top = 30.dp))
+                        
+                        Text(
+                            text = stringResource(R.string.emotions),
+                            style = AppTheme.typography.titleXS,
+                            color = AppTheme.colors.primaryText
+                        )
+
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(5),
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            contentPadding = PaddingValues(vertical = 20.dp)
+                        ) {
+                            items(state.smiles) { smile->
+                                val color =
+                                    if (smile.id in state.selectedSmiles) AppTheme.colors.primaryBackground
+                                    else AppTheme.colors.tertiaryBackground
+
+                                SmileItem(
+                                    bgColor = color,
+                                    emoji = smile,
+                                    onSmileClick = { onSmileClick(smile.id) }
+                                )
+                            }
+                        }
 
                         PrimaryTextButton(
                             textString = stringResource(id = R.string.save),
@@ -473,33 +512,83 @@ import javax.inject.Inject
         fun RecordMood(
             item: MoodPresentEntity, modifier: Modifier = Modifier
         ) {
-            Box(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .background(AppTheme.colors.fourthBackground, shape = RoundedCornerShape(12.dp))
-            ) {
-
-                Text(
-                    text = stringResource(id = item.moodTitleResStr),
-                    style = AppTheme.typography.titleCygreFont,
-                    color = AppTheme.colors.primaryBackground,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(vertical = 30.dp)
-                )
-                Text(
-                    text = item.date,
-                    style = AppTheme.typography.bodyS,
-                    color = AppTheme.colors.primaryBackground,
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(6.dp)
+            Column {
+                Box(
+                    modifier = modifier
+                        .fillMaxSize()
                         .background(
-                            color = AppTheme.colors.screenBackground,
-                            shape = RoundedCornerShape(6.dp)
+                            AppTheme.colors.primaryBackground,
+                            shape = RoundedCornerShape(28.dp)
                         )
-                        .padding(vertical = 3.dp, horizontal = 8.dp)
-                )
+                ) {
+
+                    Text(
+                        text = stringResource(id = item.moodTitleResStr),
+                        style = AppTheme.typography.titleCygreSemiBold,
+                        color = AppTheme.colors.primaryTextInvert,
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .padding(start = 20.dp, top = 15.dp, bottom = 20.dp)
+                    )
+                    Text(
+                        text = item.date,
+                        style = AppTheme.typography.titleCygreSemiBold,
+                        color = AppTheme.colors.tertiaryText,
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 20.dp)
+
+                    )
+                }
+                EmojiGrid(emojis = item.emojiTexts)
+
+            }
+        }
+
+        @Composable
+        fun EmojiGrid(emojis: List<String>) {
+            var twoInRow = true
+            var index = 0
+
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp)) {
+                while (index < emojis.size) {
+                    val count = if (twoInRow) 2 else 1
+                    val rowItems = emojis.subList(index, minOf(index + count, emojis.size))
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        horizontalArrangement = if (twoInRow) Arrangement.spacedBy(10.dp) else Arrangement.Center
+                    ) {
+                        for (emoji in rowItems) {
+                            Box(
+                                modifier = Modifier
+                                    .background(
+                                        color = AppTheme.colors.tertiaryBackground,
+                                        shape = RoundedCornerShape(28.dp)
+                                    )
+                                    .then(
+                                        if (twoInRow) Modifier.weight(1f) else Modifier.fillMaxWidth()
+                                    )
+                                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = emoji,
+                                    style = AppTheme.typography.titleCygreFont,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                                )
+                            }
+                        }
+                    }
+
+                    twoInRow = !twoInRow
+                    index += count
+                }
             }
         }
 
@@ -539,19 +628,47 @@ import javax.inject.Inject
                     },
                     newMoodViewState = remember {
                         mutableStateOf(
-                            NewMoodStatusViewState.Content(
-                                moodTitleIdSource = R.string.normal_mood
-                            )
+                            NewMoodStatusViewState.Hide
+//                                (
+//                                moodTitleIdSource = R.string.normal_mood,
+//                                smiles = listOf(
+//                                    "\uD83D\uDE00", // 😀
+//                                    "\uD83D\uDE01", // 😁
+//                                    "\uD83D\uDE02", // 😂
+//                                    "\uD83D\uDE03", // 🤣
+//                                    "\uD83D\uDE04", // 😄
+//                                    "\uD83D\uDE05", // 😅
+//                                    "\uD83D\uDE06", // 😆
+//                                    "\uD83D\uDE07", // 😇
+//                                    "\uD83D\uDE08", // 😈
+//                                    "\uD83D\uDE09", // 😉
+//                                ),
+//                                selectedSmiles = setOf("\uD83D\uDE09")
+//                            )
                         )
                     },
-                    moodsViewState = remember { mutableStateOf(MoodsTrackerViewState.Loading) },
+                    moodsViewState = remember { mutableStateOf(MoodsTrackerViewState.Content(listOf(
+                        MoodPresentEntity("f", 12, R.string.super_mood,
+                            "19:28", listOf(
+                                "\uD83D\uDE05", // 😅
+                                    "\uD83D\uDE06", // 😆
+                                    "\uD83D\uDE07", // 😇
+                                    "\uD83D\uDE08", // 😈
+                                    "\uD83D\uDE09", // 😉
+                            )
+                        ),
+
+                    )
+
+                    )) },
                     onClickNext = {},
                     onClickPrev = {},
                     onClickDate = {},
                     writeNoteClick = {},
                     onNavIconClick = {},
                     onIconAddClick = {},
-                    onClickSaveMood = {}
+                    onClickSaveMood = {},
+                    onSmileClick = {}
                 )
             }
         }

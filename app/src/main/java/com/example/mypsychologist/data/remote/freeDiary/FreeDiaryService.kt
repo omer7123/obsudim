@@ -1,6 +1,7 @@
 package com.example.mypsychologist.data.remote.freeDiary
 
 import com.example.mypsychologist.data.model.CalendarResponseModel
+import com.example.mypsychologist.data.model.EmojiModel
 import com.example.mypsychologist.data.model.FreeDiaryModel
 import com.example.mypsychologist.data.model.MoodTrackerPresentModel
 import com.example.mypsychologist.data.model.MoodTrackerRespModel
@@ -24,15 +25,18 @@ interface FreeDiaryService {
     @GET("/diary")
     suspend fun getFreeDiariesByDay(@Query("day") date: String): Response<List<FreeDiaryModel>>
 
-    @POST("/mood_tracker/save_mood_tracker")
+    @POST("/mood_tracker")
     suspend fun saveMoodTracker(@Body saveMoodTracker: SaveMoodModel): Response<MoodTrackerRespModel>
 
-    @POST("/mood_tracker/save_mood_tracker")
+    @POST("/mood_tracker")
     suspend fun saveMoodTrackerWithDate(@Body saveMoodTracker: SaveMoodWithDateModel): Response<MoodTrackerRespModel>
 
-    @GET("/mood_tracker/get_all_mood_tracker")
-    suspend fun getAllMoodTrackers(@Query("date") date: String): Response<List<MoodTrackerPresentModel>>
+    @GET("/mood_tracker")
+    suspend fun getAllMoodTrackers(@Query("day") day: String): Response<List<MoodTrackerPresentModel>>
 
     @GET("/diary/by_month")
     suspend fun getDatesWithDiary(@Query("timestamp") date: Int): Response<List<CalendarResponseModel>>
+
+    @GET("/mood_tracker/emoji")
+    suspend fun getAllEmojies(): Response<List<EmojiModel>>
 }

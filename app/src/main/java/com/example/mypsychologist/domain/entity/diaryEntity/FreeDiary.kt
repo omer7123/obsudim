@@ -18,14 +18,13 @@ data class NewFreeDiaryWithDateEntity (
 
 data class SaveMoodEntity(
     val score: Int,
-    val freeDiaryId: String = "",
-    val thinkDiaryId: String = "",
-    val diaryType: Int = 0
+    val emojiIds: List<Int>
 )
 
 data class SaveMoodWithDateEntity(
     val score: Int,
-    val date: String
+    val date: String,
+    val emojiIds: List<Int>,
 )
 
 data class MoodPresentEntity(
@@ -33,16 +32,19 @@ data class MoodPresentEntity(
     val score: Int,
     val moodTitleResStr: Int,
     val date: String,
+    val emojiTexts: List<String>,
 )
 
 data class MoodTrackerResultEntity(
     val id: String,
     val score: Int,
     val date: String,
+    val emojiIds: List<Int>,
+    val emojiTexts: List<String>,
 )
 
 data class MoodTrackerRespEntity(
-    val id: String
+    val status: String
 )
 
 data class CalendarEntity(
@@ -54,4 +56,9 @@ data class CalendarEntity(
 data class CalendarResponseEntity(
     val date: Int,
     val diary: Boolean
+)
+
+data class EmojiEntity(
+    val id: Int,
+    val text: String,
 )

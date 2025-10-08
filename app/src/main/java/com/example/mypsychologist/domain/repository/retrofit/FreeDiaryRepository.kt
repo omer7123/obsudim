@@ -2,6 +2,7 @@ package com.example.mypsychologist.domain.repository.retrofit
 
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diaryEntity.CalendarResponseEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.EmojiEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.FreeDiaryEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerRespEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodTrackerResultEntity
@@ -14,9 +15,10 @@ interface FreeDiaryRepository {
     suspend fun getFreeDiaries(): Resource<List<FreeDiaryEntity>>
     suspend fun addFreeDiary(freeDiary: NewFreeDiaryWithDateEntity): Resource<Unit>
     suspend fun getFreeDiariesByDay(day: String): Flow<Resource<List<FreeDiaryEntity>>>
-    suspend fun saveMoodTracker(saveMoodEntity: SaveMoodEntity): Resource<MoodTrackerRespEntity>
+    suspend fun saveMoodTracker(saveMoodEntity: SaveMoodEntity): Flow<Resource<MoodTrackerRespEntity>>
     suspend fun saveMoodTrackerWithDate(moodTrack: SaveMoodWithDateEntity): Flow<Resource<MoodTrackerRespEntity>>
     suspend fun getAllMoodTrackers(date: String): Flow<Resource<List<MoodTrackerResultEntity>>>
     suspend fun getDatesWithDiaries(month: Int): Flow<Resource<List<CalendarResponseEntity>>>
+    suspend fun getAllEmojies(): Flow<Resource<List<EmojiEntity>>>
 
 }

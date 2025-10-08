@@ -789,4 +789,5 @@
     <string name="have_you_account">У вас есть аккаунт?</string>
     <string name="kpt_desc">Это способ самоанализа, который позволяет отслеживать эмоции и чувства, выявлять взаимосвязи между ситуациями и мыслями.</string>
     <string name="kpt_empty_placeholder">КПТ-дневник ещё не заполнялся. Самое время это сделать!</string>
+    <string name="emotions">Эмоции</string>
 </resources>

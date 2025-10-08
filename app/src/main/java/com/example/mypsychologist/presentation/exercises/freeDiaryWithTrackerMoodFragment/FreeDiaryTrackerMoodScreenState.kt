@@ -3,6 +3,7 @@ package com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMo
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.EmojiEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import java.util.Date
@@ -26,13 +27,15 @@ sealed interface FreeDiaryViewState {
     data object Initial : FreeDiaryViewState
 }
 
-@Immutable
+
 sealed interface NewMoodStatusViewState {
-    @Stable
+
     data class Content(
         val mood: Float = 50f,
         val moodTitleIdSource: Int,
-        val loading: Boolean = false
+        val loading: Boolean = false,
+        val smiles: List<EmojiEntity>,
+        val selectedSmiles: Set<Int>,
     ) : NewMoodStatusViewState
     data object Hide : NewMoodStatusViewState
 }

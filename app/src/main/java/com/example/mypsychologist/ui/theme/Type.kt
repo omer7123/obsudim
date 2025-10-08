@@ -18,6 +18,8 @@ data class AppTypography(
     val bodyM: TextStyle,
     val bodySBold: TextStyle,
     val bodyS: TextStyle,
+
+    val titleCygreSemiBold: TextStyle,
 )
 
 val appTypography = AppTypography(
@@ -80,5 +82,11 @@ val appTypography = AppTypography(
         fontWeight = FontWeight(500),
         fontSize = 12.sp,
         lineHeight = 16.sp,
+    ),
+    titleCygreSemiBold = TextStyle(
+        fontFamily = FontFamily(Font(R.font.cygre_semi_bold)),
+        fontWeight = FontWeight(600),
+        fontSize = 20.sp,
+        lineHeight = 30.sp,
     )
 )

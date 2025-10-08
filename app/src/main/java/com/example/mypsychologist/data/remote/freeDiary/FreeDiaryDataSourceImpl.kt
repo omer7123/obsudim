@@ -3,6 +3,7 @@ package com.example.mypsychologist.data.remote.freeDiary
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.CalendarResponseModel
+import com.example.mypsychologist.data.model.EmojiModel
 import com.example.mypsychologist.data.model.FreeDiaryModel
 import com.example.mypsychologist.data.model.MoodTrackerPresentModel
 import com.example.mypsychologist.data.model.MoodTrackerRespModel
@@ -40,12 +41,19 @@ class FreeDiaryDataSourceImpl @Inject constructor(private val api: FreeDiaryServ
         }
     }
 
-    override suspend fun saveMoodTracker(saveMoodModel: SaveMoodModel): Resource<MoodTrackerRespModel> =
-        getResult {
-            api.saveMoodTracker(saveMoodModel)
-        }
+    override suspend fun saveMoodTracker(saveMoodModel: SaveMoodModel): Flow<Resource<MoodTrackerRespModel>> =
 
-    override suspend fun saveMoodTrackerWithDate(saveMoodModel: SaveMoodWithDateModel): Flow<Resource<MoodTrackerRespModel>> = flow<Resource<MoodTrackerRespModel>> {
+        flow {
+            emit(Resource.Loading)
+            emit(getResult {
+                    api.saveMoodTracker(saveMoodModel)
+                }
+            )
+        }.flowOn(Dispatchers.IO)
+
+    override suspend fun saveMoodTrackerWithDate(saveMoodModel: SaveMoodWithDateModel): Flow<Resource<MoodTrackerRespModel>> =
+        flow {
+            emit(Resource.Loading)
         emit(
             getResult {
                 api.saveMoodTrackerWithDate(saveMoodModel)
@@ -64,6 +72,15 @@ class FreeDiaryDataSourceImpl @Inject constructor(private val api: FreeDiaryServ
         emit(
             getResult {
                 api.getDatesWithDiary(month)
+            }
+        )
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getAllEmojies(): Flow<Resource<List<EmojiModel>>> = flow {
+        emit(Resource.Loading)
+        emit(
+            getResult {
+                api.getAllEmojies()
             }
         )
     }.flowOn(Dispatchers.IO)

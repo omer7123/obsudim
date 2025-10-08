@@ -1,6 +1,5 @@
 package com.example.mypsychologist.core
 
-import android.util.Log
 import com.example.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.example.mypsychologist.data.remote.authentication.AuthenticationDataSource
 import com.example.mypsychologist.domain.entity.authenticationEntity.RefreshToken
@@ -22,7 +21,6 @@ class AuthInterceptor @Inject constructor(
         if (response.code == 401) {
                 response.close()
 
-                Log.e("ER", "Yes")
                 val refToken = runBlocking {
                     sharedPrefDataSource.getRefreshToken()
                 }

@@ -4,7 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 
-
 @Serializable
 data class FreeDiaryModel(
     @SerialName("id")
@@ -29,34 +28,43 @@ data class NewFreeDiaryWithDateModel(
 @Serializable
 data class SaveMoodModel(
     val score: Int,
-    @SerialName("free_diary_id")
-    val freeDiaryId: String = "",
-    @SerialName("think_diary_id")
-    val thinkDiaryId: String = "",
-    val diaryType: Int = 0
+    @SerialName("emoji_ids")
+    val emojiIds: List<Int>,
 )
 @Serializable
 data class SaveMoodWithDateModel(
     val score: Int,
-    val date: String
+    val day: String,
+    @SerialName("emoji_ids")
+    val emojiIds: List<Int>
 )
 
 @Serializable
 data class MoodTrackerPresentModel(
     val id: String,
     val score: Int,
-    val date: String
+    @SerialName("created_at")
+    val date: String,
+    @SerialName("emoji_ids")
+    val emojiIds: List<Int>,
+    @SerialName("emoji_texts")
+    val emojiTexts: List<String>,
 )
 
 @Serializable
 data class MoodTrackerRespModel(
-    @SerialName("mood_tracker_id")
-    val moodTrackerId: String
+    val status: String
 )
 
 @Serializable
 data class CalendarResponseModel(
     val date: Int,
     val diary: Boolean,
+)
+
+@Serializable
+data class EmojiModel(
+    val id: Int,
+    val text: String,
 )
 

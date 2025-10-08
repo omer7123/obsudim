@@ -1,5 +1,6 @@
 package com.example.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,12 +9,14 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.domain.entity.diaryEntity.CalendarEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.CalendarResponseEntity
+import com.example.mypsychologist.domain.entity.diaryEntity.EmojiEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.MoodPresentEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodEntity
 import com.example.mypsychologist.domain.entity.diaryEntity.SaveMoodWithDateEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.example.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.example.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetAllEmojiesUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetAllMoodTrackersUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetDatesWithDiariesUseCase
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.GetFreeDiariesByDayUseCase
@@ -21,12 +24,12 @@ import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTracke
 import com.example.mypsychologist.domain.useCase.freeDiaryUseCase.SaveMoodTrackerWithDateUseCase
 import com.example.mypsychologist.extensions.convertDateToString
 import com.example.mypsychologist.extensions.convertLondonTimeToDeviceTime
-import com.example.mypsychologist.extensions.convertToISO8601
 import com.example.mypsychologist.extensions.isSameDay
 import com.example.mypsychologist.presentation.exercises.trackerMoodFragment.TrackerMoodScreenState
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
@@ -38,7 +41,8 @@ class TrackerMoodViewModel @Inject constructor(
     private val getFreeDiariesByDayUseCase: GetFreeDiariesByDayUseCase,
     private val saveMoodTrackerWithDateUseCase: SaveMoodTrackerWithDateUseCase,
     private val getAllMoodTrackersUseCase: GetAllMoodTrackersUseCase,
-    private val getDatesWithDiariesUseCase: GetDatesWithDiariesUseCase
+    private val getDatesWithDiariesUseCase: GetDatesWithDiariesUseCase,
+    private val getAllEmojiesUseCase: GetAllEmojiesUseCase,
 ) : ViewModel() {
 
     private val _stateScreen: MutableLiveData<TrackerMoodScreenState> =
@@ -65,17 +69,32 @@ class TrackerMoodViewModel @Inject constructor(
         MutableStateFlow(MoodsTrackerViewState.Initial)
     val moodsViewState: StateFlow<MoodsTrackerViewState> = _moodsViewState
 
+    private var emojies = listOf<EmojiEntity>()
+
     init {
         _freeDiaryViewState.value = FreeDiaryViewState.Loading
         _moodsViewState.value = MoodsTrackerViewState.Loading
 
         getDatesList()
-        viewModelScope.launch(SupervisorJob()) {
+        viewModelScope.launch {
             launch { getNotes(Date())}
             launch { getMoodTrackers(Date())}
         }
     }
 
+    fun onSmileClick(id: Int) {
+        _newMoodViewState.update { state ->
+            val contState = state as NewMoodStatusViewState.Content
+            val newSelectedSet = contState.selectedSmiles.toMutableSet().apply {
+                if (id in this) {
+                    remove(id)
+                } else {
+                    add(id)
+                }
+            }
+            contState.copy(selectedSmiles = newSelectedSet)
+        }
+    }
 
     fun saveMoodTrack() {
         val date = Date()
@@ -84,26 +103,31 @@ class TrackerMoodViewModel @Inject constructor(
         }!!.date
 
         val isSameDay = date isSameDay selectedDate
-
+        Log.e("day:", isSameDay.toString())
         val currentNewMoodViewState = (_newMoodViewState.value as NewMoodStatusViewState.Content)
-        _newMoodViewState.value = currentNewMoodViewState.copy(
-            loading = true
-        )
+//        _newMoodViewState.value = currentNewMoodViewState.copy(
+//            loading = true
+//        )
 
         if (!isSameDay) {
             viewModelScope.launch {
                 saveMoodTrackerWithDateUseCase(
                     SaveMoodWithDateEntity(
                         score = currentNewMoodViewState.mood.toInt(),
-                        date = selectedDate.convertDateToString()
+                        date = selectedDate.convertDateToString(),
+                        emojiIds = currentNewMoodViewState.selectedSmiles.toList()
                     )
                 ).collect { resource ->
                     when (resource) {
                         is Resource.Error -> {}
-                        Resource.Loading -> _newMoodViewState.value = currentNewMoodViewState.copy(loading = true)
+                        Resource.Loading -> _newMoodViewState.update {
+                            (it as NewMoodStatusViewState.Content).copy(loading = true)
+                        }
 
                         is Resource.Success -> {
-                            _newMoodViewState.value = currentNewMoodViewState.copy(loading = false)
+                            _newMoodViewState.update {
+                                (it as NewMoodStatusViewState.Content).copy(loading = false)
+                            }
                             getMoodTrackers(selectedDate)
                         }
                     }
@@ -111,16 +135,26 @@ class TrackerMoodViewModel @Inject constructor(
             }
         } else {
             viewModelScope.launch {
-                when (saveTrackMoodTrackerUseCase(
+                saveTrackMoodTrackerUseCase(
                     SaveMoodEntity(
-                        currentNewMoodViewState.mood.toInt()
+                        score = currentNewMoodViewState.mood.toInt(),
+                        emojiIds = currentNewMoodViewState.selectedSmiles.toList(),
                     )
-                )) {
-                    is Resource.Error -> {}
-                    Resource.Loading -> _newMoodViewState.value = currentNewMoodViewState.copy(loading = true)
-                    is Resource.Success -> {
-                        _newMoodViewState.value = currentNewMoodViewState.copy(loading = true)
-                        getMoodTrackers(selectedDate)
+                ).collect {state->
+                    when(state) {
+                        is Resource.Error -> {}
+                        Resource.Loading ->
+                            _newMoodViewState.update {
+                                (it as NewMoodStatusViewState.Content).copy(loading = true)
+                            }
+
+                        is Resource.Success -> {
+                            Log.e("sta", "bgfbg")
+                            _newMoodViewState.update {
+                                (it as NewMoodStatusViewState.Content).copy(loading = false)
+                            }
+                            getMoodTrackers(selectedDate)
+                        }
                     }
                 }
             }
@@ -204,7 +238,7 @@ class TrackerMoodViewModel @Inject constructor(
     }
 
     private suspend fun getMoodTrackers(selectedDate: Date) {
-        getAllMoodTrackersUseCase(selectedDate.convertToISO8601()).collect { resource ->
+        getAllMoodTrackersUseCase(selectedDate.convertDateToString()).collect { resource ->
             when (resource) {
                 is Resource.Error -> _moodsViewState.value = MoodsTrackerViewState.Error
                 Resource.Loading -> _moodsViewState.value = MoodsTrackerViewState.Loading
@@ -216,10 +250,18 @@ class TrackerMoodViewModel @Inject constructor(
                                 id = it.id,
                                 score = it.score,
                                 moodTitleResStr = calculateMoodTitle(it.score),
-                                date = it.date.convertLondonTimeToDeviceTime()
+                                date = it.date.convertLondonTimeToDeviceTime(),
+                                emojiTexts = it.emojiTexts,
                             )
                         }
                     )
+                    getAllEmojiesUseCase().collect { status->
+                        when(status){
+                            is Resource.Error -> {}
+                            is Resource.Success -> emojies = status.data
+                            Resource.Loading -> {}
+                        }
+                    }
                     if (resource.data.isNotEmpty()) changeStatusAddNewMood(false)
                     else changeStatusAddNewMood(true)
                 }
@@ -230,19 +272,21 @@ class TrackerMoodViewModel @Inject constructor(
     fun saveMood(score: Int, taskId: String = "") {
         _stateScreen.value = TrackerMoodScreenState.Loading
         viewModelScope.launch {
-            when (val res = saveTrackMoodTrackerUseCase(SaveMoodEntity(score))) {
-                is Resource.Error -> _stateScreen.value =
-                    TrackerMoodScreenState.Error(res.msg.toString())
+            saveTrackMoodTrackerUseCase(SaveMoodEntity(score, listOf())).collect{ state->
+                when(state){
+                    is Resource.Error -> _stateScreen.value =
+                        TrackerMoodScreenState.Error(state.msg.toString())
 
-                Resource.Loading -> _stateScreen.value = TrackerMoodScreenState.Loading
-                is Resource.Success -> {
-                    if (taskId.isEmpty()) _stateScreen.value = TrackerMoodScreenState.SuccessResp
-                    else markAsCompleteExerciseUseCase(DailyTaskMarkIdEntity(taskId)).collect {
-                        when (it) {
-                            is Resource.Error -> {}
-                            Resource.Loading -> {}
-                            is Resource.Success -> _stateScreen.value =
-                                TrackerMoodScreenState.SuccessResp
+                    Resource.Loading -> _stateScreen.value = TrackerMoodScreenState.Loading
+                    is Resource.Success -> {
+                        if (taskId.isEmpty()) _stateScreen.value = TrackerMoodScreenState.SuccessResp
+                        else markAsCompleteExerciseUseCase(DailyTaskMarkIdEntity(taskId)).collect {
+                            when (it) {
+                                is Resource.Error -> {}
+                                Resource.Loading -> {}
+                                is Resource.Success -> _stateScreen.value =
+                                    TrackerMoodScreenState.SuccessResp
+                            }
                         }
                     }
                 }
@@ -330,7 +374,7 @@ class TrackerMoodViewModel @Inject constructor(
     fun changeStatusAddNewMood(newStatus: Boolean) {
         when (newStatus) {
             true -> {
-                _newMoodViewState.value = NewMoodStatusViewState.Content(moodTitleIdSource = R.string.normal_mood)
+                _newMoodViewState.value = NewMoodStatusViewState.Content(moodTitleIdSource = R.string.normal_mood, smiles = emojies, selectedSmiles = setOf())
             }
             false -> {
                 _newMoodViewState.value = NewMoodStatusViewState.Hide
