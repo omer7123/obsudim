@@ -1,27 +1,26 @@
 package com.example.mypsychologist.domain.entity.educationEntity
 
-import java.io.Serializable
-
 data class TopicEntity(
     val id: String,
     val theme: String,
-    val score: Int,
-    val maxScore: Int,
-    val linkToPicture: String,
-) : Serializable
+    val link: String,
+    val tags: List<String>,
+    val educationMaterials: List<EducationsEntity>
+)
 
 data class EducationsEntity(
-    val theme: String,
-    val maxScore: Int,
-    val materials: List<SubtopicEntity>,
-)
-data class SubtopicEntity(
+    val id: String,
+    val type: Int,
+    val number: Int,
+    val title: String,
+    val linkToPicture: String,
     val subtitle: String,
-    val cards: List<ItemMaterialEntity>,
+    val cards: List<ItemMaterialEntity>
 )
 data class ItemMaterialEntity(
     val id: String,
     val text: String,
+    val number: Int,
     val linkToPicture: String,
 )
 

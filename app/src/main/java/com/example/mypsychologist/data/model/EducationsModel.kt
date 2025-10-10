@@ -7,42 +7,28 @@ import kotlinx.serialization.Serializable
 data class ThemeModel(
     val id: String,
     val theme: String,
-    val score: Int,
-    @SerialName("max_score")
-    val maxScore: Int,
-    @SerialName("link_to_picture")
-    val lincToPicture: String
+    val link: String,
+    val tags: List<String> = emptyList(),
+    @SerialName("education_materials")
+    val educationMaterials: List<EducationsModel>
 )
 @Serializable
 data class EducationsModel(
-    val theme: String,
     val id: String,
-    @SerialName("max_score")
-    val maxScore: Int,
+    val type: Int,
+    val number: Int,
+    val title: String,
     @SerialName("link_to_picture")
     val linkToPicture: String,
-    @SerialName("related_topics")
-    val relatedTopics: List<RelatedTopicModel>,
-    val subtopics: List<SubtopicModel>
-)
-@Serializable
-data class RelatedTopicModel(
-    val id: String,
-    val theme: String,
-    @SerialName("link_to_picture")
-    val linkToPicture: String,
-    @SerialName("max_score")
-    val maxScore: Int
-)
-@Serializable
-data class SubtopicModel(
     val subtitle: String,
-    val cards: List<ItemMaterialModel>
+    val cards: List<ItemMaterialModel>,
 )
+
 @Serializable
 data class ItemMaterialModel(
     val id: String,
     val text: String,
+    val number: Int,
     @SerialName("link_to_picture")
     val linkToPicture: String,
 )

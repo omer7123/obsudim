@@ -1,5 +1,6 @@
 package com.example.mypsychologist.presentation.education.educationTopicsFragment
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -25,10 +26,15 @@ class EducationTopicsViewModel(
         viewModelScope.launch {
             _screenState.value = TopicsScreenState.Loading
             when(val res = getAllThemeUseCase()){
-                is Resource.Error -> _screenState.value =
-                    TopicsScreenState.Error(res.msg.toString())
+                is Resource.Error -> {
+                    Log.e("Error", res.msg.toString())
+                    _screenState.value =
+                        TopicsScreenState.Error(res.msg.toString())
+                }
                 Resource.Loading -> _screenState.value = TopicsScreenState.Loading
-                is Resource.Success -> _screenState. value = TopicsScreenState.Content(res.data)
+                is Resource.Success -> {
+                    _screenState. value = TopicsScreenState.Content(res.data)
+                }
             }
         }
     }

@@ -33,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -221,29 +220,29 @@ class ExercisesFragment : Fragment() {
                 }
             }
 
-                   item(span = {
-                       GridItemSpan(2)
-                   }) {
-                       Text(
-                           text = stringResource(id = R.string.problem_work),
-                           style = AppTheme.typography.titleXS,
-                           color = AppTheme.colors.primaryText
-                       )
-                   }
+//                   item(span = {
+//                       GridItemSpan(2)
+//                   }) {
+//                       Text(
+//                           text = stringResource(id = R.string.problem_work),
+//                           style = AppTheme.typography.titleXS,
+//                           color = AppTheme.colors.primaryText
+//                       )
+//                   }
 
-            item {
-                ExerciseItem(
-                    item = ExerciseEntity(
-                        id = "1",
-                        title = "Определение групп \n" + "(категорий) проблем",
-                        description = "",
-                        linkToPicture = "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/exercise/images_exercise/Определение_групп_проблем.png",
-                        closed = false
-                    )
-                ) {
-                    onDefinitionGroupProblemClick()
-                }
-            }
+//            item {
+//                ExerciseItem(
+//                    item = ExerciseEntity(
+//                        id = "1",
+//                        title = "Определение групп \n" + "(категорий) проблем",
+//                        description = "",
+//                        linkToPicture = "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/exercise/images_exercise/Определение_групп_проблем.png",
+//                        closed = false
+//                    )
+//                ) {
+//                    onDefinitionGroupProblemClick()
+//                }
+//            }
 //            items(value) {
 //                Spacer(modifier = Modifier.padding(top = 20.dp))
 //                when (it.closed) {
@@ -257,32 +256,32 @@ class ExercisesFragment : Fragment() {
     }
 
 
-    @Composable
-    private fun ExerciseItem(item: ExerciseEntity, onItemClick: (ExerciseEntity) -> Unit) {
-        Column(modifier = Modifier
-            .clip(RoundedCornerShape(12.dp))
-            .clickable {
-                onItemClick(item)
-            }) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current).data(item.linkToPicture).build(),
-                contentDescription = item.title,
-                contentScale = ContentScale.Crop,
-                placeholder = ColorPainter(AppTheme.colors.loading),
-                error = painterResource(id = R.drawable.ic_diary_practice),
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(12.dp))
-                    .aspectRatio(1 / 0.89f)
-            )
-
-            Text(
-                modifier = Modifier.padding(top = 10.dp, bottom = 5.dp),
-                text = item.title,
-                style = AppTheme.typography.bodyM,
-                color = AppTheme.colors.primaryText,
-            )
-        }
-    }
+//    @Composable
+//    private fun ExerciseItem(item: ExerciseEntity, onItemClick: (ExerciseEntity) -> Unit) {
+//        Column(modifier = Modifier
+//            .clip(RoundedCornerShape(12.dp))
+//            .clickable {
+//                onItemClick(item)
+//            }) {
+//            AsyncImage(
+//                model = ImageRequest.Builder(LocalContext.current).data(item.linkToPicture).build(),
+//                contentDescription = item.title,
+//                contentScale = ContentScale.Crop,
+//                placeholder = ColorPainter(AppTheme.colors.loading),
+//                error = painterResource(id = R.drawable.ic_diary_practice),
+//                modifier = Modifier
+//                    .clip(shape = RoundedCornerShape(12.dp))
+//                    .aspectRatio(1 / 0.89f)
+//            )
+//
+//            Text(
+//                modifier = Modifier.padding(top = 10.dp, bottom = 5.dp),
+//                text = item.title,
+//                style = AppTheme.typography.bodyM,
+//                color = AppTheme.colors.primaryText,
+//            )
+//        }
+//    }
 
     @Composable
     private fun ExerciseItemClosed(item: ExerciseEntity) {

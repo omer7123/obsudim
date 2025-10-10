@@ -40,7 +40,7 @@ import com.example.mypsychologist.R
 import com.example.mypsychologist.databinding.FragmentEducationBinding
 import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.example.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
-import com.example.mypsychologist.domain.entity.educationEntity.SubtopicEntity
+import com.example.mypsychologist.domain.entity.educationEntity.TopicEntity
 import com.example.mypsychologist.extensions.getAppComponent
 import com.example.mypsychologist.extensions.showToast
 import com.example.mypsychologist.presentation.education.educationFragment.EducationScreenState
@@ -127,7 +127,7 @@ class EducationFragment : Fragment() {
     }
 
     @Composable
-    private fun EducationRenderContent(data: EducationsEntity, onBtnClick: () -> Unit) {
+    private fun EducationRenderContent(data: TopicEntity, onBtnClick: () -> Unit) {
 
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
@@ -141,7 +141,7 @@ class EducationFragment : Fragment() {
                         color = AppTheme.colors.primaryText
                     )
                 }
-                items(data.materials) { subTopic->
+                items (data.educationMaterials) { subTopic ->
                     EducationItem(subTopic)
                 }
                 item {
@@ -158,7 +158,7 @@ class EducationFragment : Fragment() {
     }
 
     @Composable
-    private fun EducationItem(item: SubtopicEntity) {
+    private fun EducationItem(item: EducationsEntity) {
         Column {
 
             Text(
@@ -203,39 +203,31 @@ class EducationFragment : Fragment() {
     @Preview(showBackground = true)
     fun TestsContentPreview() {
         val data =
-            EducationsEntity(
-                theme = "",
-                maxScore = 0,
-                materials = listOf(
-                    SubtopicEntity(
-                        "Подзаголовок",
-                        cards = listOf(
-                            ItemMaterialEntity(
-                                id = "",
-                                linkToPicture = "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/education/images_education_material/сbt_base_41.png",
-                                text = "Предлагаем узнать побольше о методике \n" +
-                                        "когнитивно-поведенческой терапии - КПТ. \n" +
-                                        "\n" +
-                                        "Здесь собрана краткая, но ёмкая информация, которая поможет освоить метод самостоятельно или с психотерапевтом."
-                            ), ItemMaterialEntity(
-                                id = "",
-                                linkToPicture = "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/education/images_education_material/сbt_base_41.png",
-                                text = "Метод позволяет достаточно быстро достичь эффекта и сохранить его после завершения терапии. За счет работы с проблемами, которые волнуют сейчас, без подробного погружения в прошлое."
-                            ), ItemMaterialEntity(
-                                id = "",
-                                linkToPicture = "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/education/images_education_material/сbt_base_41.png",
-                                text = "Предлагаем узнать побольше о методике \n" +
-                                        "когнитивно-поведенческой терапии - КПТ. \n" +
-                                        "\n" +
-                                        "Здесь собрана краткая, но ёмкая информация, которая поможет освоить метод самостоятельно или с психотерапевтом."
-                            )
-                        )
-                    )
+            TopicEntity(
+                id = "isuahfiue",
+                theme = "Основы КПТ",
+                link = "",
+                tags = listOf(
+                    "7 минут",
+                    "Образование"),
+                educationMaterials = listOf(EducationsEntity(
+                    id = "fwfe",
+                    type = 0,
+                    number = 1,
+                    title = "",
+                    subtitle =  "Что такое?",
+                    cards = listOf(ItemMaterialEntity(
+                        id = "dawdw",
+                        text = "Предлагаем узнать побольше о самой методике когнитивно-поведенческой терапии (КПТ). " +
+                                "Здесь собрана краткая, но ёмкая информация, которая поможет освоить метод самостоятельно или с психотерапевтом.",
+                        number = 1,
+                        linkToPicture =  "/images/images_education_material/img_2.png"
+                    )),
+                    linkToPicture =  "/images/images_education_material/img_2.png",
+                ))
                 )
-
-        )
-        AppTheme {
-            EducationRenderContent(data, {})
+                    AppTheme {
+                        EducationRenderContent(data, {})
         }
     }
 

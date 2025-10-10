@@ -7,7 +7,6 @@ import com.example.mypsychologist.data.model.EduSaveResp
 import com.example.mypsychologist.data.remote.education.EducationDataSource
 import com.example.mypsychologist.di.ApiUrlProvider
 import com.example.mypsychologist.domain.entity.educationEntity.EducationMaterialForSaveProgressEntity
-import com.example.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.example.mypsychologist.domain.entity.educationEntity.TopicEntity
 import com.example.mypsychologist.domain.repository.retrofit.EducationRepository
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +17,7 @@ class EducationRepositoryImpl @Inject constructor(
     private val urlProvider: ApiUrlProvider
 ) :
     EducationRepository {
+
     override suspend fun getAllTheme(): Resource<List<TopicEntity>> {
         return when (val res = dataSource.getAllTheme()) {
             is Resource.Error -> Resource.Error(res.msg.toString(), null)
@@ -26,9 +26,9 @@ class EducationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getEducationMaterial(id: String): Flow<Resource<EducationsEntity>> =
+    override suspend fun getEducationMaterial(id: String): Flow<Resource<TopicEntity>> =
         dataSource.getEducationMaterial(id).checkResource {
-            it.toEntity()
+            it.toEntity(urlProvider.url)
         }
 
 

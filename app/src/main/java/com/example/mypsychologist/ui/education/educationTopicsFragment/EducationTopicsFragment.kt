@@ -160,7 +160,7 @@ fun TopicItem(item: TopicEntity, onItemClick: (TopicEntity) -> Unit) {
         }) {
 
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current).data(item.linkToPicture).build(),
+            model = ImageRequest.Builder(LocalContext.current).data(item.educationMaterials[0].linkToPicture).build(),
             contentDescription = item.theme,
             contentScale = ContentScale.Crop,
             placeholder = ColorPainter(color = AppTheme.colors.loading),

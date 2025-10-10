@@ -3,7 +3,6 @@ package com.example.mypsychologist.data.remote.education
 import com.example.mypsychologist.core.BaseDataSource
 import com.example.mypsychologist.core.Resource
 import com.example.mypsychologist.data.model.EducationMaterialForSaveProgressModel
-import com.example.mypsychologist.data.model.EducationsModel
 import com.example.mypsychologist.data.model.ThemeModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,7 +15,7 @@ class EducationDataSourceImpl @Inject constructor(private val api: EducationServ
         api.getAllTheme()
     }
 
-    override suspend fun getEducationMaterial(id: String): Flow<Resource<EducationsModel>> = flow {
+    override suspend fun getEducationMaterial(id: String): Flow<Resource<ThemeModel>> = flow {
         emit(
             getResult {
                 api.getEducationMaterial(id)
