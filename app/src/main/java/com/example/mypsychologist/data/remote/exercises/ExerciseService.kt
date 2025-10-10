@@ -43,7 +43,7 @@ interface ExerciseService {
     @GET("/daily_tasks")
     suspend fun getDailyExercises(): Response<List<DailyExerciseModel>>
 
-    @PATCH("/daily_tasks")
+    @PATCH("/daily_tasks/complete")
     suspend fun markAsComplete(@Body body: DailyTaskMarkIdModel): Response<StatusPostResponse>
 
     @GET("/exercise/get_exercise_results/{exercise_id}")
