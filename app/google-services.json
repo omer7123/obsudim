@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "871596708875",
+    "project_id": "odeyalo-12885",
+    "storage_bucket": "odeyalo-12885.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871596708875:android:b222e835404953d625630e",
+        "android_client_info": {
+          "package_name": "ru.obsudim.odeyalo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATpTAhYbwxs_Eg2AAfu7u7SHI6zXU-XAw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
