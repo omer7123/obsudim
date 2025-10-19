@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/testResultFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment"
+        android:name="com.obsudim.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment"
         tools:layout="@layout/fragment_test_result"
         android:label="fragment_test_result" />
 </navigation>

@@ -1,0 +1,10 @@
+package com.obsudim.mypsychologist.presentation.education.educationFragment
+
+import com.obsudim.mypsychologist.domain.entity.educationEntity.TopicEntity
+
+sealed interface EducationScreenState {
+    data object Initial: EducationScreenState
+    data object Loading: EducationScreenState
+    data class Error(val msg: String): EducationScreenState
+    data class Content(val data: TopicEntity): EducationScreenState
+}
