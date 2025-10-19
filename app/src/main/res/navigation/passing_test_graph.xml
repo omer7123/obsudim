@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/passingTestFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment"
+        android:name="com.obsudim.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment"
         tools:layout="@layout/fragment_passing_test"
         android:label="fragment_passing_test">
         <action

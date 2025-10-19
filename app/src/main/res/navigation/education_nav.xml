@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment_education_topics"
-        android:name="com.example.mypsychologist.ui.education.educationTopicsFragment.EducationTopicsFragment"
+        android:name="com.obsudim.mypsychologist.ui.education.educationTopicsFragment.EducationTopicsFragment"
         android:label="EducationFragment">
         <action
             android:id="@+id/action_fragment_education_topics_to_reading_theory_graph"

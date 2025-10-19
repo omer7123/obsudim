@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/main_fragment"
-        android:name="com.example.mypsychologist.ui.main.MainFragment"
+        android:name="com.obsudim.mypsychologist.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.mypsychologist.ui.authentication.registrationFragment.RegistrationFragment"
+        android:name="com.obsudim.mypsychologist.ui.authentication.registrationFragment.RegistrationFragment"
         android:label="RegistrationFragment">
         <action
             android:id="@+id/action_registrationFragment_to_authFragment"
@@ -51,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.example.mypsychologist.ui.authentication.authFragment.AuthFragment"
+        android:name="com.obsudim.mypsychologist.ui.authentication.authFragment.AuthFragment"
         android:label="fragment_auth"
         >
         <action
@@ -76,7 +76,7 @@
         app:startDestination="@id/startBoardFragment">
         <fragment
             android:id="@+id/startBoardFragment"
-            android:name="com.example.mypsychologist.ui.authentication.boardFragment.StartBoardFragment"
+            android:name="com.obsudim.mypsychologist.ui.authentication.boardFragment.StartBoardFragment"
             android:label="fragment_start_board"
             tools:layout="@layout/fragment_start_board">
             <action
@@ -90,7 +90,7 @@
         </fragment>
         <fragment
             android:id="@+id/boardFragment"
-            android:name="com.example.mypsychologist.ui.authentication.boardFragment.BoardFragment"
+            android:name="com.obsudim.mypsychologist.ui.authentication.boardFragment.BoardFragment"
             android:label="fragment_board"
             tools:layout="@layout/fragment_board">
             <action
@@ -101,7 +101,7 @@
         </fragment>
         <fragment
             android:id="@+id/firstBoardFragment"
-            android:name="com.example.mypsychologist.ui.authentication.boardFragment.FirstBoardFragment"
+            android:name="com.obsudim.mypsychologist.ui.authentication.boardFragment.FirstBoardFragment"
             android:label="fragment_first_board"
             tools:layout="@layout/fragment_first_board">
             <action

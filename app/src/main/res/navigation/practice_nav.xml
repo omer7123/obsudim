@@ -17,7 +17,7 @@
         app:popExitAnim="@anim/slide_in_right" />
     <fragment
         android:id="@+id/fragment_exercises"
-        android:name="com.example.mypsychologist.ui.exercises.exercisesFragment.ExercisesFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.exercisesFragment.ExercisesFragment"
         tools:layout="@layout/fragment_exercises"
         android:label="FragmentExercises">
 
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/freeDiaryTrackerMoodFragment"
-        android:name="com.example.mypsychologist.ui.exercises.freeDiaryTrackerMoodFragment.FreeDiaryTrackerMoodFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.freeDiaryTrackerMoodFragment.FreeDiaryTrackerMoodFragment"
         android:label="FreeDiaryTrackerMoodFragment">
         <action
             android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
@@ -48,17 +48,17 @@
         app:destination="@id/definitionProblemGroupExerciseFragment" />
     <fragment
         android:id="@+id/fragment_new_diary"
-        android:name="com.example.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary"
+        android:name="com.obsudim.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary"
         tools:layout="@layout/fragment_new_thought_diary"
         android:label="FragmentNewDiary" />
     <fragment
         android:id="@+id/definitionProblemGroupExerciseFragment"
-        android:name="com.example.mypsychologist.ui.exercises.definitionPGExerciseFragment.DefinitionProblemGroupExerciseFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.definitionPGExerciseFragment.DefinitionProblemGroupExerciseFragment"
         tools:layout="@layout/fragment_definition_problem_group_exercise"
         android:label="fragment_definition_problem_group_exercise" />
     <fragment
         android:id="@+id/fragment_diaries"
-        android:name="com.example.mypsychologist.ui.exercises.recordsExerciseFragment.RecordsExerciseFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.recordsExerciseFragment.RecordsExerciseFragment"
         android:label="FragmentDiaries">
         <action
             android:id="@+id/action_fragment_diaries_to_fragment_new_diary"
@@ -79,7 +79,7 @@
         app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/trackerMoodFragment"
-        android:name="com.example.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment"
         tools:layout="@layout/fragment_tracker_mood"
         android:label="fragment_tracker_mood">
         <action
@@ -90,7 +90,7 @@
     </fragment>
     <fragment
         android:id="@+id/newFreeDiaryFragment"
-        android:name="com.example.mypsychologist.ui.exercises.newFreeDiaryFragment.NewFreeDiaryFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.newFreeDiaryFragment.NewFreeDiaryFragment"
         tools:layout="@layout/fragment_new_free_diary"
         android:label="fragment_new_free_diary" />
     <include app:graph="@navigation/profile_graph" />

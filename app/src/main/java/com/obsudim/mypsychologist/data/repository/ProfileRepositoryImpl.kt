@@ -1,0 +1,51 @@
+package com.obsudim.mypsychologist.data.repository
+
+import android.util.Log
+import com.obsudim.mypsychologist.core.Resource
+import com.obsudim.mypsychologist.data.converters.toEntity
+import com.obsudim.mypsychologist.data.converters.toModel
+import com.obsudim.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
+import com.obsudim.mypsychologist.data.remote.profile.UserDataSource
+import com.obsudim.mypsychologist.domain.entity.ClientInfoEntity
+import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserDataEntity
+import com.obsudim.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
+import com.obsudim.mypsychologist.domain.repository.ProfileRepository
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+
+class ProfileRepositoryImpl @Inject constructor(
+    private val dataSource: UserDataSource,
+    private val localDataSource: AuthenticationSharedPrefDataSource
+) :
+    ProfileRepository {
+
+    override suspend fun saveClient(info: ClientInfoEntity): Resource<String> = run {
+        dataSource.updateUser(info.toModel())
+    }
+
+    override suspend fun getOwnInfo(): Resource<ClientInfoEntity> =
+        when (val result = dataSource.getOwnData()) {
+            is Resource.Error -> {
+                Log.d("Info error", result.msg.toString())
+                Resource.Error(result.msg.toString(), null)
+            }
+            is Resource.Loading -> Resource.Loading
+            is Resource.Success ->
+                Resource.Success(result.data.toEntity())                // поправить
+        }
+
+    override suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String> {
+        return when(val result = dataSource.sendRequestToManager(sendRequestToPsychologistEntity.toModel())){
+            is Resource.Error -> Resource.Error(result.msg, null)
+            Resource.Loading -> Resource.Loading
+            is Resource.Success -> {
+                localDataSource.saveStatusRequestToManager()
+                Resource.Success(result.data)
+            }
+        }
+    }
+
+    override suspend fun getAuthMe(): Flow<Resource<UserDataEntity>> {
+        return dataSource.getAuthMe().checkResource { it.toEntity() }
+    }
+}

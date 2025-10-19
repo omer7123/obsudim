@@ -7,7 +7,7 @@
 
     <dialog
         android:id="@+id/diagnosticDialogFragment"
-        android:name="com.example.mypsychologist.ui.diagnostics.testsFragment.DiagnosticDialogFragment"
+        android:name="com.obsudim.mypsychologist.ui.diagnostics.testsFragment.DiagnosticDialogFragment"
         android:label="DiagnosticDialogFragment">
 
         <action
@@ -19,7 +19,7 @@
     </dialog>
     <fragment
         android:id="@+id/fragment_tests"
-        android:name="com.example.mypsychologist.ui.diagnostics.testsFragment.FragmentTests"
+        android:name="com.obsudim.mypsychologist.ui.diagnostics.testsFragment.FragmentTests"
         tools:layout="@layout/fragment_tests"
         android:label="FragmentTests">
         <action
