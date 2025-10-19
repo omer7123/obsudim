@@ -19,7 +19,7 @@ abstract class BaseDataSource {
                     Resource.Success(it)
                 } ?: Resource.Error(response.message(), null)
             } else {
-                val errorBody = response.errorBody()?.string() ?: "Unknown error"
+                val errorBody = response.errorBody()?.use { it.string() } ?: "Unknown error"
                 val errorResponse = try {
                     Json.decodeFromString<ErrorResponse>(errorBody)
                 } catch (e: SerializationException) {

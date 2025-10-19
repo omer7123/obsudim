@@ -19,7 +19,7 @@ class AuthInterceptor @Inject constructor(
         val response = chain.proceed(request)
 
         if (response.code == 401) {
-                response.close()
+
 
                 val refToken = runBlocking {
                     sharedPrefDataSource.getRefreshToken()

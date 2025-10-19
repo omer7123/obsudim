@@ -59,6 +59,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch(handler) {
             _authByTokenStatus.value = AuthState.Loading
             val token = getTokenUseCase()
+            Log.e("tok", token.toString())
             if (token == "")
                 _authByTokenStatus.value = AuthState.Error
             else {

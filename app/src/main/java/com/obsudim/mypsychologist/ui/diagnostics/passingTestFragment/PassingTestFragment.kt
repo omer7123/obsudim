@@ -1,4 +1,4 @@
-package com.example.mypsychologist.ui.diagnostics.passingTestFragment
+package com.obsudim.mypsychologist.ui.diagnostics.passingTestFragment
 
 import android.content.Context
 import android.os.Build
@@ -97,7 +97,8 @@ class PassingTestFragment : Fragment() {
         totalNumber: Int
     ) {
         binding.testQuestionVp.adapter =
-            TestQuestionAdapter(questions, totalNumber,
+            TestQuestionAdapter(
+                questions, totalNumber,
                 onAnswerClick = { score ->
                     viewModel.saveAnswerAndGoToNext(
                         score = score,

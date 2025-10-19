@@ -74,7 +74,12 @@ class DataModule {
         authInterceptorProvider: Provider<AuthInterceptor>
     ): OkHttpClient {
         return baseOkHttpClient.newBuilder()
+            // сначала авторизация
             .addInterceptor(authInterceptorProvider.get())
+            // потом логирование (чтобы логировать уже корректные запросы)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .build()
     }
 
@@ -158,4 +163,5 @@ class DataModule {
     ): ExerciseService {
         return retrofit.create(ExerciseService::class.java)
     }
+
 }
