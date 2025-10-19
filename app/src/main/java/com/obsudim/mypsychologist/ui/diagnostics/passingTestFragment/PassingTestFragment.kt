@@ -1,4 +1,4 @@
-package com.obsudim.mypsychologist.ui.diagnostics.passingTestFragment
+package com.example.mypsychologist.ui.diagnostics.passingTestFragment
 
 import android.content.Context
 import android.os.Build
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -38,6 +39,15 @@ class PassingTestFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireContext().getAppComponent().diagnosticComponent().create().inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.previousQuestion()
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -95,7 +105,8 @@ class PassingTestFragment : Fragment() {
                         taskId = requireArguments().getString(TASK_ID) ?: ""
                     )
                 }, onBackClick = {
-                    viewModel.previousQuestion()
+                    findNavController().popBackStack()
+//                    viewModel.previousQuestion()
                 })
 
         binding.testQuestionVp.isUserInputEnabled = false
