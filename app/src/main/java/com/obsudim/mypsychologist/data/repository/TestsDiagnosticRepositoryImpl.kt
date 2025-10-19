@@ -5,11 +5,11 @@ import com.obsudim.mypsychologist.data.converters.toEntity
 import com.obsudim.mypsychologist.data.converters.toModel
 import com.obsudim.mypsychologist.data.remote.diagnostic.TestsDiagnosticDataSource
 import com.obsudim.mypsychologist.di.ApiUrlProvider
+import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.ResultAfterSaveEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.SaveTestResultEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestInfoEntity
-import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestInfoForPassingEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
 import com.obsudim.mypsychologist.domain.repository.retrofit.TestsDiagnosticRepository
 import javax.inject.Inject
@@ -51,11 +51,11 @@ class TestsDiagnosticRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getQuestionsOfTest(testId: String): Resource<TestInfoForPassingEntity> {
+    override suspend fun getQuestionsOfTest(testId: String): Resource<List<QuestionOfTestEntity>> {
         return when(val res = dataSource.getQuestionsOfTest(testId)){
             is Resource.Error -> Resource.Error(res.msg, null)
             Resource.Loading -> Resource.Loading
-            is Resource.Success -> Resource.Success(res.data.toEntity())
+            is Resource.Success -> Resource.Success(res.data.map { it.toEntity() })
         }
     }
 

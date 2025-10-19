@@ -71,9 +71,9 @@ data class ScaleResultForHistoryModel(
 data class BorderOfTestModel(
     val color: String,
     @SerialName("left_border")
-    val leftBorder: Int,
+    val leftBorder: Double,
     @SerialName("right_border")
-    val rightBorder: Int,
+    val rightBorder: Double,
     val title: String
 )
 
@@ -82,7 +82,7 @@ data class ScalesOfTestInfoModel(
     val borders: List<BorderOfTestModel>,
     val max: Int,
     val min: Int,
-    @SerialName("scale_id")
+    @SerialName("id")
     val scaleId: String,
     val title: String,
 )
@@ -93,6 +93,7 @@ data class TestInfoModel(
     val description: String,
     @SerialName("short_desc")
     val shortDesc: String,
+    @SerialName("scale")
     val scales: List<ScalesOfTestInfoModel>,
 )
 @Serializable
@@ -107,7 +108,7 @@ data class TestInfoForPassingModel(
 data class QuestionOfTestModel(
     val number: Int,
     val text: String,
-    @SerialName("answer_options")
+    @SerialName("answer_choices")
     val answerOptions: List<AnswersOfQuestionsModel>
 )
 

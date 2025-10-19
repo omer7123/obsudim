@@ -12,8 +12,10 @@ import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.ResultAfterSave
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.SaveTestResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.obsudim.mypsychologist.domain.useCase.diagnosticsUseCases.GetQuestionsOfTestByIdUseCase
+import com.obsudim.mypsychologist.domain.useCase.diagnosticsUseCases.GetTestInfoUseCase
 import com.obsudim.mypsychologist.domain.useCase.diagnosticsUseCases.SaveResultTestUseCase
 import com.obsudim.mypsychologist.domain.useCase.exerciseUseCases.MarkAsCompleteExerciseUseCase
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -22,7 +24,8 @@ import javax.inject.Inject
 class PassingTestViewModel @Inject constructor(
     private val saveResultTestUseCase: SaveResultTestUseCase,
     private val getQuestionsOfTestByIdUseCase: GetQuestionsOfTestByIdUseCase,
-    private val marsAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase
+    private val marsAsCompleteExerciseUseCase: MarkAsCompleteExerciseUseCase,
+    private val getTestInfoUseCase: GetTestInfoUseCase,
 ) : ViewModel() {
 
     private val _screenState: MutableLiveData<PassingTestScreenState> = MutableLiveData()
@@ -40,17 +43,25 @@ class PassingTestViewModel @Inject constructor(
 
     fun getQuestions(testId: String) {
         viewModelScope.launch {
-            when (val questionsRequest = getQuestionsOfTestByIdUseCase(testId)) {
-                is Resource.Error -> _screenState.value =
-                    PassingTestScreenState.Error(questionsRequest.msg.toString())
+            val questionsRequestDeff = async { getQuestionsOfTestByIdUseCase(testId)}
+            val testInfoDeff = async { getTestInfoUseCase(testId) }
 
-                Resource.Loading -> _screenState.value = PassingTestScreenState.Loading
+            val questionsRequest = questionsRequestDeff.await()
+            val testInfo = testInfoDeff.await()
 
-                is Resource.Success -> {
-                    _questions = questionsRequest.data.questions
+            when {
+                questionsRequest is Resource.Error -> {
+                    _screenState.value = PassingTestScreenState.Error("Ошибка загрузки вопросов")
+                }
+                testInfo is Resource.Error -> {
+                    _screenState.value = PassingTestScreenState.Error("Ошибка загрузки информации о тесте")
+                }
+                questionsRequest is Resource.Success && testInfo is Resource.Success -> {
+                    _questions = questionsRequest.data
+
                     _screenState.value = PassingTestScreenState.Content(
-                        questionsRequest.data.title,
-                        questionsRequest.data.description
+                        title = testInfo.data.title,
+                        desc = testInfo.data.description,
                     )
 
                     _screenState.value = PassingTestScreenState.Questions(questions)

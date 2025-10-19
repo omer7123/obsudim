@@ -1,8 +1,8 @@
 package com.obsudim.mypsychologist.data.remote.diagnostic
 
+import com.obsudim.mypsychologist.data.model.QuestionOfTestModel
 import com.obsudim.mypsychologist.data.model.ResultAfterSaveModel
 import com.obsudim.mypsychologist.data.model.SaveTestResultModel
-import com.obsudim.mypsychologist.data.model.TestInfoForPassingModel
 import com.obsudim.mypsychologist.data.model.TestInfoModel
 import com.obsudim.mypsychologist.data.model.TestModel
 import com.obsudim.mypsychologist.data.model.TestResultsGetModel
@@ -18,27 +18,27 @@ interface TestsDiagnosticService {
     @GET("/tests")
     suspend fun getAllTests(): Response<List<TestModel>>
 
-    @POST("/test/save_test_result")
+    @POST("/tests/result")
     suspend fun saveTestResult(@Body saveTestResultModel: SaveTestResultModel): Response<ResultAfterSaveModel>
 
-    @GET("/test/get_test_results/{test_id}")
+    @GET("/tests/{test_id}/results/")
     suspend fun getTestResults(
         @Path("test_id") testId: String,
         @Query("user_id") userId: String
     ): Response<List<TestResultsGetModel>>
 
-    @GET("/test/get_test_info/{id}")
+    @GET("/tests/{test_id}")
     suspend fun getTestInfo(
-        @Path("id") testId: String
+        @Path("test_id") testId: String
     ): Response<TestInfoModel>
 
-    @GET("/test/{test_id}/questions")
+    @GET("/tests/{test_id}/questions/answers")
     suspend fun getQuestionsOfTest(
         @Path("test_id") testId: String
-    ): Response<TestInfoForPassingModel>
+    ): Response<List<QuestionOfTestModel>>
 
-    @GET("/test/get_test_result/{test_result_id}")
+    @GET("/tests/test_result/{result_id}")
     suspend fun getTestResult(
-        @Path("test_result_id") testResultId: String
+        @Path("result_id") testResultId: String
     ): Response<TestResultsGetModel>
 }

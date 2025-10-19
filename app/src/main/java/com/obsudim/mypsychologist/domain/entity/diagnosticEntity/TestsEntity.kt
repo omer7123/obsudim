@@ -58,8 +58,8 @@ data class TestInfoEntity(
 
 data class BorderOfTestEntity(
     val color: String,
-    val leftBorder: Int,
-    val rightBorder: Int,
+    val leftBorder: Double,
+    val rightBorder: Double,
     val title: String
 )
 
