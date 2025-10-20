@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment_test_history"
-        android:name="com.example.mypsychologist.ui.diagnostics.historyTestFragment.FragmentTestHistory"
+        android:name="com.obsudim.mypsychologist.ui.diagnostics.historyTestFragment.FragmentTestHistory"
         tools:layout="@layout/fragment_test_history"
         android:label="FragmentTestHistory" >
         <action

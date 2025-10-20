@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/educationFragment"
-        android:name="com.example.mypsychologist.ui.education.educationFragment.EducationFragment"
+        android:name="com.obsudim.mypsychologist.ui.education.educationFragment.EducationFragment"
         android:label="EducationFragment" />
 </navigation>
