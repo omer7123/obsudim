@@ -2,7 +2,6 @@ package com.obsudim.mypsychologist.data.remote.diagnostic
 
 import com.obsudim.mypsychologist.core.BaseDataSource
 import com.obsudim.mypsychologist.core.Resource
-import com.obsudim.mypsychologist.data.local.sharedPref.AuthenticationSharedPrefDataSource
 import com.obsudim.mypsychologist.data.model.QuestionOfTestModel
 import com.obsudim.mypsychologist.data.model.ResultAfterSaveModel
 import com.obsudim.mypsychologist.data.model.SaveTestResultModel
@@ -13,7 +12,6 @@ import javax.inject.Inject
 
 class TestsDiagnosticDataSourceImpl @Inject constructor(
     private val api: TestsDiagnosticService,
-    private val userDataSource: AuthenticationSharedPrefDataSource
 ) :
     TestsDiagnosticDataSource, BaseDataSource() {
     override suspend fun getAllTests(): Resource<List<TestModel>> = getResult {
@@ -26,8 +24,7 @@ class TestsDiagnosticDataSourceImpl @Inject constructor(
         }
 
     override suspend fun getTestResults(testId: String): Resource<List<TestResultsGetModel>> {
-        val userID = userDataSource.getUserId()
-        return getResult { api.getTestResults(testId, userID) }
+        return getResult { api.getTestResults(testId) }
     }
 
     override suspend fun getInfoAboutTest(testId: String): Resource<TestInfoModel> = getResult {
