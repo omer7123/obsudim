@@ -11,7 +11,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface TestsDiagnosticService {
 
@@ -24,7 +23,6 @@ interface TestsDiagnosticService {
     @GET("/tests/{test_id}/results/")
     suspend fun getTestResults(
         @Path("test_id") testId: String,
-        @Query("user_id") userId: String
     ): Response<List<TestResultsGetModel>>
 
     @GET("/tests/{test_id}")
