@@ -3,6 +3,7 @@ package com.obsudim.mypsychologist.data.model.exerciseModels
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Serializable
 data class ExerciseInfoPreview(
     val id: String,
     val title: String,

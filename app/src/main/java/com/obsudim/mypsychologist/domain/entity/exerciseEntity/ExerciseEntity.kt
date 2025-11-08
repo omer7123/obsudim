@@ -1,7 +1,5 @@
 package com.obsudim.mypsychologist.domain.entity.exerciseEntity
 
-import com.obsudim.mypsychologist.ui.core.delegateItems.DelegateItem
-
 data class ExerciseInfoPreviewEntity(
     val id: String,
     val title: String,
@@ -36,10 +34,6 @@ sealed interface TypeOfExercise {
     data object TextInput : TypeOfExercise
     data object NumberInput : TypeOfExercise
 }
-
-data class ExerciseDetailWithDelegateItem(
-    val id: String, val title: String, val description: String, val fields: List<DelegateItem>
-)
 
 data class ExerciseResultRequestEntity(
     val id: String, val result: List<ExerciseResultEntity>

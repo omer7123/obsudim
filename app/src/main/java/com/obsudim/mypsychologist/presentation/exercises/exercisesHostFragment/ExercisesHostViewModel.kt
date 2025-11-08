@@ -1,5 +1,6 @@
 package com.obsudim.mypsychologist.presentation.exercises.exercisesHostFragment
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.core.Resource
@@ -22,6 +23,7 @@ class ExercisesHostViewModel @Inject constructor(private val getExerciseInfoUseC
             getExerciseInfoUseCase(id).collect { state ->
                 when (state) {
                     is Resource.Error<ExerciseInfoPreviewEntity> -> {
+                        Log.e("Error", state.msg.toString())
                         _screenState.update {
                             ExerciseHostScreenState.Error
                         }

@@ -1,6 +1,5 @@
 package com.obsudim.mypsychologist.presentation.exercises.exercisesFragment
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -25,12 +24,12 @@ class ExercisesViewModel(
     init {
         viewModelScope.launch {
             getAllExercisesUseCase().collect{resource->
-                Log.e("ololo", resource.toString())
                 when(resource){
-                    is Resource.Error -> _screenState.value = ExercisesScreenState.Error
+                    is Resource.Error -> {
+                        _screenState.value = ExercisesScreenState.Error
+                    }
                     Resource.Loading -> _screenState.value = ExercisesScreenState.Loading
                     is Resource.Success -> {
-                        Log.e("ololo", resource.data.toString())
                         _screenState.value = ExercisesScreenState.Content(resource.data)
                     }
                 }

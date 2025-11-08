@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_fragment_exercises_to_freeDiaryTrackerMoodFragment"
             app:destination="@id/freeDiaryTrackerMoodFragment" />
+        <action
+            android:id="@+id/action_fragment_exercises_to_exercisesHostFragment"
+            app:destination="@id/exercisesHostFragment" />
     </fragment>
     <fragment
         android:id="@+id/freeDiaryTrackerMoodFragment"
@@ -94,4 +97,8 @@
         tools:layout="@layout/fragment_new_free_diary"
         android:label="fragment_new_free_diary" />
     <include app:graph="@navigation/profile_graph" />
+    <fragment
+        android:id="@+id/exercisesHostFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.exercisesHostFragment.ExercisesHostFragment"
+        android:label="ExercisesHostFragment" />
 </navigation>

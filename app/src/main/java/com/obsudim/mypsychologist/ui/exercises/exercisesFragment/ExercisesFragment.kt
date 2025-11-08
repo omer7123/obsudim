@@ -4,12 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,34 +29,31 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.obsudim.mypsychologist.R
-import com.obsudim.mypsychologist.databinding.FragmentExercisesBinding
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.obsudim.mypsychologist.extensions.getAppComponent
 import com.obsudim.mypsychologist.presentation.exercises.exercisesFragment.ExercisesScreenState
 import com.obsudim.mypsychologist.presentation.exercises.exercisesFragment.ExercisesViewModel
-import com.obsudim.mypsychologist.ui.core.autoCleared
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
 class ExercisesFragment : Fragment() {
-
-    private var binding: FragmentExercisesBinding by autoCleared()
 
     @Inject
     lateinit var vmFactory: ExercisesViewModel.Factory
@@ -71,13 +66,8 @@ class ExercisesFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentExercisesBinding.inflate(inflater, container, false)
-
-        binding.include.profileIcon.setOnClickListener {
-            findNavController().navigate(R.id.action_fragment_exercises_to_profile_graph)
-        }
-        binding.content.setContent {
+    ) = ComposeView(requireContext()).apply {
+        setContent {
             AppTheme {
                 SetupMainContent(
                     onFreeDiaryClick = {
@@ -86,11 +76,15 @@ class ExercisesFragment : Fragment() {
                         )
                     },
                     viewModel,
-                    onClickExercise = {}
+                    onClickExercise = {
+                        findNavController().navigate(
+                            resId = R.id.action_fragment_exercises_to_exercisesHostFragment,
+                            args = bundleOf(EXERCISE_ID to it)
+                        )
+                    }
                 )
             }
         }
-        return binding.root
     }
 
     @Composable
@@ -123,7 +117,11 @@ class ExercisesFragment : Fragment() {
         onClickExercise: (String) -> Unit,
         data: List<ExerciseEntity>,
     ) {
-        Column(modifier = Modifier.fillMaxSize().background(color = AppTheme.colors.screenBackground)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = AppTheme.colors.screenBackground)
+        ) {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -181,7 +179,9 @@ class ExercisesFragment : Fragment() {
                             Icon(
                                 painter = painterResource(R.drawable.ic_screp),
                                 contentDescription = null,
-                                modifier = Modifier.padding(vertical = 16.dp).padding(end = 8.dp)
+                                modifier = Modifier
+                                    .padding(vertical = 16.dp)
+                                    .padding(end = 8.dp)
                             )
                             Text(
                                 text = stringResource(R.string.notes),
@@ -201,7 +201,9 @@ class ExercisesFragment : Fragment() {
                             Icon(
                                 painter = painterResource(R.drawable.ic_screp),
                                 contentDescription = null,
-                                modifier = Modifier.padding(vertical = 16.dp).padding(end = 8.dp)
+                                modifier = Modifier
+                                    .padding(vertical = 16.dp)
+                                    .padding(end = 8.dp)
                             )
                             Text(
                                 text = stringResource(R.string.cbt_diary_new_name),
@@ -220,9 +222,10 @@ class ExercisesFragment : Fragment() {
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(data) { item ->
-                    CardExercise(item){
-                        onClickExercise
-                    }
+                    CardExercise(
+                        item = item,
+                        onClickExercise = { onClickExercise(item.id) }
+                    )
                 }
             }
         }
@@ -237,11 +240,7 @@ class ExercisesFragment : Fragment() {
             modifier = Modifier
                 .width(180.dp)
                 .clip(RoundedCornerShape(28.dp))
-                .clickable(
-                    interactionSource = remember {
-                        MutableInteractionSource()
-                    }, indication = null
-                ) {
+                .clickable {
                     onClickExercise(item.id)
                 },
         ) {
@@ -257,7 +256,8 @@ class ExercisesFragment : Fragment() {
                 text = item.title,
                 style = AppTheme.typography.titleCygreSemiBold,
                 color = Color.White,
-                modifier = Modifier.align(Alignment.BottomCenter)
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 16.dp)
 
@@ -299,5 +299,9 @@ class ExercisesFragment : Fragment() {
                 )
             }
         }
+    }
+
+    companion object {
+        private const val EXERCISE_ID = "EXERCISE_ID"
     }
 }

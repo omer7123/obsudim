@@ -49,6 +49,10 @@ import javax.inject.Inject
 
 class ExercisesHostFragment: Fragment() {
 
+    companion object {
+        private const val EXERCISE_ID = "EXERCISE_ID"
+    }
+
     @Inject
     lateinit var viewModelFactory: MultiViewModelFactory
     private val viewModel: ExercisesHostViewModel by lazy {
@@ -60,6 +64,10 @@ class ExercisesHostFragment: Fragment() {
         requireContext().getAppComponent().exercisesComponent().create().inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getInfo(requireArguments().getString(EXERCISE_ID)!!)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -79,7 +87,7 @@ class ExercisesHostFragment: Fragment() {
     fun OnboardingExerciseScreen(
         onBackClick: () -> Unit,
         viewModel: ExercisesHostViewModel,
-        ){
+    ) {
         val viewState = viewModel.screenState.collectAsState()
         when(val state = viewState.value){
             is ExerciseHostScreenState.Content -> {
@@ -94,7 +102,7 @@ class ExercisesHostFragment: Fragment() {
             ExerciseHostScreenState.Initial -> Unit
             ExerciseHostScreenState.Loading -> {
                 Box(modifier = Modifier.fillMaxSize()){
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
         }
@@ -106,7 +114,11 @@ class ExercisesHostFragment: Fragment() {
         data: ExerciseInfoPreviewEntity,
         onBackClick: () -> Unit
     ) {
-        Column(modifier = Modifier.fillMaxSize()){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = AppTheme.colors.screenBackground)
+        ) {
             Box(modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()){
@@ -121,6 +133,7 @@ class ExercisesHostFragment: Fragment() {
                     contentDescription = null,
                     modifier = Modifier
                         .padding(16.dp)
+                        .padding(top = 32.dp)
                         .clickable { onBackClick() }
                 )
 
@@ -133,7 +146,7 @@ class ExercisesHostFragment: Fragment() {
                             brush = Brush.verticalGradient(
                                 colors = listOf(
                                     Color.Transparent,
-                                    Color.White.copy(alpha = 1f)
+                                    AppTheme.colors.screenBackground.copy(alpha = 1f)
                                 )
                             )
                         )
@@ -188,6 +201,7 @@ class ExercisesHostFragment: Fragment() {
                     Text(
                         text = stringResource(R.string.allows),
                         style = AppTheme.typography.titleCygreSemiBold,
+                        color = AppTheme.colors.primaryText,
                         fontSize = 26.sp,
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
@@ -196,6 +210,7 @@ class ExercisesHostFragment: Fragment() {
                     Text(
                         text = data.description,
                         style = AppTheme.typography.bodyM,
+                        color = AppTheme.colors.primaryText,
                         fontSize = 14.sp,
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
@@ -215,7 +230,8 @@ class ExercisesHostFragment: Fragment() {
                         Text(
                             text = stringResource(R.string.time_to_read, data.timeToRead),
                             style = AppTheme.typography.titleCygreSemiBold,
-                            fontSize = 26.sp,
+                            color = AppTheme.colors.primaryText,
+                            fontSize = 22.sp,
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
                                 .padding(top = 20.dp)
@@ -223,6 +239,7 @@ class ExercisesHostFragment: Fragment() {
                         Text(
                             text = stringResource(R.string.to_pass),
                             style = AppTheme.typography.bodyM,
+                            color = AppTheme.colors.primaryText,
                             fontSize = 14.sp,
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
@@ -243,7 +260,8 @@ class ExercisesHostFragment: Fragment() {
                         Text(
                             text = stringResource(R.string.count_questions, data.questionsCount),
                             style = AppTheme.typography.titleCygreSemiBold,
-                            fontSize = 26.sp,
+                            color = AppTheme.colors.primaryText,
+                            fontSize = 22.sp,
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
                                 .padding(top = 20.dp)
@@ -251,6 +269,7 @@ class ExercisesHostFragment: Fragment() {
                         Text(
                             text = stringResource(R.string.with_open_answers),
                             style = AppTheme.typography.bodyM,
+                            color = AppTheme.colors.primaryText,
                             fontSize = 14.sp,
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
