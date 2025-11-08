@@ -10,5 +10,5 @@ class ApiUrlProviderImpl @Inject constructor() : ApiUrlProvider {
 
     override var url =
 
-        "https://xn--2-ctbib7ccc.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai/"
+        "https://xn--b1afb6bcb.xn--d1acsjd4h.tech/"
 }
