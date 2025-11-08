@@ -3,12 +3,20 @@ package com.obsudim.mypsychologist.data.model.exerciseModels
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+data class ExerciseInfoPreview(
+    val id: String,
+    val title: String,
+    val description: String,
+    @SerialName("time_to_read")
+    val timeToRead: Int,
+    @SerialName("questions_count")
+    val questionsCount: Int,
+)
 @Serializable
 data class ExercisesModel(
     val id: String,
     val title: String,
-    val description: String,
-    @SerialName("link_to_picture")
+    @SerialName("picture_link")
     val linkToPicture: String,
     val closed: Boolean
 )

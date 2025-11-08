@@ -17,10 +17,10 @@ sealed interface ExercisesStatusScreenState {
 sealed interface ExercisesScreenState {
     data object Init:
         ExercisesScreenState
-    data class Error(val msg: String):
+    data object Error:
         ExercisesScreenState
     data object Loading:
         ExercisesScreenState
-    data class Data(val data: List<ExerciseEntity>):
+    data class Content(val data: List<ExerciseEntity>):
         ExercisesScreenState
 }
