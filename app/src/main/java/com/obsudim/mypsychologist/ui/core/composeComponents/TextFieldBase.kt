@@ -90,6 +90,63 @@ fun PrimaryTextField(
     }
 }
 
+@Composable
+fun TransparentPrimaryTextField(
+    field: String,
+    placeHolderText: String,
+    onFieldChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    errorStr: String? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    textColor: Color = AppTheme.colors.primaryText
+) {
+    val focusManager: FocusManager = LocalFocusManager.current
+
+    Column(modifier = modifier) {
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp),
+            value = field,
+            onValueChange = onFieldChange,
+            singleLine = true,
+
+            placeholder = {
+                Text(
+                    text = placeHolderText,
+                    style = AppTheme.typography.bodyM,
+                    color = textColor
+                )
+            },
+            visualTransformation = visualTransformation,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                textColor = textColor,
+                unfocusedBorderColor = Color.Transparent,
+                focusedBorderColor = Color.Transparent,
+                cursorColor = textColor,
+            ),
+
+            textStyle = AppTheme.typography.bodyM.copy(color = textColor),
+            keyboardOptions = keyboardOptions,
+            keyboardActions = KeyboardActions(onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }, onDone = {
+                focusManager.clearFocus()
+            })
+        )
+
+        if (!errorStr.isNullOrEmpty()) {
+            Spacer(modifier = Modifier.padding(top = 10.dp))
+            Text(
+                text = errorStr,
+                style = AppTheme.typography.bodyM,
+                color = AppTheme.colors.secondaryText
+            )
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TextFieldForDropMenu(
