@@ -15,6 +15,7 @@ import com.obsudim.mypsychologist.presentation.authentication.authFragment.AuthV
 import com.obsudim.mypsychologist.presentation.authentication.registrationFragment.RegisterViewModel
 import com.obsudim.mypsychologist.presentation.diagnostics.passingTestFragment.PassingTestViewModel
 import com.obsudim.mypsychologist.presentation.exercises.definitionProblemGroupExerciseFragment.DefinitionProblemGroupExerciseViewModel
+import com.obsudim.mypsychologist.presentation.exercises.exercisesHostFragment.ExercisesHostViewModel
 import com.obsudim.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.TrackerMoodViewModel
 import com.obsudim.mypsychologist.presentation.exercises.newFreeDiaryFragment.NewFreeDiaryViewModel
 import com.obsudim.mypsychologist.presentation.exercises.statementProblemsAndTargetFragment.StatementProblemsAndTargetViewModel
@@ -48,7 +49,6 @@ interface DomainModule {
     fun bindExercise(impl: ExerciseReposityoryImpl): ExerciseRepository
 
 
-
     @Binds
     @[IntoMap ClassKey(RegisterViewModel::class)]
     fun provideRegisterViewModel(registerViewModel: RegisterViewModel): ViewModel
@@ -75,5 +75,9 @@ interface DomainModule {
     @Binds
     @[IntoMap ClassKey(DefinitionProblemGroupExerciseViewModel::class)]
     fun provideDefinitionProlemGroupExerciseViewModel(definitionProblemGroupExerciseViewModel: DefinitionProblemGroupExerciseViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ClassKey(ExercisesHostViewModel::class)]
+    fun provideExercisesHostViewModel(exercisesHostViewModel: ExercisesHostViewModel): ViewModel
 
 }

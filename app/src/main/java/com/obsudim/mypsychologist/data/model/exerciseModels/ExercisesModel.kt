@@ -4,13 +4,27 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ExercisesModel(
+data class ExerciseInfoPreview(
     val id: String,
     val title: String,
     val description: String,
-    @SerialName("link_to_picture")
+    @SerialName("time_to_read")
+    val timeToRead: Int,
+    @SerialName("questions_count")
+    val questionsCount: Int,
+)
+
+@Serializable
+data class ExerciseMock(
+    val exercises: List<ExercisesModel>
+)
+@Serializable
+data class ExercisesModel(
+    val id: String,
+    val title: String,
+    @SerialName("picture_link")
     val linkToPicture: String,
-    val closed: Boolean
+    val open: Boolean
 )
 
 @Serializable
@@ -73,10 +87,17 @@ data class StatusPostResponse(
 )
 
 @Serializable
+data class ResultsExercise(
+    val results: List<ExerciseResultFromAPIModel>
+)
+
+@Serializable
 data class ExerciseResultFromAPIModel(
-    @SerialName("completed_exercise_id")
-    val completedExerciseId: String,
-    val date: String
+    val id: String,
+    @SerialName("exercise_id")
+    val exerciseId: String,
+    val date: String,
+    val preview: String,
 )
 
 @Serializable

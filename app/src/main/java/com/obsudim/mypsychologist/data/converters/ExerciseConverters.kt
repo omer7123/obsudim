@@ -6,6 +6,7 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGro
 import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupHistoryModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
+import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultFromAPIModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
@@ -15,11 +16,12 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.FieldExerciseModel
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.FieldExerciseEntity
@@ -27,8 +29,12 @@ import com.obsudim.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEnt
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
 import com.obsudim.mypsychologist.extensions.convertLondonTimeToDeviceTime
 
+fun ExerciseInfoPreview.toEntity(): ExerciseInfoPreviewEntity {
+    return ExerciseInfoPreviewEntity(id, title, description, timeToRead, questionsCount)
+}
+
 fun ExercisesModel.toEntity(): ExerciseEntity {
-    return ExerciseEntity(id, title, description, "https://xn--b1afb6bcb.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai$linkToPicture", closed)
+    return ExerciseEntity(id, title, "https://xn--b1afb6bcb.xn--d1acsjd4h.tech$linkToPicture", open)
 }
 
 fun ExerciseDetailModel.toEntity(): ExerciseDetailEntity =
@@ -64,7 +70,7 @@ fun DailyTaskMarkIdEntity.toModel() = DailyTaskMarkIdModel(
     id = id
 )
 
-fun ExerciseResultFromAPIModel.toEntity() = ExerciseResultFromAPIEntity(completedExerciseId, date)
+fun ExerciseResultFromAPIModel.toEntity() = ExerciseAllResultEntity(id, exerciseId, date, preview)
 
 fun ExerciseDetailResultModel.toEntity() =
     ExerciseDetailResultEntity(title, date, result = result.map { ExerciseResultEntity(fieldId = it.fieldId, value = it.value) })

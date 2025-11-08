@@ -133,6 +133,7 @@
     <string name="alternative_thought_help">Сформулируй альтернативные мысли, которые можно противопоставить автоматической мысли, и которые будут соответствовать прошлому пункту</string>
     <string name="new_mood_help">Опиши, как ты себя чувствуешь после заполнения дневника</string>
     <string name="no_diaries">Вы еще не заполняли дневник в нашем приложении. Самое время начать!</string>
+    <string name="start">Начать</string>
 
     <string name="test_progress">%1$s из %2$s</string>
 
@@ -339,6 +340,7 @@
 Со своей стороны обещаем конфиденциальность и неразглашение вашей информации.</string>
 
     <string name="attention">Внимание</string>
+    <string name="allows">Позволяет</string>
     <string name="consent_acceptance">Заполнение анкеты позволяет использовать приложение в роли психолога. Продолжая, вы даете согласие на обработку персональных данных</string>
     <string name="accept">Принять</string>
     <string name="text_approval">Текст согласия</string>
@@ -790,4 +792,9 @@
     <string name="kpt_desc">Это способ самоанализа, который позволяет отслеживать эмоции и чувства, выявлять взаимосвязи между ситуациями и мыслями.</string>
     <string name="kpt_empty_placeholder">КПТ-дневник ещё не заполнялся. Самое время это сделать!</string>
     <string name="emotions">Эмоции</string>
+    <string name="time_to_read">%1$d минут</string>
+    <string name="to_pass">на прохождение</string>
+    <string name="count_questions">%1$d вопроса</string>
+    <string name="with_open_answers">с открытыми ответами</string>
+
 </resources>

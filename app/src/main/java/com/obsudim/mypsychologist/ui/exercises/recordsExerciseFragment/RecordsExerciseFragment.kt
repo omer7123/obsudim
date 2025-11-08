@@ -79,9 +79,8 @@ class RecordsExerciseFragment : Fragment() {
         val exercise = ExerciseEntity(
             id = requireArguments().getString(EXERCISE_ID)!!,
             title = requireArguments().getString(EXERCISE_TITLE)!!,
-            description = requireArguments().getString(EXERCISE_DESCRIPTION)!!,
             linkToPicture = requireArguments().getString(IMAGE)!!,
-            closed = false
+            open = false
         )
 
         when(exercise.id){
@@ -203,12 +202,7 @@ class RecordsExerciseFragment : Fragment() {
                 style = AppTheme.typography.titleXS,
                 color = AppTheme.colors.primaryText
             )
-            Text(
-                modifier = Modifier.padding(top = 10.dp),
-                text = exerciseData.description,
-                style = AppTheme.typography.bodyL,
-                color = AppTheme.colors.primaryText
-            )
+
             PrimaryTextButton(
                 modifier = Modifier.padding(top = 20.dp),
                 textString = stringResource(id = R.string.begin),
@@ -283,7 +277,7 @@ class RecordsExerciseFragment : Fragment() {
                 addNewDiaryClick = {},
                 exercise = ExerciseEntity(
                     "fdf", "КПТ-дневник",
-                    stringResource(R.string.kpt_desc),
+
                     "ds",
                     true
                 ),
