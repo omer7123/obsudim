@@ -80,7 +80,7 @@ class RecordsExerciseFragment : Fragment() {
             id = requireArguments().getString(EXERCISE_ID)!!,
             title = requireArguments().getString(EXERCISE_TITLE)!!,
             linkToPicture = requireArguments().getString(IMAGE)!!,
-            closed = false
+            open = false
         )
 
         when(exercise.id){

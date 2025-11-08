@@ -8,10 +8,10 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGro
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
+import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseMock
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultFromAPIModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseSaveResponseModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.SaveExerciseResultResponseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.StatusPostResponse
@@ -31,7 +31,7 @@ interface ExerciseService {
     ): Response<ExerciseInfoPreview>
 
     @GET("/exercises/")
-    suspend fun getAllExercises(): Response<List<ExercisesModel>>
+    suspend fun getAllExercises(): Response<ExerciseMock>
 
     @GET("/exercise/all")
     suspend fun getAllExerciseStatus(): Response<List<ExercisesStatusModel>>

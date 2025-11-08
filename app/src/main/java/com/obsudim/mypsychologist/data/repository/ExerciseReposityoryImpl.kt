@@ -30,7 +30,7 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
 
     override suspend fun getAllExercises(): Flow<Resource<List<ExerciseEntity>>> {
         return dataSource.getAllExercises().checkResource { list ->
-            list.map { it.toEntity() }
+            list.exercises.map { it.toEntity() }
         }
     }
 

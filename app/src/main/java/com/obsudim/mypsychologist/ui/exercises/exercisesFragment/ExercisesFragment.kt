@@ -1,5 +1,6 @@
 package com.obsudim.mypsychologist.ui.exercises.exercisesFragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,13 +15,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -32,6 +34,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -40,7 +43,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -51,15 +53,12 @@ import com.obsudim.mypsychologist.extensions.getAppComponent
 import com.obsudim.mypsychologist.presentation.exercises.exercisesFragment.ExercisesScreenState
 import com.obsudim.mypsychologist.presentation.exercises.exercisesFragment.ExercisesViewModel
 import com.obsudim.mypsychologist.ui.core.autoCleared
-import com.obsudim.mypsychologist.ui.exercises.recordsExerciseFragment.RecordsExerciseFragment
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
 class ExercisesFragment : Fragment() {
 
     private var binding: FragmentExercisesBinding by autoCleared()
-
-    private var kptExercise: ExerciseEntity? = null
 
     @Inject
     lateinit var vmFactory: ExercisesViewModel.Factory
@@ -86,17 +85,8 @@ class ExercisesFragment : Fragment() {
                             R.id.action_fragment_exercises_to_freeDiaryTrackerMoodFragment,
                         )
                     },
-                    onDefinitionGroupProblemClick = {
-                        findNavController().navigate(
-                            R.id.fragment_diaries,
-                            bundleOf(
-                                RecordsExerciseFragment.EXERCISE_ID to "DPG_ID",
-                                RecordsExerciseFragment.EXERCISE_TITLE to "Определение проблемы, постановка цели",
-                                RecordsExerciseFragment.EXERCISE_DESCRIPTION to "А теперь, давайте обозначим четкую форму своей проблемы, это поможет понять её суть и определить, к чему хотите прийти.",
-                                RecordsExerciseFragment.IMAGE to "DS",
-                            )
-                        )
-                    }
+                    viewModel,
+                    onClickExercise = {}
                 )
             }
         }
@@ -106,7 +96,8 @@ class ExercisesFragment : Fragment() {
     @Composable
     private fun SetupMainContent(
         onFreeDiaryClick: () -> Unit,
-        onDefinitionGroupProblemClick: () -> Unit,
+        viewModel: ExercisesViewModel,
+        onClickExercise: (String) -> Unit
     ) {
         val viewState = viewModel.screenState.collectAsState()
 
@@ -114,9 +105,8 @@ class ExercisesFragment : Fragment() {
             is ExercisesScreenState.Content -> {
                 RenderContent(
                     onFreeDiaryClick = { onFreeDiaryClick() },
-                    modifier = Modifier.background(
-                        color = AppTheme.colors.screenBackground
-                    ),
+                    onClickExercise = onClickExercise,
+                    data = res.data,
                 )
             }
 
@@ -130,9 +120,10 @@ class ExercisesFragment : Fragment() {
     @Composable
     private fun RenderContent(
         onFreeDiaryClick: () -> Unit,
-        modifier: Modifier = Modifier,
+        onClickExercise: (String) -> Unit,
+        data: List<ExerciseEntity>,
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize().background(color = AppTheme.colors.screenBackground)) {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -154,7 +145,7 @@ class ExercisesFragment : Fragment() {
                             brush = Brush.verticalGradient(
                                 colors = listOf(
                                     Color.Transparent,
-                                    Color.White.copy(alpha = 1f)
+                                    AppTheme.colors.screenBackground.copy(alpha = 1f)
                                 )
                             )
                         )
@@ -183,7 +174,7 @@ class ExercisesFragment : Fragment() {
                                 contentColor = AppTheme.colors.primaryTextInvert
                             ),
                             contentPadding = PaddingValues(0.dp),
-                            onClick = {},
+                            onClick = {onFreeDiaryClick()},
                             modifier = Modifier.weight(1f)
 
                         ) {
@@ -193,7 +184,7 @@ class ExercisesFragment : Fragment() {
                                 modifier = Modifier.padding(vertical = 16.dp).padding(end = 8.dp)
                             )
                             Text(
-                                text = stringResource(R.string.start),
+                                text = stringResource(R.string.notes),
                                 style = AppTheme.typography.titleCygreSemiBold,
                                 fontSize = 16.sp,
                             )
@@ -215,7 +206,7 @@ class ExercisesFragment : Fragment() {
                             Text(
                                 text = stringResource(R.string.cbt_diary_new_name),
                                 style = AppTheme.typography.titleCygreSemiBold,
-                                fontSize = 14.sp,
+                                fontSize = 16.sp,
                             )
                         }
                     }
@@ -224,100 +215,53 @@ class ExercisesFragment : Fragment() {
 
             }
             LazyRow(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(vertical = 20.dp, horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                item{
-                    Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable(
-                                    interactionSource = remember {
-                                        MutableInteractionSource()
-                                    }, indication = null
-                                ) {
-
-                                },
-                        ) {
-                            Image(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight(),
-                                painter = painterResource(id = R.drawable.ic_kpt_card),
-                                contentDescription = "",
-                                contentScale = ContentScale.FillWidth
-                            )
-
-                            Spacer(modifier = Modifier.padding(top = 10.dp))
-
-                            Text(
-                                text = stringResource(id = R.string.cbt_diary_new_name),
-                                style = AppTheme.typography.bodyXLBold,
-                                color = AppTheme.colors.primaryText
-                            )
-                        }
+                items(data) { item ->
+                    CardExercise(item){
+                        onClickExercise
+                    }
                 }
-
             }
+        }
+    }
 
-//                LazyVerticalGrid(
-//                    modifier = modifier.padding(horizontal = 16.dp),
-//                    columns = GridCells.Fixed(2),
-//                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-//                    verticalArrangement = Arrangement.spacedBy(20.dp),
-//                    contentPadding = PaddingValues(vertical = 30.dp),
-//                ) {
-//                    item(span = {
-//                        GridItemSpan(2)
-//                    }) {
-//                        Text(
-//                            text = stringResource(id = R.string.daily_tasks),
-//                            style = AppTheme.typography.titleXS,
-//                            color = AppTheme.colors.primaryText
-//                        )
-//                    }
-//
-//                    item(span = {
-//                        GridItemSpan(2)
-//                    }) {
-//                        Column(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .clickable(
-//                                    interactionSource = remember {
-//                                        MutableInteractionSource()
-//                                    }, indication = null
-//                                ) {
-//
-//                                },
-//                        ) {
-//                            Image(
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                                    .wrapContentHeight(),
-//                                painter = painterResource(id = R.drawable.ic_kpt_card),
-//                                contentDescription = "",
-//                                contentScale = ContentScale.FillWidth
-//                            )
-//
-//                            Spacer(modifier = Modifier.padding(top = 10.dp))
-//
-//                            Text(
-//                                text = stringResource(id = R.string.cbt_diary_new_name),
-//                                style = AppTheme.typography.bodyXLBold,
-//                                color = AppTheme.colors.primaryText
-//                            )
-//                        }
-//                    }
-//
-//                    item(span = {
-//                        GridItemSpan(2)
-//                    }) {
-//                        DiaryTextButton(modifier = Modifier.padding(vertical = 20.dp)) {
-//                            onFreeDiaryClick()
-//                        }
-//                    }
-//                }
+    @Composable
+    private fun CardExercise(
+        item: ExerciseEntity,
+        onClickExercise: (id: String) -> Unit
+    ) {
+        Box(
+            modifier = Modifier
+                .width(180.dp)
+                .clip(RoundedCornerShape(28.dp))
+                .clickable(
+                    interactionSource = remember {
+                        MutableInteractionSource()
+                    }, indication = null
+                ) {
+                    onClickExercise(item.id)
+                },
+        ) {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                painter = painterResource(id = R.drawable.ic_kpt_card),
+                contentDescription = "",
+                contentScale = ContentScale.FillWidth
+            )
 
+            Text(
+                text = item.title,
+                style = AppTheme.typography.titleCygreSemiBold,
+                color = Color.White,
+                modifier = Modifier.align(Alignment.BottomCenter)
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 16.dp)
+
+            )
         }
     }
 
@@ -328,14 +272,30 @@ class ExercisesFragment : Fragment() {
         }
     }
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Preview(showBackground = true)
     @Composable
     private fun RenderContent_Preview() {
         Scaffold {
             AppTheme {
                 RenderContent(
-                    modifier = Modifier.padding(it),
                     onFreeDiaryClick = {},
+                    onClickExercise = {},
+                    data = listOf(
+                        ExerciseEntity(
+                            id = "",
+                            title = "Определение групп проблем",
+                            linkToPicture = "g[f[gf",
+                            open = true
+                        ),
+                        ExerciseEntity(
+                            id = "",
+                            title = "Определение проблемы,\n" +
+                                    "постановка цели",
+                            linkToPicture = "g[f[gf",
+                            open = true
+                        )
+                    ),
                 )
             }
         }

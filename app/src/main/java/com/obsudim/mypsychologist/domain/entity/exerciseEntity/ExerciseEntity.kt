@@ -13,7 +13,7 @@ data class ExerciseEntity(
     val id: String,
     val title: String,
     val linkToPicture: String,
-    val closed: Boolean
+    val open: Boolean
 )
 
 data class ExerciseDetailEntity(

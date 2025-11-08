@@ -34,7 +34,7 @@ fun ExerciseInfoPreview.toEntity(): ExerciseInfoPreviewEntity {
 }
 
 fun ExercisesModel.toEntity(): ExerciseEntity {
-    return ExerciseEntity(id, title, "https://xn--b1afb6bcb.xn--d1acsjd4h.tech$linkToPicture", closed)
+    return ExerciseEntity(id, title, "https://xn--b1afb6bcb.xn--d1acsjd4h.tech$linkToPicture", open)
 }
 
 fun ExerciseDetailModel.toEntity(): ExerciseDetailEntity =

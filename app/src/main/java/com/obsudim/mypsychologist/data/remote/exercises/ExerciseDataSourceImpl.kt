@@ -10,10 +10,10 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGro
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
+import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseMock
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultFromAPIModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseSaveResponseModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.SaveExerciseResultResponseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.StatusPostResponse
@@ -34,7 +34,7 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         })
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAllExercises(): Flow<Resource<List<ExercisesModel>>> = flow {
+    override suspend fun getAllExercises(): Flow<Resource<ExerciseMock>> = flow {
         emit(Resource.Loading)
         emit(getResult {
             api.getAllExercises()

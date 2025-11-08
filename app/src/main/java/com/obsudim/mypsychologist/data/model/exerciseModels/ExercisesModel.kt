@@ -12,13 +12,18 @@ data class ExerciseInfoPreview(
     @SerialName("questions_count")
     val questionsCount: Int,
 )
+
+@Serializable
+data class ExerciseMock(
+    val exercises: List<ExercisesModel>
+)
 @Serializable
 data class ExercisesModel(
     val id: String,
     val title: String,
     @SerialName("picture_link")
     val linkToPicture: String,
-    val closed: Boolean
+    val open: Boolean
 )
 
 @Serializable
