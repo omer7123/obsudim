@@ -87,10 +87,17 @@ data class StatusPostResponse(
 )
 
 @Serializable
+data class ResultsExercise(
+    val results: List<ExerciseResultFromAPIModel>
+)
+
+@Serializable
 data class ExerciseResultFromAPIModel(
-    @SerialName("completed_exercise_id")
-    val completedExerciseId: String,
-    val date: String
+    val id: String,
+    @SerialName("exercise_id")
+    val exerciseId: String,
+    val date: String,
+    val preview: String,
 )
 
 @Serializable

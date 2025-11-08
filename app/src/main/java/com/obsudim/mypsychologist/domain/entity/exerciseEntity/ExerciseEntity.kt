@@ -35,6 +35,13 @@ sealed interface TypeOfExercise {
     data object NumberInput : TypeOfExercise
 }
 
+data class ExerciseAllResultEntity(
+    val id: String,
+    val exerciseId: String,
+    val date: String,
+    val preview: String,
+)
+
 data class ExerciseResultRequestEntity(
     val id: String, val result: List<ExerciseResultEntity>
 )

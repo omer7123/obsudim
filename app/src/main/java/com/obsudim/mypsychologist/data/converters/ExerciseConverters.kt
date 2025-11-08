@@ -16,12 +16,12 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.FieldExerciseModel
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.FieldExerciseEntity
@@ -70,7 +70,7 @@ fun DailyTaskMarkIdEntity.toModel() = DailyTaskMarkIdModel(
     id = id
 )
 
-fun ExerciseResultFromAPIModel.toEntity() = ExerciseResultFromAPIEntity(completedExerciseId, date)
+fun ExerciseResultFromAPIModel.toEntity() = ExerciseAllResultEntity(id, exerciseId, date, preview)
 
 fun ExerciseDetailResultModel.toEntity() =
     ExerciseDetailResultEntity(title, date, result = result.map { ExerciseResultEntity(fieldId = it.fieldId, value = it.value) })

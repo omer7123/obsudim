@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.core.Resource
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.obsudim.mypsychologist.domain.useCase.exerciseUseCases.GetAllExerciseResultsUseCase
 import com.obsudim.mypsychologist.domain.useCase.exerciseUseCases.definitionProblemGroupExercise.GetAllDPGResultsUseCase
-import com.obsudim.mypsychologist.extensions.convertLondonTimeToDeviceTime
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,15 +31,7 @@ class RecordsExerciseViewModel (
                 when(resource){
                     is Resource.Error -> _screenState.value = RecordsExerciseScreenState.Error
                     Resource.Loading -> _screenState.value = RecordsExerciseScreenState.Loading
-                    is Resource.Success -> _screenState.value = RecordsExerciseScreenState.Content(
-                        resource.data.map {
-                            RecordExerciseEntity(
-                                it.completedExerciseId,
-                                "",
-                                it.date.convertLondonTimeToDeviceTime()
-                            )
-                        }
-                    )
+                    is Resource.Success -> {}
                 }
             }
         }

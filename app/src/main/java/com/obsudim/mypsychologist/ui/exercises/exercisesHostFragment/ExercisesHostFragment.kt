@@ -8,13 +8,17 @@ import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -38,6 +42,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.obsudim.mypsychologist.R
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
 import com.obsudim.mypsychologist.extensions.getAppComponent
 import com.obsudim.mypsychologist.presentation.di.MultiViewModelFactory
@@ -66,7 +71,7 @@ class ExercisesHostFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getInfo(requireArguments().getString(EXERCISE_ID)!!)
+        viewModel.getHistory(requireArguments().getString(EXERCISE_ID)!!)
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -93,7 +98,8 @@ class ExercisesHostFragment: Fragment() {
             is ExerciseHostScreenState.Content -> {
                 OnboardingExerciseContent(
                     state.data,
-                    onBackClick
+                    state.history,
+                    onBackClick,
                 )
             }
             ExerciseHostScreenState.Error -> {
@@ -112,6 +118,7 @@ class ExercisesHostFragment: Fragment() {
     @Composable
     fun OnboardingExerciseContent(
         data: ExerciseInfoPreviewEntity,
+        history: List<ExerciseAllResultEntity>,
         onBackClick: () -> Unit
     ) {
         Column(
@@ -165,7 +172,8 @@ class ExercisesHostFragment: Fragment() {
             Column(modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
-                .background(color = AppTheme.colors.screenBackground)){
+                .background(color = AppTheme.colors.screenBackground)
+            ) {
                 Button(
                     colors = ButtonDefaults.buttonColors(
                         containerColor = AppTheme.colors.primaryText,
@@ -188,95 +196,164 @@ class ExercisesHostFragment: Fragment() {
                     )
                 }
 
-                Column(
+                when {
+                    history.isEmpty() -> RenderInfo(
+                        data, modifier = Modifier
+                            .padding(top = 20.dp)
+                            .padding(horizontal = 16.dp)
+                    )
+
+                    else -> RenderHistory(
+                        history, modifier = Modifier
+                            .padding(top = 20.dp)
+                            .padding(horizontal = 16.dp)
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun RenderHistory(history: List<ExerciseAllResultEntity>, modifier: Modifier) {
+        Column(
+            modifier = modifier
+        ) {
+            Text(
+                text = stringResource(R.string.history),
+                style = AppTheme.typography.titleCygreSemiBold,
+                fontSize = 26.sp,
+                color = AppTheme.colors.primaryText
+            )
+
+            Spacer(modifier = Modifier.padding(top = 20.dp))
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(history) { item ->
+                    CardHistory(item)
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun CardHistory(item: ExerciseAllResultEntity) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color = AppTheme.colors.tertiaryBackground,
+                    shape = RoundedCornerShape(28.dp)
+                )
+                .padding(horizontal = 16.dp, vertical = 16.dp)
+        ) {
+
+            Text(
+                text = item.preview,
+                style = AppTheme.typography.bodyLBold,
+                fontSize = 16.sp,
+                color = AppTheme.colors.primaryText,
+            )
+
+            Spacer(modifier = Modifier.padding(top = 6.dp))
+
+            Text(
+                text = item.date,
+                style = AppTheme.typography.bodyM,
+                fontSize = 14.sp,
+                color = AppTheme.colors.primaryText,
+            )
+        }
+    }
+
+    @Composable
+    private fun RenderInfo(data: ExerciseInfoPreviewEntity, modifier: Modifier = Modifier) {
+        Column(
+            modifier = modifier
+                .background(
+                    color = AppTheme.colors.tertiaryBackground,
+                    shape = RoundedCornerShape(28.dp)
+                )
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = stringResource(R.string.allows),
+                style = AppTheme.typography.titleCygreSemiBold,
+                color = AppTheme.colors.primaryText,
+                fontSize = 26.sp,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 20.dp)
+            )
+            Text(
+                text = data.description,
+                style = AppTheme.typography.bodyM,
+                color = AppTheme.colors.primaryText,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 20.dp, top = 2.dp)
+            )
+        }
+
+        Row(modifier = Modifier.padding(horizontal = 16.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .background(
+                        color = AppTheme.colors.tertiaryBackground,
+                        shape = RoundedCornerShape(28.dp)
+                    )
+            ) {
+                Text(
+                    text = stringResource(R.string.time_to_read, data.timeToRead),
+                    style = AppTheme.typography.titleCygreSemiBold,
+                    color = AppTheme.colors.primaryText,
+                    fontSize = 22.sp,
                     modifier = Modifier
-                        .padding(top = 20.dp)
                         .padding(horizontal = 16.dp)
-                        .background(
-                            color = AppTheme.colors.tertiaryBackground,
-                            shape = RoundedCornerShape(28.dp)
-                        )
-                        .fillMaxWidth()
-                ){
-                    Text(
-                        text = stringResource(R.string.allows),
-                        style = AppTheme.typography.titleCygreSemiBold,
-                        color = AppTheme.colors.primaryText,
-                        fontSize = 26.sp,
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .padding(top = 20.dp)
-                    )
-                    Text(
-                        text = data.description,
-                        style = AppTheme.typography.bodyM,
-                        color = AppTheme.colors.primaryText,
-                        fontSize = 14.sp,
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .padding(bottom = 20.dp, top = 2.dp)
-                    )
-                }
+                        .padding(top = 20.dp)
+                )
+                Text(
+                    text = stringResource(R.string.to_pass),
+                    style = AppTheme.typography.bodyM,
+                    color = AppTheme.colors.primaryText,
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 20.dp, top = 2.dp)
+                )
+            }
 
-                Row(modifier = Modifier.padding(horizontal = 16.dp)) {
-                    Column(
-                        modifier = Modifier
-                            .padding(top = 20.dp)
-                            .background(
-                                color = AppTheme.colors.tertiaryBackground,
-                                shape = RoundedCornerShape(28.dp)
-                            )
-                    ) {
-                        Text(
-                            text = stringResource(R.string.time_to_read, data.timeToRead),
-                            style = AppTheme.typography.titleCygreSemiBold,
-                            color = AppTheme.colors.primaryText,
-                            fontSize = 22.sp,
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 20.dp)
-                        )
-                        Text(
-                            text = stringResource(R.string.to_pass),
-                            style = AppTheme.typography.bodyM,
-                            color = AppTheme.colors.primaryText,
-                            fontSize = 14.sp,
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .padding(bottom = 20.dp, top = 2.dp)
-                        )
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .padding(top = 20.dp)
-                            .padding(start = 16.dp)
-                            .background(
-                                color = AppTheme.colors.tertiaryBackground,
-                                shape = RoundedCornerShape(28.dp)
-                            )
-                            .fillMaxWidth()
-                    ){
-                        Text(
-                            text = stringResource(R.string.count_questions, data.questionsCount),
-                            style = AppTheme.typography.titleCygreSemiBold,
-                            color = AppTheme.colors.primaryText,
-                            fontSize = 22.sp,
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 20.dp)
-                        )
-                        Text(
-                            text = stringResource(R.string.with_open_answers),
-                            style = AppTheme.typography.bodyM,
-                            color = AppTheme.colors.primaryText,
-                            fontSize = 14.sp,
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .padding(bottom = 20.dp, top = 2.dp)
-                        )
-                    }
-                }
+            Column(
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .padding(start = 16.dp)
+                    .background(
+                        color = AppTheme.colors.tertiaryBackground,
+                        shape = RoundedCornerShape(28.dp)
+                    )
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(R.string.count_questions, data.questionsCount),
+                    style = AppTheme.typography.titleCygreSemiBold,
+                    color = AppTheme.colors.primaryText,
+                    fontSize = 22.sp,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 20.dp)
+                )
+                Text(
+                    text = stringResource(R.string.with_open_answers),
+                    style = AppTheme.typography.bodyM,
+                    color = AppTheme.colors.primaryText,
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 20.dp, top = 2.dp)
+                )
             }
         }
     }
@@ -286,7 +363,6 @@ class ExercisesHostFragment: Fragment() {
     fun OnboardingExerciseScreenPreview(){
         AppTheme {
             OnboardingExerciseContent(
-                onBackClick = {},
                 data = ExerciseInfoPreviewEntity(
                     id = "fd",
                     title = "Что вас расстраивает?",
@@ -294,7 +370,28 @@ class ExercisesHostFragment: Fragment() {
                             "о травматическом событии не выходят из головы",
                     timeToRead = 14,
                     questionsCount = 3
-                )
+                ),
+                history = listOf(
+                    ExerciseAllResultEntity(
+                        id = "TODO()",
+                        exerciseId = "TODO()",
+                        date = "12-02-2025",
+                        preview = "Вота как как то"
+                    ),
+                    ExerciseAllResultEntity(
+                        id = "TODO()",
+                        exerciseId = "TODO()",
+                        date = "12-02-2025",
+                        preview = "Вота как как то"
+                    ),
+                    ExerciseAllResultEntity(
+                        id = "TODO()",
+                        exerciseId = "TODO()",
+                        date = "12-02-2025",
+                        preview = "Вота как как то"
+                    ),
+                ),
+                onBackClick = {}
             )
         }
     }

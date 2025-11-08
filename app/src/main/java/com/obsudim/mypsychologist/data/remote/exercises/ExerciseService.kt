@@ -9,10 +9,10 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseMock
-import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultFromAPIModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseSaveResponseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
+import com.obsudim.mypsychologist.data.model.exerciseModels.ResultsExercise
 import com.obsudim.mypsychologist.data.model.exerciseModels.SaveExerciseResultResponseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.StatusPostResponse
 import retrofit2.Response
@@ -52,8 +52,8 @@ interface ExerciseService {
     @PATCH("/daily_tasks/complete")
     suspend fun markAsComplete(@Body body: DailyTaskMarkIdModel): Response<StatusPostResponse>
 
-    @GET("/exercise/get_exercise_results/{exercise_id}")
-    suspend fun getExerciseResults(@Path("exercise_id") exerciseId: String): Response<List<ExerciseResultFromAPIModel>>
+    @GET("/exercises/{exercise_id}/results")
+    suspend fun getExerciseResults(@Path("exercise_id") exerciseId: String): Response<ResultsExercise>
 
     @GET("/exercise/get_exercise_result/{completed_exercise_id}")
     suspend fun getDetailExerciseResult(@Path("completed_exercise_id") id: String): Response<ExerciseDetailResultModel>

@@ -8,11 +8,11 @@ import com.obsudim.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
@@ -58,9 +58,9 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
         }
     }
 
-    override suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseResultFromAPIEntity>>> {
+    override suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseAllResultEntity>>> {
         return dataSource.getExerciseResults(exerciseId).checkResource {list->
-            list.map { it.toEntity() }
+            list.results.map { it.toEntity() }
         }
     }
 

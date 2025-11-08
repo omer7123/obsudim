@@ -4,43 +4,49 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.core.Resource
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
+import com.obsudim.mypsychologist.domain.useCase.exerciseUseCases.GetAllExerciseResultsUseCase
 import com.obsudim.mypsychologist.domain.useCase.exerciseUseCases.GetExerciseInfoUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ExercisesHostViewModel @Inject constructor(private val getExerciseInfoUseCase: GetExerciseInfoUseCase) :
+class ExercisesHostViewModel @Inject constructor(
+    private val getExerciseInfoUseCase: GetExerciseInfoUseCase,
+    private val getAllExerciseResultsUseCase: GetAllExerciseResultsUseCase
+) :
     ViewModel() {
     private val _screenState: MutableStateFlow<ExerciseHostScreenState> =
         MutableStateFlow(ExerciseHostScreenState.Initial)
     val screenState = _screenState.asStateFlow()
 
-    fun getInfo(id: String) {
+    fun getHistory(id: String) {
         viewModelScope.launch {
-            getExerciseInfoUseCase(id).collect { state ->
-                when (state) {
-                    is Resource.Error<ExerciseInfoPreviewEntity> -> {
-                        Log.e("Error", state.msg.toString())
-                        _screenState.update {
-                            ExerciseHostScreenState.Error
-                        }
+            combine(
+                getExerciseInfoUseCase(id),
+                getAllExerciseResultsUseCase(id)
+            ) { infoState, historyState ->
+                when {
+                    infoState is Resource.Loading || historyState is Resource.Loading -> {
+                        ExerciseHostScreenState.Loading
                     }
 
-                    Resource.Loading -> {
-                        _screenState.update {
-                            ExerciseHostScreenState.Loading
-                        }
+                    infoState is Resource.Error || historyState is Resource.Error -> {
+                        Log.e("Error", (historyState as Resource.Error).msg.toString())
+                        ExerciseHostScreenState.Error
                     }
 
-                    is Resource.Success<ExerciseInfoPreviewEntity> -> {
-                        _screenState.update {
-                            ExerciseHostScreenState.Content(state.data)
-                        }
+                    infoState is Resource.Success && historyState is Resource.Success -> {
+                        val historyData = historyState.data
+                        ExerciseHostScreenState.Content(infoState.data, historyData)
+
                     }
+
+                    else -> ExerciseHostScreenState.Initial
                 }
+            }.collect { state ->
+                _screenState.value = state
             }
         }
     }

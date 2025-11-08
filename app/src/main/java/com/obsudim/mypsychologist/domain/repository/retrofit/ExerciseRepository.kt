@@ -5,11 +5,11 @@ import com.obsudim.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
@@ -22,7 +22,7 @@ interface ExerciseRepository {
     suspend fun getDailyExercises(): Flow<Resource<List<DailyExerciseEntity>>>
     suspend fun markAsCompleteDailyTask(dailyTaskMarkIdEntity: DailyTaskMarkIdEntity): Flow<Resource<String>>
     suspend fun saveExerciseResult(result: ExerciseResultRequestEntity): Flow<Resource<DailyTaskMarkIdEntity>>
-    suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseResultFromAPIEntity>>>
+    suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseAllResultEntity>>>
     suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultEntity>>
     suspend fun getAllStatusExercise(): Flow<Resource<List<ExercisesStatusEntity>>>
     suspend fun saveDefinitionProblemGroupResult(result: DefinitionProblemGroupExerciseEntity): Flow<Resource<Boolean>>
