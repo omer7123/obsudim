@@ -20,12 +20,25 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorSecondaryContainer"
+        android:layout_height="75dp"
+        android:background="@drawable/navbar_background"
+        android:layout_marginBottom="6dp"
+        android:layout_marginHorizontal="16dp"
         app:itemIconTint="?attr/colorOnSecondaryContainer"
         app:itemTextColor="?attr/colorOnSecondaryContainer"
         app:itemActiveIndicatorStyle="@style/Theme.BottomNavigationView.ActiveIndicator"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/navigation_items"/>
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/navigation"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?attr/colorOnPrimary"-->
+<!--        app:itemIconTint="?attr/colorOnSecondaryContainer"-->
+<!--        app:itemTextColor="?attr/colorOnSecondaryContainer"-->
+<!--        app:itemActiveIndicatorStyle="@style/Theme.BottomNavigationView.ActiveIndicator"-->
+<!--        app:labelVisibilityMode="labeled"-->
+<!--        app:menu="@menu/navigation_items"/>-->
 
 </LinearLayout>
