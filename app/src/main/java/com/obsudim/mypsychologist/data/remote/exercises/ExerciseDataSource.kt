@@ -8,6 +8,7 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGro
 import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupHistoryModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
+import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultFromAPIModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseSaveResponseModel
@@ -18,6 +19,7 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.StatusPostResponse
 import kotlinx.coroutines.flow.Flow
 
 interface ExerciseDataSource {
+    suspend fun getExerciseInfoPreview(id: String): Flow<Resource<ExerciseInfoPreview>>
     suspend fun getAllExercises(): Flow<Resource<List<ExercisesModel>>>
     suspend fun getExerciseDetail(id: String): Flow<Resource<ExerciseDetailModel>>
     suspend fun saveExerciseResult(data: ExerciseResultRequestModel): Flow<Resource<SaveExerciseResultResponseModel>>

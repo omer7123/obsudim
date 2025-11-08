@@ -11,6 +11,7 @@ import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DefinitionProblem
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
@@ -21,6 +22,12 @@ import javax.inject.Inject
 
 class ExerciseReposityoryImpl @Inject constructor(private val dataSource: ExerciseDataSource) :
     ExerciseRepository {
+    override suspend fun getExerciseInfoPreview(id: String): Flow<Resource<ExerciseInfoPreviewEntity>> {
+        return dataSource.getExerciseInfoPreview(id).checkResource {
+            it.toEntity()
+        }
+    }
+
     override suspend fun getAllExercises(): Flow<Resource<List<ExerciseEntity>>> {
         return dataSource.getAllExercises().checkResource { list ->
             list.map { it.toEntity() }

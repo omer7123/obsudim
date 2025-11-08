@@ -2,10 +2,16 @@ package com.obsudim.mypsychologist.domain.entity.exerciseEntity
 
 import com.obsudim.mypsychologist.ui.core.delegateItems.DelegateItem
 
-data class ExerciseEntity(
+data class ExerciseInfoPreviewEntity(
     val id: String,
     val title: String,
     val description: String,
+    val timeToRead: Int,
+    val questionsCount: Int,
+)
+data class ExerciseEntity(
+    val id: String,
+    val title: String,
     val linkToPicture: String,
     val closed: Boolean
 )

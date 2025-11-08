@@ -7,6 +7,7 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGro
 import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupHistoryModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
+import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultFromAPIModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseSaveResponseModel
@@ -24,7 +25,12 @@ import retrofit2.http.Query
 
 interface ExerciseService {
 
-    @GET("/exercise/get_all_exercises")
+    @GET("/exercises/{exercise_id}")
+    suspend fun getExerciseInfoPreview(
+        @Path("exercise_id") id: String
+    ): Response<ExerciseInfoPreview>
+
+    @GET("/exercises/")
     suspend fun getAllExercises(): Response<List<ExercisesModel>>
 
     @GET("/exercise/all")

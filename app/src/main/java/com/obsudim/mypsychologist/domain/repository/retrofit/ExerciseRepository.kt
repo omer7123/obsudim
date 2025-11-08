@@ -8,6 +8,7 @@ import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DefinitionProblem
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultFromAPIEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
@@ -15,6 +16,7 @@ import com.obsudim.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEnt
 import kotlinx.coroutines.flow.Flow
 
 interface ExerciseRepository {
+    suspend fun getExerciseInfoPreview(id: String): Flow<Resource<ExerciseInfoPreviewEntity>>
     suspend fun getAllExercises(): Flow<Resource<List<ExerciseEntity>>>
     suspend fun getExerciseDetail(id: String): Flow<Resource<ExerciseDetailEntity>>
     suspend fun getDailyExercises(): Flow<Resource<List<DailyExerciseEntity>>>
