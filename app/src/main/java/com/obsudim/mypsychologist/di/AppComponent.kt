@@ -22,7 +22,6 @@ interface AppComponent {
     fun educationComponent(): EducationComponent.Factory
     fun authenticationComponent(): AuthenticationComponent.Factory
 
-    fun tagsComponent(): TagsComponent.Factory
 
     @Component.Factory
     interface Factory {
