@@ -2,8 +2,6 @@ package com.obsudim.mypsychologist.data.converters
 
 import com.obsudim.mypsychologist.data.model.exerciseModels.DailyExerciseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.DailyTaskMarkIdModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupExerciseModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupHistoryModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
@@ -15,7 +13,6 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.FieldExerciseModel
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
@@ -25,9 +22,7 @@ import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEnt
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.FieldExerciseEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
-import com.obsudim.mypsychologist.extensions.convertLondonTimeToDeviceTime
 
 fun ExerciseInfoPreview.toEntity(): ExerciseInfoPreviewEntity {
     return ExerciseInfoPreviewEntity(id, title, description, timeToRead, questionsCount)
@@ -76,8 +71,4 @@ fun ExerciseDetailResultModel.toEntity() =
     ExerciseDetailResultEntity(title, date, result = result.map { ExerciseResultEntity(fieldId = it.fieldId, value = it.value) })
 
 fun ExercisesStatusModel.toEntity() = ExercisesStatusEntity(title, isClosed)
-
-fun DefinitionProblemGroupExerciseEntity.toModel() = DefinitionProblemGroupExerciseModel(sphere, emotion, target)
-
-fun DefinitionProblemGroupHistoryModel.toEntity() = RecordExerciseEntity(id, sphere, time.convertLondonTimeToDeviceTime())
 

@@ -5,14 +5,11 @@ import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.data.model.CBTDiaryModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.DailyExerciseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.DailyTaskMarkIdModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupExerciseModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupHistoryModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseMock
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseSaveResponseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ResultsExercise
 import com.obsudim.mypsychologist.data.model.exerciseModels.SaveExerciseResultResponseModel
@@ -105,29 +102,11 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun saveDefinitionProblemGroupResult(definitionDataModel: DefinitionProblemGroupExerciseModel): Flow<Resource<ExerciseSaveResponseModel>> = flow{
-        emit(Resource.Loading)
-        emit(
-            getResult {
-                api.saveDefinitionProblemGroupResult(definitionDataModel)
-            }
-        )
-    }.flowOn(Dispatchers.IO)
-
     override suspend fun saveCBTDiary(diary: CBTDiaryModel): Flow<Resource<SaveExerciseResultResponseModel>> = flow {
         emit(Resource.Loading)
         emit(
             getResult {
                 api.saveCBTDiary(diary)
-            }
-        )
-    }.flowOn(Dispatchers.IO)
-
-    override suspend fun getExerciseDPGResults(): Flow<Resource<List<DefinitionProblemGroupHistoryModel>>> = flow{
-        emit(Resource.Loading)
-        emit(
-            getResult {
-                api.getAllDPGResults()
             }
         )
     }.flowOn(Dispatchers.IO)

@@ -3,14 +3,11 @@ package com.obsudim.mypsychologist.data.remote.exercises
 import com.obsudim.mypsychologist.data.model.CBTDiaryModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.DailyExerciseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.DailyTaskMarkIdModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupExerciseModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.DefinitionProblemGroupHistoryModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseMock
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseSaveResponseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ResultsExercise
 import com.obsudim.mypsychologist.data.model.exerciseModels.SaveExerciseResultResponseModel
@@ -58,11 +55,7 @@ interface ExerciseService {
     @GET("/exercise/get_exercise_result/{completed_exercise_id}")
     suspend fun getDetailExerciseResult(@Path("completed_exercise_id") id: String): Response<ExerciseDetailResultModel>
 
-    @POST("/defining_problem_groups/save_exercise_result")
-    suspend fun saveDefinitionProblemGroupResult(@Body data: DefinitionProblemGroupExerciseModel): Response<ExerciseSaveResponseModel>
     @POST("/diary/writing_think_diary")
     suspend fun saveCBTDiary(@Body diary: CBTDiaryModel): Response<SaveExerciseResultResponseModel>
 
-    @GET("/defining_problem_groups/get_all_by_user")
-    suspend fun getAllDPGResults(): Response<List<DefinitionProblemGroupHistoryModel>>
 }
