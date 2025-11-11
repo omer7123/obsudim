@@ -10,7 +10,7 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.FieldExerciseModel
+import com.obsudim.mypsychologist.data.model.exerciseModels.PagesExerciseModel
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
@@ -35,7 +35,7 @@ fun ExercisesModel.toEntity(): ExerciseEntity {
 fun ExerciseDetailModel.toEntity(): ExerciseDetailEntity =
     ExerciseDetailEntity(id, title, description, fields = field.map { it.toEntity() })
 
-fun FieldExerciseModel.toEntity(): FieldExerciseEntity {
+fun PagesExerciseModel.toEntity(): FieldExerciseEntity {
     val typeOfEntity = when (type) {
         1 -> TypeOfExercise.TextInput
         2 -> TypeOfExercise.NumberInput

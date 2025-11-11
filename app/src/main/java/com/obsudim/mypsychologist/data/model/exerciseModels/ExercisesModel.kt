@@ -29,22 +29,38 @@ data class ExercisesModel(
 
 @Serializable
 data class ExerciseDetailModel(
+    @SerialName("pulled_fields")
+    val pulledFields: List<String>,
     val id: String,
     val title: String,
+    @SerialName("picture_link")
+    val pictureLink: String,
     val description: String,
-    val field: List<FieldExerciseModel>
+    @SerialName("time_to_read")
+    val timeToRead: Int,
+    @SerialName("questions_count")
+    val questionsCount: Int,
+    val open: Boolean,
+    val pages: List<PagesExerciseModel>
 )
 
 @Serializable
-data class FieldExerciseModel(
-    val description: String,
-    val title: String,
-    val major: Boolean,
-    @SerialName("exercise_structure_id")
-    val exerciseStructureId: String,
-    val type: Int,
-    val id: String
+data class PagesExerciseModel(
+    val pageNumber: Int,
+    val sections: List<SectionsExerciseModel>,
 )
+
+@Serializable
+data class SectionsExerciseModel(
+    val id: String,
+    val title: String,
+    val view: String,
+    val type: String,
+    val placeholder: String,
+    val prompt: String,
+    val variants: List<String>,
+)
+
 @Serializable
 data class ExerciseResultRequestModel(
     @SerialName("exercise_structure_id")

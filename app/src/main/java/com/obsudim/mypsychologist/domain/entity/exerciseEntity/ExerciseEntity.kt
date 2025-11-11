@@ -15,24 +15,35 @@ data class ExerciseEntity(
 )
 
 data class ExerciseDetailEntity(
+    val pulledFields: List<String>,
     val id: String,
     val title: String,
+    val pictureLink: String,
     val description: String,
-    val fields: List<FieldExerciseEntity>
+    val timeToRead: Int,
+    val questionsCount: Int,
+    val open: Boolean,
+    val pages: List<PagesExerciseEntity>
 )
 
-data class FieldExerciseEntity(
-    val description: String,
+data class PagesExerciseEntity(
+    val pageNumber: Int,
+    val sections: List<SectionsExerciseEntity>,
+)
+
+data class SectionsExerciseEntity(
+    val id: String,
     val title: String,
-    val major: Boolean,
-    val exerciseStructureId: String,
-    val type: TypeOfExercise,
-    val id: String
+    val view: String,
+    val type: TypeOfSection,
+    val placeholder: String,
+    val prompt: String,
+    val variants: List<String>,
 )
 
-sealed interface TypeOfExercise {
-    data object TextInput : TypeOfExercise
-    data object NumberInput : TypeOfExercise
+sealed interface TypeOfSection {
+    data object TextInput : TypeOfSection
+    data object AddableList : TypeOfSection
 }
 
 data class ExerciseAllResultEntity(
