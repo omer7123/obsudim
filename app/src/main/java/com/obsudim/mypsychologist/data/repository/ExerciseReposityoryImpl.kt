@@ -7,7 +7,6 @@ import com.obsudim.mypsychologist.data.remote.exercises.ExerciseDataSource
 import com.obsudim.mypsychologist.domain.entity.ThoughtDiaryEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DefinitionProblemGroupExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailResultEntity
@@ -15,7 +14,6 @@ import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.RecordExerciseEntity
 import com.obsudim.mypsychologist.domain.repository.retrofit.ExerciseRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -78,23 +76,9 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
         }
     }
 
-    override suspend fun saveDefinitionProblemGroupResult(result: DefinitionProblemGroupExerciseEntity): Flow<Resource<Boolean>> {
-        return dataSource.saveDefinitionProblemGroupResult(result.toModel()).checkResource {
-            true
-        }
-    }
-
     override suspend fun saveCBTDiary(diary: ThoughtDiaryEntity): Flow<Resource<DailyTaskMarkIdEntity>> {
         return dataSource.saveCBTDiary(diary.toModel()).checkResource {
             DailyTaskMarkIdEntity(it.id)
-        }
-    }
-
-    override suspend fun getAllDPGResults(): Flow<Resource<List<RecordExerciseEntity>>> {
-        return dataSource.getExerciseDPGResults().checkResource {list->
-            list.map {
-                it.toEntity()
-            }
         }
     }
 }
