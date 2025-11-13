@@ -3,14 +3,29 @@ package com.obsudim.mypsychologist.data.converters
 import com.obsudim.mypsychologist.data.model.EducationMaterialForSaveProgressModel
 import com.obsudim.mypsychologist.data.model.EducationsModel
 import com.obsudim.mypsychologist.data.model.ItemMaterialModel
+import com.obsudim.mypsychologist.data.model.RecomendationModel
 import com.obsudim.mypsychologist.data.model.ThemeModel
 import com.obsudim.mypsychologist.domain.entity.educationEntity.EducationMaterialForSaveProgressEntity
 import com.obsudim.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.obsudim.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
+import com.obsudim.mypsychologist.domain.entity.educationEntity.RecomendationEntity
 import com.obsudim.mypsychologist.domain.entity.educationEntity.TopicEntity
 
 fun ThemeModel.toEntity(url: String) =
-    TopicEntity(id, theme, "${url.dropLast(1)+link}", tags, educationMaterials = educationMaterials.map{it.toEntity()})
+    TopicEntity(
+        id,
+        theme,
+        "${url.dropLast(1) + link}",
+        recomendations = recomendations.map { it.toEntity() },
+        educationMaterials = educationMaterials.map { it.toEntity() }
+    )
+
+fun RecomendationModel.toEntity() = RecomendationEntity(
+    id = id,
+    theme = theme,
+    link = "https://xn--2-ctbib7ccc.xn--c1ajjlbco7a.xn----gtbbcb4bjf2ak.xn--p1ai$link",
+    tags = tags
+)
 
 fun EducationsModel.toEntity() = EducationsEntity(
     id = id,

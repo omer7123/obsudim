@@ -8,9 +8,17 @@ data class ThemeModel(
     val id: String,
     val theme: String,
     val link: String,
-    val tags: List<String> = emptyList(),
+    val recomendations: List<RecomendationModel> = emptyList(),
     @SerialName("education_materials")
     val educationMaterials: List<EducationsModel>
+)
+
+@Serializable
+data class RecomendationModel(
+    val id: String,
+    val theme: String,
+    val link: String,
+    val tags: List<String>,
 )
 @Serializable
 data class EducationsModel(

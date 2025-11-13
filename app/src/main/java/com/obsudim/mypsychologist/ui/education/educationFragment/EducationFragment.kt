@@ -14,8 +14,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -31,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -40,6 +44,7 @@ import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.databinding.FragmentEducationBinding
 import com.obsudim.mypsychologist.domain.entity.educationEntity.EducationsEntity
 import com.obsudim.mypsychologist.domain.entity.educationEntity.ItemMaterialEntity
+import com.obsudim.mypsychologist.domain.entity.educationEntity.RecomendationEntity
 import com.obsudim.mypsychologist.domain.entity.educationEntity.TopicEntity
 import com.obsudim.mypsychologist.extensions.getAppComponent
 import com.obsudim.mypsychologist.extensions.showToast
@@ -128,7 +133,6 @@ class EducationFragment : Fragment() {
 
     @Composable
     private fun EducationRenderContent(data: TopicEntity, onBtnClick: () -> Unit) {
-
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(16.dp),
@@ -152,6 +156,9 @@ class EducationFragment : Fragment() {
                             onBtnClick()
                         }
                     )
+                }
+                item {
+                    RecomendationRenderContent(data, onBtnClick)
                 }
 
         }
@@ -200,16 +207,93 @@ class EducationFragment : Fragment() {
     }
 
     @Composable
+    private fun RecomendationRenderContent(data: TopicEntity, onBtnClick: () -> Unit) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp)
+        ) {
+            Text(
+                text = "РЕКОМЕНДАЦИИ",
+                style = AppTheme.typography.titleCygreSemiBold,
+                color = AppTheme.colors.primaryText,
+                fontSize = 16.sp,
+            )
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                items(data.recomendations) { recomendation ->
+                    RecomendationItem(recomendation)
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun RecomendationItem(item: RecomendationEntity) {
+        Box(
+            modifier = Modifier
+                .width(280.dp)
+                .height(280.dp)
+                .padding(horizontal = 10.dp)
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current).data(item.link).build(),
+                contentDescription = item.theme,
+                placeholder = ColorPainter(color = AppTheme.colors.loading),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(16.dp))
+                    .fillMaxSize()
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
+                Column (
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = item.theme,
+                        style = AppTheme.typography.titleCygreSemiBold,
+                        color = AppTheme.colors.primaryText,
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
     @Preview(showBackground = true)
     fun TestsContentPreview() {
-        val data =
-            TopicEntity(
+        val data = TopicEntity(
                 id = "isuahfiue",
                 theme = "Основы КПТ",
                 link = "",
-                tags = listOf(
-                    "7 минут",
-                    "Образование"),
+                recomendations = listOf(
+                    RecomendationEntity(
+                        id = "1",
+                        theme = "Убеждения",
+                        link = "",
+                        tags = listOf(
+                            "5 минут",
+                            "Образование")
+                    ),
+                    RecomendationEntity(
+                        id = "2",
+                        theme = "КПТ-дневник",
+                        link = "/images/images_education_material/img_2.png",
+                        tags = listOf(
+                            "7 минут",
+                            "Образование")
+                    )
+                ),
                 educationMaterials = listOf(EducationsEntity(
                     id = "fwfe",
                     type = 0,
