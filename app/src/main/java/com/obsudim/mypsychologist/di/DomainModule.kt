@@ -5,11 +5,13 @@ import com.obsudim.mypsychologist.data.repository.AuthenticationRepositoryImpl
 import com.obsudim.mypsychologist.data.repository.EducationRepositoryImpl
 import com.obsudim.mypsychologist.data.repository.ExerciseReposityoryImpl
 import com.obsudim.mypsychologist.data.repository.FreeDiaryRepositoryImpl
+import com.obsudim.mypsychologist.data.repository.ModelDeprRepositoryImpl
 import com.obsudim.mypsychologist.data.repository.TestsDiagnosticRepositoryImpl
 import com.obsudim.mypsychologist.domain.repository.retrofit.AuthenticationRepository
 import com.obsudim.mypsychologist.domain.repository.retrofit.EducationRepository
 import com.obsudim.mypsychologist.domain.repository.retrofit.ExerciseRepository
 import com.obsudim.mypsychologist.domain.repository.retrofit.FreeDiaryRepository
+import com.obsudim.mypsychologist.domain.repository.retrofit.ModelDeprRepository
 import com.obsudim.mypsychologist.domain.repository.retrofit.TestsDiagnosticRepository
 import com.obsudim.mypsychologist.presentation.authentication.authFragment.AuthViewModel
 import com.obsudim.mypsychologist.presentation.authentication.registrationFragment.RegisterViewModel
@@ -46,6 +48,10 @@ interface DomainModule {
     @Binds
     @Singleton
     fun bindExercise(impl: ExerciseReposityoryImpl): ExerciseRepository
+
+    @Binds
+    @Singleton
+    fun ModelDeprRepository(impl: ModelDeprRepositoryImpl): ModelDeprRepository
 
 
     @Binds
