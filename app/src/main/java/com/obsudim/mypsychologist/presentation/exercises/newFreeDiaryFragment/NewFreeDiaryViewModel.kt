@@ -9,6 +9,7 @@ import com.obsudim.mypsychologist.domain.entity.ModelDepressionRespEntity
 import com.obsudim.mypsychologist.domain.entity.diaryEntity.NewFreeDiaryWithDateEntity
 import com.obsudim.mypsychologist.domain.useCase.freeDiaryUseCase.AddFreeDiaryUseCase
 import com.obsudim.mypsychologist.domain.useCase.modelDepressionUseCases.SaveNoteModelUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -46,6 +47,7 @@ class NewFreeDiaryViewModel @Inject constructor(
                 Resource.Loading -> _screenState.value = NewFreeDiaryScreenState.Loading
                 is Resource.Success -> {
                     startModel(diary)
+                    delay(10000)
                     _screenState.value = NewFreeDiaryScreenState.Success
                 }
             }
@@ -59,7 +61,9 @@ class NewFreeDiaryViewModel @Inject constructor(
                     Log.e("error", state.msg.toString())
                     _screenState.value = NewFreeDiaryScreenState.Error("Произошла непредвиденная ошибка")
                 }
-                Resource.Loading -> _screenState.value = NewFreeDiaryScreenState.LoadingModel
+                Resource.Loading -> {
+                    _screenState.value = NewFreeDiaryScreenState.LoadingModel
+                }
                 is Resource.Success<ModelDepressionRespEntity> -> {
                     val resMsg = when(state.data.prediction){
                         0 -> "Склонность к депрессии не выявлена"
