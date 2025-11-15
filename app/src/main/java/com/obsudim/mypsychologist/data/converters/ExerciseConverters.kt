@@ -11,6 +11,7 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultReques
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.PagesExerciseModel
+import com.obsudim.mypsychologist.data.model.exerciseModels.SectionsExerciseModel
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
@@ -21,8 +22,9 @@ import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPrevi
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.FieldExerciseEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfExercise
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.PagesExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SectionsExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
 
 fun ExerciseInfoPreview.toEntity(): ExerciseInfoPreviewEntity {
     return ExerciseInfoPreviewEntity(id, title, description, timeToRead, questionsCount)
@@ -33,15 +35,37 @@ fun ExercisesModel.toEntity(): ExerciseEntity {
 }
 
 fun ExerciseDetailModel.toEntity(): ExerciseDetailEntity =
-    ExerciseDetailEntity(id, title, description, fields = field.map { it.toEntity() })
+    ExerciseDetailEntity(
+        pulledFields = pulledFields,
+        id = id,
+        title = title,
+        pictureLink = pictureLink,
+        description = description,
+        timeToRead = timeToRead,
+        questionsCount = questionsCount,
+        open = open,
+        pages = pages.map { it.toEntity() },
+        )
 
-fun PagesExerciseModel.toEntity(): FieldExerciseEntity {
-    val typeOfEntity = when (type) {
-        1 -> TypeOfExercise.TextInput
-        2 -> TypeOfExercise.NumberInput
-        else -> TypeOfExercise.TextInput
+fun PagesExerciseModel.toEntity(): PagesExerciseEntity {
+    return PagesExerciseEntity(pageNumber = pageNumber, sections = sections.map { it.toEntity() })
+}
+
+fun SectionsExerciseModel.toEntity(): SectionsExerciseEntity{
+    val typeLoc = when(this.type){
+        "input"-> TypeOfSection.TextInput
+        else -> TypeOfSection.AddableList
     }
-    return FieldExerciseEntity(description, title, major, exerciseStructureId, typeOfEntity, id)
+
+    return SectionsExerciseEntity(
+        id = id,
+        title = title,
+        view = view,
+        type = typeLoc,
+        placeholder = placeholder,
+        prompt = prompt,
+        variants = variants
+    )
 }
 
 fun ExerciseResultRequestEntity.toModel(): ExerciseResultRequestModel {
