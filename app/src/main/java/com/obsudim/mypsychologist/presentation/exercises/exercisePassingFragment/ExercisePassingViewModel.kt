@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SectionsExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSectionUiRes
 import com.obsudim.mypsychologist.domain.useCase.exerciseUseCases.GetExerciseDetailUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,7 +15,7 @@ import javax.inject.Inject
 
 class ExercisePassingViewModel @Inject constructor(
     private val getExerciseDetailUseCase: GetExerciseDetailUseCase
-): ViewModel() {
+) : ViewModel() {
     private var _screenState =
         MutableStateFlow<ExercisePassingScreenState>(ExercisePassingScreenState.Initial)
     val screenState = _screenState.asStateFlow()
@@ -25,10 +28,24 @@ class ExercisePassingViewModel @Inject constructor(
                         ExercisePassingScreenState.Error
 
                     Resource.Loading -> _screenState.value = ExercisePassingScreenState.Loading
-                    is Resource.Success<ExerciseDetailEntity> -> _screenState.value =
-                        ExercisePassingScreenState.Content(0, res.data.pages)
+                    is Resource.Success<ExerciseDetailEntity> -> {
+                        val pages = res.data.pages
+                        _screenState.value =
+                            ExercisePassingScreenState.Content(
+                                currentPage = 1,
+                                pagesWithFields = pages,
+                                currValue = pages.flatMap { it.sections }
+                                    .map { it.toUiRes() }
+                            )
+                    }
                 }
             }
         }
     }
+
+    private fun SectionsExerciseEntity.toUiRes(): TypeOfSectionUiRes =
+        when (type) {
+            TypeOfSection.AddableList -> TypeOfSectionUiRes.AddableListUiEntity(id)
+            TypeOfSection.TextInput   -> TypeOfSectionUiRes.TextInputUiEntity(id)
+        }
 }
