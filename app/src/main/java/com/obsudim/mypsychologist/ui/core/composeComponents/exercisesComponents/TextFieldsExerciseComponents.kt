@@ -22,7 +22,7 @@ import com.obsudim.mypsychologist.ui.theme.AppTheme
 @Composable
 fun TextInputItem(
     title: String,
-    text: String,
+    text: String? = null,
     onTextChange: (String) -> Unit,
     placeholder: String = "",
     modifier: Modifier = Modifier,
@@ -54,11 +54,12 @@ fun TextInputItem(
         Spacer(modifier = Modifier.padding(top = 20.dp))
 
         TransparentPrimaryTextField(
-            field = text,
+            field = text ?: "",
             placeHolderText = placeholder,
             onFieldChange = onTextChange,
             modifier = defaultModifier,
-            textColor = textColor
+            textColor = textColor,
+            singleLine = false
         )
     }
 }

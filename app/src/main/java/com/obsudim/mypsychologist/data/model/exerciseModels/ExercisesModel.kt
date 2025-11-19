@@ -46,6 +46,7 @@ data class ExerciseDetailModel(
 
 @Serializable
 data class PagesExerciseModel(
+    @SerialName("page_number")
     val pageNumber: Int,
     val sections: List<SectionsExerciseModel>,
 )

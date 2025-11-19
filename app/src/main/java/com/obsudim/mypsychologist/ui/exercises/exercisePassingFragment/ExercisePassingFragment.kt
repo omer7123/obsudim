@@ -4,11 +4,16 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -26,11 +31,16 @@ import com.obsudim.mypsychologist.presentation.di.MultiViewModelFactory
 import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment.ExercisePassingScreenState
 import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment.ExercisePassingViewModel
 import com.obsudim.mypsychologist.ui.core.composeComponents.PlaceholderError
+import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextInputItem
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
 
 class ExercisePassingFragment : Fragment() {
+
+    companion object{
+        const val EXERCISE_ID = "EXERCISE_ID"
+    }
 
     @Inject
     lateinit var vmFactory: MultiViewModelFactory
@@ -38,19 +48,26 @@ class ExercisePassingFragment : Fragment() {
         ViewModelProvider(this, vmFactory)[ExercisePassingViewModel::class.java]
     }
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireContext().getAppComponent().exercisesComponent().create().inject(this)
+
+        viewModel.getExerciseStructure(requireArguments().getString(EXERCISE_ID)!!)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = ComposeView(requireContext()).apply {
+        activity?.window?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        )
+
         setContent {
             AppTheme {
-                ExercisePassingScreen(viewModel)
+                Scaffold {
+                    ExercisePassingScreen(viewModel)
+                }
             }
         }
     }
@@ -60,7 +77,10 @@ class ExercisePassingFragment : Fragment() {
         val viewState = viewModel.screenState.collectAsState().value
         when (viewState) {
             is ExercisePassingScreenState.Content -> {
-                ExercisePassingContent(viewState)
+                ExercisePassingContent(
+                    viewState = viewState,
+                    onTextInputChange = {viewModel.textInputChange(it)}
+                )
             }
 
             ExercisePassingScreenState.Error -> {
@@ -77,33 +97,61 @@ class ExercisePassingFragment : Fragment() {
     }
 
     @Composable
-    private fun ExercisePassingContent(viewState: ExercisePassingScreenState.Content) {
+    private fun ExercisePassingContent(viewState: ExercisePassingScreenState.Content, onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,) {
         val fieldsOfThisPage =
             viewState.pagesWithFields.first { it.pageNumber == viewState.currentPage }.sections
 
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier.imePadding()
+                .verticalScroll(rememberScrollState())
+        ) {
+
             items(fieldsOfThisPage) { item ->
-                ItemExercise(item)
+                val currValField =
+                    viewState.currValue.first { it.id == item.id }
+
+                ItemExercise(item, currValField, onTextInputChange = {onTextInputChange(it)})
             }
         }
     }
 
     @Composable
-    private fun ItemExercise(item: SectionsExerciseEntity) {
+    private fun ItemExercise(item: SectionsExerciseEntity, currValField: TypeOfSectionUiRes, onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,) {
         when(item.type){
             TypeOfSection.AddableList -> {}
             TypeOfSection.TextInput -> {
-                TextInputExercise(item)
+                TextInputExercise(
+                    item = item,
+                    currValField = currValField as TypeOfSectionUiRes.TextInputUiEntity,
+                    onTextInputChange = {onTextInputChange(it)}
+                )
             }
         }
     }
 
     @Composable
-    private fun TextInputExercise(item: SectionsExerciseEntity) {
+    private fun TextInputExercise(
+        item: SectionsExerciseEntity,
+        currValField: TypeOfSectionUiRes.TextInputUiEntity,
+        onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,
+    ) {
         val view = item.view
         when{
             view == "primary" ->{
+                TextInputItem(
+                    title = item.title,
+                    text = currValField.title,
+                    onTextChange = {
+                        onTextInputChange(
+                            TypeOfSectionUiRes.TextInputUiEntity(
+                                item.id,
+                                it
+                            )
+                        )
+                    },
+                    placeholder = item.placeholder,
 
+                    )
             }
             view == "default" ->{
                 
@@ -136,10 +184,11 @@ class ExercisePassingFragment : Fragment() {
                     ),
                     currValue = listOf(
                         TypeOfSectionUiRes.TextInputUiEntity(
-                            id = "9a24ce66-8dd0-4008-bcf4-d06664cdd9aa",
+                            idLoc = "9a24ce66-8dd0-4008-bcf4-d06664cdd9aa",
                         )
                     )
-                )
+                ),
+                {}
             )
         }
     }

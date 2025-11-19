@@ -1,5 +1,6 @@
 package com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.core.Resource
@@ -24,15 +25,19 @@ class ExercisePassingViewModel @Inject constructor(
         viewModelScope.launch {
             getExerciseDetailUseCase(id).collect { res ->
                 when (res) {
-                    is Resource.Error<ExerciseDetailEntity> -> _screenState.value =
-                        ExercisePassingScreenState.Error
-
+                    is Resource.Error<ExerciseDetailEntity> -> {
+                        Log.e("Error", res.msg.toString())
+                        _screenState.value =
+                            ExercisePassingScreenState.Error
+                    }
                     Resource.Loading -> _screenState.value = ExercisePassingScreenState.Loading
                     is Resource.Success<ExerciseDetailEntity> -> {
                         val pages = res.data.pages
+                        Log.e("data:", pages.flatMap { it.sections }
+                            .map { it.toUiRes() }.toString())
                         _screenState.value =
                             ExercisePassingScreenState.Content(
-                                currentPage = 1,
+                                currentPage = 0,
                                 pagesWithFields = pages,
                                 currValue = pages.flatMap { it.sections }
                                     .map { it.toUiRes() }
@@ -43,6 +48,17 @@ class ExercisePassingViewModel @Inject constructor(
         }
     }
 
+    fun textInputChange(textInput: TypeOfSectionUiRes.TextInputUiEntity){
+        val currState = (screenState.value as ExercisePassingScreenState.Content)
+        _screenState.value = currState.copy(
+            currValue = currState.currValue.map { curr ->
+                if (curr.id == textInput.id)
+                    textInput
+                else
+                    curr
+            }
+        )
+    }
     private fun SectionsExerciseEntity.toUiRes(): TypeOfSectionUiRes =
         when (type) {
             TypeOfSection.AddableList -> TypeOfSectionUiRes.AddableListUiEntity(id)
