@@ -46,6 +46,18 @@ sealed interface TypeOfSection {
     data object AddableList : TypeOfSection
 }
 
+sealed interface TypeOfSectionUiRes {
+    data class TextInputUiEntity(
+        val id: String,
+        val title: String? = null,
+    ) : TypeOfSectionUiRes
+
+    data class AddableListUiEntity(
+        val id: String,
+        val list: List<String>? = null,
+    ): TypeOfSectionUiRes
+}
+
 data class ExerciseAllResultEntity(
     val id: String,
     val exerciseId: String,
