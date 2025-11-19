@@ -29,6 +29,7 @@ import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment
 import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment.ExercisePassingViewModel
 import com.obsudim.mypsychologist.ui.core.composeComponents.PlaceholderError
 import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextInputItem
+import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextInputItemDefault
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -148,7 +149,7 @@ class ExercisePassingFragment : Fragment() {
                     )
             }
             "default" -> {
-                TextInputItem(
+                TextInputItemDefault(
                     title = item.title,
                     text = currValField.title,
                     onTextChange = {

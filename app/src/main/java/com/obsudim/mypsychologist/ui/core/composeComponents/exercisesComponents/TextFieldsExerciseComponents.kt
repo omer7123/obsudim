@@ -27,28 +27,30 @@ fun TextInputItem(
     placeholder: String = "",
     modifier: Modifier = Modifier,
     height: Int = 140,
-    backgroundColor: Color = AppTheme.colors.navBackground,
-    textColor: Color = AppTheme.colors.secondaryBackground
+    backgroundTextFieldColor: Color = AppTheme.colors.navBackground,
+    textFieldColor: Color = AppTheme.colors.primaryTextInvert,
+    backgroundColor: Color = AppTheme.colors.primaryBackground,
+    titleColor: Color = AppTheme.colors.primaryTextInvert
 ) {
     val defaultModifier = modifier
         .fillMaxWidth()
         .sizeIn(minHeight = height.dp)
         .background(
-            color = backgroundColor,
+            color = backgroundTextFieldColor,
             shape = RoundedCornerShape(28.dp)
         )
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = AppTheme.colors.primaryBackground)
+            .background(color = backgroundColor)
             .padding(horizontal = 16.dp, vertical = 30.dp)
     ) {
         Text(
             text = title,
             style = AppTheme.typography.titleCygreSemiBold,
             fontSize = 26.sp,
-            color = AppTheme.colors.primaryTextInvert
+            color = titleColor
         )
 
         Spacer(modifier = Modifier.padding(top = 20.dp))
@@ -58,10 +60,32 @@ fun TextInputItem(
             placeHolderText = placeholder,
             onFieldChange = onTextChange,
             modifier = defaultModifier,
-            textColor = textColor,
+            textColor = textFieldColor,
             singleLine = false
         )
     }
+}
+
+@Composable
+fun TextInputItemDefault(
+    title: String,
+    text: String? = null,
+    onTextChange: (String) -> Unit,
+    placeholder: String = "",
+) {
+
+    TextInputItem(
+        title = title,
+        text = text,
+        onTextChange = { onTextChange(it) },
+        placeholder = placeholder,
+        modifier = Modifier,
+        height = 110,
+        textFieldColor = AppTheme.colors.secondaryText,
+        backgroundTextFieldColor = AppTheme.colors.tertiaryBackground,
+        backgroundColor = AppTheme.colors.screenBackground,
+        titleColor = AppTheme.colors.primaryText
+    )
 }
 
 
@@ -79,8 +103,8 @@ fun TextInputItemBluePreview() {
             placeholder = "Что произошло?",
             modifier = Modifier,
             height = 140,
-            textColor = Color(0xFFCDD7FF),
-            backgroundColor = AppTheme.colors.navBackground
+            textFieldColor = Color(0xFFCDD7FF),
+            backgroundTextFieldColor = AppTheme.colors.navBackground
         )
     }
 }
@@ -90,16 +114,11 @@ fun TextInputItemBluePreview() {
 fun TextInputItemWhitePreview() {
     AppTheme {
         val textState = remember { mutableStateOf("") }
-
-        TextInputItem(
+        TextInputItemDefault(
             title = "Какие эпизоды этой истории особенно вас расстраивают?",
             text = textState.value,
             onTextChange = { textState.value = it },
             placeholder = "Мне кажется....",
-            modifier = Modifier,
-            height = 110,
-            textColor = AppTheme.colors.secondaryText,
-            backgroundColor = AppTheme.colors.tertiaryBackground
         )
     }
 }
@@ -117,8 +136,8 @@ fun TextInputItemGreenPreview() {
             placeholder = "Брать ипотеку или просить повышения...",
             modifier = Modifier,
             height = 224,
-            textColor = Color(0xFF8DD9C6),
-            backgroundColor = Color(0xFF015641)
+            textFieldColor = Color(0xFF8DD9C6),
+            backgroundTextFieldColor = Color(0xFF015641)
         )
     }
 }
