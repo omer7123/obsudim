@@ -4,14 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -59,13 +56,10 @@ class ExercisePassingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = ComposeView(requireContext()).apply {
-        activity?.window?.setSoftInputMode(
-            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-        )
 
         setContent {
             AppTheme {
-                Scaffold {
+                Scaffold(modifier = Modifier.imePadding()) {
                     ExercisePassingScreen(viewModel)
                 }
             }
@@ -103,7 +97,7 @@ class ExercisePassingFragment : Fragment() {
 
         LazyColumn(
             modifier = Modifier.imePadding()
-                .verticalScroll(rememberScrollState())
+
         ) {
 
             items(fieldsOfThisPage) { item ->
@@ -136,8 +130,8 @@ class ExercisePassingFragment : Fragment() {
         onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,
     ) {
         val view = item.view
-        when{
-            view == "primary" ->{
+        when (view) {
+            "primary" -> {
                 TextInputItem(
                     title = item.title,
                     text = currValField.title,
@@ -153,8 +147,21 @@ class ExercisePassingFragment : Fragment() {
 
                     )
             }
-            view == "default" ->{
-                
+            "default" -> {
+                TextInputItem(
+                    title = item.title,
+                    text = currValField.title,
+                    onTextChange = {
+                        onTextInputChange(
+                            TypeOfSectionUiRes.TextInputUiEntity(
+                                item.id,
+                                it
+                            )
+                        )
+                    },
+                    placeholder = item.placeholder,
+
+                    )
             }
         }
     }
