@@ -87,9 +87,12 @@ data class DailyTaskMarkIdEntity(
     val id: String
 )
 
-data class ExerciseResultFromAPIEntity(
-    val completedExerciseId: String,
-    val date: String
+data class SaveExerciseResultResponseEntity(
+    val id: String,
+    val score: Int,
+    val pictureLink: String,
+    val view: String,
+    val successMessage: String,
 )
 
 data class ExerciseDetailResultEntity(

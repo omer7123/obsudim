@@ -91,6 +91,7 @@ sealed interface TypeFieldModel{
 data class SaveExerciseResultResponseModel(
     val id: String,
     val score: Int,
+    @SerialName("picture_link")
     val pictureLink: String,
     val view: String,
     @SerialName("success_message")

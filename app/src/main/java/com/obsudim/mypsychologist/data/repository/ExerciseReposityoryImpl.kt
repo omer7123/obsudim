@@ -14,6 +14,7 @@ import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseInfoPreviewEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SaveExerciseResultResponseEntity
 import com.obsudim.mypsychologist.domain.repository.retrofit.ExerciseRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -50,9 +51,9 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
         }
     }
 
-    override suspend fun saveExerciseResult(result: ExerciseResultRequestEntity): Flow<Resource<DailyTaskMarkIdEntity>> {
+    override suspend fun saveExerciseResult(result: ExerciseResultRequestEntity): Flow<Resource<SaveExerciseResultResponseEntity>> {
         return dataSource.saveExerciseResult(result.toModel()).checkResource {
-            DailyTaskMarkIdEntity(it.id)
+            SaveExerciseResultResponseEntity(it.id, score = it.score, it.pictureLink, it.view, it.successMessage)
         }
     }
 

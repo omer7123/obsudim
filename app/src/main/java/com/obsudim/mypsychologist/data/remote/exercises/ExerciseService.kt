@@ -37,7 +37,7 @@ interface ExerciseService {
         @Path("exercise_id") id: String
     ): Response<ExerciseDetailModel>
 
-    @POST("/exercise/save_exercise_result")
+    @POST("/exercises/complete")
     suspend fun saveExerciseResult(
         @Body resultExercise: ExerciseResultRequestModel
     ): Response<SaveExerciseResultResponseModel>

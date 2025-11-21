@@ -47,7 +47,7 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun saveExerciseResult(data: ExerciseResultRequestModel): Flow<Resource<SaveExerciseResultResponseModel>> = flow<Resource<SaveExerciseResultResponseModel>> {
+    override suspend fun saveExerciseResult(data: ExerciseResultRequestModel): Flow<Resource<SaveExerciseResultResponseModel>> = flow {
         emit(Resource.Loading)
         emit(
             getResult {
