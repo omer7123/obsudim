@@ -151,10 +151,17 @@ class ExercisePassingFragment : Fragment() {
             }
 
             item {
-                TotalTextButton(
-                    textString = stringResource(R.string.next),
-                    onClick = {onNextBtnClick()},
-                )
+                if (viewState.currentPage == viewState.pagesWithFields.size - 1) {
+                    TotalTextButton(
+                        textString = stringResource(R.string.end),
+                        onClick = {onNextBtnClick()},
+                    )
+                }else {
+                    TotalTextButton(
+                        textString = stringResource(R.string.next),
+                        onClick = { onNextBtnClick() },
+                    )
+                }
             }
         }
     }
