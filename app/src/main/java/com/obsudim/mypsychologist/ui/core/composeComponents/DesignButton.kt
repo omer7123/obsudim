@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 
@@ -83,6 +84,35 @@ fun SecondaryTextButton(
 }
 
 @Composable
+fun TotalTextButton(
+    textString: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+){
+    TextButton(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(bottom = 30.dp)
+            .background(
+                color = AppTheme.colors.primaryText,
+                shape = RoundedCornerShape(28.dp)
+            ),
+        contentPadding = PaddingValues(vertical = 13.dp),
+        onClick = {
+            onClick()
+        },
+    ) {
+        Text(
+            text = textString,
+            style = AppTheme.typography.titleCygreSemiBold,
+            color = AppTheme.colors.primaryTextInvert,
+            fontSize = 16.sp
+        )
+    }
+}
+
+@Composable
 fun DiaryTextButton(
     modifier: Modifier = Modifier,
     textString: String = stringResource(id = R.string.free_diary),
@@ -136,6 +166,30 @@ private fun PrimaryTextButton_Preview(){
         PrimaryTextButton(
             textString = stringResource(id = R.string.mail),
             isLoading = false,
+            onClick = {},
+            modifier = Modifier.padding(vertical = 30.dp, horizontal = 10.dp)
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SecondaryTextButton_Preview(){
+    AppTheme {
+        SecondaryTextButton(
+            textString = stringResource(id = R.string.mail),
+            onClick = {},
+            modifier = Modifier.padding(vertical = 30.dp, horizontal = 10.dp)
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun TotalTextButton_Preview(){
+    AppTheme {
+        TotalTextButton(
+            textString = stringResource(id = R.string.mail),
             onClick = {},
             modifier = Modifier.padding(vertical = 30.dp, horizontal = 10.dp)
         )

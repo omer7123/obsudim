@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -16,9 +17,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.PagesExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SectionsExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
@@ -28,6 +31,7 @@ import com.obsudim.mypsychologist.presentation.di.MultiViewModelFactory
 import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment.ExercisePassingScreenState
 import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment.ExercisePassingViewModel
 import com.obsudim.mypsychologist.ui.core.composeComponents.PlaceholderError
+import com.obsudim.mypsychologist.ui.core.composeComponents.TotalTextButton
 import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextInputItem
 import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextInputItemDefault
 import com.obsudim.mypsychologist.ui.theme.AppTheme
@@ -60,7 +64,7 @@ class ExercisePassingFragment : Fragment() {
 
         setContent {
             AppTheme {
-                Scaffold(modifier = Modifier.imePadding()) {
+                Scaffold(modifier = Modifier.imePadding().background(color = AppTheme.colors.screenBackground)) {
                     ExercisePassingScreen(viewModel)
                 }
             }
@@ -74,7 +78,8 @@ class ExercisePassingFragment : Fragment() {
             is ExercisePassingScreenState.Content -> {
                 ExercisePassingContent(
                     viewState = viewState,
-                    onTextInputChange = {viewModel.textInputChange(it)}
+                    onTextInputChange = {viewModel.textInputChange(it)},
+                    onNextBtnClick = {viewModel.btnClickNext()}
                 )
             }
 
@@ -92,12 +97,16 @@ class ExercisePassingFragment : Fragment() {
     }
 
     @Composable
-    private fun ExercisePassingContent(viewState: ExercisePassingScreenState.Content, onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,) {
+    private fun ExercisePassingContent(
+        viewState: ExercisePassingScreenState.Content,
+        onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,
+        onNextBtnClick: () -> Unit,
+        ) {
         val fieldsOfThisPage =
             viewState.pagesWithFields.first { it.pageNumber == viewState.currentPage }.sections
 
         LazyColumn(
-            modifier = Modifier.imePadding()
+            modifier = Modifier.imePadding().background(color = AppTheme.colors.screenBackground)
 
         ) {
 
@@ -106,6 +115,13 @@ class ExercisePassingFragment : Fragment() {
                     viewState.currValue.first { it.id == item.id }
 
                 ItemExercise(item, currValField, onTextInputChange = {onTextInputChange(it)})
+            }
+
+            item {
+                TotalTextButton(
+                    textString = stringResource(R.string.next),
+                    onClick = {onNextBtnClick()},
+                )
             }
         }
     }
@@ -196,6 +212,7 @@ class ExercisePassingFragment : Fragment() {
                         )
                     )
                 ),
+                {},
                 {}
             )
         }
