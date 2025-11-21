@@ -66,7 +66,8 @@ data class ExerciseAllResultEntity(
 )
 
 data class ExerciseResultRequestEntity(
-    val id: String, val result: List<ExerciseResultEntity>
+    val id: String,
+    val filledFields: List<TypeOfSectionUiRes>
 )
 
 data class ExerciseResultEntity(

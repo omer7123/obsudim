@@ -6,12 +6,12 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultFromAPIModel
-import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.PagesExerciseModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.SectionsExerciseModel
+import com.obsudim.mypsychologist.data.model.exerciseModels.TypeFieldModel
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseAllResultEntity
@@ -25,6 +25,7 @@ import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExercisesStatusEn
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.PagesExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SectionsExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSectionUiRes
 
 fun ExerciseInfoPreview.toEntity(): ExerciseInfoPreviewEntity {
     return ExerciseInfoPreviewEntity(id, title, description, timeToRead, questionsCount)
@@ -70,15 +71,16 @@ fun SectionsExerciseModel.toEntity(): SectionsExerciseEntity{
 
 fun ExerciseResultRequestEntity.toModel(): ExerciseResultRequestModel {
     return ExerciseResultRequestModel(
-        id, result = result.map { it.toModel() }
+        id = id,
+        filledFields = filledFields.map{it.toModel()}
     )
 }
 
-private fun ExerciseResultEntity.toModel() : ExerciseResultModel {
-    return ExerciseResultModel(
-        fieldId = fieldId,
-        value = value
-    )
+private fun TypeOfSectionUiRes.toModel(): TypeFieldModel{
+    return when(val type = this){
+        is TypeOfSectionUiRes.AddableListUiEntity -> TypeFieldModel.AddableListModel(fieldId = type.id, text = type.list.orEmpty())
+        is TypeOfSectionUiRes.TextInputUiEntity -> TypeFieldModel.InputTextModel(fieldId = type.id, text = type.title.orEmpty())
+    }
 }
 
 fun DailyExerciseModel.toEntity(): DailyExerciseEntity{
