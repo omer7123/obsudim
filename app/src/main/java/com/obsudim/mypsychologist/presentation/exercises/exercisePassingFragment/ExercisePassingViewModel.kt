@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseDetailEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultRequestEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.FieldAddableListChange
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SaveExerciseResultResponseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SectionsExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
@@ -93,7 +94,31 @@ class ExercisePassingViewModel @Inject constructor(
     }
     private fun SectionsExerciseEntity.toUiRes(): TypeOfSectionUiRes =
         when (type) {
-            TypeOfSection.AddableList -> TypeOfSectionUiRes.AddableListUiEntity(id)
+            TypeOfSection.AddableList -> TypeOfSectionUiRes.AddableListUiEntity(
+                id,
+                list = listOf("")
+            )
             TypeOfSection.TextInput   -> TypeOfSectionUiRes.TextInputUiEntity(id)
         }
+
+    fun changeTextAddableList(entity: FieldAddableListChange) {
+        val currState = screenState.value as ExercisePassingScreenState.Content
+
+        _screenState.value = currState.copy(
+            currValue = currState.currValue.map { curr ->
+                if (curr.id == entity.idField) {
+                    val addableField = curr as TypeOfSectionUiRes.AddableListUiEntity
+
+                    val updatedList = addableField.list.mapIndexed { index, string->
+                        if (index == entity.idItem) entity.text else string
+                    }
+                    addableField.copy(list = updatedList)
+                } else curr
+            }
+        )
+    }
+
+    fun addItemAddableList() {
+        _screenState.value
+    }
 }

@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.obsudim.mypsychologist.R
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.FieldAddableListChange
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.PagesExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SectionsExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
@@ -40,6 +41,7 @@ import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment
 import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment.ExercisePassingViewModel
 import com.obsudim.mypsychologist.ui.core.composeComponents.PlaceholderError
 import com.obsudim.mypsychologist.ui.core.composeComponents.TotalTextButton
+import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.AddableList
 import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextInputItem
 import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextInputItemDefault
 import com.obsudim.mypsychologist.ui.theme.AppTheme
@@ -104,13 +106,16 @@ class ExercisePassingFragment : Fragment() {
         innerPadding: PaddingValues
     ) {
         val viewState = viewModel.screenState.collectAsState().value
+
         when (viewState) {
             is ExercisePassingScreenState.Content -> {
                 ExercisePassingContent(
                     viewState = viewState,
                     onTextInputChange = {viewModel.textInputChange(it)},
                     onNextBtnClick = { viewModel.btnClickNext() },
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier.padding(innerPadding),
+                    onTextChangeAddableList = { viewModel.changeTextAddableList(it) },
+                    addItemAddableListOnClick = { viewModel.addItemAddableList() }
                 )
             }
 
@@ -134,6 +139,8 @@ class ExercisePassingFragment : Fragment() {
         viewState: ExercisePassingScreenState.Content,
         onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,
         onNextBtnClick: () -> Unit,
+        onTextChangeAddableList: (FieldAddableListChange) -> Unit,
+        addItemAddableListOnClick: () -> Unit,
         modifier: Modifier = Modifier
         ) {
         val fieldsOfThisPage =
@@ -150,7 +157,13 @@ class ExercisePassingFragment : Fragment() {
                 val currValField =
                     viewState.currValue.first { it.id == item.id }
 
-                ItemExercise(item, currValField, onTextInputChange = {onTextInputChange(it)})
+                ItemExercise(
+                    item,
+                    currValField,
+                    onTextInputChange = { onTextInputChange(it) },
+                    onTextChangeAddableList = { onTextChangeAddableList(it) },
+                    addItemAddableList = { addItemAddableListOnClick() },
+                )
             }
 
             item {
@@ -173,10 +186,19 @@ class ExercisePassingFragment : Fragment() {
     private fun ItemExercise(
         item: SectionsExerciseEntity,
         currValField: TypeOfSectionUiRes,
-        onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit
+        onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,
+        onTextChangeAddableList: (FieldAddableListChange) -> Unit,
+        addItemAddableList: () -> Unit,
     ) {
         when(item.type){
-            TypeOfSection.AddableList -> {}
+            TypeOfSection.AddableList -> {
+                AddableList(
+                    item,
+                    currValField as TypeOfSectionUiRes.AddableListUiEntity,
+                    onTextChange = { onTextChangeAddableList(it) },
+                    onAddItemClick = { addItemAddableList() }
+                )
+            }
             TypeOfSection.TextInput -> {
                 TextInputExercise(
                     item = item,
@@ -259,6 +281,8 @@ class ExercisePassingFragment : Fragment() {
                         )
                     )
                 ),
+                {},
+                {},
                 {},
                 {}
             )

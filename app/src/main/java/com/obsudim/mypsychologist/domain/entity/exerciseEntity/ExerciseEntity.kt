@@ -54,9 +54,15 @@ sealed class TypeOfSectionUiRes(val id: String) {
 
     data class AddableListUiEntity(
         val idLoc: String,
-        val list: List<String>? = null,
+        val list: List<String>,
     ): TypeOfSectionUiRes(idLoc)
 }
+
+data class FieldAddableListChange(
+    val idField: String,
+    val idItem: Int,
+    val text: String,
+)
 
 data class ExerciseAllResultEntity(
     val id: String,

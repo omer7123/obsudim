@@ -7,15 +7,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.obsudim.mypsychologist.R
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.FieldAddableListChange
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SectionsExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSectionUiRes
 import com.obsudim.mypsychologist.ui.core.composeComponents.TransparentPrimaryTextField
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 
@@ -86,6 +95,108 @@ fun TextInputItemDefault(
         backgroundColor = AppTheme.colors.screenBackground,
         titleColor = AppTheme.colors.primaryText
     )
+}
+
+@Composable
+fun AddableList(
+    item: SectionsExerciseEntity,
+    currVal: TypeOfSectionUiRes.AddableListUiEntity,
+    onTextChange: (FieldAddableListChange) -> Unit,
+    onAddItemClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    val defaultModifier = modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp)
+        .sizeIn(minHeight = 72.dp)
+        .background(
+            color = AppTheme.colors.navBackground,
+            shape = RoundedCornerShape(28.dp)
+        )
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = AppTheme.colors.primaryBackground)
+    ) {
+        Text(
+            text = item.title,
+            style = AppTheme.typography.titleCygreSemiBold,
+            fontSize = 26.sp,
+            color = AppTheme.colors.primaryTextInvert,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+
+        Spacer(modifier = Modifier.padding(top = 20.dp))
+
+
+        for ((indx, currValue) in currVal.list.withIndex()) {
+            TransparentPrimaryTextField(
+                field = currValue,
+                placeHolderText = item.placeholder,
+                onFieldChange = {
+                    onTextChange(
+                        FieldAddableListChange(
+                            item.id,
+                            idItem = indx,
+                            it
+                        )
+                    )
+                },
+                modifier = defaultModifier,
+                textColor = AppTheme.colors.primaryTextInvert,
+                singleLine = false
+            )
+            Spacer(modifier = Modifier.padding(top = 20.dp))
+        }
+
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = AppTheme.colors.navBackground,
+            ),
+            shape = RoundedCornerShape(28.dp),
+            onClick = { onAddItemClick() },
+            content = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_add),
+                    contentDescription = null,
+                    tint = AppTheme.colors.primaryTextInvert
+                )
+            }
+        )
+
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun AddableList_Preview() {
+    AppTheme {
+        AddableList(
+            item =
+                SectionsExerciseEntity(
+                    id = "9a24ce66-8dd0-4008-bcf4-d06664cdd9aa",
+                    title = "Минусы этого",
+                    view = "primary",
+                    type = TypeOfSection.AddableList,
+                    placeholder = "Что произошло?",
+                    prompt = "string",
+                    variants = emptyList()
+
+                ),
+            currVal =
+                TypeOfSectionUiRes.AddableListUiEntity(
+                    idLoc = "9a24ce66-8dd0-4008-bcf4-d06664cdd9aa",
+                    list = listOf("Я смогу купить авто", "Я буду счастлив")
+                ),
+            {},
+            {}
+        )
+    }
 }
 
 
