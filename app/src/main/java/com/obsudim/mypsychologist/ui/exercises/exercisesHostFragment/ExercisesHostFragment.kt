@@ -70,10 +70,11 @@ class ExercisesHostFragment: Fragment() {
         requireContext().getAppComponent().exercisesComponent().create().inject(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         viewModel.getHistory(requireArguments().getString(EXERCISE_ID)!!)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
