@@ -118,7 +118,19 @@ class ExercisePassingViewModel @Inject constructor(
         )
     }
 
-    fun addItemAddableList() {
-        _screenState.value
+    fun addItemAddableList(fieldId: String) {
+        val currState = screenState.value as ExercisePassingScreenState.Content
+
+        _screenState.value = currState.copy(
+            currValue = currState.currValue.map { curr->
+                if (curr.id == fieldId){
+                    val addableList = curr as TypeOfSectionUiRes.AddableListUiEntity
+
+                    val currResAddableList = addableList.list + ""
+                    addableList.copy(list = currResAddableList)
+                }else
+                    curr
+            }
+        )
     }
 }

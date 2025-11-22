@@ -115,7 +115,7 @@ class ExercisePassingFragment : Fragment() {
                     onNextBtnClick = { viewModel.btnClickNext() },
                     modifier = Modifier.padding(innerPadding),
                     onTextChangeAddableList = { viewModel.changeTextAddableList(it) },
-                    addItemAddableListOnClick = { viewModel.addItemAddableList() }
+                    addItemAddableListOnClick = { viewModel.addItemAddableList(it) }
                 )
             }
 
@@ -140,7 +140,7 @@ class ExercisePassingFragment : Fragment() {
         onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,
         onNextBtnClick: () -> Unit,
         onTextChangeAddableList: (FieldAddableListChange) -> Unit,
-        addItemAddableListOnClick: () -> Unit,
+        addItemAddableListOnClick: (String) -> Unit,
         modifier: Modifier = Modifier
         ) {
         val fieldsOfThisPage =
@@ -162,7 +162,7 @@ class ExercisePassingFragment : Fragment() {
                     currValField,
                     onTextInputChange = { onTextInputChange(it) },
                     onTextChangeAddableList = { onTextChangeAddableList(it) },
-                    addItemAddableList = { addItemAddableListOnClick() },
+                    addItemAddableList = { addItemAddableListOnClick(it) },
                 )
             }
 
@@ -188,7 +188,7 @@ class ExercisePassingFragment : Fragment() {
         currValField: TypeOfSectionUiRes,
         onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,
         onTextChangeAddableList: (FieldAddableListChange) -> Unit,
-        addItemAddableList: () -> Unit,
+        addItemAddableList: (String) -> Unit,
     ) {
         when(item.type){
             TypeOfSection.AddableList -> {
@@ -196,7 +196,7 @@ class ExercisePassingFragment : Fragment() {
                     item,
                     currValField as TypeOfSectionUiRes.AddableListUiEntity,
                     onTextChange = { onTextChangeAddableList(it) },
-                    onAddItemClick = { addItemAddableList() }
+                    onAddItemClick = { addItemAddableList(it) }
                 )
             }
             TypeOfSection.TextInput -> {

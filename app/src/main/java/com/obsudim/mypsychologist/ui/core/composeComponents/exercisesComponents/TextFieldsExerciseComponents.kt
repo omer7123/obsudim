@@ -102,7 +102,7 @@ fun AddableList(
     item: SectionsExerciseEntity,
     currVal: TypeOfSectionUiRes.AddableListUiEntity,
     onTextChange: (FieldAddableListChange) -> Unit,
-    onAddItemClick: () -> Unit,
+    onAddItemClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -159,7 +159,7 @@ fun AddableList(
                 containerColor = AppTheme.colors.navBackground,
             ),
             shape = RoundedCornerShape(28.dp),
-            onClick = { onAddItemClick() },
+            onClick = { onAddItemClick(item.id) },
             content = {
                 Icon(
                     painter = painterResource(R.drawable.ic_add),
