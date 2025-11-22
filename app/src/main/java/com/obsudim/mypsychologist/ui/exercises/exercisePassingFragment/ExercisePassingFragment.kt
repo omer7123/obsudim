@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.PagesExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SectionsExerciseEntity
@@ -123,6 +124,8 @@ class ExercisePassingFragment : Fragment() {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
+
+            ExercisePassingScreenState.SuccessSave -> findNavController().popBackStack()
         }
     }
 

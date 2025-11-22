@@ -13,5 +13,6 @@ sealed interface ExercisePassingScreenState {
     data object Initial : ExercisePassingScreenState
     data object Error : ExercisePassingScreenState
     data object Loading : ExercisePassingScreenState
+    data object SuccessSave: ExercisePassingScreenState
 
 }
