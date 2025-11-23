@@ -148,6 +148,7 @@ class ExercisePassingFragment : Fragment() {
 
         LazyColumn(
             modifier = modifier
+                .fillMaxSize()
                 .imePadding()
                 .background(color = AppTheme.colors.screenBackground)
 

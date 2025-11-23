@@ -120,6 +120,8 @@ fun AddableList(
             .fillMaxWidth()
             .background(color = AppTheme.colors.primaryBackground)
     ) {
+        Spacer(modifier = Modifier.padding(top = 30.dp))
+
         Text(
             text = item.title,
             style = AppTheme.typography.titleCygreSemiBold,
