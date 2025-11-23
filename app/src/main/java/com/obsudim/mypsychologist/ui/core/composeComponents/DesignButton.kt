@@ -15,6 +15,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -87,6 +88,7 @@ fun SecondaryTextButton(
 fun TotalTextButton(
     textString: String,
     onClick: () -> Unit,
+    bgColor: Color = AppTheme.colors.primaryText,
     modifier: Modifier = Modifier,
 ){
     TextButton(
@@ -95,7 +97,7 @@ fun TotalTextButton(
             .padding(horizontal = 16.dp)
             .padding(bottom = 30.dp)
             .background(
-                color = AppTheme.colors.primaryText,
+                color = bgColor,
                 shape = RoundedCornerShape(28.dp)
             ),
         contentPadding = PaddingValues(vertical = 13.dp),

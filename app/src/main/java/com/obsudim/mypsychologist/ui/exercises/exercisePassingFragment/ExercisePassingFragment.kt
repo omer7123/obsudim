@@ -6,32 +6,47 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.FieldAddableListChange
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.PagesExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SaveExerciseResultResponseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SectionsExerciseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSectionUiRes
@@ -79,17 +94,20 @@ class ExercisePassingFragment : Fragment() {
                         .imePadding()
                         .background(color = AppTheme.colors.screenBackground),
                     topBar = {
-                        TopAppBar(
-                            backgroundColor = AppTheme.colors.primaryBackground,
-                            elevation = 0.dp
-                        ) {
-                            IconButton(
-                                onClick = { viewModel.btnClickPrev() }
+                        val viewState = viewModel.screenState.collectAsState().value
+                        if (viewState !is ExercisePassingScreenState.SuccessSave) {
+                            TopAppBar(
+                                backgroundColor = AppTheme.colors.primaryBackground,
+                                elevation = 0.dp
                             ) {
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_arrow_back_white),
-                                    contentDescription = null
-                                )
+                                IconButton(
+                                    onClick = { viewModel.btnClickPrev() }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.ic_arrow_back_white),
+                                        contentDescription = null
+                                    )
+                                }
                             }
                         }
                     }
@@ -130,7 +148,102 @@ class ExercisePassingFragment : Fragment() {
                 }
             }
 
-            ExercisePassingScreenState.SuccessSave -> findNavController().popBackStack()
+            is ExercisePassingScreenState.SuccessSave -> {
+                FinishScreen(viewState.data)
+            }
+        }
+    }
+
+    @Composable
+    private fun FinishScreen(data: SaveExerciseResultResponseEntity) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = AppTheme.colors.primaryBackground)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text(
+                    text = "+ ${data.score} баллов",
+                    style = AppTheme.typography.titleCygreFont,
+                    fontSize = 16.sp,
+                    color = AppTheme.colors.primaryTextInvert,
+                    modifier = Modifier
+                        .background(
+                            color = AppTheme.colors.navBackground,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .padding(vertical = 12.dp, horizontal = 14.dp)
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                IconButton(
+                    onClick = { findNavController().popBackStack() },
+                    modifier = Modifier
+                        .background(
+                            color = AppTheme.colors.screenBackground,
+                            shape = RoundedCornerShape(28.dp)
+                        )
+                        .size(40.dp)
+
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_close),
+                        tint = AppTheme.colors.primaryText,
+                        contentDescription = null
+                    )
+                }
+            }
+
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data("/dsa").build(),
+                contentDescription = null,
+                placeholder = ColorPainter(color = AppTheme.colors.loading),
+                error = painterResource(id = R.drawable.ic_book_succ_passing_exercise),
+                colorFilter = ColorFilter.tint(AppTheme.colors.secondaryBackground),
+                modifier = Modifier.align(alignment = Alignment.CenterHorizontally).height(350.dp)
+            )
+
+            Text(
+                text = data.successMessage,
+                style = AppTheme.typography.titleCygreFont,
+                fontSize = 24.sp,
+                color = AppTheme.colors.secondaryBackground,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 24.dp)
+            )
+
+            TotalTextButton(
+                "В достижения",
+                onClick = {},
+                bgColor = AppTheme.colors.navBackground,
+                modifier = Modifier.padding(top = 40.dp)
+            )
+        }
+    }
+
+    @Composable
+    @Preview(showBackground = true)
+    private fun FinishScreen_Preview() {
+        AppTheme {
+            FinishScreen(
+                data =
+                    SaveExerciseResultResponseEntity(
+                        id = "ds",
+                        20,
+                        "ds",
+                        "primary",
+                        successMessage = "Вы разобрали свои\n" +
+                                "«горячие точки»"
+                    )
+            )
         }
     }
 

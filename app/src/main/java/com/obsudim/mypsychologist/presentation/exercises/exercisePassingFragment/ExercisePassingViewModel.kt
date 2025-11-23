@@ -64,7 +64,7 @@ class ExercisePassingViewModel @Inject constructor(
                         Resource.Loading -> _screenState.value =
                             ExercisePassingScreenState.Loading
                         is Resource.Success<SaveExerciseResultResponseEntity> -> _screenState.value =
-                            ExercisePassingScreenState.SuccessSave
+                            ExercisePassingScreenState.SuccessSave(state.data)
                     }
                 }
             }

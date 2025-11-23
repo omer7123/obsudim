@@ -1,6 +1,7 @@
 package com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment
 
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.PagesExerciseEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.SaveExerciseResultResponseEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSectionUiRes
 
 sealed interface ExercisePassingScreenState {
@@ -13,6 +14,6 @@ sealed interface ExercisePassingScreenState {
     data object Initial : ExercisePassingScreenState
     data object Error : ExercisePassingScreenState
     data object Loading : ExercisePassingScreenState
-    data object SuccessSave: ExercisePassingScreenState
+    data class SuccessSave(val data: SaveExerciseResultResponseEntity): ExercisePassingScreenState
 
 }
