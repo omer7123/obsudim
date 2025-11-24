@@ -4,15 +4,29 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
+import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
 import com.obsudim.mypsychologist.extensions.getAppComponent
 import com.obsudim.mypsychologist.presentation.di.MultiViewModelFactory
+import com.obsudim.mypsychologist.presentation.exercises.exerciseDemoResultFragment.ExerciseDemoResultScreenState
 import com.obsudim.mypsychologist.presentation.exercises.exerciseDemoResultFragment.ExerciseDemoResultViewModel
+import com.obsudim.mypsychologist.ui.core.composeComponents.PlaceholderError
+import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextItemDefault
+import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextItemPrimary
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -49,7 +63,8 @@ class ExerciseDemoResultFragment : Fragment() {
             AppTheme {
                 Scaffold {innerPadding ->
                     ExerciseDemoResultScreen(
-                        innerPadding
+                        innerPadding,
+                        viewModel
                     )
                 }
             }
@@ -57,8 +72,62 @@ class ExerciseDemoResultFragment : Fragment() {
     }
 
     @Composable
-    private fun ExerciseDemoResultScreen(innerPadding: PaddingValues) {
+    private fun ExerciseDemoResultScreen(
+        innerPadding: PaddingValues,
+        viewModel: ExerciseDemoResultViewModel
+    ) {
+        val viewState = viewModel.screenState.collectAsState().value
+        when (viewState) {
+            is ExerciseDemoResultScreenState.Content -> {
+                ExerciseDemoResultContent(viewState.fields)
+            }
 
+            ExerciseDemoResultScreenState.Error -> {
+                PlaceholderError()
+            }
+
+            ExerciseDemoResultScreenState.Initial -> Unit
+            ExerciseDemoResultScreenState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun ExerciseDemoResultContent(fields: List<ExerciseResultEntity>) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(fields){item->
+                CardItemExercise(item)
+            }
+        }
+    }
+
+    @Composable
+    private fun CardItemExercise(item: ExerciseResultEntity) {
+        when(item.type){
+            TypeOfSection.AddableList -> TODO()
+            TypeOfSection.TextInput -> CardInputType(item)
+        }
+    }
+
+    @Composable
+    private fun CardInputType(item: ExerciseResultEntity) {
+        when(item.view){
+            "primary" -> {
+                TextItemPrimary(
+                    item.title,
+                    item.value
+                )
+            }
+            "default" -> {
+                TextItemDefault(
+                    item.title,
+                    item.value
+                )
+            }
+        }
     }
 }
 
