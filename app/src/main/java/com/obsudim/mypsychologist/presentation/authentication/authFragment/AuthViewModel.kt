@@ -42,7 +42,9 @@ class AuthViewModel @Inject constructor(
     fun auth() {
         val email = _stateScreen.value.email
         val password = _stateScreen.value.password
+
         if (email.isNotEmpty() && password.isNotEmpty()) {
+
             viewModelScope.launch(handler) {
                 _stateScreen.value = _stateScreen.value.copy(loading = true, error = null)
                 when (val result = authWithDataUserUseCase(AuthModel(email, password))) {
