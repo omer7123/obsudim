@@ -97,8 +97,14 @@ fun ExerciseResultFromAPIModel.toEntity() = ExerciseAllResultEntity(id, exercise
 fun ExerciseDetailResultModel.toEntity() =
     ExerciseDetailResultEntity(id, title, pictureLink, description, exerciseId, date, sections.map { it.toEntity() })
 
-private fun ExerciseResultModel.toEntity() =
-    ExerciseResultEntity(title, view, type, value)
+private fun ExerciseResultModel.toEntity(): ExerciseResultEntity {
+    val typeEntity = when (type) {
+        "input" -> TypeOfSection.TextInput
+        "addable_list" -> TypeOfSection.AddableList
+        else -> TypeOfSection.TextInput
+    }
+    return ExerciseResultEntity(title, view, typeEntity, value)
+}
 
 fun ExercisesStatusModel.toEntity() = ExercisesStatusEntity(title, isClosed)
 
