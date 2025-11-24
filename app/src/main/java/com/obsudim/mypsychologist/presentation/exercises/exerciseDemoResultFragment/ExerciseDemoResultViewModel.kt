@@ -34,6 +34,4 @@ class ExerciseDemoResultViewModel @Inject constructor(private val getExerciseDet
             }
         }
     }
-
-
 }
