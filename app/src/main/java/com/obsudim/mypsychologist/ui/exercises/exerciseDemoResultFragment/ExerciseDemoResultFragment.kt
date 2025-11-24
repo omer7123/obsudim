@@ -7,17 +7,25 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.TypeOfSection
 import com.obsudim.mypsychologist.extensions.getAppComponent
@@ -61,7 +69,25 @@ class ExerciseDemoResultFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             AppTheme {
-                Scaffold {innerPadding ->
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            backgroundColor = AppTheme.colors.tertiaryBackground,
+                            elevation = 0.dp
+                        ) {
+                            IconButton(
+                                onClick = { findNavController().popBackStack() }
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_arrow_back_white),
+                                    contentDescription = null
+                                )
+                            }
+                        }
+
+                    }
+                ) { innerPadding ->
+
                     ExerciseDemoResultScreen(
                         innerPadding,
                         viewModel
@@ -79,7 +105,10 @@ class ExerciseDemoResultFragment : Fragment() {
         val viewState = viewModel.screenState.collectAsState().value
         when (viewState) {
             is ExerciseDemoResultScreenState.Content -> {
-                ExerciseDemoResultContent(viewState.fields)
+                ExerciseDemoResultContent(
+                    viewState.fields,
+                   innerPadding
+                )
             }
 
             ExerciseDemoResultScreenState.Error -> {
@@ -88,7 +117,9 @@ class ExerciseDemoResultFragment : Fragment() {
 
             ExerciseDemoResultScreenState.Initial -> Unit
             ExerciseDemoResultScreenState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize()) {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                ) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
@@ -96,8 +127,11 @@ class ExerciseDemoResultFragment : Fragment() {
     }
 
     @Composable
-    private fun ExerciseDemoResultContent(fields: List<ExerciseResultEntity>) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+    private fun ExerciseDemoResultContent(
+        fields: List<ExerciseResultEntity>,
+        innerPadding: PaddingValues,
+    ) {
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding())) {
             items(fields){item->
                 CardItemExercise(item)
             }
