@@ -51,8 +51,11 @@ interface ExerciseService {
     @GET("/exercises/{exercise_id}/results")
     suspend fun getExerciseResults(@Path("exercise_id") exerciseId: String): Response<ResultsExercise>
 
-    @GET("/exercise/get_exercise_result/{completed_exercise_id}")
-    suspend fun getDetailExerciseResult(@Path("completed_exercise_id") id: String): Response<ExerciseDetailResultModel>
+    @GET("/exercises/{exercise_id}/results/{result_id}")
+    suspend fun getDetailExerciseResult(
+        @Path("exercise_id") idExercise: String,
+        @Path("result_id") idResult: String
+    ): Response<ExerciseDetailResultModel>
 
     @POST("/diary/writing_think_diary")
     suspend fun saveCBTDiary(@Body diary: CBTDiaryModel): Response<SaveExerciseResultResponseModel>

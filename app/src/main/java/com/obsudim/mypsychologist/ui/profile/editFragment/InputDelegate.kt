@@ -1,20 +1,15 @@
 package com.obsudim.mypsychologist.ui.profile.editFragment
 
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.databinding.IncludeEditTextBinding
 import com.obsudim.mypsychologist.domain.entity.InputItemEntity
-import com.obsudim.mypsychologist.domain.entity.InputItemExerciseEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseResultEntity
 import com.obsudim.mypsychologist.ui.core.adapter.AdapterDelegate
 import com.obsudim.mypsychologist.ui.core.delegateItems.DelegateItem
 import com.obsudim.mypsychologist.ui.core.delegateItems.InputDelegateItem
-import com.obsudim.mypsychologist.ui.core.delegateItems.InputExerciseDelegateItem
 
 class InputDelegate(
     private val onHelpClick: ((Int, Int) -> Unit)? = null
@@ -79,58 +74,6 @@ class InputDelegate(
                 }
 
                 field.setText(item.text)*/
-            }
-        }
-    }
-}
-
-class InputExerciseDelegate(
-    private val itemCount: Int,
-    private val onHelpClick: ((Int, Int) -> Unit)? = null
-) : AdapterDelegate {
-    private val mDataSet = HashMap<Int, String>()
-    override fun onCreateViewHolder(parent: ViewGroup) = ViewHolder(
-        IncludeEditTextBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-        onHelpClick
-    )
-
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        item: DelegateItem,
-        position: Int
-    ) {
-        (holder as ViewHolder).bind((item as InputExerciseDelegateItem).content())
-    }
-
-    override fun isOfViewType(item: DelegateItem) = item is InputExerciseDelegateItem
-
-
-    inner class ViewHolder(
-        private val binding: IncludeEditTextBinding,
-        private val onHelpClick: ((Int, Int) -> Unit)?
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: InputItemExerciseEntity) {
-            if (adapterPosition != itemCount-2)
-                binding.editText.imeOptions = EditorInfo.IME_ACTION_NEXT
-            else
-                binding.editText.imeOptions = EditorInfo.IME_ACTION_DONE
-
-            binding.editText.setRawInputType(InputType.TYPE_CLASS_TEXT)
-            binding.editText.imeOptions = binding.editText.imeOptions
-
-            binding.apply {
-                editText.hint = item.titleId
-
-                if (item.isNotCorrect)
-                    editLayout.error = itemView.context.getString(R.string.necessary_to_fill)
-
-                editText.setText(item.text)
-
-                editText.addTextChangedListener {
-                    item.saveFunction(ExerciseResultEntity(item.id, it.toString()))
-                }
-
             }
         }
     }

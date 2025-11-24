@@ -1,5 +1,7 @@
 package com.obsudim.mypsychologist.domain.entity.exerciseEntity
 
+import kotlinx.serialization.SerialName
+
 data class ExerciseInfoPreviewEntity(
     val id: String,
     val title: String,
@@ -76,10 +78,6 @@ data class ExerciseResultRequestEntity(
     val filledFields: List<TypeOfSectionUiRes>
 )
 
-data class ExerciseResultEntity(
-    val fieldId: String, var value: String
-)
-
 data class DailyExerciseEntity(
     val id: String,
     val type: Int,
@@ -101,11 +99,24 @@ data class SaveExerciseResultResponseEntity(
     val successMessage: String,
 )
 
-data class ExerciseDetailResultEntity(
+data class ExerciseResultEntity(
     val title: String,
-    val date: String,
-    val result: List<ExerciseResultEntity>
+    val view: String,
+    val type: String,
+    val value: String
 )
+
+data class ExerciseDetailResultEntity(
+    val id: String,
+    val title: String,
+    val pictureLink: String,
+    val description: String,
+    @SerialName("exercise_id")
+    val exerciseId: String,
+    val date: String,
+    val sections: List<ExerciseResultEntity>
+)
+
 
 data class RecordExerciseEntity(
     val id: String,
