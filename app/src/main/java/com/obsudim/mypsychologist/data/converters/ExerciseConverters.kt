@@ -6,6 +6,7 @@ import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseDetailResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseInfoPreview
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultFromAPIModel
+import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExerciseResultRequestModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesModel
 import com.obsudim.mypsychologist.data.model.exerciseModels.ExercisesStatusModel
@@ -78,7 +79,7 @@ fun ExerciseResultRequestEntity.toModel(): ExerciseResultRequestModel {
 
 private fun TypeOfSectionUiRes.toModel(): TypeFieldModel{
     return when(val type = this){
-        is TypeOfSectionUiRes.AddableListUiEntity -> TypeFieldModel.AddableListModel(fieldId = type.id, text = type.list.orEmpty())
+        is TypeOfSectionUiRes.AddableListUiEntity -> TypeFieldModel.AddableListModel(fieldId = type.id, text = type.list)
         is TypeOfSectionUiRes.TextInputUiEntity -> TypeFieldModel.InputTextModel(fieldId = type.id, text = type.title.orEmpty())
     }
 }
@@ -94,7 +95,10 @@ fun DailyTaskMarkIdEntity.toModel() = DailyTaskMarkIdModel(
 fun ExerciseResultFromAPIModel.toEntity() = ExerciseAllResultEntity(id, exerciseId, date, preview)
 
 fun ExerciseDetailResultModel.toEntity() =
-    ExerciseDetailResultEntity(title, date, result = result.map { ExerciseResultEntity(fieldId = it.fieldId, value = it.value) })
+    ExerciseDetailResultEntity(id, title, pictureLink, description, exerciseId, date, sections.map { it.toEntity() })
+
+private fun ExerciseResultModel.toEntity() =
+    ExerciseResultEntity(title, view, type, value)
 
 fun ExercisesStatusModel.toEntity() = ExercisesStatusEntity(title, isClosed)
 

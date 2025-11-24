@@ -7,5 +7,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetExerciseDetailResultUseCase @Inject constructor(private val repository: ExerciseRepository) {
-    suspend operator fun invoke(id: String): Flow<Resource<ExerciseDetailResultEntity>> = repository.getExerciseDetailResult(id)
+    suspend operator fun invoke(
+        idExercise: String,
+        idResult: String
+    ): Flow<Resource<ExerciseDetailResultEntity>> =
+        repository.getExerciseDetailResult(idExercise, idResult)
 }
