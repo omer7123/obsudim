@@ -148,6 +148,7 @@ data class ExerciseResultModel(
 data class ExerciseDetailResultModel(
     val id: String,
     val title: String,
+    @SerialName("picture_link")
     val pictureLink: String,
     val description: String,
     @SerialName("exercise_id")
