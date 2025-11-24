@@ -102,7 +102,7 @@ data class SaveExerciseResultResponseEntity(
 data class ExerciseResultEntity(
     val title: String,
     val view: String,
-    val type: String,
+    val type: TypeOfSection,
     val value: String
 )
 
