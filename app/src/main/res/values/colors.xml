@@ -1,5 +1,11 @@
 
 <resources>
+    <color name="fui_transparent">#00000000</color>
+    <color name="fui_red_500">#F44336</color>
+    <color name="fui_blue_500">#2196F3</color>
+    <color name="fui_green_500">#4CAF50</color>
+    <color name="fui_yellow_500">#FFEB3B</color>
+
     <color name="seed">#4CA569</color>
     <color name="exit_button">#EBEEFF</color>
     <color name="md_theme_light_primary">#3555D4</color>
