@@ -5,6 +5,7 @@ import com.obsudim.mypsychologist.data.model.UserDataModel
 import com.obsudim.mypsychologist.data.model.UserInfoModel
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -21,4 +22,7 @@ interface UserService {
 
     @GET("/auth/me")
     suspend fun getAuthMe(): Response<UserDataModel>
+
+    @DELETE("/auth/delete")
+    suspend fun deleteAccount(): Response<String>
 }

@@ -34,4 +34,8 @@ class UserDataSourceImpl @Inject constructor(private val api: UserService) :
             }
         )
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun deleteAccount(): Flow<Resource<String>> = flow {
+        api.deleteAccount()
+    }
 }

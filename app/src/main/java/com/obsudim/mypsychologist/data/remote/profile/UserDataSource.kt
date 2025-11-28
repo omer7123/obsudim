@@ -12,4 +12,6 @@ interface UserDataSource {
     suspend fun sendRequestToManager(sendRequestToPsychologistModel: SendRequestToPsychologistModel): Resource<String>
     suspend fun getAuthMe(): Flow<Resource<UserDataModel>>
     //   suspend fun getUserData(token: Token): Resource<UserInfo>
+
+    suspend fun deleteAccount(): Flow<Resource<String>>
 }

@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        binding.include.toolbar.title = getString(R.string.profile)
+        binding.include.toolbar.title = getString(R.string.settings)
 
         setupListeners()
 
@@ -68,12 +68,9 @@ class ProfileFragment : Fragment() {
             }
 
 
-//            rules.setOnClickListener {
-//                findNavController().navigate(R.id.fragment_long_text, bundleOf(
-//                    LongTextFragment.TITLE to rules.text.toString(),
-//                    LongTextFragment.TEXT_ID to R.string.rules_text
-//                ))
-//            }
+            rules.setOnClickListener {
+                findNavController().navigate(R.id.fragment_rules)
+            }
 
             feedback.setOnClickListener {
                 findNavController().navigate(R.id.fragment_feedback)
@@ -83,6 +80,9 @@ class ProfileFragment : Fragment() {
                 signOut()
             }
 
+            deleteAccountButton.setOnClickListener {
+                deleteAccount()
+            }
         }
     }
 
@@ -100,6 +100,20 @@ class ProfileFragment : Fragment() {
             .show(childFragmentManager, EXIT)
     }
 
+    private fun deleteAccount() {
+        childFragmentManager.setFragmentResultListener(
+            DELETE,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            if (bundle.getBoolean(ConfirmationDialogFragment.RESULT)) {
+                viewModel.deleteAccount()
+            }
+        }
+
+        ConfirmationDialogFragment.newInstance(R.string.confirm_delete)
+            .show(childFragmentManager, DELETE)
+    }
+
 
     private fun startMainActivity() {
         val newIntent = Intent(requireContext(), MainActivity::class.java).apply {
@@ -110,5 +124,6 @@ class ProfileFragment : Fragment() {
 
     companion object {
         private const val EXIT = "exit"
+        private const val DELETE = "delete"
     }
 }

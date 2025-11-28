@@ -48,4 +48,8 @@ class ProfileRepositoryImpl @Inject constructor(
     override suspend fun getAuthMe(): Flow<Resource<UserDataEntity>> {
         return dataSource.getAuthMe().checkResource { it.toEntity() }
     }
+
+    override suspend fun deleteAccount(): Flow<Resource<String>> {
+        return dataSource.deleteAccount()
+    }
 }

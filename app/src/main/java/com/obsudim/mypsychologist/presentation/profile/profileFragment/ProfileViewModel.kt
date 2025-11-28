@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.domain.useCase.authenticationUseCases.DeleteTokenUseCase
 import com.obsudim.mypsychologist.domain.useCase.authenticationUseCases.DeleteUserIdUseCase
+import com.obsudim.mypsychologist.domain.useCase.profile.DeleteAccountUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 class ProfileViewModel(
     private val deleteTokenUseCase: DeleteTokenUseCase,
-    private val deleteUserIdUseCase: DeleteUserIdUseCase
+    private val deleteUserIdUseCase: DeleteUserIdUseCase,
+    private val deleteAccountUseCase: DeleteAccountUseCase
 ) : ViewModel() {
 
     private val _goToAuthorization: MutableStateFlow<Boolean> =
@@ -29,9 +31,17 @@ class ProfileViewModel(
         }
     }
 
+    fun deleteAccount() {
+        viewModelScope.launch {
+            deleteAccountUseCase()
+            _goToAuthorization.value = true
+        }
+    }
+
     class Factory @Inject constructor(
         private val deleteTokenUseCase: DeleteTokenUseCase,
-        private val deleteUserIdUseCase: DeleteUserIdUseCase
+        private val deleteUserIdUseCase: DeleteUserIdUseCase,
+        private val deleteAccountUseCase: DeleteAccountUseCase
     ) :
         ViewModelProvider.Factory {
 
@@ -39,7 +49,8 @@ class ProfileViewModel(
             @Suppress("UNCHECKED_CAST")
             return ProfileViewModel(
                 deleteTokenUseCase,
-                deleteUserIdUseCase
+                deleteUserIdUseCase,
+                deleteAccountUseCase
             ) as T
         }
     }

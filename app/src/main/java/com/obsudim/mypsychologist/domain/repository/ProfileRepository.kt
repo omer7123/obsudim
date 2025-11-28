@@ -11,4 +11,5 @@ interface ProfileRepository {
     suspend fun getOwnInfo(): Resource<ClientInfoEntity>
     suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String>
     suspend fun getAuthMe(): Flow<Resource<UserDataEntity>>
+    suspend fun deleteAccount(): Flow<Resource<String>>
 }
