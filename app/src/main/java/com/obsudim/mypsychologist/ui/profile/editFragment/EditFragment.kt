@@ -38,13 +38,9 @@ class EditFragment : Fragment() {
     lateinit var vmFactory: EditViewModel.Factory
     private val viewModel: EditViewModel by viewModels { vmFactory }
 
-    private lateinit var mainAdapter: MainAdapter
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireContext().getAppComponent().profileComponent().create().inject(this)
-
-
     }
 
     override fun onCreateView(
@@ -55,7 +51,6 @@ class EditFragment : Fragment() {
         binding = FragmentEditBinding.inflate(inflater, container, false)
 
         binding.includeToolbar.toolbar.apply {
-            title = getString(R.string.edit_data)
             setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
@@ -67,7 +62,6 @@ class EditFragment : Fragment() {
             .launchIn(lifecycleScope)
 
         setupListeners()
-        setupAdapter(viewModel.items)
 
         return binding.root
     }
@@ -77,8 +71,8 @@ class EditFragment : Fragment() {
         when (state) {
             is EditScreenState.CurrentData -> {
                 binding.progressBar.isVisible = false
-                binding.birthdayData.setText(state.birthday)
-                mainAdapter.submitList(state.list)
+            //    binding.birthdayData.setText(state.birthday)
+
             }
 
             is EditScreenState.Loading -> {
@@ -119,16 +113,16 @@ class EditFragment : Fragment() {
     private fun setupListeners() {
         binding.apply {
 
-            birthday.setEndIconOnClickListener {
+          /*  birthday.setEndIconOnClickListener {
                 setupDatePicker()
-            }
+            } */
 
             saveButton.setOnClickListener {
-                viewModel.tryToSaveInfo(binding.nameEt.text.toString(), binding.birthdayData.text.toString())
+                viewModel.tryToSaveInfo(binding.name.editText.text.toString(), "")
             }
         }
     }
-    private val DATE_PATTERN = "dd.MM.yyyy"
+
     private fun setupDatePicker() {
         val calendar = Calendar.getInstance()
 
@@ -144,7 +138,7 @@ class EditFragment : Fragment() {
                 SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(calendar.time)
 
 
-            binding.birthday.editText?.setText(selectedDate)
+            //binding.birthday.editText?.setText(selectedDate)
 
         }
         DatePickerDialog(
@@ -156,52 +150,8 @@ class EditFragment : Fragment() {
         ).show()
     }
 
-    private fun isValidBirthday(calendar: Calendar): Boolean {
-        val today = Calendar.getInstance()
-
-        // Минимальный возраст (например, 18 лет)
-        val minAge = 18
-        val maxAge = 100
-
-        val birthDate = calendar.clone() as Calendar
-        birthDate.add(Calendar.YEAR, minAge)
-
-        val oldestDate = calendar.clone() as Calendar
-        oldestDate.add(Calendar.YEAR, -maxAge)
-
-        // Возраст должен быть между minAge и maxAge
-        return today.after(birthDate) && calendar.after(oldestDate)
-    }
-
-    private fun setupAdapter(items: List<DelegateItem>) {
-        mainAdapter = MainAdapter().apply {
-            addDelegate(
-                InputDelegate()
-            )
-
-            submitList(items)
-        }
-//
-//        binding.itemsRw.apply {
-//            layoutManager = LinearLayoutManager(requireContext())
-//            adapter = mainAdapter
-//        }
-    }
-
-    /*private fun setupChips(list: List<TagEntity>) {
-        binding.requestsGroup.removeAllViews()
-        list.forEach {
-            binding.requestsGroup.addView(
-                Chip(requireContext()).apply {
-                    text = it.text
-                }
-            )
-        }
-    }*/
-
-
     companion object {
-        private var DATE_PATTERN = "yyyy-MM-dd"
+        private var DATE_PATTERN = "dd.MM.yyyy"
         private const val EDIT_NAME = "edit name"
         private const val EDIT_GENDER = "edit gender"
         private const val EDIT_DIAGNOSIS = "edit diagnosis"

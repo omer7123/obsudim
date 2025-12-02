@@ -6,47 +6,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="20dp">
+    android:layout_marginTop="16dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_layout"
-        app:boxStrokeWidth="0dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxBackgroundColor="#F3F5FF"
+
+    <EditText
+        android:id="@+id/edit_text"
+        style="@style/BodyM.SecondaryContainer"
+        android:paddingVertical="16dp"
+        android:paddingHorizontal="20dp"
+        android:background="@drawable/bg_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text"
-            android:textColorHint="@color/text_default_color"
-            android:textColor="@color/text_default_color"
-            android:textAppearance="@style/BodyM.Black"
-            tools:hint="Опиши ситуацию..."
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="match_parent"
+        android:textAppearance="@style/BodyM.Black"
+        android:textColor="@color/text_default_color"
+        android:textColorHint="@color/text_default_color"
+        tools:hint="Опиши ситуацию..." />
 
 
-</LinearLayout>
+    </LinearLayout>
 
-<!--<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/input_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="20dp"
-    app:helperTextEnabled="true"
-    app:endIconMode="custom"
-    app:errorEnabled="true">
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/field"
+    <!--<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        />
-</com.google.android.material.textfield.TextInputLayout> -->
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        app:helperTextEnabled="true"
+        app:endIconMode="custom"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            />
+    </com.google.android.material.textfield.TextInputLayout> -->

@@ -73,13 +73,13 @@
 
 
     <style name="TitleXS">
-        <item name="fontFamily">@font/inter_bold</item>
+        <item name="fontFamily">@font/cygre_semi_bold</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
     <style name="TestQuestion">
-        <item name="fontFamily">@font/inter_bold</item>
+        <item name="fontFamily">@font/cygre_semi_bold</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">?attr/colorOnSecondaryContainer</item>
     </style>
