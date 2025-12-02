@@ -14,6 +14,7 @@ import com.obsudim.mypsychologist.domain.repository.retrofit.TestsDiagnosticRepo
 import com.obsudim.mypsychologist.presentation.authentication.authFragment.AuthViewModel
 import com.obsudim.mypsychologist.presentation.authentication.registrationFragment.RegisterViewModel
 import com.obsudim.mypsychologist.presentation.diagnostics.passingTestFragment.PassingTestViewModel
+import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment.ExercisePassingViewModel
 import com.obsudim.mypsychologist.presentation.exercises.exercisesHostFragment.ExercisesHostViewModel
 import com.obsudim.mypsychologist.presentation.exercises.freeDiaryWithTrackerMoodFragment.TrackerMoodViewModel
 import com.obsudim.mypsychologist.presentation.exercises.newFreeDiaryFragment.NewFreeDiaryViewModel
@@ -69,4 +70,8 @@ interface DomainModule {
     @Binds
     @[IntoMap ClassKey(ExercisesHostViewModel::class)]
     fun provideExercisesHostViewModel(exercisesHostViewModel: ExercisesHostViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ClassKey(ExercisePassingViewModel::class)]
+    fun provideExercisePassingViewModel(exercisePassingViewModel: ExercisePassingViewModel): ViewModel
 }

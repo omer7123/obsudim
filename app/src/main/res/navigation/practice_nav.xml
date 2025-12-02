@@ -99,5 +99,14 @@
     <fragment
         android:id="@+id/exercisesHostFragment"
         android:name="com.obsudim.mypsychologist.ui.exercises.exercisesHostFragment.ExercisesHostFragment"
-        android:label="ExercisesHostFragment" />
+        android:label="ExercisesHostFragment" >
+        <action
+            android:id="@+id/action_exercisesHostFragment_to_exercisePassingFragment"
+            app:destination="@id/exercisePassingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exercisePassingFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.exercisePassingFragment.ExercisePassingFragment"
+        android:label="fragment_exercise_passing"
+        tools:layout="@layout/fragment_exercise_passing" />
 </navigation>

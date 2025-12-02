@@ -99,7 +99,8 @@ fun TransparentPrimaryTextField(
     errorStr: String? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    textColor: Color = AppTheme.colors.primaryText
+    textColor: Color = AppTheme.colors.primaryText,
+    singleLine: Boolean = true,
 ) {
     val focusManager: FocusManager = LocalFocusManager.current
 
@@ -110,7 +111,7 @@ fun TransparentPrimaryTextField(
                 .padding(0.dp),
             value = field,
             onValueChange = onFieldChange,
-            singleLine = true,
+            singleLine = singleLine,
 
             placeholder = {
                 Text(

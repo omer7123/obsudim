@@ -38,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -69,10 +70,11 @@ class ExercisesHostFragment: Fragment() {
         requireContext().getAppComponent().exercisesComponent().create().inject(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         viewModel.getHistory(requireArguments().getString(EXERCISE_ID)!!)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -100,6 +102,12 @@ class ExercisesHostFragment: Fragment() {
                     state.data,
                     state.history,
                     onBackClick,
+                    onStartClick = {
+                        findNavController().navigate(
+                            R.id.action_exercisesHostFragment_to_exercisePassingFragment,
+                            bundleOf(EXERCISE_ID to requireArguments().getString(EXERCISE_ID)!!)
+                        )
+                    }
                 )
             }
             ExerciseHostScreenState.Error -> {
@@ -119,7 +127,8 @@ class ExercisesHostFragment: Fragment() {
     fun OnboardingExerciseContent(
         data: ExerciseInfoPreviewEntity,
         history: List<ExerciseAllResultEntity>,
-        onBackClick: () -> Unit
+        onBackClick: () -> Unit,
+        onStartClick: () -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -179,7 +188,7 @@ class ExercisesHostFragment: Fragment() {
                         containerColor = AppTheme.colors.primaryText,
                         contentColor = AppTheme.colors.primaryTextInvert
                     ),
-                    onClick = {},
+                    onClick = { onStartClick() },
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .fillMaxWidth()
@@ -391,7 +400,8 @@ class ExercisesHostFragment: Fragment() {
                         preview = "Вота как как то"
                     ),
                 ),
-                onBackClick = {}
+                onBackClick = {},
+                onStartClick = {}
             )
         }
     }

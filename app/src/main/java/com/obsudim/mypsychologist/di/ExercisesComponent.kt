@@ -1,5 +1,6 @@
 package com.obsudim.mypsychologist.di
 
+import com.obsudim.mypsychologist.ui.exercises.exercisePassingFragment.ExercisePassingFragment
 import com.obsudim.mypsychologist.ui.exercises.exercisesFragment.ExercisesFragment
 import com.obsudim.mypsychologist.ui.exercises.exercisesHostFragment.ExercisesHostFragment
 import com.obsudim.mypsychologist.ui.exercises.freeDiaryTrackerMoodFragment.FreeDiaryTrackerMoodFragment
@@ -13,6 +14,7 @@ import dagger.Subcomponent
 interface ExercisesComponent {
     fun inject(fragment: ExercisesFragment)
     fun inject(fragment: ExercisesHostFragment)
+    fun inject(fragment: ExercisePassingFragment)
     fun inject(fragment: FragmentNewCBTDiary)
     fun inject(fragment: NewFreeDiaryFragment)
     fun inject(fragment: TrackerMoodFragment)
