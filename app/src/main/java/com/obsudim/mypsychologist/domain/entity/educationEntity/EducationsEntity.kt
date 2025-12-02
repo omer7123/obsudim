@@ -4,11 +4,11 @@ data class TopicEntity(
     val id: String,
     val theme: String,
     val link: String,
-    val recomendations: List<RecomendationEntity>,
+    val recommendations: List<RecommendationEntity>,
     val educationMaterials: List<EducationsEntity>
 )
 
-data class RecomendationEntity (
+data class RecommendationEntity (
     val id: String,
     val theme: String,
     val link: String,

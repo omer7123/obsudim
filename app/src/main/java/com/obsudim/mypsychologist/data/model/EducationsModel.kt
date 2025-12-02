@@ -8,13 +8,13 @@ data class ThemeModel(
     val id: String,
     val theme: String,
     val link: String,
-    val recomendations: List<RecomendationModel> = emptyList(),
+    val recommendations: List<RecommendationModel> = emptyList(),
     @SerialName("education_materials")
     val educationMaterials: List<EducationsModel>
 )
 
 @Serializable
-data class RecomendationModel(
+data class RecommendationModel(
     val id: String,
     val theme: String,
     val link: String,
