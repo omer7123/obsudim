@@ -57,6 +57,7 @@ class ExercisesHostFragment: Fragment() {
 
     companion object {
         private const val EXERCISE_ID = "EXERCISE_ID"
+        private const val RESULT_ID = "RESULT_ID"
     }
 
     @Inject
@@ -95,6 +96,8 @@ class ExercisesHostFragment: Fragment() {
         onBackClick: () -> Unit,
         viewModel: ExercisesHostViewModel,
     ) {
+        val exerciseId = requireArguments().getString(EXERCISE_ID)!!
+
         val viewState = viewModel.screenState.collectAsState()
         when(val state = viewState.value){
             is ExerciseHostScreenState.Content -> {
@@ -105,7 +108,13 @@ class ExercisesHostFragment: Fragment() {
                     onStartClick = {
                         findNavController().navigate(
                             R.id.action_exercisesHostFragment_to_exercisePassingFragment,
-                            bundleOf(EXERCISE_ID to requireArguments().getString(EXERCISE_ID)!!)
+                            bundleOf(EXERCISE_ID to exerciseId)
+                        )
+                    },
+                    onItemClick = { resultId ->
+                        findNavController().navigate(
+                            R.id.action_exercisesHostFragment_to_exerciseDemoResultFragment,
+                            bundleOf(EXERCISE_ID to exerciseId, RESULT_ID to resultId)
                         )
                     }
                 )
@@ -129,6 +138,7 @@ class ExercisesHostFragment: Fragment() {
         history: List<ExerciseAllResultEntity>,
         onBackClick: () -> Unit,
         onStartClick: () -> Unit,
+        onItemClick: (String) -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -213,7 +223,9 @@ class ExercisesHostFragment: Fragment() {
                     )
 
                     else -> RenderHistory(
-                        history, modifier = Modifier
+                        history,
+                        onItemClick = { onItemClick(it) },
+                        modifier = Modifier
                             .padding(top = 20.dp)
                             .padding(horizontal = 16.dp)
                     )
@@ -223,7 +235,11 @@ class ExercisesHostFragment: Fragment() {
     }
 
     @Composable
-    fun RenderHistory(history: List<ExerciseAllResultEntity>, modifier: Modifier) {
+    fun RenderHistory(
+        history: List<ExerciseAllResultEntity>,
+        onItemClick: (String) -> Unit,
+        modifier: Modifier
+    ) {
         Column(
             modifier = modifier
         ) {
@@ -240,14 +256,20 @@ class ExercisesHostFragment: Fragment() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(history) { item ->
-                    CardHistory(item)
+                    CardHistory(
+                        item = item,
+                        onItemClick = { onItemClick(it) }
+                    )
                 }
             }
         }
     }
 
     @Composable
-    private fun CardHistory(item: ExerciseAllResultEntity) {
+    private fun CardHistory(
+        item: ExerciseAllResultEntity,
+        onItemClick: (String) -> Unit,
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -256,6 +278,9 @@ class ExercisesHostFragment: Fragment() {
                     shape = RoundedCornerShape(28.dp)
                 )
                 .padding(horizontal = 16.dp, vertical = 16.dp)
+                .clickable {
+                    onItemClick(item.id)
+                }
         ) {
 
             Text(
@@ -401,7 +426,8 @@ class ExercisesHostFragment: Fragment() {
                     ),
                 ),
                 onBackClick = {},
-                onStartClick = {}
+                onStartClick = {},
+                onItemClick = {}
             )
         }
     }

@@ -1,6 +1,7 @@
 package com.obsudim.mypsychologist
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.obsudim.mypsychologist.di.AppComponent
 import com.obsudim.mypsychologist.di.DaggerAppComponent
@@ -11,6 +12,7 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        FirebaseApp.initializeApp(this)
         AndroidThreeTen.init(this)
         appComponent = DaggerAppComponent.factory().create(applicationContext)
     }

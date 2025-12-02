@@ -23,7 +23,7 @@ interface ExerciseDataSource {
     suspend fun getDailyExercises(): Flow<Resource<List<DailyExerciseModel>>>
     suspend fun markAsCompleteTask(taskCompleted: DailyTaskMarkIdModel): Flow<Resource<StatusPostResponse>>
     suspend fun getExerciseResults(exerciseId: String): Flow<Resource<ResultsExercise>>
-    suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultModel>>
+    suspend fun getExerciseDetailResult(idExercise: String, idResult: String): Flow<Resource<ExerciseDetailResultModel>>
     suspend fun getAllStatusExercises(): Flow<Resource<List<ExercisesStatusModel>>>
     suspend fun saveCBTDiary(diary: CBTDiaryModel): Flow<Resource<SaveExerciseResultResponseModel>>
 }

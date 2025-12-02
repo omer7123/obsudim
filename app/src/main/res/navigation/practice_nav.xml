@@ -20,13 +20,7 @@
         android:name="com.obsudim.mypsychologist.ui.exercises.exercisesFragment.ExercisesFragment"
         android:label="FragmentExercises">
 
-        <action
-            android:id="@+id/action_fragment_exercises_to_fragment_diaries"
-            app:destination="@id/fragment_diaries"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right" />
+
         <action
             android:id="@+id/action_fragment_exercises_to_profile_graph"
             app:destination="@id/profile_graph" />
@@ -45,35 +39,12 @@
             android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
             app:destination="@id/newFreeDiaryFragment" />
     </fragment>
-    <action
-        android:id="@+id/action_fragment_diaries_to_definitionProblemGroupExerciseFragment"
-        app:destination="@id/definitionProblemGroupExerciseFragment" />
     <fragment
         android:id="@+id/fragment_new_diary"
         android:name="com.obsudim.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary"
         tools:layout="@layout/fragment_new_thought_diary"
         android:label="FragmentNewDiary" />
-    <fragment
-        android:id="@+id/definitionProblemGroupExerciseFragment"
-        android:name="com.obsudim.mypsychologist.ui.exercises.definitionPGExerciseFragment.DefinitionProblemGroupExerciseFragment"
-        tools:layout="@layout/fragment_definition_problem_group_exercise"
-        android:label="fragment_definition_problem_group_exercise" />
-    <fragment
-        android:id="@+id/fragment_diaries"
-        android:name="com.obsudim.mypsychologist.ui.exercises.recordsExerciseFragment.RecordsExerciseFragment"
-        android:label="FragmentDiaries">
-        <action
-            android:id="@+id/action_fragment_diaries_to_fragment_new_diary"
-            app:destination="@id/fragment_new_diary"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_in_right" />
-        <action
-            android:id="@+id/action_fragment_diaries_to_definitionProblemGroupExerciseFragment"
-            app:destination="@id/definitionProblemGroupExerciseFragment" />
 
-    </fragment>
     <action
         android:id="@+id/action_trackerMoodFragment_to_newFreeDiaryFragment"
         app:destination="@id/newFreeDiaryFragment"
@@ -103,10 +74,18 @@
         <action
             android:id="@+id/action_exercisesHostFragment_to_exercisePassingFragment"
             app:destination="@id/exercisePassingFragment" />
+        <action
+            android:id="@+id/action_exercisesHostFragment_to_exerciseDemoResultFragment"
+            app:destination="@id/exerciseDemoResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/exercisePassingFragment"
         android:name="com.obsudim.mypsychologist.ui.exercises.exercisePassingFragment.ExercisePassingFragment"
         android:label="fragment_exercise_passing"
         tools:layout="@layout/fragment_exercise_passing" />
+    <fragment
+        android:id="@+id/exerciseDemoResultFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.exerciseDemoResultFragment.ExerciseDemoResultFragment"
+        android:label="fragment_exercise_demo_result"
+        tools:layout="@layout/fragment_exercise_demo_result" />
 </navigation>

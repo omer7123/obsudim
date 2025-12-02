@@ -138,14 +138,23 @@ data class ExerciseResultFromAPIModel(
 
 @Serializable
 data class ExerciseResultModel(
-    val fieldId: String, var value: String
+    val title: String,
+    val view: String,
+    val type: String,
+    val value: String
 )
 
 @Serializable
 data class ExerciseDetailResultModel(
+    val id: String,
     val title: String,
+    @SerialName("picture_link")
+    val pictureLink: String,
+    val description: String,
+    @SerialName("exercise_id")
+    val exerciseId: String,
     val date: String,
-    val result: List<ExerciseResultModel>
+    val sections: List<ExerciseResultModel>
 )
 
 @Serializable

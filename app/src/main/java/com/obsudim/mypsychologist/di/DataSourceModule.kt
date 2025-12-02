@@ -12,6 +12,8 @@ import com.obsudim.mypsychologist.data.remote.exercises.ExerciseDataSource
 import com.obsudim.mypsychologist.data.remote.exercises.ExerciseDataSourceImpl
 import com.obsudim.mypsychologist.data.remote.freeDiary.FreeDiaryDataSource
 import com.obsudim.mypsychologist.data.remote.freeDiary.FreeDiaryDataSourceImpl
+import com.obsudim.mypsychologist.data.remote.modelDepression.ModelDeprDataSource
+import com.obsudim.mypsychologist.data.remote.modelDepression.ModelDeprDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -42,4 +44,8 @@ interface DataSourceModule {
     @Binds
     @Singleton
     fun bindExerciseDataSource(impl: ExerciseDataSourceImpl): ExerciseDataSource
+
+    @Binds
+    @Singleton
+    fun bindModelDeprDataSource(impl: ModelDeprDataSourceImpl): ModelDeprDataSource
 }

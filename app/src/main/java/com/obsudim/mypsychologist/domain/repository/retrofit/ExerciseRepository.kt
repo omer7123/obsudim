@@ -22,7 +22,7 @@ interface ExerciseRepository {
     suspend fun markAsCompleteDailyTask(dailyTaskMarkIdEntity: DailyTaskMarkIdEntity): Flow<Resource<String>>
     suspend fun saveExerciseResult(result: ExerciseResultRequestEntity): Flow<Resource<SaveExerciseResultResponseEntity>>
     suspend fun getExerciseResults(exerciseId: String): Flow<Resource<List<ExerciseAllResultEntity>>>
-    suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultEntity>>
+    suspend fun getExerciseDetailResult(idExercise: String, idResult: String): Flow<Resource<ExerciseDetailResultEntity>>
     suspend fun getAllStatusExercise(): Flow<Resource<List<ExercisesStatusEntity>>>
     suspend fun saveCBTDiary(diary: ThoughtDiaryEntity): Flow<Resource<DailyTaskMarkIdEntity>>
 }

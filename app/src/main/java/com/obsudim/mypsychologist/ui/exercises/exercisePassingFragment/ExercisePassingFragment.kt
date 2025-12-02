@@ -207,7 +207,9 @@ class ExercisePassingFragment : Fragment() {
                 placeholder = ColorPainter(color = AppTheme.colors.loading),
                 error = painterResource(id = R.drawable.ic_book_succ_passing_exercise),
                 colorFilter = ColorFilter.tint(AppTheme.colors.secondaryBackground),
-                modifier = Modifier.align(alignment = Alignment.CenterHorizontally).height(350.dp)
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .height(350.dp)
             )
 
             Text(
@@ -403,3 +405,5 @@ class ExercisePassingFragment : Fragment() {
         }
     }
 }
+data class Marsh(val stantionName: String, val depTime: String, val arrTime: String, val timeMin: Int)
+data class ScheduleRes(val idLine: String, val stantionLineStart: String, val stantionLineEnd: String, val marshs: List<Marsh>, val totalTimeMin: Int)

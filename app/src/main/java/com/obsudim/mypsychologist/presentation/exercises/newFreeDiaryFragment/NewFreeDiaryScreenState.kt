@@ -6,4 +6,7 @@ sealed interface NewFreeDiaryScreenState {
     data object Success: NewFreeDiaryScreenState
     data object Content: NewFreeDiaryScreenState
     data class Error(val msg: String): NewFreeDiaryScreenState
+
+    data object LoadingModel: NewFreeDiaryScreenState
+    data class SuccessModel(val msg: String): NewFreeDiaryScreenState
 }

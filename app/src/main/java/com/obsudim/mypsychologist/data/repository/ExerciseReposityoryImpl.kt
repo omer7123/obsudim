@@ -53,7 +53,7 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
 
     override suspend fun saveExerciseResult(result: ExerciseResultRequestEntity): Flow<Resource<SaveExerciseResultResponseEntity>> {
         return dataSource.saveExerciseResult(result.toModel()).checkResource {
-            SaveExerciseResultResponseEntity(it.id, score = it.score, it.pictureLink, it.view, it.successMessage)
+            SaveExerciseResultResponseEntity(it.id, score = it.score, "https://xn--b1afb6bcb.xn--d1acsjd4h.tech${it.pictureLink}", it.view, it.successMessage)
         }
     }
 
@@ -63,8 +63,8 @@ class ExerciseReposityoryImpl @Inject constructor(private val dataSource: Exerci
         }
     }
 
-    override suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultEntity>> {
-        return dataSource.getExerciseDetailResult(id).checkResource {
+    override suspend fun getExerciseDetailResult(idExercise: String, idResult: String): Flow<Resource<ExerciseDetailResultEntity>> {
+        return dataSource.getExerciseDetailResult(idExercise, idResult).checkResource {
             it.toEntity()
         }
     }

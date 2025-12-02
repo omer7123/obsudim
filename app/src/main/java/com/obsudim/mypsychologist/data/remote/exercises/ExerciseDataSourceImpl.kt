@@ -84,11 +84,11 @@ class ExerciseDataSourceImpl @Inject constructor(private val api: ExerciseServic
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getExerciseDetailResult(id: String): Flow<Resource<ExerciseDetailResultModel>> = flow{
+    override suspend fun getExerciseDetailResult(idExercise: String, idResult: String): Flow<Resource<ExerciseDetailResultModel>> = flow{
         emit(Resource.Loading)
         emit(
             getResult {
-                api.getDetailExerciseResult(id)
+                api.getDetailExerciseResult(idExercise, idResult)
             }
         )
     }.flowOn(Dispatchers.IO)
