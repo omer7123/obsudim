@@ -110,6 +110,11 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
 
                     setLightStatusBarIcons(true)
                 }
+                R.id.fragment_edit -> {
+                    bottomNav.isVisible = false
+
+                    setLightStatusBarIcons(true)
+                }
 
                 else -> {
                     window.statusBarColor = WHITE

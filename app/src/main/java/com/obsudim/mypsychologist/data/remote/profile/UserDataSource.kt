@@ -4,6 +4,7 @@ import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.data.model.SendRequestToPsychologistModel
 import com.obsudim.mypsychologist.data.model.UserDataModel
 import com.obsudim.mypsychologist.data.model.UserInfoModel
+import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserInfoEntity
 import kotlinx.coroutines.flow.Flow
 
 interface UserDataSource {

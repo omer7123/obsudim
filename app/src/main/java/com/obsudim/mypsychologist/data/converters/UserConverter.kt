@@ -5,25 +5,29 @@ import com.obsudim.mypsychologist.data.model.UserInfoModel
 import com.obsudim.mypsychologist.domain.entity.ClientInfoEntity
 import com.obsudim.mypsychologist.domain.entity.TagEntity
 import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserDataEntity
+import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserInfoEntity
 
-fun ClientInfoEntity.toModel() =
+fun UserInfoEntity.toModel() =
     UserInfoModel(
         birthDate = birthday,
         gender = gender,
         username = name,
-        request = request.map { it.id },
         city = city,
-        description = "",
-        type = TYPE_USER
+        description = description,
+        company = company,
+        online = true,
+        phoneNumber = phone
     )
 
 fun UserInfoModel.toEntity() =
-    ClientInfoEntity(
+    UserInfoEntity(
         birthday = birthDate,
         gender = gender,
         name = username,
         city = city,
-        request = request.map { TagEntity(it, "") } // Переделать
+        description = description,
+        company = company,
+        phone = phoneNumber
     )
 
 fun UserDataModel.toEntity() =

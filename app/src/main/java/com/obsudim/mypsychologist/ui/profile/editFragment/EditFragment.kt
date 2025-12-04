@@ -3,6 +3,7 @@ package com.obsudim.mypsychologist.ui.profile.editFragment
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,9 +62,22 @@ class EditFragment : Fragment() {
             .onEach { render(it) }
             .launchIn(lifecycleScope)
 
+        setupDefaultFields()
+
         setupListeners()
 
         return binding.root
+    }
+
+    private fun setupDefaultFields() {
+        binding.apply {
+            name.editText.hint = getString(R.string.name)
+            description.editText.hint = getString(R.string.description)
+            city.editText.hint = getString(R.string.city)
+            company.editText.hint = getString(R.string.company)
+            gender.editText.hint = getString(R.string.gender)
+            phone.editText.hint = getString(R.string.phone)
+        }
     }
 
 
@@ -71,6 +85,7 @@ class EditFragment : Fragment() {
         when (state) {
             is EditScreenState.CurrentData -> {
                 binding.progressBar.isVisible = false
+                Log.d("AAAAA current", state.toString())
             //    binding.birthdayData.setText(state.birthday)
 
             }

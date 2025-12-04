@@ -29,7 +29,7 @@ class RequestToPsychologistViewModel(
     fun getUserData() {
         _screenState.value = FeedbackScreenState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            renderUserData(getOwnDataUseCase())
+        //    renderUserData(getOwnDataUseCase())
         }
     }
 

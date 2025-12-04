@@ -288,6 +288,7 @@
     <string name="profile">Профиль</string>
     <string name="settings">Настройки</string>
     <string name="edit_data">Изменить данные</string>
+    <string name="personal_data">Личные данные</string>
     <string name="for_psychologist">Для психолога</string>
     <string name="rules">Политика конфиденциальности</string>
     <string name="feedback">Обратная связь</string>
@@ -328,6 +329,8 @@
 
     <string name="name">Имя</string>
     <string name="diagnosis">Диагноз</string>
+    <string name="description">Описание</string>
+    <string name="company">Компания</string>
     <string name="mail">Почта</string>
     <string name="phone">Телефон</string>
     <string name="password">Пароль</string>

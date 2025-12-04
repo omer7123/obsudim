@@ -2,10 +2,12 @@ package com.obsudim.mypsychologist.domain.entity
 
 data class ClientInfoEntity(
     val name: String = "",
+    val description: String = "",
     val birthday: String = "",
     val gender: String = "",
-    val request: List<TagEntity> = listOf(),
-    val city: String = "Томск"
+    val company: String = "",
+    val city: String = "",
+    val phone: String = ""
 )
 
 fun ClientInfoEntity.getMapOfMembers() =

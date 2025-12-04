@@ -8,6 +8,7 @@ import com.obsudim.mypsychologist.data.local.sharedPref.AuthenticationSharedPref
 import com.obsudim.mypsychologist.data.remote.profile.UserDataSource
 import com.obsudim.mypsychologist.domain.entity.ClientInfoEntity
 import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserDataEntity
+import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserInfoEntity
 import com.obsudim.mypsychologist.domain.entity.psychologistsEntity.SendRequestToPsychologistEntity
 import com.obsudim.mypsychologist.domain.repository.ProfileRepository
 import kotlinx.coroutines.flow.Flow
@@ -19,11 +20,11 @@ class ProfileRepositoryImpl @Inject constructor(
 ) :
     ProfileRepository {
 
-    override suspend fun saveClient(info: ClientInfoEntity): Resource<String> = run {
+    override suspend fun saveClient(info: UserInfoEntity): Resource<String> = run {
         dataSource.updateUser(info.toModel())
     }
 
-    override suspend fun getOwnInfo(): Resource<ClientInfoEntity> =
+    override suspend fun getOwnInfo(): Resource<UserInfoEntity> =
         when (val result = dataSource.getOwnData()) {
             is Resource.Error -> {
                 Log.d("Info error", result.msg.toString())

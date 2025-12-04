@@ -5,9 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.core.Resource
+import com.obsudim.mypsychologist.data.converters.toModel
 import com.obsudim.mypsychologist.domain.entity.ClientInfoEntity
 import com.obsudim.mypsychologist.domain.entity.InputItemEntity
 import com.obsudim.mypsychologist.domain.entity.getMapOfMembers
+import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserInfoEntity
+import com.obsudim.mypsychologist.domain.entity.priofileEntity.getMapOfMembers
 import com.obsudim.mypsychologist.domain.useCase.profile.GetOwnDataUseCase
 import com.obsudim.mypsychologist.domain.useCase.profile.SaveClientInfoUseCase
 import com.obsudim.mypsychologist.ui.core.delegateItems.InputDelegateItem
@@ -28,7 +31,7 @@ class EditViewModel(
     val screenState: StateFlow<EditScreenState>
         get() = _screenState.asStateFlow()
 
-    private var info = ClientInfoEntity()
+    private var info = UserInfoEntity()
 
     init {
         _screenState.value = EditScreenState.Loading
@@ -43,22 +46,8 @@ class EditViewModel(
                 is Resource.Success -> {
                     info = result.data
 
-                    info.getMapOfMembers().forEach { (key, value) ->
 
-                        _items = items.map {
-                            if (it.content().fieldName == key) {
-
-                                InputDelegateItem(
-                                    it.content().copy(text = value)
-                                )
-
-                            }
-                            else
-                                it
-                        }.toMutableList()
-                    }
-
-                    EditScreenState.CurrentData(items, result.data.birthday, result.data.request)
+                    EditScreenState.CurrentData(result.data)
                 }
 
                 is Resource.Loading -> {
@@ -89,7 +78,7 @@ class EditViewModel(
 
     fun tryToSaveInfo(name: String, birthDate: String) {
         viewModelScope.launch {
-            saveClientInfoUseCase(ClientInfoEntity(name, birthday = birthDate))
+            saveClientInfoUseCase(UserInfoEntity(name, birthday = birthDate))
             if (fieldsAreCorrect())
                 _screenState.value =
                     EditScreenState.Response(saveClientInfoUseCase(info))
@@ -115,12 +104,12 @@ class EditViewModel(
 
     private fun markAsNotCorrect(member: String) {
         viewModelScope.launch {
-            _items = items.map { item ->
-                if (item.content().titleId == info.mapOfTitles()[member])
-                    InputDelegateItem(item.content().copy(isNotCorrect = true))
-                else
-                    item
-            }
+            /* _items = items.map { item ->
+                 if (item.content().titleId == info.mapOfTitles()[member])
+                     InputDelegateItem(item.content().copy(isNotCorrect = true))
+                 else
+                     item
+            }*/
         }
     }
 

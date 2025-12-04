@@ -26,7 +26,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Личные данные"/>
+            android:text="@string/personal_data"/>
 
         <include
             android:id="@+id/name"
