@@ -10,6 +10,7 @@ import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.RegisterEntity
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.Tokens
 import com.obsudim.mypsychologist.domain.useCase.authenticationUseCases.RegisterUseCase
+import com.obsudim.mypsychologist.domain.useCase.authenticationUseCases.SaveRefreshTokenUseCase
 import com.obsudim.mypsychologist.domain.useCase.authenticationUseCases.SaveTokenUseCase
 import com.obsudim.mypsychologist.domain.useCase.authenticationUseCases.SaveUserIdUseCase
 import com.obsudim.mypsychologist.extensions.convertDateToBackendFormatString
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
     private val saveTokenUseCase: SaveTokenUseCase,
+    private val saveRefreshTokenUseCase: SaveRefreshTokenUseCase,
     private val saveUserIdUseCase: SaveUserIdUseCase
 ) : ViewModel() {
 
@@ -39,6 +41,7 @@ class RegisterViewModel @Inject constructor(
 
     private suspend fun saveToken(result: Resource.Success<Tokens>) {
         saveTokenUseCase(result.data.accessToken)
+        saveRefreshTokenUseCase(result.data.refreshToken)
         _statusRegistration.value = RegisterStatus.Success
     }
 
