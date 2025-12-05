@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_main_fragment_to_reading_theory_graph"
             app:destination="@id/reading_theory_graph" />
+        <action
+            android:id="@+id/action_main_fragment_to_free_diary_graph"
+            app:destination="@id/free_diary_graph" />
 
     </fragment>
 
@@ -112,4 +115,5 @@
     <include app:graph="@navigation/profile_graph" />
     <include app:graph="@navigation/psychologists_with_tasks_graph" />
     <include app:graph="@navigation/reading_theory_graph" />
+    <include app:graph="@navigation/free_diary_graph" />
 </navigation>

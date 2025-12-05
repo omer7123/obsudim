@@ -24,7 +24,6 @@ import com.obsudim.mypsychologist.presentation.main.mainFragment.MainViewModel
 import com.obsudim.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment
 import com.obsudim.mypsychologist.ui.education.educationFragment.EducationFragment
 import com.obsudim.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary
-import com.obsudim.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -50,9 +49,6 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        setNavbarActualItem()
-
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         setupListeners()
@@ -64,12 +60,6 @@ class MainFragment : Fragment() {
 
         initView()
         return binding.root
-    }
-
-    private fun setNavbarActualItem() {
-//        if (activity is NavbarHider) {
-//            (activity as NavbarHider).setActualItem(R.id.plan_item)
-//        }
     }
 
     private fun initView() {
@@ -110,7 +100,6 @@ class MainFragment : Fragment() {
         when (state) {
             is MainScreenState.Error -> {
                 binding.progressCircular.isVisible = false
-//                findNavController().navigate(R.id.registrationFragment)
             }
             MainScreenState.Initial -> {}
             MainScreenState.Loading -> {
@@ -142,20 +131,7 @@ class MainFragment : Fragment() {
 
             2 -> {
                 if (dailyExerciseEntity.title == getString(R.string.tracker_mood_title)) {
-                    val fragment = TrackerMoodFragment.newInstance(dailyExerciseEntity.id)
-                    childFragmentManager.setFragmentResultListener(
-                        TrackerMoodFragment.RESULT_KEY,
-                        viewLifecycleOwner
-                    ) { _, res ->
-                        val key = res.getString(TrackerMoodFragment.RESULT_KEY)
-                        if (key == TrackerMoodFragment.CLOSE)
-                            viewModel.getInitialData()
-                    }
-
-                    fragment.show(childFragmentManager, TrackerMoodFragment.SHOW)
-
-                } else {
-                    //Вольный дневник
+                    findNavController().navigate(R.id.action_main_fragment_to_free_diary_graph)
                 }
             }
 
