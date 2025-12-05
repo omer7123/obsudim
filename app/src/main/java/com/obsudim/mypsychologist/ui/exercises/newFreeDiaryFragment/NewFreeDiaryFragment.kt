@@ -110,22 +110,7 @@ class NewFreeDiaryFragment : Fragment() {
             NewFreeDiaryScreenState.Loading -> renderLoading()
             NewFreeDiaryScreenState.Success -> renderRequest()
             NewFreeDiaryScreenState.Content -> renderContent()
-            NewFreeDiaryScreenState.LoadingModel -> renderLoadingModel()
-            is NewFreeDiaryScreenState.SuccessModel -> renderSuccessModel(state)
         }
-    }
-
-    private fun renderSuccessModel(state: NewFreeDiaryScreenState.SuccessModel) {
-        binding.modelContent.isVisible = true
-        binding.progressCircular.isVisible = false
-        binding.resTv.isVisible = true
-        binding.resTv.text = state.msg
-    }
-
-    private fun renderLoadingModel() {
-        binding.modelContent.isVisible = true
-        binding.progressCircular.isVisible = true
-        binding.resTv.isVisible = false
     }
 
     private fun renderContent() {

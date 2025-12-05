@@ -11,7 +11,6 @@ import com.obsudim.mypsychologist.data.remote.diagnostic.TestsDiagnosticService
 import com.obsudim.mypsychologist.data.remote.education.EducationService
 import com.obsudim.mypsychologist.data.remote.exercises.ExerciseService
 import com.obsudim.mypsychologist.data.remote.freeDiary.FreeDiaryService
-import com.obsudim.mypsychologist.data.remote.modelDepression.ModelService
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -39,10 +38,6 @@ annotation class BaseRetrofit
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class AuthRetrofit
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class ModelRetrofit
 
 @Module
 class DataModule {
@@ -118,29 +113,6 @@ class DataModule {
             .client(authOkHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
-    }
-
-    @Singleton
-    @Provides
-    @ModelRetrofit
-    fun provideModelNoteRetrofitClient(
-        json: Json,
-        @BaseOkHttpClient baseOkHttpClient: OkHttpClient,
-    ): Retrofit{
-        val contentType = "application/json".toMediaType()
-        return Retrofit.Builder()
-            .baseUrl("http://89.223.63.213:5000")
-            .client(baseOkHttpClient)
-            .addConverterFactory(json.asConverterFactory(contentType))
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideModelService(
-        @ModelRetrofit retrofit: Retrofit
-    ): ModelService {
-        return retrofit.create(ModelService::class.java)
     }
 
     @Singleton
