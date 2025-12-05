@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -17,8 +18,10 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Visibility
@@ -37,6 +40,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
@@ -67,6 +72,7 @@ import com.obsudim.mypsychologist.ui.core.composeComponents.DatePickerModal
 import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryPickerTextField
 import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryTextButton
 import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryTextField
+import com.obsudim.mypsychologist.ui.core.composeComponents.scrollToElement
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -180,6 +186,7 @@ class RegistrationFragment : Fragment() {
                 )
             }
 
+            val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -191,7 +198,7 @@ class RegistrationFragment : Fragment() {
                     .padding(top = 16.dp)
                     .padding(bottom = 52.dp)
                     .imePadding()
-
+                    .verticalScroll(scrollState)
 
             ) {
                 ChangeScreen(
@@ -205,7 +212,8 @@ class RegistrationFragment : Fragment() {
                     onPhoneChange = {onPhoneChange(it)},
                     onPasswordChange = {onPasswordChange(it)},
                     onConfirmPasswordChange = {onConfirmPasswordChange(it)},
-                    onRegisterClick = {onRegisterClick()}
+                    onRegisterClick = {onRegisterClick()},
+                    scrollState
                 )
             }
             if(showDatePicker.value) {
@@ -232,7 +240,8 @@ class RegistrationFragment : Fragment() {
         onPhoneChange: (String) -> Unit,
         onPasswordChange: (String) -> Unit,
         onConfirmPasswordChange: (String) -> Unit,
-        onRegisterClick: () -> Unit
+        onRegisterClick: () -> Unit,
+        scrollState: ScrollState
     ) {
         val content = viewState.value
         when(content.step){
@@ -243,7 +252,8 @@ class RegistrationFragment : Fragment() {
                     onCityChange = {onCityChange(it)},
                     onGenderChange = {onGenderChange(it)},
                     showDatePicker = showDatePicker,
-                    onNextClick = {onNextClick()}
+                    onNextClick = {onNextClick()},
+                    scrollState
                 )
             }
             StepScreen.RegistrationScreen -> {
@@ -253,7 +263,8 @@ class RegistrationFragment : Fragment() {
                     onPhoneChange = onPhoneChange,
                     onPasswordChange = onPasswordChange,
                     onConfirmPasswordChange = onConfirmPasswordChange,
-                    onRegisterClick = {onRegisterClick() }
+                    onRegisterClick = {onRegisterClick() },
+                    scrollState
                 )
             }
         }
@@ -266,7 +277,8 @@ class RegistrationFragment : Fragment() {
         onCityChange: (String) -> Unit,
         onGenderChange: (Gender) -> Unit,
         showDatePicker: MutableState<Boolean>,
-        onNextClick: () -> Unit
+        onNextClick: () -> Unit,
+        scrollState: ScrollState
     ) {
 
 
@@ -280,7 +292,7 @@ class RegistrationFragment : Fragment() {
             field = value.name,
             placeHolderText = stringResource(id = R.string.name),
             onFieldChange = {onNameChange(it)},
-            modifier = Modifier.padding(top = 30.dp),
+            modifier = Modifier.padding(top = 30.dp).scrollToElement(scrollState),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 capitalization = KeyboardCapitalization.Words
@@ -294,6 +306,7 @@ class RegistrationFragment : Fragment() {
             field = value.city,
             placeHolderText = stringResource(id = R.string.city),
             onFieldChange = {onCityChange(it)},
+            modifier = Modifier.scrollToElement(scrollState),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 capitalization = KeyboardCapitalization.Words
@@ -306,6 +319,7 @@ class RegistrationFragment : Fragment() {
         PrimaryPickerTextField(
             field = value.birthday,
             placeHolderText = stringResource(id = R.string.birthday),
+            modifier = Modifier.scrollToElement(scrollState),
             onFieldChange = {},
             readOnly = true,
             trailingIcon = {
@@ -399,7 +413,8 @@ class RegistrationFragment : Fragment() {
         onPhoneChange: (String) -> Unit,
         onPasswordChange: (String) -> Unit,
         onConfirmPasswordChange: (String) -> Unit,
-        onRegisterClick: () -> Unit
+        onRegisterClick: () -> Unit,
+        scrollState: ScrollState
     ) {
         var passwordVisible by remember { mutableStateOf(false) }
 
@@ -420,6 +435,7 @@ class RegistrationFragment : Fragment() {
         PrimaryTextField(
             field = value.email,
             placeHolderText = stringResource(id = R.string.mail),
+            modifier = Modifier.scrollToElement(scrollState),
             onFieldChange = { newEmail ->
                 onEmailChange(newEmail)
             },
@@ -442,6 +458,7 @@ class RegistrationFragment : Fragment() {
                 imeAction = ImeAction.Next,
                 keyboardType = KeyboardType.Phone
             ),
+            modifier = Modifier.scrollToElement(scrollState),
             visualTransformation = PhoneVisualTransformation(),
             errorStr = value.phoneNumberError?.let { stringResource(id = it) } ?: "",
         )
@@ -455,6 +472,7 @@ class RegistrationFragment : Fragment() {
                 onPasswordChange(pass)
             },
             imeAction = ImeAction.Next,
+            modifier = Modifier.scrollToElement(scrollState),
             trailingIcon = {
                 val image = if (passwordVisible) Icons.Filled.Visibility
                 else Icons.Filled.VisibilityOff
@@ -495,6 +513,7 @@ class RegistrationFragment : Fragment() {
                     Icon(imageVector = image, contentDescription = "", tint = AppTheme.colors.primaryText)
                 }
             },
+            modifier = Modifier.scrollToElement(scrollState),
             errorStr = value.confirmPasswordError?.let{ stringResource(id = it)},
             visualTransformation =
                 if(passwordVisible) VisualTransformation.None
@@ -507,6 +526,16 @@ class RegistrationFragment : Fragment() {
             modifier = Modifier.padding(top = 30.dp)
         )
     }
+
+    @Composable
+    private fun Modifier.focusAndScroll(
+        focusRequester: FocusRequester,
+        scrollState: ScrollState
+    ): Modifier =
+        this
+            .focusRequester(focusRequester)
+            .scrollToElement(scrollState)
+
 
     @Preview
     @Composable

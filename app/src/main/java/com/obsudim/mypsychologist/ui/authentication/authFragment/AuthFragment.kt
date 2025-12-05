@@ -8,13 +8,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -56,6 +59,7 @@ import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryPickerTextFie
 import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryTextButton
 import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryTextField
 import com.obsudim.mypsychologist.ui.core.composeComponents.SecondaryTextButton
+import com.obsudim.mypsychologist.ui.core.composeComponents.scrollToElement
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -155,6 +159,7 @@ class AuthFragment : Fragment() {
                 contentScale = ContentScale.Crop,
             )
 
+            val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier
                     .statusBarsPadding()
@@ -164,10 +169,11 @@ class AuthFragment : Fragment() {
                         shape = RoundedCornerShape(topEnd = 28.dp, topStart = 28.dp)
                     )
                     .padding(horizontal = 16.dp)
+                    .padding(bottom = 52.dp, top = 16.dp)
                     .imePadding()
+                    .verticalScroll(scrollState)
             ) {
                 Text(
-                    modifier = Modifier.padding(top = 16.dp),
                     text = stringResource(R.string.have_you_account),
                     style = AppTheme.typography.titleXS,
                     color = AppTheme.colors.primaryText,
@@ -182,7 +188,7 @@ class AuthFragment : Fragment() {
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next,
                     ),
-                    modifier = Modifier.padding(top = 30.dp)
+                    modifier = Modifier.padding(top = 30.dp).scrollToElement(scrollState)
                 )
 
                 PrimaryPickerTextField(
@@ -202,7 +208,7 @@ class AuthFragment : Fragment() {
                     visualTransformation =
                         if(passwordVisible) VisualTransformation.None
                         else PasswordVisualTransformation(),
-                    modifier = Modifier.padding(top = 16.dp)
+                    modifier = Modifier.padding(top = 16.dp).scrollToElement(scrollState)
                 )
 
                 PrimaryTextButton(
@@ -212,12 +218,12 @@ class AuthFragment : Fragment() {
                     modifier = Modifier.padding(top = 30.dp)
                 )
 
+                Spacer(modifier = Modifier.padding(top = 16.dp))
                 SecondaryTextButton(
                     textString = stringResource(id = R.string.register),
                     onClick = {
                         onRegisterClick()
                     },
-                    modifier = Modifier.padding(top = 16.dp, bottom = 52.dp)
                 )
             }
         }
