@@ -117,19 +117,14 @@ class NewFreeDiaryFragment : Fragment() {
 
     private fun renderSuccessModel(state: NewFreeDiaryScreenState.SuccessModel) {
         binding.modelContent.isVisible = true
-        binding.progressBarModel.isVisible = false
+        binding.progressCircular.isVisible = false
         binding.resTv.isVisible = true
         binding.resTv.text = state.msg
     }
 
     private fun renderLoadingModel() {
-        binding.KPTDiaryTv.isVisible = false
-        binding.saveButton.isVisible = false
-        binding.field.isVisible = false
-        binding.field.isVisible = false
-
         binding.modelContent.isVisible = true
-        binding.progressBarModel.isVisible = true
+        binding.progressCircular.isVisible = true
         binding.resTv.isVisible = false
     }
 
