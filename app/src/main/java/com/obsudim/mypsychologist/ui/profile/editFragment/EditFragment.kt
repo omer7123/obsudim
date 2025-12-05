@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -16,6 +18,9 @@ import androidx.navigation.fragment.findNavController
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.databinding.FragmentEditBinding
+import com.obsudim.mypsychologist.databinding.IncludeEditTextBinding
+import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserDataEntity
+import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserInfoEntity
 import com.obsudim.mypsychologist.extensions.getAppComponent
 import com.obsudim.mypsychologist.extensions.showToast
 import com.obsudim.mypsychologist.presentation.profile.editFragment.EditScreenState
@@ -71,23 +76,46 @@ class EditFragment : Fragment() {
 
     private fun setupDefaultFields() {
         binding.apply {
-            name.editText.hint = getString(R.string.name)
-            description.editText.hint = getString(R.string.description)
-            city.editText.hint = getString(R.string.city)
-            company.editText.hint = getString(R.string.company)
-            gender.editText.hint = getString(R.string.gender)
-            phone.editText.hint = getString(R.string.phone)
+            name.editText.apply {
+                hint = getString(R.string.name)
+                textChangeListener(viewModel::setName)
+            }
+
+            description.editText.apply {
+                hint = getString(R.string.description)
+                textChangeListener(viewModel::setDescription)
+            }
+
+            city.editText.apply {
+                hint = getString(R.string.city)
+                textChangeListener(viewModel::setCity)
+            }
+            company.editText.apply {
+                hint = getString(R.string.company)
+                textChangeListener(viewModel::setCompany)
+            }
+            gender.editText.apply {
+                hint = getString(R.string.gender)
+                textChangeListener(viewModel::setGender)
+            }
+            phone.editText.apply {
+                hint = getString(R.string.phone)
+                textChangeListener(viewModel::setPhone)
+            }
         }
     }
 
+    private fun EditText.textChangeListener(setter: (String) -> Unit) {
+        addTextChangedListener {
+            setter(text.toString())
+        }
+    }
 
     private fun render(state: EditScreenState) {
         when (state) {
             is EditScreenState.CurrentData -> {
                 binding.progressBar.isVisible = false
-                Log.d("AAAAA current", state.toString())
-            //    binding.birthdayData.setText(state.birthday)
-
+                setupRealFields(state.userInfo)
             }
 
             is EditScreenState.Loading -> {
@@ -108,6 +136,18 @@ class EditFragment : Fragment() {
             }
 
             is EditScreenState.Init -> Unit
+        }
+    }
+
+
+    private fun setupRealFields(userData: UserInfoEntity){
+        binding.apply {
+            if(userData.name.isNotEmpty()) name.editText.hint = userData.name
+            if(userData.description.isNotEmpty()) description.editText.hint = userData.description
+            if(userData.city.isNotEmpty()) city.editText.hint = userData.city
+            if(userData.company.isNotEmpty()) company.editText.hint = userData.company
+            if(userData.gender.isNotEmpty()) gender.editText.hint = userData.gender
+            if(userData.phone.isNotEmpty()) phone.editText.hint = userData.phone
         }
     }
 
@@ -133,7 +173,7 @@ class EditFragment : Fragment() {
             } */
 
             saveButton.setOnClickListener {
-                viewModel.tryToSaveInfo(binding.name.editText.text.toString(), "")
+                viewModel.tryToSaveInfo()
             }
         }
     }

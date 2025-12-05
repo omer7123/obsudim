@@ -11,10 +11,10 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface UserService {
-    @PATCH("/users/update_user")
+    @PATCH("/auth/update")
     suspend fun updateUser(@Body userInfo: UserInfoModel): Response<String>
 
-    @GET("/users/user_data")
+    @GET("/auth/me")
     suspend fun getOwnData(): Response<UserInfoModel>
 
     @POST("/client/send_application")

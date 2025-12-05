@@ -45,8 +45,6 @@ class EditViewModel(
             when (val result = getOwnDataUseCase()) {
                 is Resource.Success -> {
                     info = result.data
-
-
                     EditScreenState.CurrentData(result.data)
                 }
 
@@ -62,26 +60,34 @@ class EditViewModel(
 
 
 
-    private fun setCity(it: String) {
+    fun setCity(it: String) {
         info = info.copy(city = it)
     }
-
-    private fun setGender(it: String) {
+    fun setGender(it: String) {
         info = info.copy(gender = it)
     }
-
-    private fun setName(it: String) {
+    fun setName(it: String) {
         info = info.copy(name = it)
+    }
+    fun setDescription(it: String) {
+        info = info.copy(description = it)
+    }
+    fun setCompany(it: String) {
+        info = info.copy(company = it)
+    }
+    fun setPhone(it: String) {
+        info = info.copy(phone = it)
     }
 
 
 
-    fun tryToSaveInfo(name: String, birthDate: String) {
+    fun tryToSaveInfo() {
         viewModelScope.launch {
-            saveClientInfoUseCase(UserInfoEntity(name, birthday = birthDate))
-            if (fieldsAreCorrect())
+            _screenState.value =
+                EditScreenState.Response(saveClientInfoUseCase(info))
+           /* if (fieldsAreCorrect())
                 _screenState.value =
-                    EditScreenState.Response(saveClientInfoUseCase(info))
+                    EditScreenState.Response(saveClientInfoUseCase(info)) */
         }
     }
 
