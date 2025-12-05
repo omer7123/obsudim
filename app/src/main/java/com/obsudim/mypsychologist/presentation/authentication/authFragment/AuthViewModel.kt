@@ -1,6 +1,5 @@
 package com.obsudim.mypsychologist.presentation.authentication.authFragment
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.core.Resource
@@ -59,19 +58,15 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch(handler) {
             _authByTokenStatus.value = AuthState.Loading
             val token = getTokenUseCase()
-            Log.e("tok", token.toString())
             if (token == "")
                 _authByTokenStatus.value = AuthState.Error
             else {
                 getAuthMeUseCase()
                     .collect { result ->
-                        Log.e("SAuth", "Auth states: $result")
-                        Log.e("SAuth", "Auth states Code: ${result.toString()}")
                         _authByTokenStatus.value = when (result) {
                             is Resource.Error -> AuthState.Error
                             Resource.Loading -> AuthState.Loading
                             is Resource.Success -> {
-                                Log.e("SAuth", "Auth success")
                                 AuthState.Success
                             }
                         }
