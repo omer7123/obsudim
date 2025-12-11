@@ -118,6 +118,5 @@
     <fragment
         android:id="@+id/resetPasswordFragment"
         android:name="com.obsudim.mypsychologist.ui.authentication.resetPasswordFragment.ResetPasswordFragment"
-        android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password" />
+        android:label="fragment_reset_password"/>
 </navigation>
