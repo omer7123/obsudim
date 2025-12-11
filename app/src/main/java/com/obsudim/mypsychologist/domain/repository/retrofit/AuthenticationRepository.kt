@@ -4,7 +4,9 @@ import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.data.model.AuthModel
 import com.obsudim.mypsychologist.data.model.Token
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.RegisterEntity
+import com.obsudim.mypsychologist.domain.entity.authenticationEntity.ResetPasswordEntity
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.Tokens
+import kotlinx.coroutines.flow.Flow
 
 interface AuthenticationRepository {
     suspend fun oldRegister(register: RegisterEntity): Resource<Tokens>
@@ -17,5 +19,6 @@ interface AuthenticationRepository {
     suspend fun authByToken(token: Token): Resource<Tokens>
     suspend fun saveUserId(userId: String)
     suspend fun getUserId(): String
+    suspend fun resetPassword(resetPasswordEntity: ResetPasswordEntity): Flow<Resource<Unit>>
 
 }

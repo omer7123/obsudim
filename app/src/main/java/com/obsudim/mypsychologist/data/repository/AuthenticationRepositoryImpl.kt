@@ -7,8 +7,10 @@ import com.obsudim.mypsychologist.data.model.AuthModel
 import com.obsudim.mypsychologist.data.model.Token
 import com.obsudim.mypsychologist.data.remote.authentication.AuthenticationDataSource
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.RegisterEntity
+import com.obsudim.mypsychologist.domain.entity.authenticationEntity.ResetPasswordEntity
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.Tokens
 import com.obsudim.mypsychologist.domain.repository.retrofit.AuthenticationRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AuthenticationRepositoryImpl @Inject constructor(
@@ -35,6 +37,10 @@ class AuthenticationRepositoryImpl @Inject constructor(
 
     override suspend fun getUserId(): String {
         return localDataSource.getUserId()
+    }
+
+    override suspend fun resetPassword(resetPasswordEntity: ResetPasswordEntity): Flow<Resource<Unit>> {
+        return dataSource.resetPass(resetPasswordEntity.toModel())
     }
 
     override suspend fun saveToken(token: String) {
