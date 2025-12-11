@@ -13,6 +13,7 @@
     <string name="diary_empty_placeholder">Напиши, как прошёл день, как себя чувствуешь :)</string>
     <string name="just_a_little_left">Осталось чуть-чуть</string>
 
+    <string name="reset_password">Восстановление пароля</string>
     <string name="nothing">Ничего нет :(</string>
     <string name="need_data">Необходимы данные.</string>
     <string name="need_user_data">Пожалуйста, укажите свои данные, чтобы HR-менеджер мог вас идентифицировать. Если вы не готовы к этому, укажите псевдоним.</string>
