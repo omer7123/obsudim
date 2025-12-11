@@ -17,8 +17,16 @@ class ResetPasswordViewModel @Inject constructor(
     val screenState: StateFlow<ResetPasswordScreenState> = _screenState.asStateFlow()
 
     fun sendRequestToResetPassword(){
+        val currentState = screenState.value as ResetPasswordScreenState.Content
+        _screenState.value = currentState.copy(isLoading = true)
+
         viewModelScope.launch {
 
         }
+    }
+
+    fun changeEmail(email: String) {
+        val currentState = screenState.value as ResetPasswordScreenState.Content
+        _screenState.value = currentState.copy(email = email)
     }
 }
