@@ -84,11 +84,15 @@ class ResetPasswordFragment : Fragment() {
         val viewState = viewModel.screenState.collectAsState().value
         when (viewState) {
             is ResetPasswordScreenState.Content -> {
-                ResetPasswordContent(viewState, onEmailChange = {
-                    viewModel.changeEmail(it)
-                }, onResetPassword = {
-
-                })
+                ResetPasswordContent(
+                    viewState,
+                    onEmailChange = {
+                        viewModel.changeEmail(it)
+                    },
+                    onResetPassword = {
+                        viewModel.sendRequestToResetPassword()
+                    }
+                )
             }
 
             ResetPasswordScreenState.Error -> {
