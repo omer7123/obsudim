@@ -22,6 +22,11 @@ data class UserModel(
 )
 
 @Serializable
+data class ResetPasswordModel(
+    val email: String
+)
+
+@Serializable
 data class RegisterModel(
     val username: String,
     @SerialName("birth_date")

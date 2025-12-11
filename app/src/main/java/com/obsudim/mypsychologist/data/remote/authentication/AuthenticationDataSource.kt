@@ -3,8 +3,10 @@ package com.obsudim.mypsychologist.data.remote.authentication
 import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.data.model.AuthModel
 import com.obsudim.mypsychologist.data.model.RegisterModel
+import com.obsudim.mypsychologist.data.model.ResetPasswordModel
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.RefreshToken
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.Tokens
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 
@@ -13,4 +15,5 @@ interface AuthenticationDataSource {
     suspend fun authOld(authModel: AuthModel): Resource<Tokens>
     suspend fun authByToken(token: String): Resource<Tokens>
     suspend fun refreshToken(refreshToken: RefreshToken): Response<Tokens>
+    suspend fun resetPass(resetPasswordModel: ResetPasswordModel): Flow<Resource<Unit>>
 }

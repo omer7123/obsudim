@@ -2,6 +2,7 @@ package com.obsudim.mypsychologist.data.remote.authentication
 
 import com.obsudim.mypsychologist.data.model.AuthModel
 import com.obsudim.mypsychologist.data.model.RegisterModel
+import com.obsudim.mypsychologist.data.model.ResetPasswordModel
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.RefreshToken
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.Tokens
 import retrofit2.Response
@@ -16,7 +17,9 @@ interface AuthenticationService {
     suspend fun authOld(@Body auhModel: AuthModel): Response<Tokens>
     @POST("/auth/token-auth")
     suspend fun authByToken(@Query("token") token: String): Response<Tokens>
-
     @POST("/auth/refresh-token")
     suspend fun refreshToken(@Body refreshToken: RefreshToken): Response<Tokens>
+
+    @POST("/auth/request-password-reset")
+    suspend fun resetPass(@Body resetPasswordModel: ResetPasswordModel): Response<Unit>
 }

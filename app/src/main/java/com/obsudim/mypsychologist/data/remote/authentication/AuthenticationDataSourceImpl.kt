@@ -4,8 +4,11 @@ import com.obsudim.mypsychologist.core.BaseDataSource
 import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.data.model.AuthModel
 import com.obsudim.mypsychologist.data.model.RegisterModel
+import com.obsudim.mypsychologist.data.model.ResetPasswordModel
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.RefreshToken
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.Tokens
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -26,5 +29,12 @@ class AuthenticationDataSourceImpl @Inject constructor(val api: AuthenticationSe
 
     override suspend fun refreshToken(refreshToken: RefreshToken): Response<Tokens> {
         return api.refreshToken(refreshToken)
+    }
+
+    override suspend fun resetPass(resetPasswordModel: ResetPasswordModel): Flow<Resource<Unit>> = flow{
+        emit(Resource.Loading)
+        emit(getResult {
+            api.resetPass(resetPasswordModel)
+        })
     }
 }
