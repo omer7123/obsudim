@@ -120,7 +120,7 @@ class AuthFragment : Fragment() {
                         navController.navigate(R.id.action_authFragment_to_registrationFragment)
                     },
                     onForgotPasswordClick = {
-
+                        navController.navigate(R.id.action_authFragment_to_resetPasswordFragment)
                     }
                 )
             }

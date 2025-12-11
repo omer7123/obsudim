@@ -66,6 +66,9 @@
             app:exitAnim="@anim/slide_in_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_authFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
 
     <include app:graph="@navigation/test_nav" />
@@ -112,4 +115,9 @@
     <include app:graph="@navigation/profile_graph" />
     <include app:graph="@navigation/psychologists_with_tasks_graph" />
     <include app:graph="@navigation/reading_theory_graph" />
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.obsudim.mypsychologist.ui.authentication.resetPasswordFragment.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" />
 </navigation>
