@@ -6,9 +6,6 @@
     app:startDestination="@id/fragment_exercises">
 
     <action
-        android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
-        app:destination="@id/newFreeDiaryFragment" />
-    <action
         android:id="@+id/action_fragment_diaries_to_fragment_new_diary"
         app:destination="@id/fragment_new_diary"
         app:enterAnim="@anim/slide_from_right"
@@ -26,46 +23,19 @@
             app:destination="@id/profile_graph" />
         <action
             android:id="@+id/action_fragment_exercises_to_freeDiaryTrackerMoodFragment"
-            app:destination="@id/freeDiaryTrackerMoodFragment" />
+            app:destination="@id/free_diary_graph" />
         <action
             android:id="@+id/action_fragment_exercises_to_exercisesHostFragment"
             app:destination="@id/exercisesHostFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/freeDiaryTrackerMoodFragment"
-        android:name="com.obsudim.mypsychologist.ui.exercises.freeDiaryTrackerMoodFragment.FreeDiaryTrackerMoodFragment"
-        android:label="FreeDiaryTrackerMoodFragment">
-        <action
-            android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
-            app:destination="@id/newFreeDiaryFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/fragment_new_diary"
         android:name="com.obsudim.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary"
         tools:layout="@layout/fragment_new_thought_diary"
         android:label="FragmentNewDiary" />
 
-    <action
-        android:id="@+id/action_trackerMoodFragment_to_newFreeDiaryFragment"
-        app:destination="@id/newFreeDiaryFragment"
-        app:popUpTo="@id/main_fragment"
-        app:popUpToInclusive="true" />
-    <fragment
-        android:id="@+id/trackerMoodFragment"
-        android:name="com.obsudim.mypsychologist.ui.exercises.trackerMoodBottomSheetFragment.TrackerMoodFragment"
-        tools:layout="@layout/fragment_tracker_mood"
-        android:label="fragment_tracker_mood">
-        <action
-            android:id="@+id/action_trackerMoodFragment_to_newFreeDiaryFragment"
-            app:destination="@id/newFreeDiaryFragment"
-            app:popUpTo="@id/main_fragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/newFreeDiaryFragment"
-        android:name="com.obsudim.mypsychologist.ui.exercises.newFreeDiaryFragment.NewFreeDiaryFragment"
-        tools:layout="@layout/fragment_new_free_diary"
-        android:label="fragment_new_free_diary" />
+
     <include app:graph="@navigation/profile_graph" />
     <fragment
         android:id="@+id/exercisesHostFragment"
@@ -86,6 +56,6 @@
     <fragment
         android:id="@+id/exerciseDemoResultFragment"
         android:name="com.obsudim.mypsychologist.ui.exercises.exerciseDemoResultFragment.ExerciseDemoResultFragment"
-        android:label="fragment_exercise_demo_result"
-        tools:layout="@layout/fragment_exercise_demo_result" />
+        android:label="fragment_exercise_demo_result" />
+    <include app:graph="@navigation/free_diary_graph" />
 </navigation>

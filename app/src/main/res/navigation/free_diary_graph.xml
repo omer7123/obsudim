@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/free_diary_graph"
+    app:startDestination="@id/freeDiaryTrackerMoodFragment">
+
+    <fragment
+        android:id="@+id/freeDiaryTrackerMoodFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.freeDiaryTrackerMoodFragment.FreeDiaryTrackerMoodFragment"
+        android:label="FreeDiaryTrackerMoodFragment">
+        <action
+            android:id="@+id/action_freeDiaryTrackerMoodFragment_to_newFreeDiaryFragment"
+            app:destination="@id/newFreeDiaryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newFreeDiaryFragment"
+        android:name="com.obsudim.mypsychologist.ui.exercises.newFreeDiaryFragment.NewFreeDiaryFragment"
+        tools:layout="@layout/fragment_new_free_diary"
+        android:label="fragment_new_free_diary" />
+</navigation>

@@ -110,27 +110,7 @@ class NewFreeDiaryFragment : Fragment() {
             NewFreeDiaryScreenState.Loading -> renderLoading()
             NewFreeDiaryScreenState.Success -> renderRequest()
             NewFreeDiaryScreenState.Content -> renderContent()
-            NewFreeDiaryScreenState.LoadingModel -> renderLoadingModel()
-            is NewFreeDiaryScreenState.SuccessModel -> renderSuccessModel(state)
         }
-    }
-
-    private fun renderSuccessModel(state: NewFreeDiaryScreenState.SuccessModel) {
-        binding.modelContent.isVisible = true
-        binding.progressBarModel.isVisible = false
-        binding.resTv.isVisible = true
-        binding.resTv.text = state.msg
-    }
-
-    private fun renderLoadingModel() {
-        binding.KPTDiaryTv.isVisible = false
-        binding.saveButton.isVisible = false
-        binding.field.isVisible = false
-        binding.field.isVisible = false
-
-        binding.modelContent.isVisible = true
-        binding.progressBarModel.isVisible = true
-        binding.resTv.isVisible = false
     }
 
     private fun renderContent() {
