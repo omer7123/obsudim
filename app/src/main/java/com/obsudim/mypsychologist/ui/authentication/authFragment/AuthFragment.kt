@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -117,6 +118,9 @@ class AuthFragment : Fragment() {
                     },
                     onRegisterClick = {
                         navController.navigate(R.id.action_authFragment_to_registrationFragment)
+                    },
+                    onForgotPasswordClick = {
+
                     }
                 )
             }
@@ -140,7 +144,8 @@ class AuthFragment : Fragment() {
         onEmailChange: (String) -> Unit,
         onPasswordChange: (String) -> Unit,
         onSubmitClick: () -> Unit,
-        onRegisterClick: () -> Unit
+        onRegisterClick: () -> Unit,
+        onForgotPasswordClick: () -> Unit
     ) {
         var passwordVisible by remember { mutableStateOf(false) }
 
@@ -188,7 +193,9 @@ class AuthFragment : Fragment() {
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next,
                     ),
-                    modifier = Modifier.padding(top = 30.dp).scrollToElement(scrollState)
+                    modifier = Modifier
+                        .padding(top = 30.dp)
+                        .scrollToElement(scrollState)
                 )
 
                 PrimaryPickerTextField(
@@ -208,7 +215,20 @@ class AuthFragment : Fragment() {
                     visualTransformation =
                         if(passwordVisible) VisualTransformation.None
                         else PasswordVisualTransformation(),
-                    modifier = Modifier.padding(top = 16.dp).scrollToElement(scrollState)
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .scrollToElement(scrollState)
+                )
+
+                Text(
+                    text = stringResource(R.string.forgot_your_password),
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .padding(top = 16.dp).clickable{
+                            onForgotPasswordClick()
+                        },
+                    style = AppTheme.typography.bodyM,
+                    color = AppTheme.colors.primaryBackground,
                 )
 
                 PrimaryTextButton(
@@ -239,7 +259,8 @@ class AuthFragment : Fragment() {
                 onEmailChange = {},
                 onPasswordChange = {},
                 onSubmitClick = {},
-                onRegisterClick = {})
+                onRegisterClick = {},
+                onForgotPasswordClick = {})
         }
     }
 
