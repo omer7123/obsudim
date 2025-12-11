@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -44,6 +45,7 @@ import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryTextButton
 import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryTextField
 import com.obsudim.mypsychologist.ui.core.composeComponents.scrollToElement
 import com.obsudim.mypsychologist.ui.theme.AppTheme
+import com.obsudim.mypsychologist.ui.theme.AppTheme.typography
 import javax.inject.Inject
 
 
@@ -86,6 +88,7 @@ class ResetPasswordFragment : Fragment() {
             is ResetPasswordScreenState.Content -> {
                 ResetPasswordContent(
                     viewState,
+                    innerPadding,
                     onEmailChange = {
                         viewModel.changeEmail(it)
                     },
@@ -100,8 +103,24 @@ class ResetPasswordFragment : Fragment() {
             }
 
             ResetPasswordScreenState.SuccessRequest -> {
-                Box(modifier = Modifier.fillMaxSize()) {
-
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_topic),
+                        contentDescription = stringResource(
+                            id = R.string.db_error
+                        )
+                    )
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 100.dp)
+                            .padding(horizontal = 16.dp),
+                        text = stringResource(id = R.string.place_reset),
+                        style = typography.bodyL
+                    )
                 }
             }
         }
@@ -110,11 +129,12 @@ class ResetPasswordFragment : Fragment() {
     @Composable
     private fun ResetPasswordContent(
         viewState: ResetPasswordScreenState.Content,
+        innerPadding: PaddingValues,
         onEmailChange: (String) -> Unit,
         onResetPassword: () -> Unit
     ) {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().padding(innerPadding)
         ) {
             Image(
                 modifier = Modifier.fillMaxWidth(),
@@ -140,7 +160,7 @@ class ResetPasswordFragment : Fragment() {
                 Spacer(modifier = Modifier.padding(top = 16.dp))
                 Text(
                     text = stringResource(R.string.reset_password),
-                    style = AppTheme.typography.titleXS,
+                    style = typography.titleXS,
                     color = AppTheme.colors.primaryText,
                 )
 
@@ -175,9 +195,9 @@ class ResetPasswordFragment : Fragment() {
         AppTheme {
             ResetPasswordContent(
                 viewState = ResetPasswordScreenState.Content(),
-                onEmailChange = {},
-                onResetPassword = {}
-            )
+                innerPadding = PaddingValues(),
+                onEmailChange = {}
+            ) {}
         }
     }
 }
