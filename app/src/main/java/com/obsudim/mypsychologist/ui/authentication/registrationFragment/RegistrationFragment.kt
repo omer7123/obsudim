@@ -40,8 +40,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
@@ -189,6 +187,7 @@ class RegistrationFragment : Fragment() {
             val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier
+                    .statusBarsPadding()
                     .align(Alignment.BottomCenter)
                     .background(
                         color = AppTheme.colors.screenBackground,
@@ -196,7 +195,6 @@ class RegistrationFragment : Fragment() {
                     )
                     .padding(horizontal = 16.dp)
                     .padding(top = 16.dp)
-                    .padding(bottom = 52.dp)
                     .imePadding()
                     .verticalScroll(scrollState)
 
@@ -402,7 +400,7 @@ class RegistrationFragment : Fragment() {
         PrimaryTextButton(
             textString = stringResource(id = R.string.next),
             onClick = {onNextClick()},
-            modifier = Modifier.padding(top = 30.dp)
+            modifier = Modifier.padding(top = 30.dp).padding(bottom = 52.dp)
         )
     }
 
@@ -523,19 +521,9 @@ class RegistrationFragment : Fragment() {
         PrimaryTextButton(
             textString = stringResource(id = R.string.register),
             onClick = {onRegisterClick()},
-            modifier = Modifier.padding(top = 30.dp)
+            modifier = Modifier.padding(top = 30.dp).padding(bottom = 52.dp)
         )
     }
-
-    @Composable
-    private fun Modifier.focusAndScroll(
-        focusRequester: FocusRequester,
-        scrollState: ScrollState
-    ): Modifier =
-        this
-            .focusRequester(focusRequester)
-            .scrollToElement(scrollState)
-
 
     @Preview
     @Composable

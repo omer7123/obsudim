@@ -175,7 +175,7 @@ class AuthFragment : Fragment() {
                         shape = RoundedCornerShape(topEnd = 28.dp, topStart = 28.dp)
                     )
                     .padding(horizontal = 16.dp)
-                    .padding(bottom = 52.dp, top = 16.dp)
+                    .padding(top = 16.dp)
                     .imePadding()
                     .verticalScroll(scrollState)
             ) {
@@ -245,6 +245,7 @@ class AuthFragment : Fragment() {
                     onClick = {
                         onRegisterClick()
                     },
+                    modifier = Modifier.padding(bottom = 52.dp)
                 )
             }
         }
