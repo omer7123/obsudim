@@ -27,7 +27,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -83,6 +82,11 @@ class AuthFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.authByToken()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ) = ComposeView(context = requireContext()).apply {
@@ -95,9 +99,6 @@ class AuthFragment : Fragment() {
 
     @Composable
     fun AuthScreen(viewModel: AuthViewModel, navController: NavController) {
-        LaunchedEffect(key1 = Unit) {
-            viewModel.authByToken()
-        }
         val viewState = viewModel.stateScreen.collectAsState()
         val authByTokenState = viewModel.authByTokenStatus.collectAsState()
 
@@ -120,7 +121,7 @@ class AuthFragment : Fragment() {
                         navController.navigate(R.id.action_authFragment_to_registrationFragment)
                     },
                     onForgotPasswordClick = {
-                        navController.navigate(R.id.action_authFragment_to_resetPasswordFragment)
+                        navController.navigate(R.id.resetPasswordFragment)
                     }
                 )
             }

@@ -109,7 +109,7 @@ class ResetPasswordFragment : Fragment() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_topic),
+                        painter = painterResource(id = R.drawable.ic_tracker_mood_practice),
                         contentDescription = stringResource(
                             id = R.string.db_error
                         )
@@ -134,7 +134,7 @@ class ResetPasswordFragment : Fragment() {
         onResetPassword: () -> Unit
     ) {
         Box(
-            modifier = Modifier.fillMaxSize().padding(innerPadding)
+            modifier = Modifier.fillMaxSize()
         ) {
             Image(
                 modifier = Modifier.fillMaxWidth(),

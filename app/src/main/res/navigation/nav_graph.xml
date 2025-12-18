@@ -69,6 +69,9 @@
             app:exitAnim="@anim/slide_in_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_authFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
 
     <include app:graph="@navigation/test_nav" />
