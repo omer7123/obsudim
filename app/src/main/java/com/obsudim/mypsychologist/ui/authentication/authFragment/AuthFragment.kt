@@ -102,7 +102,7 @@ class AuthFragment : Fragment() {
         val viewState = viewModel.stateScreen.collectAsState()
         val authByTokenState = viewModel.authByTokenStatus.collectAsState()
 
-        when(authByTokenState.value){
+        when (authByTokenState.value) {
             AuthState.Error -> {
                 AuthInitial(
                     email = viewState.value.email,
@@ -125,12 +125,14 @@ class AuthFragment : Fragment() {
                     }
                 )
             }
+
             AuthState.Initial -> Unit
             AuthState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize()){
+                Box(modifier = Modifier.fillMaxSize()) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
+
             AuthState.Success -> {
                 navController.navigate(R.id.action_authFragment_to_main_fragment)
             }
@@ -214,7 +216,7 @@ class AuthFragment : Fragment() {
                         }
                     },
                     visualTransformation =
-                        if(passwordVisible) VisualTransformation.None
+                        if (passwordVisible) VisualTransformation.None
                         else PasswordVisualTransformation(),
                     modifier = Modifier
                         .padding(top = 16.dp)
@@ -225,7 +227,8 @@ class AuthFragment : Fragment() {
                     text = stringResource(R.string.forgot_your_password),
                     modifier = Modifier
                         .align(alignment = Alignment.CenterHorizontally)
-                        .padding(top = 16.dp).clickable{
+                        .padding(top = 16.dp)
+                        .clickable {
                             onForgotPasswordClick()
                         },
                     style = AppTheme.typography.bodyM,
@@ -255,7 +258,8 @@ class AuthFragment : Fragment() {
     @Composable
     fun AuthInitial_Preview() {
         AppTheme {
-            AuthInitial(email = "",
+            AuthInitial(
+                email = "",
                 password = "",
                 res = AuthContent(loading = true),
                 onEmailChange = {},

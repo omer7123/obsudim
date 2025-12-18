@@ -168,7 +168,7 @@ class RegistrationFragment : Fragment() {
                 contentDescription = "",
                 contentScale = ContentScale.Crop
             )
-            androidx.compose.material3.IconButton(
+            IconButton(
                 modifier = Modifier
                     .statusBarsPadding()
                     .padding(top = 12.dp, start = 8.dp),
@@ -290,7 +290,9 @@ class RegistrationFragment : Fragment() {
             field = value.name,
             placeHolderText = stringResource(id = R.string.name),
             onFieldChange = {onNameChange(it)},
-            modifier = Modifier.padding(top = 30.dp).scrollToElement(scrollState),
+            modifier = Modifier
+                .padding(top = 30.dp)
+                .scrollToElement(scrollState),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 capitalization = KeyboardCapitalization.Words
@@ -400,7 +402,9 @@ class RegistrationFragment : Fragment() {
         PrimaryTextButton(
             textString = stringResource(id = R.string.next),
             onClick = {onNextClick()},
-            modifier = Modifier.padding(top = 30.dp).padding(bottom = 52.dp)
+            modifier = Modifier
+                .padding(top = 30.dp)
+                .padding(bottom = 52.dp)
         )
     }
 
@@ -521,7 +525,9 @@ class RegistrationFragment : Fragment() {
         PrimaryTextButton(
             textString = stringResource(id = R.string.register),
             onClick = {onRegisterClick()},
-            modifier = Modifier.padding(top = 30.dp).padding(bottom = 52.dp)
+            modifier = Modifier
+                .padding(top = 30.dp)
+                .padding(bottom = 52.dp)
         )
     }
 
