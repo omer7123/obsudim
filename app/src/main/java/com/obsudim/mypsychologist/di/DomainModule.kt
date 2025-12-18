@@ -13,6 +13,7 @@ import com.obsudim.mypsychologist.domain.repository.retrofit.FreeDiaryRepository
 import com.obsudim.mypsychologist.domain.repository.retrofit.TestsDiagnosticRepository
 import com.obsudim.mypsychologist.presentation.authentication.authFragment.AuthViewModel
 import com.obsudim.mypsychologist.presentation.authentication.registrationFragment.RegisterViewModel
+import com.obsudim.mypsychologist.presentation.authentication.resetPasswordFragment.ResetPasswordViewModel
 import com.obsudim.mypsychologist.presentation.diagnostics.passingTestFragment.PassingTestViewModel
 import com.obsudim.mypsychologist.presentation.exercises.exerciseDemoResultFragment.ExerciseDemoResultViewModel
 import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment.ExercisePassingViewModel
@@ -55,6 +56,10 @@ interface DomainModule {
     @Binds
     @[IntoMap ClassKey(AuthViewModel::class)]
     fun provideAuthViewModel(authViewModel: AuthViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ClassKey(ResetPasswordViewModel::class)]
+    fun provideResetPasswordViewModel(resetPasswordViewModel: ResetPasswordViewModel): ViewModel
 
     @Binds
     @[IntoMap ClassKey(NewFreeDiaryViewModel::class)]

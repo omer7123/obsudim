@@ -6,15 +6,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -23,7 +27,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,6 +59,7 @@ import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryPickerTextFie
 import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryTextButton
 import com.obsudim.mypsychologist.ui.core.composeComponents.PrimaryTextField
 import com.obsudim.mypsychologist.ui.core.composeComponents.SecondaryTextButton
+import com.obsudim.mypsychologist.ui.core.composeComponents.scrollToElement
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -78,6 +82,11 @@ class AuthFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.authByToken()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ) = ComposeView(context = requireContext()).apply {
@@ -90,13 +99,10 @@ class AuthFragment : Fragment() {
 
     @Composable
     fun AuthScreen(viewModel: AuthViewModel, navController: NavController) {
-        LaunchedEffect(key1 = Unit) {
-            viewModel.authByToken()
-        }
         val viewState = viewModel.stateScreen.collectAsState()
         val authByTokenState = viewModel.authByTokenStatus.collectAsState()
 
-        when(authByTokenState.value){
+        when (authByTokenState.value) {
             AuthState.Error -> {
                 AuthInitial(
                     email = viewState.value.email,
@@ -113,15 +119,20 @@ class AuthFragment : Fragment() {
                     },
                     onRegisterClick = {
                         navController.navigate(R.id.action_authFragment_to_registrationFragment)
+                    },
+                    onForgotPasswordClick = {
+                        navController.navigate(R.id.resetPasswordFragment)
                     }
                 )
             }
+
             AuthState.Initial -> Unit
             AuthState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize()){
+                Box(modifier = Modifier.fillMaxSize()) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
+
             AuthState.Success -> {
                 navController.navigate(R.id.action_authFragment_to_main_fragment)
             }
@@ -136,7 +147,8 @@ class AuthFragment : Fragment() {
         onEmailChange: (String) -> Unit,
         onPasswordChange: (String) -> Unit,
         onSubmitClick: () -> Unit,
-        onRegisterClick: () -> Unit
+        onRegisterClick: () -> Unit,
+        onForgotPasswordClick: () -> Unit
     ) {
         var passwordVisible by remember { mutableStateOf(false) }
 
@@ -155,6 +167,7 @@ class AuthFragment : Fragment() {
                 contentScale = ContentScale.Crop,
             )
 
+            val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier
                     .statusBarsPadding()
@@ -164,10 +177,11 @@ class AuthFragment : Fragment() {
                         shape = RoundedCornerShape(topEnd = 28.dp, topStart = 28.dp)
                     )
                     .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp)
                     .imePadding()
+                    .verticalScroll(scrollState)
             ) {
                 Text(
-                    modifier = Modifier.padding(top = 16.dp),
                     text = stringResource(R.string.have_you_account),
                     style = AppTheme.typography.titleXS,
                     color = AppTheme.colors.primaryText,
@@ -182,7 +196,9 @@ class AuthFragment : Fragment() {
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next,
                     ),
-                    modifier = Modifier.padding(top = 30.dp)
+                    modifier = Modifier
+                        .padding(top = 30.dp)
+                        .scrollToElement(scrollState)
                 )
 
                 PrimaryPickerTextField(
@@ -200,9 +216,23 @@ class AuthFragment : Fragment() {
                         }
                     },
                     visualTransformation =
-                        if(passwordVisible) VisualTransformation.None
+                        if (passwordVisible) VisualTransformation.None
                         else PasswordVisualTransformation(),
-                    modifier = Modifier.padding(top = 16.dp)
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .scrollToElement(scrollState)
+                )
+
+                Text(
+                    text = stringResource(R.string.forgot_your_password),
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .padding(top = 16.dp)
+                        .clickable {
+                            onForgotPasswordClick()
+                        },
+                    style = AppTheme.typography.bodyM,
+                    color = AppTheme.colors.primaryBackground,
                 )
 
                 PrimaryTextButton(
@@ -212,12 +242,13 @@ class AuthFragment : Fragment() {
                     modifier = Modifier.padding(top = 30.dp)
                 )
 
+                Spacer(modifier = Modifier.padding(top = 16.dp))
                 SecondaryTextButton(
                     textString = stringResource(id = R.string.register),
                     onClick = {
                         onRegisterClick()
                     },
-                    modifier = Modifier.padding(top = 16.dp, bottom = 52.dp)
+                    modifier = Modifier.padding(bottom = 52.dp)
                 )
             }
         }
@@ -227,13 +258,15 @@ class AuthFragment : Fragment() {
     @Composable
     fun AuthInitial_Preview() {
         AppTheme {
-            AuthInitial(email = "",
+            AuthInitial(
+                email = "",
                 password = "",
                 res = AuthContent(loading = true),
                 onEmailChange = {},
                 onPasswordChange = {},
                 onSubmitClick = {},
-                onRegisterClick = {})
+                onRegisterClick = {},
+                onForgotPasswordClick = {})
         }
     }
 

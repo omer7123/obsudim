@@ -58,6 +58,12 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                     setLightStatusBarIcons(false)
                 }
 
+                R.id.resetPasswordFragment -> {
+                    transparentStatusBar()
+                    bottomNav.isVisible = false
+                    setLightStatusBarIcons(false)
+                }
+
                 R.id.freeDiaryTrackerMoodFragment -> {
                     transparentStatusBar()
                     bottomNav.isVisible = false

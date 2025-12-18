@@ -9,10 +9,10 @@ data class Auth(
     val password: String,
 )
 
-data class Register(
-    val auth: Auth,
-    val checkPassword: String,
+data class ResetPasswordEntity(
+    val email: String
 )
+
 data class RegisterEntity(
     val username: String,
     val birthDate: String,

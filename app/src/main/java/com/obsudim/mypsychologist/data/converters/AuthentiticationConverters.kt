@@ -2,9 +2,11 @@ package com.obsudim.mypsychologist.data.converters
 
 import com.obsudim.mypsychologist.data.model.AuthModel
 import com.obsudim.mypsychologist.data.model.RegisterModel
+import com.obsudim.mypsychologist.data.model.ResetPasswordModel
 import com.obsudim.mypsychologist.data.model.UserModel
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.Auth
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.RegisterEntity
+import com.obsudim.mypsychologist.domain.entity.authenticationEntity.ResetPasswordEntity
 import com.obsudim.mypsychologist.domain.entity.authenticationEntity.User
 
 fun AuthModel.toAuth(): Auth {
@@ -26,6 +28,8 @@ fun RegisterEntity.toModel(): RegisterModel{
         confirmPassword = confirmPassword
     )
 }
+
+fun ResetPasswordEntity.toModel() = ResetPasswordModel(email)
 
 fun UserModel.toUser(): User {
     return User(
