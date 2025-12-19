@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_graph"
-    app:startDestination="@id/fragment_profile">
+    app:startDestination="@id/gamificationFragment2">
 
     <fragment
         android:id="@+id/fragment_feedback"
@@ -32,4 +32,12 @@
         android:id="@+id/fragment_edit"
         android:name="com.obsudim.mypsychologist.ui.profile.editFragment.EditFragment"
         android:label="EditFragment" />
+    <fragment
+        android:id="@+id/gamificationFragment2"
+        android:name="com.obsudim.mypsychologist.ui.gamification.GamificationFragment"
+        android:label="GamificationFragment" >
+        <action
+            android:id="@+id/action_gamificationFragment2_to_fragment_profile"
+            app:destination="@id/fragment_profile" />
+    </fragment>
 </navigation>

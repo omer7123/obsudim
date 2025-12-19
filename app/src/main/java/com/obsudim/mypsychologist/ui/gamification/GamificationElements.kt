@@ -1,4 +1,4 @@
-package com.obsudim.mypsychologist.ui.profile.profileFragment
+package com.obsudim.mypsychologist.ui.gamification
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.obsudim.mypsychologist.ui.theme.AppTheme
+import java.util.Calendar
 
 @Composable
 fun ProgressBarScore(
@@ -119,14 +120,35 @@ fun ProgressBarScore(
 @Composable
 fun Graph(scores: List<Int>) {
 
-    val days = listOf("ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС")
+    val calendar = Calendar.getInstance()
+
+    val lastSevenDays = (6 downTo 0).map { offset ->
+        val dayCalendar = Calendar.getInstance().apply {
+            timeInMillis = calendar.timeInMillis
+            add(Calendar.DAY_OF_YEAR, -offset)
+        }
+        dayCalendar
+    }
+
+    val days = lastSevenDays.map { dayCalendar ->
+        when (dayCalendar.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.MONDAY -> "ПН"
+            Calendar.TUESDAY -> "ВТ"
+            Calendar.WEDNESDAY -> "СР"
+            Calendar.THURSDAY -> "ЧТ"
+            Calendar.FRIDAY -> "ПТ"
+            Calendar.SATURDAY -> "СБ"
+            Calendar.SUNDAY -> "ВС"
+            else -> ""
+        }
+    }
 
     Box(
         modifier = Modifier
             .width(380.dp)
             .height(148.dp)
             .clip(RoundedCornerShape(28.dp))
-            .background(Color(0xFFF1F3F6))
+            .background(color = AppTheme.colors.tertiaryBackground)
             .padding(16.dp)
     ) {
 

@@ -1,4 +1,4 @@
-package com.obsudim.mypsychologist.domain.entity.priofileEntity
+package com.obsudim.mypsychologist.domain.entity.gamificationEntity
 
 data class CurrentScoreEntity(
     val score: Int

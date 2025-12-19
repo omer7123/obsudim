@@ -1,4 +1,4 @@
-package com.obsudim.mypsychologist.data.remote.profile.gamification
+package com.obsudim.mypsychologist.data.remote.gamification
 
 import com.obsudim.mypsychologist.data.model.CurrentScoreModel
 import com.obsudim.mypsychologist.data.model.WeeklyScoresModel
@@ -9,6 +9,6 @@ interface GamificationService {
     @GET("/gamification/current-score")
     suspend fun getCurrentScore(): Response<CurrentScoreModel>
 
-    @GET("/gamification/weekly-score")
+    @GET("/gamification/weekly-scores")
     suspend fun getWeeklyScores(): Response<WeeklyScoresModel>
 }

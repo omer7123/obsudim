@@ -11,6 +11,7 @@ import com.obsudim.mypsychologist.data.remote.diagnostic.TestsDiagnosticService
 import com.obsudim.mypsychologist.data.remote.education.EducationService
 import com.obsudim.mypsychologist.data.remote.exercises.ExerciseService
 import com.obsudim.mypsychologist.data.remote.freeDiary.FreeDiaryService
+import com.obsudim.mypsychologist.data.remote.gamification.GamificationService
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -162,6 +163,14 @@ class DataModule {
         @AuthRetrofit retrofit: Retrofit
     ): ExerciseService {
         return retrofit.create(ExerciseService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGamificationService(
+        @AuthRetrofit retrofit: Retrofit
+    ): GamificationService {
+        return retrofit.create(GamificationService::class.java)
     }
 
 }
