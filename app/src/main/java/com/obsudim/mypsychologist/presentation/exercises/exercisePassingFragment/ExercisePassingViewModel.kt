@@ -99,6 +99,7 @@ class ExercisePassingViewModel @Inject constructor(
                 list = listOf("")
             )
             TypeOfSection.TextInput   -> TypeOfSectionUiRes.TextInputUiEntity(id)
+            TypeOfSection.Slider    -> TypeOfSectionUiRes.SliderUiEntity(id)
         }
 
     fun changeTextAddableList(entity: FieldAddableListChange) {
@@ -114,6 +115,18 @@ class ExercisePassingViewModel @Inject constructor(
                     }
                     addableField.copy(list = updatedList)
                 } else curr
+            }
+        )
+    }
+
+    fun sliderChange(slider: TypeOfSectionUiRes.SliderUiEntity) {
+        val currState = (screenState.value as ExercisePassingScreenState.Content)
+        _screenState.value = currState.copy(
+            currValue = currState.currValue.map { curr ->
+                if (curr.id == slider.id)
+                    slider
+                else
+                    curr
             }
         )
     }

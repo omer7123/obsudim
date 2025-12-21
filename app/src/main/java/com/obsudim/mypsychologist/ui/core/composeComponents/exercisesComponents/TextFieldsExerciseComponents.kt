@@ -55,14 +55,16 @@ fun TextInputItem(
             .background(color = backgroundColor)
             .padding(horizontal = 16.dp, vertical = 30.dp)
     ) {
-        Text(
-            text = title,
-            style = AppTheme.typography.titleCygreSemiBold,
-            fontSize = 26.sp,
-            color = titleColor
-        )
+        if (title.isNotEmpty()) {
+            Text(
+                text = title,
+                style = AppTheme.typography.titleCygreSemiBold,
+                fontSize = 26.sp,
+                color = titleColor
+            )
 
-        Spacer(modifier = Modifier.padding(top = 20.dp))
+            Spacer(modifier = Modifier.padding(top = 20.dp))
+        }
 
         TransparentPrimaryTextField(
             field = text ?: "",
