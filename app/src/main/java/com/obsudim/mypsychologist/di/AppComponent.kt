@@ -21,6 +21,7 @@ interface AppComponent {
 
     fun educationComponent(): EducationComponent.Factory
     fun authenticationComponent(): AuthenticationComponent.Factory
+    fun gamificationComponent(): GamificationComponent.Factory
 
 
     @Component.Factory

@@ -45,6 +45,7 @@ data class SectionsExerciseEntity(
 
 sealed interface TypeOfSection {
     data object TextInput : TypeOfSection
+    data object Slider : TypeOfSection
     data object AddableList : TypeOfSection
 }
 
@@ -52,6 +53,11 @@ sealed class TypeOfSectionUiRes(val id: String) {
     data class TextInputUiEntity(
         val idLoc: String,
         val title: String? = null,
+    ) : TypeOfSectionUiRes(idLoc)
+
+    data class SliderUiEntity(
+        val idLoc: String,
+        val value: Float = 50f,
     ) : TypeOfSectionUiRes(idLoc)
 
     data class AddableListUiEntity(

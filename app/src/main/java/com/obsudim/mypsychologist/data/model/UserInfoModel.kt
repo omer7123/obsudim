@@ -22,7 +22,7 @@ data class UserDataModel(
     val email: String,
     val city: String,
     val company: String?,
-    val online: String?,
+    val online: Boolean,
     val gender: String,
     @SerialName("birth_date")
     val birthDate: String,
@@ -30,7 +30,7 @@ data class UserDataModel(
     val phoneNumber: String,
     val description: String?,
     @SerialName("is_active")
-    val isActive: String?,
+    val isActive: Boolean,
     val department: String?,
     @SerialName("face_to_face")
     val faceToFace: Boolean?,

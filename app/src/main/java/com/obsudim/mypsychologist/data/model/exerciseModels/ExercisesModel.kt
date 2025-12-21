@@ -80,6 +80,14 @@ sealed interface TypeFieldModel{
     ): TypeFieldModel
 
     @Serializable
+    data class SliderModel(
+        @SerialName("field_id")
+        val fieldId: String,
+        val value: Float,
+        val text: String
+    ) : TypeFieldModel
+
+    @Serializable
     data class AddableListModel(
         @SerialName("field_id")
         val fieldId: String,

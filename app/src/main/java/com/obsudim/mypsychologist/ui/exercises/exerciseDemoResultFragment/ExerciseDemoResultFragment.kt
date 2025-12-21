@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -143,6 +144,7 @@ class ExerciseDemoResultFragment : Fragment() {
         when(item.type){
             TypeOfSection.AddableList -> TODO()
             TypeOfSection.TextInput -> CardInputType(item)
+            TypeOfSection.Slider -> CardSliderType(item)
         }
     }
 
@@ -162,6 +164,29 @@ class ExerciseDemoResultFragment : Fragment() {
                 )
             }
         }
+    }
+
+    @Composable
+    private fun CardSliderType(item: ExerciseResultEntity) {
+        val sliderValue = try {
+            item.value.toFloat()
+        } catch (e: NumberFormatException) {
+            50f
+        }
+
+        val moodTextRes = when (sliderValue.toInt()) {
+            in 0..20 -> R.string.terrible_mood
+            in 21..40 -> R.string.bad_mood
+            in 41..59 -> R.string.normal_mood
+            in 60..79 -> R.string.good_mood
+            in 80..100 -> R.string.super_mood
+            else -> R.string.normal_mood
+        }
+
+        TextItemDefault(
+            title = item.title,
+            text = "${sliderValue.toInt()}% (${stringResource(moodTextRes)})"
+        )
     }
 }
 

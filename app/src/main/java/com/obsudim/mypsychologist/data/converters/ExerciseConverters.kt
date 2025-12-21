@@ -56,6 +56,7 @@ fun PagesExerciseModel.toEntity(): PagesExerciseEntity {
 fun SectionsExerciseModel.toEntity(): SectionsExerciseEntity{
     val typeLoc = when(this.type){
         "input"-> TypeOfSection.TextInput
+        "slider"-> TypeOfSection.Slider
         else -> TypeOfSection.AddableList
     }
 
@@ -80,6 +81,7 @@ fun ExerciseResultRequestEntity.toModel(): ExerciseResultRequestModel {
 private fun TypeOfSectionUiRes.toModel(): TypeFieldModel{
     return when(val type = this){
         is TypeOfSectionUiRes.AddableListUiEntity -> TypeFieldModel.AddableListModel(fieldId = type.id, text = type.list)
+        is TypeOfSectionUiRes.SliderUiEntity -> TypeFieldModel.SliderModel(fieldId = type.id, value = type.value, text = type.value.toString())
         is TypeOfSectionUiRes.TextInputUiEntity -> TypeFieldModel.InputTextModel(fieldId = type.id, text = type.title.orEmpty())
     }
 }

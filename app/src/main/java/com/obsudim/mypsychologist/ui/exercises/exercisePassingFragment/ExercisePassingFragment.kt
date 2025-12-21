@@ -57,6 +57,7 @@ import com.obsudim.mypsychologist.presentation.exercises.exercisePassingFragment
 import com.obsudim.mypsychologist.ui.core.composeComponents.PlaceholderError
 import com.obsudim.mypsychologist.ui.core.composeComponents.TotalTextButton
 import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.AddableList
+import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.SliderItem
 import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextInputItem
 import com.obsudim.mypsychologist.ui.core.composeComponents.exercisesComponents.TextInputItemDefault
 import com.obsudim.mypsychologist.ui.theme.AppTheme
@@ -130,6 +131,7 @@ class ExercisePassingFragment : Fragment() {
                 ExercisePassingContent(
                     viewState = viewState,
                     onTextInputChange = {viewModel.textInputChange(it)},
+                    onSliderChange = { viewModel.sliderChange(it) },
                     onNextBtnClick = { viewModel.btnClickNext() },
                     modifier = Modifier.padding(innerPadding),
                     onTextChangeAddableList = { viewModel.changeTextAddableList(it) },
@@ -253,6 +255,7 @@ class ExercisePassingFragment : Fragment() {
     private fun ExercisePassingContent(
         viewState: ExercisePassingScreenState.Content,
         onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,
+        onSliderChange: (TypeOfSectionUiRes.SliderUiEntity) -> Unit,
         onNextBtnClick: () -> Unit,
         onTextChangeAddableList: (FieldAddableListChange) -> Unit,
         addItemAddableListOnClick: (String) -> Unit,
@@ -277,6 +280,7 @@ class ExercisePassingFragment : Fragment() {
                     item,
                     currValField,
                     onTextInputChange = { onTextInputChange(it) },
+                    onSliderChange = { onSliderChange(it) },
                     onTextChangeAddableList = { onTextChangeAddableList(it) },
                     addItemAddableList = { addItemAddableListOnClick(it) },
                 )
@@ -303,6 +307,7 @@ class ExercisePassingFragment : Fragment() {
         item: SectionsExerciseEntity,
         currValField: TypeOfSectionUiRes,
         onTextInputChange: (TypeOfSectionUiRes.TextInputUiEntity) -> Unit,
+        onSliderChange: (TypeOfSectionUiRes.SliderUiEntity) -> Unit,
         onTextChangeAddableList: (FieldAddableListChange) -> Unit,
         addItemAddableList: (String) -> Unit,
     ) {
@@ -320,6 +325,13 @@ class ExercisePassingFragment : Fragment() {
                     item = item,
                     currValField = currValField as TypeOfSectionUiRes.TextInputUiEntity,
                     onTextInputChange = {onTextInputChange(it)}
+                )
+            }
+            TypeOfSection.Slider -> {
+                SliderExercise(
+                    item = item,
+                    currValField = currValField as TypeOfSectionUiRes.SliderUiEntity,
+                    onSliderChange = { onSliderChange(it) }
                 )
             }
         }
@@ -369,6 +381,26 @@ class ExercisePassingFragment : Fragment() {
     }
 
     @Composable
+    private fun SliderExercise(
+        item: SectionsExerciseEntity,
+        currValField: TypeOfSectionUiRes.SliderUiEntity,
+        onSliderChange: (TypeOfSectionUiRes.SliderUiEntity) -> Unit,
+    ) {
+        SliderItem(
+            title = item.title,
+            value = currValField.value,
+            onValueChange = { newValue ->
+                onSliderChange(
+                    TypeOfSectionUiRes.SliderUiEntity(
+                        idLoc = currValField.idLoc,
+                        value = newValue
+                    )
+                )
+            }
+        )
+    }
+
+    @Composable
     @Preview(showBackground = true)
     private fun ExercisePassingContentPreview() {
         AppTheme {
@@ -397,6 +429,7 @@ class ExercisePassingFragment : Fragment() {
                         )
                     )
                 ),
+                {},
                 {},
                 {},
                 {},
