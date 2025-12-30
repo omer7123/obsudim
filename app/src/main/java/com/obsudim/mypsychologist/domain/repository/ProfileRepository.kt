@@ -8,7 +8,7 @@ import com.obsudim.mypsychologist.domain.entity.psychologistsEntity.SendRequestT
 import kotlinx.coroutines.flow.Flow
 
 interface ProfileRepository {
-    suspend fun saveClient(info: UserInfoEntity): Resource<String>
+    suspend fun saveClient(info: UserInfoEntity): Resource<Unit>
     suspend fun getOwnInfo(): Resource<UserInfoEntity>
     suspend fun sendRequestToPsychologist(sendRequestToPsychologistEntity: SendRequestToPsychologistEntity): Resource<String>
     suspend fun getAuthMe(): Flow<Resource<UserDataEntity>>

@@ -12,7 +12,7 @@ import retrofit2.http.POST
 
 interface UserService {
     @PATCH("/auth/update")
-    suspend fun updateUser(@Body userInfo: UserInfoModel): Response<String>
+    suspend fun updateUser(@Body userInfo: UserInfoModel): Response<Unit>
 
     @GET("/auth/me")
     suspend fun getOwnData(): Response<UserInfoModel>

@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class UserDataSourceImpl @Inject constructor(private val api: UserService) :
     UserDataSource, BaseDataSource() {
-    override suspend fun updateUser(info: UserInfoModel): Resource<String> =
+    override suspend fun updateUser(info: UserInfoModel): Resource<Unit> =
         getResult {
             api.updateUser(info)
         }

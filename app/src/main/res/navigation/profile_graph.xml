@@ -33,6 +33,10 @@
         android:name="com.obsudim.mypsychologist.ui.profile.editFragment.EditFragment"
         android:label="EditFragment" />
     <fragment
+        android:id="@+id/fragment_rules"
+        android:name="com.obsudim.mypsychologist.ui.profile.profileFragment.RulesFragment"
+        android:label="RulesFragment" />
+    <fragment
         android:id="@+id/gamificationFragment2"
         android:name="com.obsudim.mypsychologist.ui.gamification.GamificationFragment"
         android:label="GamificationFragment" >

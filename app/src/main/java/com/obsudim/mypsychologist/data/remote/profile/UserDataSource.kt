@@ -8,7 +8,7 @@ import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserInfoEntity
 import kotlinx.coroutines.flow.Flow
 
 interface UserDataSource {
-    suspend fun updateUser(info: UserInfoModel): Resource<String>
+    suspend fun updateUser(info: UserInfoModel): Resource<Unit>
     suspend fun getOwnData(): Resource<UserInfoModel>
     suspend fun sendRequestToManager(sendRequestToPsychologistModel: SendRequestToPsychologistModel): Resource<String>
     suspend fun getAuthMe(): Flow<Resource<UserDataModel>>

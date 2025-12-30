@@ -2,8 +2,6 @@ package com.obsudim.mypsychologist.data.converters
 
 import com.obsudim.mypsychologist.data.model.UserDataModel
 import com.obsudim.mypsychologist.data.model.UserInfoModel
-import com.obsudim.mypsychologist.domain.entity.ClientInfoEntity
-import com.obsudim.mypsychologist.domain.entity.TagEntity
 import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserDataEntity
 import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserInfoEntity
 
@@ -37,12 +35,12 @@ fun UserDataModel.toEntity() =
         email,
         city,
         company,
-        online,
+        true,
         gender,
         birthDate,
         phoneNumber,
         description,
-        isActive,
+        true,
         department,
         faceToFace,
         roleId

@@ -2,6 +2,7 @@ package com.obsudim.mypsychologist.ui.gamification
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,11 +65,14 @@ class GamificationFragment : Fragment() {
             }
         }
 
+
         binding.composeView.setContent {
             AppTheme {
                 GamificationContent(viewModel)
             }
         }
+
+
 
         return binding.root
     }
@@ -76,13 +80,22 @@ class GamificationFragment : Fragment() {
     @Composable
     private fun GamificationContent(viewModel: GamificationViewModel) {
         val viewState = viewModel.screenState.collectAsState()
-        when(val result = viewState.value){
-            is GamificationScreenState.Content -> GamificationRenderContent(
-                currentScore = result.currentScore,
-                weeklyScores = result.weeklyScores,
-                userInfo = result.userInfo
-            )
-            is GamificationScreenState.Error -> PlaceholderError()
+        when (val result = viewState.value) {
+            is GamificationScreenState.Content -> {
+
+                GamificationRenderContent(
+                    currentScore = result.currentScore,
+                    weeklyScores = result.weeklyScores,
+                    userInfo = result.userInfo
+                )
+                Log.d("aaaa", "yes")
+            }
+
+            is GamificationScreenState.Error -> {
+                Log.e("GamificationScreenState.Error", result.msg)
+                PlaceholderError()
+            }
+
             GamificationScreenState.Initial -> Unit
             GamificationScreenState.Loading -> {
                 Box(modifier = Modifier.fillMaxSize()) {
@@ -98,7 +111,7 @@ class GamificationFragment : Fragment() {
         weeklyScores: WeeklyScoresEntity,
         userInfo: UserDataEntity
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -138,7 +151,7 @@ class GamificationFragment : Fragment() {
             Graph(
                 scores = scoreValues
             )
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),

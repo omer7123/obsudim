@@ -20,7 +20,7 @@ class ProfileRepositoryImpl @Inject constructor(
 ) :
     ProfileRepository {
 
-    override suspend fun saveClient(info: UserInfoEntity): Resource<String> = run {
+    override suspend fun saveClient(info: UserInfoEntity): Resource<Unit> = run {
         dataSource.updateUser(info.toModel())
     }
 

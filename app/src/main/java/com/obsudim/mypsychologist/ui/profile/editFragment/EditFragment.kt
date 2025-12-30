@@ -151,10 +151,10 @@ class EditFragment : Fragment() {
         }
     }
 
-    private fun render(resource: Resource<String>) {
+    private fun render(resource: Resource<Unit>) {
         when (resource) {
             is Resource.Success -> {
-                requireContext().showToast(resource.data)
+                requireContext().showToast(SUCCESS)
                 findNavController().popBackStack()
             }
             is Resource.Error -> {
