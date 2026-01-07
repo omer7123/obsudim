@@ -1,6 +1,5 @@
 package com.obsudim.mypsychologist.presentation.gamification
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -29,27 +28,28 @@ class GamificationViewModel(
     val screenState: StateFlow<GamificationScreenState> = _screenState
 
     private val _currentScoreStatus: MutableLiveData<CurrentScoreStatus> = MutableLiveData()
-    val currentScoreStatus: LiveData<CurrentScoreStatus> = _currentScoreStatus
 
     private val _weeklyScoresStatus: MutableLiveData<WeeklyScoresStatus> = MutableLiveData()
-    val weeklyScoresStatus: LiveData<WeeklyScoresStatus> = _weeklyScoresStatus
 
     private val _userInfoStatus: MutableLiveData<UserInfoStatus> = MutableLiveData()
-    val userInfoStatus: LiveData<UserInfoStatus> = _userInfoStatus
 
     fun loadData() {
         _screenState.value = GamificationScreenState.Loading
         viewModelScope.launch {
-            getCurrentScoreUseCase().collect { currentScoreResource ->
-                handleCurrentScoreResult(currentScoreResource)
+            launch {
+                getCurrentScoreUseCase.invoke().collect { currentScoreResource ->
+                    handleCurrentScoreResult(currentScoreResource)
+                }
             }
-
-            getWeeklyScoresUseCase().collect { weeklyScoresResource ->
-                handleWeeklyScoresResult(weeklyScoresResource)
+            launch {
+                getWeeklyScoresUseCase.invoke().collect { weeklyScoresResource ->
+                    handleWeeklyScoresResult(weeklyScoresResource)
+                }
             }
-
-            getUserInfoUseCase().collect { userInfoResource ->
-                handleUserInfoResult(userInfoResource)
+            launch {
+                getUserInfoUseCase.invoke().collect { userInfoResource ->
+                    handleUserInfoResult(userInfoResource)
+                }
             }
         }
     }
@@ -58,10 +58,7 @@ class GamificationViewModel(
         when (result) {
             is Resource.Error -> {
                 _currentScoreStatus.value = CurrentScoreStatus.Error(result.msg.toString())
-                if (_screenState.value is GamificationScreenState.Loading ||
-                    _screenState.value is GamificationScreenState.Initial) {
-                    _screenState.value = GamificationScreenState.Error(result.msg.toString())
-                }
+                checkAndUpdateContentState()
             }
             Resource.Loading -> {
                 _currentScoreStatus.value = CurrentScoreStatus.Loading
@@ -77,10 +74,7 @@ class GamificationViewModel(
         when (result) {
             is Resource.Error -> {
                 _weeklyScoresStatus.value = WeeklyScoresStatus.Error(result.msg.toString())
-                if (_screenState.value is GamificationScreenState.Loading ||
-                    _screenState.value is GamificationScreenState.Initial) {
-                    _screenState.value = GamificationScreenState.Error(result.msg.toString())
-                }
+                checkAndUpdateContentState()
             }
             Resource.Loading -> {
                 _weeklyScoresStatus.value = WeeklyScoresStatus.Loading
@@ -96,10 +90,7 @@ class GamificationViewModel(
         when (result) {
             is Resource.Error -> {
                 _userInfoStatus.value = UserInfoStatus.Error(result.msg.toString())
-                if (_screenState.value is GamificationScreenState.Loading ||
-                    _screenState.value is GamificationScreenState.Initial) {
-                    _screenState.value = GamificationScreenState.Error(result.msg.toString())
-                }
+                checkAndUpdateContentState()
             }
             Resource.Loading -> {
                 _userInfoStatus.value = UserInfoStatus.Loading
@@ -112,17 +103,24 @@ class GamificationViewModel(
     }
 
     private fun checkAndUpdateContentState() {
-        val currentScore = (_currentScoreStatus.value as? CurrentScoreStatus.Success)?.data
-        val weeklyScores = (_weeklyScoresStatus.value as? WeeklyScoresStatus.Success)?.data
         val userInfo = (_userInfoStatus.value as? UserInfoStatus.Success)?.data
+            ?: return
 
-        if (currentScore != null && weeklyScores != null && userInfo != null) {
-            _screenState.value = GamificationScreenState.Content(
-                currentScore = currentScore,
-                weeklyScores = weeklyScores,
-                userInfo = userInfo
-            )
+        val currentScore = when (val status = _currentScoreStatus.value) {
+            is CurrentScoreStatus.Success -> status.data
+            else -> null
         }
+
+        val weeklyScores = when (val status = _weeklyScoresStatus.value) {
+            is WeeklyScoresStatus.Success -> status.data
+            else -> null
+        }
+
+        _screenState.value = GamificationScreenState.Content(
+            currentScore = currentScore,
+            weeklyScores = weeklyScores,
+            userInfo = userInfo
+        )
     }
 
     sealed class CurrentScoreStatus {
