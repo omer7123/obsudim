@@ -119,6 +119,7 @@ fun ProgressBarScore(
 
 @Composable
 fun Graph(scores: List<Int>) {
+    val scoresToDisplay = scores.ifEmpty { List(7) { 0 } }
 
     val calendar = Calendar.getInstance()
 
@@ -194,7 +195,7 @@ fun Graph(scores: List<Int>) {
             val stepX = size.width / 6f
             val maxScore = 40f
 
-            val points = scores.mapIndexed { index, s ->
+            val points = scoresToDisplay.mapIndexed { index, s ->
                 Offset(
                     x = stepX * index,
                     y = size.height - (s / maxScore) * size.height

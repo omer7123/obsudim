@@ -9,8 +9,8 @@ sealed interface GamificationScreenState {
     data object Loading: GamificationScreenState
     data class Error(val msg: String): GamificationScreenState
     data class Content(
-        val currentScore: CurrentScoreEntity,
-        val weeklyScores: WeeklyScoresEntity,
+        val currentScore: CurrentScoreEntity?,
+        val weeklyScores: WeeklyScoresEntity?,
         val userInfo: UserDataEntity
     ): GamificationScreenState
 }

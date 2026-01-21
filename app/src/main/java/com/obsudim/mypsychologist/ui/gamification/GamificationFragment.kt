@@ -107,8 +107,8 @@ class GamificationFragment : Fragment() {
 
     @Composable
     private fun GamificationRenderContent(
-        currentScore: CurrentScoreEntity,
-        weeklyScores: WeeklyScoresEntity,
+        currentScore: CurrentScoreEntity?,
+        weeklyScores: WeeklyScoresEntity?,
         userInfo: UserDataEntity
     ) {
         Column(
@@ -129,12 +129,12 @@ class GamificationFragment : Fragment() {
                 modifier = Modifier.padding(bottom = 20.dp)
             )
             ProgressBarScore(
-                currentValue = currentScore.score,
+                currentValue = currentScore?.score ?: 0,
                 maxValue = 40,
                 modifier = Modifier.padding(bottom = 10.dp),
                 minLeftWidth = 64.dp
             )
-            val leftScore = 40 - currentScore.score
+            val leftScore = 40 - (currentScore?.score ?: 0)
             Text(
                 style = AppTheme.typography.bodyLBold,
                 text = "Нужно набрать еще $leftScore очков",
@@ -147,7 +147,7 @@ class GamificationFragment : Fragment() {
                 color = AppTheme.colors.primaryText,
                 modifier = Modifier.padding(bottom = 20.dp)
             )
-            val scoreValues = weeklyScores.scores.map { it.score }
+            val scoreValues = weeklyScores?.scores?.map { it.score } ?: emptyList()
             Graph(
                 scores = scoreValues
             )
