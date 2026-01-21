@@ -2,7 +2,6 @@ package com.obsudim.mypsychologist.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -163,9 +162,6 @@ class MainFragment : Fragment() {
             toolbar.profileIcon.setOnClickListener {
                 findNavController().navigate(R.id.action_main_fragment_to_profile_graph)
             }
-        /*    toolbar.psychologistsIcon.setOnClickListener {
-                findNavController().navigate(R.id.action_main_fragment_to_psychologists_with_tasks_graph)
-            } */
         }
     }
 
