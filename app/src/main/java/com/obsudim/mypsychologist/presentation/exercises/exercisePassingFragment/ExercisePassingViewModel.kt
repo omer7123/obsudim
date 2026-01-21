@@ -75,10 +75,9 @@ class ExercisePassingViewModel @Inject constructor(
 
     fun btnClickPrev() {
         val currState = (screenState.value as ExercisePassingScreenState.Content)
-        if (currState.currentPage >= 1)
+
             _screenState.value = currState.copy(currentPage = currState.currentPage - 1)
-        else
-            _screenState.value = currState.copy(currentPage = 0)
+
     }
 
     fun textInputChange(textInput: TypeOfSectionUiRes.TextInputUiEntity){

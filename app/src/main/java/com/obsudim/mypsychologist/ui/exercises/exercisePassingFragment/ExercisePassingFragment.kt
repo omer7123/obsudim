@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,6 +27,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,6 +45,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.FieldAddableListChange
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.PagesExerciseEntity
@@ -90,6 +93,16 @@ class ExercisePassingFragment : Fragment() {
 
         setContent {
             AppTheme {
+                val systemUiController = rememberSystemUiController()
+                val statusBarColor = AppTheme.colors.primaryBackground
+
+                SideEffect {
+                    systemUiController.setStatusBarColor(
+                        color = statusBarColor,
+                        darkIcons = true
+                    )
+                }
+
                 Scaffold(
                     modifier = Modifier
                         .imePadding()
@@ -98,11 +111,14 @@ class ExercisePassingFragment : Fragment() {
                         val viewState = viewModel.screenState.collectAsState().value
                         if (viewState !is ExercisePassingScreenState.SuccessSave) {
                             TopAppBar(
+                                modifier = Modifier.statusBarsPadding(),
                                 backgroundColor = AppTheme.colors.primaryBackground,
                                 elevation = 0.dp
                             ) {
                                 IconButton(
-                                    onClick = { viewModel.btnClickPrev() }
+                                    onClick = {
+                                        viewModel.btnClickPrev()
+                                    }
                                 ) {
                                     Icon(
                                         painter = painterResource(R.drawable.ic_arrow_back_white),
@@ -135,7 +151,8 @@ class ExercisePassingFragment : Fragment() {
                     onNextBtnClick = { viewModel.btnClickNext() },
                     modifier = Modifier.padding(innerPadding),
                     onTextChangeAddableList = { viewModel.changeTextAddableList(it) },
-                    addItemAddableListOnClick = { viewModel.addItemAddableList(it) }
+                    addItemAddableListOnClick = { viewModel.addItemAddableList(it) },
+                    closeScreen = {findNavController().popBackStack()}
                 )
             }
 
@@ -160,6 +177,7 @@ class ExercisePassingFragment : Fragment() {
     private fun FinishScreen(data: SaveExerciseResultResponseEntity) {
         Column(
             modifier = Modifier
+                .statusBarsPadding()
                 .fillMaxSize()
                 .background(color = AppTheme.colors.primaryBackground)
         ) {
@@ -259,10 +277,18 @@ class ExercisePassingFragment : Fragment() {
         onNextBtnClick: () -> Unit,
         onTextChangeAddableList: (FieldAddableListChange) -> Unit,
         addItemAddableListOnClick: (String) -> Unit,
+        closeScreen: () -> Unit,
         modifier: Modifier = Modifier
         ) {
-        val fieldsOfThisPage =
-            viewState.pagesWithFields.first { it.pageNumber == viewState.currentPage }.sections
+        val page = viewState.pagesWithFields
+            .firstOrNull { it.pageNumber == viewState.currentPage }
+
+        if (page == null) {
+            closeScreen()
+            return
+        }
+
+        val fieldsOfThisPage = page.sections
 
         LazyColumn(
             modifier = modifier
@@ -433,10 +459,9 @@ class ExercisePassingFragment : Fragment() {
                 {},
                 {},
                 {},
+                {},
                 {}
             )
         }
     }
 }
-data class Marsh(val stantionName: String, val depTime: String, val arrTime: String, val timeMin: Int)
-data class ScheduleRes(val idLine: String, val stantionLineStart: String, val stantionLineEnd: String, val marshs: List<Marsh>, val totalTimeMin: Int)

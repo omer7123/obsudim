@@ -24,7 +24,8 @@
 
     <TextView
         android:id="@+id/scale_title"
-        style="@style/BodyMBold.Black"
+        style="@style/BodyMBold"
+        android:textColor="?attr/colorOnBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
@@ -35,7 +36,8 @@
 
     <TextView
         android:id="@+id/result_score"
-        style="@style/BodyM.Black"
+        style="@style/BodyM"
+        android:textColor="?attr/colorOnBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

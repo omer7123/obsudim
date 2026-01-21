@@ -189,28 +189,6 @@ class ExercisesFragment : Fragment() {
                                 fontSize = 16.sp,
                             )
                         }
-                        Button(
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = AppTheme.colors.primaryText,
-                                contentColor = AppTheme.colors.primaryTextInvert
-                            ),
-                            contentPadding = PaddingValues(0.dp),
-                            onClick = {},
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_screp),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .padding(vertical = 16.dp)
-                                    .padding(end = 8.dp)
-                            )
-                            Text(
-                                text = stringResource(R.string.cbt_diary_new_name),
-                                style = AppTheme.typography.titleCygreSemiBold,
-                                fontSize = 16.sp,
-                            )
-                        }
                     }
                 }
 
