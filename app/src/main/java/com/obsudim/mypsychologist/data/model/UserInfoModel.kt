@@ -9,11 +9,14 @@ data class UserInfoModel(
     val birthDate: String,
     val gender: String,
     val username: String,
-    val request: List<Int>,
     val city: String,
     val description: String,
-    val type: Int
+    val company: String,
+    val online: Boolean,
+    @SerialName("phone_number")
+    val phoneNumber: String
 )
+
 
 @Serializable
 data class UserDataModel(
