@@ -52,6 +52,10 @@ class MainActivity : AppCompatActivity(), NavbarHider, ConnectionChecker {
                     setLightStatusBarIcons(false)
                 }
 
+                R.id.exercisePassingFragment -> {
+                    bottomNav.isVisible = false
+                }
+
                 R.id.registrationFragment -> {
                     transparentStatusBar()
                     bottomNav.isVisible = false
