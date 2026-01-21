@@ -102,7 +102,9 @@ class ExercisePassingFragment : Fragment() {
                                 elevation = 0.dp
                             ) {
                                 IconButton(
-                                    onClick = { viewModel.btnClickPrev() }
+                                    onClick = {
+                                        viewModel.btnClickPrev()
+                                    }
                                 ) {
                                     Icon(
                                         painter = painterResource(R.drawable.ic_arrow_back_white),
@@ -135,7 +137,8 @@ class ExercisePassingFragment : Fragment() {
                     onNextBtnClick = { viewModel.btnClickNext() },
                     modifier = Modifier.padding(innerPadding),
                     onTextChangeAddableList = { viewModel.changeTextAddableList(it) },
-                    addItemAddableListOnClick = { viewModel.addItemAddableList(it) }
+                    addItemAddableListOnClick = { viewModel.addItemAddableList(it) },
+                    closeScreen = {findNavController().popBackStack()}
                 )
             }
 
@@ -259,10 +262,18 @@ class ExercisePassingFragment : Fragment() {
         onNextBtnClick: () -> Unit,
         onTextChangeAddableList: (FieldAddableListChange) -> Unit,
         addItemAddableListOnClick: (String) -> Unit,
+        closeScreen: () -> Unit,
         modifier: Modifier = Modifier
         ) {
-        val fieldsOfThisPage =
-            viewState.pagesWithFields.first { it.pageNumber == viewState.currentPage }.sections
+        val page = viewState.pagesWithFields
+            .firstOrNull { it.pageNumber == viewState.currentPage }
+
+        if (page == null) {
+            closeScreen()
+            return
+        }
+
+        val fieldsOfThisPage = page.sections
 
         LazyColumn(
             modifier = modifier
@@ -433,10 +444,9 @@ class ExercisePassingFragment : Fragment() {
                 {},
                 {},
                 {},
+                {},
                 {}
             )
         }
     }
 }
-data class Marsh(val stantionName: String, val depTime: String, val arrTime: String, val timeMin: Int)
-data class ScheduleRes(val idLine: String, val stantionLineStart: String, val stantionLineEnd: String, val marshs: List<Marsh>, val totalTimeMin: Int)
