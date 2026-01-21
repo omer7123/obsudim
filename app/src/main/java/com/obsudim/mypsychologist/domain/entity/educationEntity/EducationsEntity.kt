@@ -4,10 +4,16 @@ data class TopicEntity(
     val id: String,
     val theme: String,
     val link: String,
-    val tags: List<String>,
+    val recommendations: List<RecommendationEntity>,
     val educationMaterials: List<EducationsEntity>
 )
 
+data class RecommendationEntity (
+    val id: String,
+    val theme: String,
+    val link: String,
+    val tags: List<String>,
+)
 data class EducationsEntity(
     val id: String,
     val type: Int,
