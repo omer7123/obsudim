@@ -32,7 +32,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="16dp"
         android:cursorVisible="true"
-
         android:background="@drawable/text_card"
         android:gravity="top"
         android:hint="@string/diary_hint"
@@ -51,24 +50,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="10dp"
         android:clickable="false"
-        android:text="@string/save"
-        app:layout_constraintBottom_toTopOf="@id/KPT_diary_tv" />
-
-    <Button
-        android:id="@+id/KPT_diary_tv"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="24dp"
-        android:padding="10dp"
-        android:text="@string/go_to_kpt_diary"
-        android:textAlignment="center"
-        android:textColor="@color/md_theme_light_primary"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
 
     <ProgressBar
         android:id="@+id/progress_circular"

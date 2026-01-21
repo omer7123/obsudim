@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -14,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.databinding.FragmentNewFreeDiaryBinding
 import com.obsudim.mypsychologist.extensions.bounce
 import com.obsudim.mypsychologist.extensions.expand
@@ -24,7 +22,6 @@ import com.obsudim.mypsychologist.presentation.di.MultiViewModelFactory
 import com.obsudim.mypsychologist.presentation.exercises.newFreeDiaryFragment.NewFreeDiaryScreenState
 import com.obsudim.mypsychologist.presentation.exercises.newFreeDiaryFragment.NewFreeDiaryViewModel
 import com.obsudim.mypsychologist.ui.core.autoCleared
-import com.obsudim.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.text.SimpleDateFormat
@@ -88,14 +85,6 @@ class NewFreeDiaryFragment : Fragment() {
 
         binding.includeToolbar.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
-        }
-
-        binding.KPTDiaryTv.setOnClickListener {
-            findNavController().navigate(R.id.fragment_new_diary,
-                bundleOf(
-                    FragmentNewCBTDiary.EXERCISE_ID to requireArguments().getString(KPT_ID).toString()
-                )
-            )
         }
     }
 
