@@ -134,10 +134,10 @@ class GamificationFragment : Fragment() {
                 modifier = Modifier.padding(bottom = 10.dp),
                 minLeftWidth = 64.dp
             )
-            val leftScore = 40 - (currentScore?.score ?: 0)
+//            val leftScore = 40 - (currentScore?.score ?: 0)
             Text(
                 style = AppTheme.typography.bodyLBold,
-                text = "Нужно набрать еще $leftScore очков",
+                text = "Чтобы набрать очки, читайте теорию, проходите тесты и выполняйте упражнения",
                 color = AppTheme.colors.secondaryText,
                 modifier = Modifier.padding(bottom = 40.dp)
             )
