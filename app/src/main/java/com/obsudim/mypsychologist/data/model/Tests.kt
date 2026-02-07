@@ -108,6 +108,8 @@ data class TestInfoForPassingModel(
 data class QuestionOfTestModel(
     val number: Int,
     val text: String,
+    @SerialName("opposite_text")
+    val oppositeText: String?,
     @SerialName("answer_choices")
     val answerOptions: List<AnswersOfQuestionsModel>
 )

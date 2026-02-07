@@ -83,6 +83,7 @@ data class TestInfoForPassingEntity(
 data class QuestionOfTestEntity(
     val number: Int,
     val text: String,
+    val oppositeText: String,
     val answerOptions: List<AnswersOfQuestionsEntity>
 ) : Parcelable
 

@@ -1,9 +1,11 @@
 package com.obsudim.mypsychologist.ui.diagnostics.passingTestFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -27,16 +29,21 @@ class FragmentTestQuestion : BottomSheetDialogFragment() {
 
         if (question.number != 0) {
             binding.question.apply {
-                text = question.text
+ //               text = question.text
                 isVisible = true
+            }
+            binding.oppositeQuestion.apply {
+                //if (question.oppositeText != "") {
+
+
+                    text = question.oppositeText
+                    isVisible = true
+
+
             }
         }
         return binding.root
     }
-
-
-
-
 
     companion object {
         const val GO_BACK = "go back"

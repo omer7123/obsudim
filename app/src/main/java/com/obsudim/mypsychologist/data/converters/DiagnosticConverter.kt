@@ -1,5 +1,6 @@
 package com.obsudim.mypsychologist.data.converters
 
+import android.util.Log
 import com.obsudim.mypsychologist.data.model.AnswersOfQuestionsModel
 import com.obsudim.mypsychologist.data.model.BorderOfTestModel
 import com.obsudim.mypsychologist.data.model.ConclusionOfTestModel
@@ -53,7 +54,7 @@ private fun BorderOfTestModel.toEntity(): BorderOfTestEntity =
     BorderOfTestEntity(color, leftBorder, rightBorder, title)
 
 fun QuestionOfTestModel.toEntity(): QuestionOfTestEntity {
-    return QuestionOfTestEntity(number, text, answerOptions.map { it.toEntity() })
+    return QuestionOfTestEntity(number, text, oppositeText ?: "", answerOptions.map { it.toEntity() })
 }
 
 private fun AnswersOfQuestionsModel.toEntity(): AnswersOfQuestionsEntity {

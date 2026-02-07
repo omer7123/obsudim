@@ -2,6 +2,7 @@ package com.obsudim.mypsychologist.ui.diagnostics.passingTestFragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,6 +51,11 @@ class TestQuestionAdapter(
                 )
 
             binding.question.text = question.text
+            if (question.oppositeText != "")
+            binding.oppositeQuestion.apply {
+                text = question.oppositeText
+                isVisible = true
+            }
 
             binding.toolbar.toolbar.setNavigationOnClickListener { onBackClick() }
 
