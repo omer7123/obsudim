@@ -61,6 +61,27 @@ fun String.convertLondonTimeToDeviceTime(): String {
     }
 }
 
+fun String.convertLondonDateTimeToDeviceDateTime(): String {
+    val formatterWithMicroSec = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    val formatterWithoutMicroSec = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+
+    return try {
+        val utcDateTime = LocalDateTime.parse(this, formatterWithMicroSec)
+        val utcZonedDateTime = utcDateTime.atZone(ZoneOffset.UTC)
+
+        val deviceTime = utcZonedDateTime.withZoneSameInstant(ZoneId.systemDefault())
+
+        deviceTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+    } catch (e: DateTimeParseException) {
+        try {
+            val localDateTime = LocalDateTime.parse(this, formatterWithoutMicroSec)
+            localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+        } catch (e: DateTimeParseException) {
+            throw IllegalArgumentException("Неверный формат времени: $this")
+        }
+    }
+}
+
 fun Date.convertToISO8601(): String {
     // Формат входящей строки
     val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)

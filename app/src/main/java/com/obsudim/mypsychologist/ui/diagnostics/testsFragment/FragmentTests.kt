@@ -27,9 +27,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -42,6 +44,7 @@ import com.obsudim.mypsychologist.presentation.diagnostics.testsFragment.TestsVi
 import com.obsudim.mypsychologist.ui.core.autoCleared
 import com.obsudim.mypsychologist.ui.core.composeComponents.PlaceholderError
 import com.obsudim.mypsychologist.ui.core.composeComponents.SkeletonItem
+import com.obsudim.mypsychologist.ui.diagnostics.hostTestFragment.HostTestFragment
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -74,7 +77,7 @@ class FragmentTests : Fragment() {
 
         binding.testsRw.setContent {
             AppTheme {
-                TestsScreen(viewModel = viewModel, childFragmentManager)
+                TestsScreen(viewModel = viewModel, childFragmentManager, findNavController())
             }
         }
 
@@ -85,18 +88,24 @@ class FragmentTests : Fragment() {
 }
 
 @Composable
-fun TestsScreen(viewModel: TestsViewModel, childFragmentManager: FragmentManager) {
+fun TestsScreen(
+    viewModel: TestsViewModel,
+    childFragmentManager: FragmentManager,
+    navController: NavController
+) {
     val viewState = viewModel.screenState.collectAsState()
 
     when (val state = viewState.value) {
 
-        is TestsScreenState.Content ->{
+        is TestsScreenState.Content -> {
             TestsContent(data = state.data) { test ->
 
-            DiagnosticDialogFragment.newInstance(test.testId, test.title, test.description)
-                .show(childFragmentManager, DiagnosticDialogFragment.TAG)
-        }
+                navController.navigate(
+                    R.id.test_history_graph,
+                    bundleOf(HostTestFragment.TEST_ID to test.testId)
+                )
             }
+        }
 
         is TestsScreenState.Error -> {
             PlaceholderError()
@@ -145,10 +154,11 @@ fun TestsContent(data: List<TestEntity>, onItemClick: (TestEntity) -> Unit) {
 
 @Composable
 fun TestItem(item: TestEntity, onItemClick: (TestEntity) -> Unit) {
-    Column(modifier = Modifier
-        .clickable {
-            onItemClick(item)
-        }) {
+    Column(
+        modifier = Modifier
+            .clickable {
+                onItemClick(item)
+            }) {
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current).data(item.linkToPicture).build(),

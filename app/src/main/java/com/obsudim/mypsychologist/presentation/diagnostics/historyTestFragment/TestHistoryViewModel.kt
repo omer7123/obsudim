@@ -1,6 +1,5 @@
 package com.obsudim.mypsychologist.presentation.diagnostics.historyTestFragment
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -27,14 +26,17 @@ class TestHistoryViewModel(
         _screenState.value = TestHistoryScreenState.Loading
 
         viewModelScope.launch {
-            when (val res = getTestResultsUseCase(testId)) {
-                is Resource.Error -> {
-                    Log.e("Error TestHit", res.msg.toString())
-                    _screenState.value = TestHistoryScreenState.Error
+            getTestResultsUseCase(testId).collect { res ->
+                when (res) {
+
+                    is Resource.Error -> {
+                        _screenState.value = TestHistoryScreenState.Error
+                    }
+
+                    Resource.Loading -> _screenState.value = TestHistoryScreenState.Loading
+                    is Resource.Success -> _screenState.value =
+                        TestHistoryScreenState.Data(res.data, emptySet())
                 }
-                Resource.Loading -> _screenState.value = TestHistoryScreenState.Loading
-                is Resource.Success -> _screenState.value =
-                    TestHistoryScreenState.Data(res.data, emptySet())
             }
         }
     }

@@ -8,6 +8,10 @@ import com.obsudim.mypsychologist.data.model.SaveTestResultModel
 import com.obsudim.mypsychologist.data.model.TestInfoModel
 import com.obsudim.mypsychologist.data.model.TestModel
 import com.obsudim.mypsychologist.data.model.TestResultsGetModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class TestsDiagnosticDataSourceImpl @Inject constructor(
@@ -23,13 +27,21 @@ class TestsDiagnosticDataSourceImpl @Inject constructor(
             api.saveTestResult(testResultModel)
         }
 
-    override suspend fun getTestResults(testId: String): Resource<List<TestResultsGetModel>> {
-        return getResult { api.getTestResults(testId) }
-    }
+    override suspend fun getTestResults(testId: String): Flow<Resource<List<TestResultsGetModel>>> =
+        flow {
+            emit(Resource.Loading)
+            emit(getResult {
+                api.getTestResults(testId)
+            })
+        }.flowOn(Dispatchers.IO)
 
-    override suspend fun getInfoAboutTest(testId: String): Resource<TestInfoModel> = getResult {
-        api.getTestInfo(testId)
-    }
+    override suspend fun getInfoAboutTest(testId: String): Flow<Resource<TestInfoModel>> = flow {
+        emit(Resource.Loading)
+        emit(getResult {
+            api.getTestInfo(testId)
+        })
+    }.flowOn(Dispatchers.IO)
+
 
     override suspend fun getQuestionsOfTest(testId: String): Resource<List<QuestionOfTestModel>> =
         getResult {

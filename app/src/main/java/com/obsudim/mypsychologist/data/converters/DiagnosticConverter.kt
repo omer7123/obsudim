@@ -1,6 +1,5 @@
 package com.obsudim.mypsychologist.data.converters
 
-import android.util.Log
 import com.obsudim.mypsychologist.data.model.AnswersOfQuestionsModel
 import com.obsudim.mypsychologist.data.model.BorderOfTestModel
 import com.obsudim.mypsychologist.data.model.ConclusionOfTestModel
@@ -25,6 +24,7 @@ import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestInfoEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestInfoForPassingEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
+import com.obsudim.mypsychologist.extensions.convertLondonDateTimeToDeviceDateTime
 
 fun TestModel.toEntity(mainLink: String) =
     TestEntity(id, title, description, shortDesc, mainLink.dropLast(1) + link)
@@ -34,7 +34,11 @@ fun SaveTestResultEntity.toModel() =
 
 
 fun TestResultsGetModel.toEntity() =
-    TestResultsGetEntity(testId, testResultId, datetime, scaleResults.map { it.toEntity() })
+    TestResultsGetEntity(
+        testId,
+        testResultId,
+        datetime.convertLondonDateTimeToDeviceDateTime(),
+        scaleResults.map { it.toEntity() })
 
 fun ScaleResultForHistoryModel.toEntity()=
     ScaleResultForHistoryEntity(scaleId, score, scaleTitle, maxScore, conclusion, color, userRecommendation)
