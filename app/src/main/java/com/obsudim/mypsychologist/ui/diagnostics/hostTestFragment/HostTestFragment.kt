@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -112,6 +113,7 @@ class HostTestFragment : Fragment() {
         when (val data = uiState.value) {
             is HostTestScreenState.Content -> HostTestContent(
                 title = data.data.title,
+                description = data.data.description,
                 history = data.data.history,
                 onBackClick = onBackClick,
                 onStartClick = onStartClick,
@@ -127,6 +129,7 @@ class HostTestFragment : Fragment() {
     @Composable
     private fun HostTestContent(
         title: String,
+        description: String,
         history: List<TestResultsGetEntity>,
         onBackClick: () -> Unit,
         onStartClick: () -> Unit,
@@ -211,11 +214,11 @@ class HostTestFragment : Fragment() {
                 }
 
                 when {
-//                    history.isEmpty() -> RenderInfo(
-//                        data, modifier = Modifier
-//                            .padding(top = 20.dp)
-//                            .padding(horizontal = 16.dp)
-//                    )
+                    history.isEmpty() -> RenderInfo(
+                        description, modifier = Modifier
+                            .padding(top = 20.dp)
+                            .padding(horizontal = 16.dp)
+                    )
 
                     else -> RenderHistory(
                         history,
@@ -226,6 +229,97 @@ class HostTestFragment : Fragment() {
                     )
                 }
             }
+        }
+    }
+
+    @Composable
+    private fun RenderInfo(description: String, modifier: Modifier = Modifier) {
+        Column(
+            modifier = modifier
+                .background(
+                    color = AppTheme.colors.tertiaryBackground,
+                    shape = RoundedCornerShape(28.dp)
+                )
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = stringResource(R.string.allows),
+                style = AppTheme.typography.titleCygreSemiBold,
+                color = AppTheme.colors.primaryText,
+                fontSize = 26.sp,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 20.dp)
+            )
+            Text(
+                text = description,
+                style = AppTheme.typography.bodyM,
+                color = AppTheme.colors.primaryText,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 20.dp, top = 2.dp)
+            )
+        }
+
+        Row(modifier = Modifier.padding(horizontal = 16.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .background(
+                        color = AppTheme.colors.tertiaryBackground,
+                        shape = RoundedCornerShape(28.dp)
+                    )
+            ) {
+//                Text(
+//                    text = stringResource(R.string.time_to_read, data.timeToRead),
+//                    style = AppTheme.typography.titleCygreSemiBold,
+//                    color = AppTheme.colors.primaryText,
+//                    fontSize = 22.sp,
+//                    modifier = Modifier
+//                        .padding(horizontal = 16.dp)
+//                        .padding(top = 20.dp)
+//                )
+//                Text(
+//                    text = stringResource(R.string.to_pass),
+//                    style = AppTheme.typography.bodyM,
+//                    color = AppTheme.colors.primaryText,
+//                    fontSize = 14.sp,
+//                    modifier = Modifier
+//                        .padding(horizontal = 16.dp)
+//                        .padding(bottom = 20.dp, top = 2.dp)
+//                )
+            }
+
+//            Column(
+//                modifier = Modifier
+//                    .padding(top = 20.dp)
+//                    .padding(start = 16.dp)
+//                    .background(
+//                        color = AppTheme.colors.tertiaryBackground,
+//                        shape = RoundedCornerShape(28.dp)
+//                    )
+//                    .fillMaxWidth()
+//            ) {
+//                Text(
+//                    text = stringResource(R.string.count_questions, data.questionsCount),
+//                    style = AppTheme.typography.titleCygreSemiBold,
+//                    color = AppTheme.colors.primaryText,
+//                    fontSize = 22.sp,
+//                    modifier = Modifier
+//                        .padding(horizontal = 16.dp)
+//                        .padding(top = 20.dp)
+//                )
+//                Text(
+//                    text = stringResource(R.string.with_open_answers),
+//                    style = AppTheme.typography.bodyM,
+//                    color = AppTheme.colors.primaryText,
+//                    fontSize = 14.sp,
+//                    modifier = Modifier
+//                        .padding(horizontal = 16.dp)
+//                        .padding(bottom = 20.dp, top = 2.dp)
+//                )
+//            }
         }
     }
 
