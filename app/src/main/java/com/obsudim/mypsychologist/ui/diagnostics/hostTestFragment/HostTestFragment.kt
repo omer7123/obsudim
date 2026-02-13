@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,6 +46,7 @@ import com.obsudim.mypsychologist.extensions.getAppComponent
 import com.obsudim.mypsychologist.presentation.di.MultiViewModelFactory
 import com.obsudim.mypsychologist.presentation.diagnostics.hostTestFragment.HostTestScreenState
 import com.obsudim.mypsychologist.presentation.diagnostics.hostTestFragment.HostTestViewModel
+import com.obsudim.mypsychologist.ui.core.composeComponents.PlaceholderError
 import com.obsudim.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment
 import com.obsudim.mypsychologist.ui.theme.AppTheme
 import javax.inject.Inject
@@ -120,9 +122,19 @@ class HostTestFragment : Fragment() {
                 onItemClick = { onItemClick(it) }
             )
 
-            HostTestScreenState.Error -> Unit
-            HostTestScreenState.Initial -> Unit
-            HostTestScreenState.Loading -> Unit
+            HostTestScreenState.Error -> {
+                PlaceholderError()
+            }
+            HostTestScreenState.Initial -> {
+                Box(modifier = Modifier.fillMaxSize()){
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
+            HostTestScreenState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize()){
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
         }
     }
 
