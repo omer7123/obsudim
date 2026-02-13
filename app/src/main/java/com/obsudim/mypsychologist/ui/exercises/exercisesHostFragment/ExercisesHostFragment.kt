@@ -133,7 +133,7 @@ class ExercisesHostFragment: Fragment() {
     }
 
     @Composable
-    fun OnboardingExerciseContent(
+    private fun OnboardingExerciseContent(
         data: ExerciseInfoPreviewEntity,
         history: List<ExerciseAllResultEntity>,
         onBackClick: () -> Unit,
