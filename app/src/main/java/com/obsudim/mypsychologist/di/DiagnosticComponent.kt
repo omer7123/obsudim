@@ -1,6 +1,7 @@
 package com.obsudim.mypsychologist.di
 
 import com.obsudim.mypsychologist.ui.diagnostics.historyTestFragment.FragmentTestHistory
+import com.obsudim.mypsychologist.ui.diagnostics.hostTestFragment.HostTestFragment
 import com.obsudim.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment
 import com.obsudim.mypsychologist.ui.diagnostics.testResultFragment.TestResultFragment
 import com.obsudim.mypsychologist.ui.diagnostics.testsFragment.FragmentTests
@@ -13,6 +14,7 @@ interface DiagnosticComponent {
     fun inject(fragment: FragmentTestHistory)
     fun inject(fragment: PassingTestFragment)
     fun inject(fragment: TestResultFragment)
+    fun inject(fragment: HostTestFragment)
 
     @Subcomponent.Factory
     interface Factory {
