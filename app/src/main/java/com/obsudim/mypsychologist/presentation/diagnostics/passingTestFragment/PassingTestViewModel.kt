@@ -49,24 +49,31 @@ class PassingTestViewModel @Inject constructor(
             val questionsRequest = questionsRequestDeff.await()
             val testInfo = testInfoDeff.await()
 
-            when {
-                questionsRequest is Resource.Error -> {
-                    _screenState.value = PassingTestScreenState.Error("Ошибка загрузки вопросов")
-                }
-                testInfo is Resource.Error -> {
-                    _screenState.value = PassingTestScreenState.Error("Ошибка загрузки информации о тесте")
-                }
-                questionsRequest is Resource.Success && testInfo is Resource.Success -> {
-                    _questions = questionsRequest.data
+            testInfo.collect { testInfoData ->
+                when {
+                    questionsRequest is Resource.Error -> {
+                        _screenState.value =
+                            PassingTestScreenState.Error("Ошибка загрузки вопросов")
+                    }
 
-                    _screenState.value = PassingTestScreenState.Content(
-                        title = testInfo.data.title,
-                        desc = testInfo.data.description,
-                    )
+                    testInfoData is Resource.Error -> {
+                        _screenState.value =
+                            PassingTestScreenState.Error("Ошибка загрузки информации о тесте")
+                    }
 
-                    _screenState.value = PassingTestScreenState.Questions(questions)
+                    questionsRequest is Resource.Success && testInfoData is Resource.Success -> {
+                        _questions = questionsRequest.data
+
+                        _screenState.value = PassingTestScreenState.Content(
+                            title = testInfoData.data.title,
+                            desc = testInfoData.data.description,
+                        )
+
+                        _screenState.value = PassingTestScreenState.Questions(questions)
+                    }
                 }
             }
+
         }
     }
 

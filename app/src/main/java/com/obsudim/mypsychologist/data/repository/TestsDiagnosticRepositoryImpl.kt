@@ -12,6 +12,7 @@ import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestInfoEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.TestResultsGetEntity
 import com.obsudim.mypsychologist.domain.repository.retrofit.TestsDiagnosticRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TestsDiagnosticRepositoryImpl @Inject constructor(
@@ -35,19 +36,15 @@ class TestsDiagnosticRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getTestResults(testId: String): Resource<List<TestResultsGetEntity>> {
-        return when (val res = dataSource.getTestResults(testId)) {
-            is Resource.Success -> Resource.Success(res.data.map { it.toEntity() })
-            is Resource.Error -> Resource.Error(res.msg.toString(), null)
-            Resource.Loading -> Resource.Loading
+    override suspend fun getTestResults(testId: String): Flow<Resource<List<TestResultsGetEntity>>> {
+        return (dataSource.getTestResults(testId)).checkResource { data->
+            data.map { it.toEntity() }
         }
     }
 
-    override suspend fun getInfoAboutTest(testId: String): Resource<TestInfoEntity> {
-        return when(val result = dataSource.getInfoAboutTest(testId)){
-            is Resource.Error -> Resource.Error(result.msg.toString(), null)
-            Resource.Loading -> Resource.Loading
-            is Resource.Success -> Resource.Success(result.data.toEntity())
+    override suspend fun getInfoAboutTest(testId: String): Flow<Resource<TestInfoEntity>> {
+        return dataSource.getInfoAboutTest(testId).checkResource { data->
+            data.toEntity()
         }
     }
 
