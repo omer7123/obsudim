@@ -67,6 +67,10 @@ class HostTestFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireContext().getAppComponent().diagnosticComponent().create().inject(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
         viewModel.initData(requireArguments().getString(TEST_ID)!!)
     }
 
