@@ -1,6 +1,7 @@
 package com.obsudim.mypsychologist.domain.entity.diagnosticEntity
 
 import android.os.Parcelable
+import androidx.compose.runtime.Stable
 import kotlinx.parcelize.Parcelize
 
 data class TestEntity(
@@ -93,3 +94,12 @@ data class AnswersOfQuestionsEntity(
     val text: String,
     val score: Int
 ) : Parcelable
+
+@Stable
+data class TestHostEntity(
+    val testId: String,
+    val title: String,
+    val description: String,
+    val shortDesc: String,
+    val history: List<TestResultsGetEntity>,
+)
