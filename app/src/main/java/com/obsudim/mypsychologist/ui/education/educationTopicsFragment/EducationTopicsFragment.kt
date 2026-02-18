@@ -154,7 +154,6 @@ fun TopicsContent(data: List<TopicEntity>, onItemClick: (TopicEntity) -> Unit) {
 @Composable
 fun TopicItem(item: TopicEntity, onItemClick: (TopicEntity) -> Unit) {
     Column(modifier = Modifier
-        .clip(shape = RoundedCornerShape(12.dp))
         .clickable {
             onItemClick(item)
         }) {

@@ -244,7 +244,6 @@ class EducationFragment : Fragment() {
             modifier = Modifier
                 .width(280.dp)
                 .height(280.dp)
-                .padding(horizontal = 10.dp)
                 .clickable{onItemClick(item.id)}
         ) {
             AsyncImage(
