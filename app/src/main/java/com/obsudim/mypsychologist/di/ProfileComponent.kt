@@ -3,6 +3,7 @@ package com.obsudim.mypsychologist.di
 import com.obsudim.mypsychologist.ui.main.MainFragment
 import com.obsudim.mypsychologist.ui.profile.editFragment.EditFragment
 import com.obsudim.mypsychologist.ui.profile.feedBackFragment.FeedbackFragment
+import com.obsudim.mypsychologist.ui.profile.profileFragment.NotificationFragment
 import com.obsudim.mypsychologist.ui.profile.profileFragment.ProfileFragment
 import com.obsudim.mypsychologist.ui.profile.profileFragment.RulesFragment
 import com.obsudim.mypsychologist.ui.psychologist.requestToPsychologistFragment.RequestToPsychologistFragment
@@ -17,7 +18,7 @@ interface ProfileComponent {
     fun inject(fragment: FeedbackFragment)
     fun inject(fragment: EditFragment)
     fun inject(fragment: RequestToPsychologistFragment)
-
+    fun inject(fragment: NotificationFragment)
     fun inject(fragment: RulesFragment)
 
     @Subcomponent.Factory

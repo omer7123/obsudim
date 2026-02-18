@@ -1,4 +1,4 @@
-package com.obsudim.mypsychologist.domain.useCase.gamificationCases
+package com.obsudim.mypsychologist.domain.useCase.gamificationUseCases
 
 import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.domain.entity.gamificationEntity.WeeklyScoresEntity

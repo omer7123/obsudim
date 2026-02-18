@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_fragment_profile_to_fragment_edit"
             app:destination="@id/fragment_edit" />
+        <action
+            android:id="@+id/action_fragment_profile_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
     <action
         android:id="@+id/action_fragment_profile_to_fragment_feedback"
@@ -44,4 +47,8 @@
             android:id="@+id/action_gamificationFragment2_to_fragment_profile"
             app:destination="@id/fragment_profile" />
     </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.obsudim.mypsychologist.ui.profile.profileFragment.NotificationFragment"
+        android:label="NotificationFragment" />
 </navigation>
