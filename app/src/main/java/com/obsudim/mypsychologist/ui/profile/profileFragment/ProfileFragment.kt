@@ -67,6 +67,9 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(R.id.fragment_edit)
             }
 
+            editNotification.setOnClickListener {
+                findNavController().navigate(R.id.notificationFragment)
+            }
 
             rules.setOnClickListener {
                 findNavController().navigate(R.id.fragment_rules)

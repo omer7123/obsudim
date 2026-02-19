@@ -65,14 +65,11 @@ class GamificationFragment : Fragment() {
             }
         }
 
-
         binding.composeView.setContent {
             AppTheme {
                 GamificationContent(viewModel)
             }
         }
-
-
 
         return binding.root
     }

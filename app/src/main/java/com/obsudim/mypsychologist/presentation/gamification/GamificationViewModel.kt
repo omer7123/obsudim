@@ -8,8 +8,8 @@ import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.domain.entity.gamificationEntity.CurrentScoreEntity
 import com.obsudim.mypsychologist.domain.entity.gamificationEntity.WeeklyScoresEntity
 import com.obsudim.mypsychologist.domain.entity.priofileEntity.UserDataEntity
-import com.obsudim.mypsychologist.domain.useCase.gamificationCases.GetCurrentScoreUseCase
-import com.obsudim.mypsychologist.domain.useCase.gamificationCases.GetWeeklyScoresUseCase
+import com.obsudim.mypsychologist.domain.useCase.gamificationUseCases.GetCurrentScoreUseCase
+import com.obsudim.mypsychologist.domain.useCase.gamificationUseCases.GetWeeklyScoresUseCase
 import com.obsudim.mypsychologist.domain.useCase.profile.GetInfoMeUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
