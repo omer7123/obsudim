@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.domain.useCase.notificationUseCases.GetNotificationTimeUseCase
 import com.obsudim.mypsychologist.domain.useCase.notificationUseCases.SaveNotificationTimeUseCase
+import com.obsudim.mypsychologist.domain.useCase.notificationUseCases.ScheduleNotificationUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 class NotificationViewModel @Inject constructor(
     private val getNotificationTimeUseCase: GetNotificationTimeUseCase,
-    private val saveNotificationTimeUseCase: SaveNotificationTimeUseCase
+    private val saveNotificationTimeUseCase: SaveNotificationTimeUseCase,
+    private val scheduleNotificationUseCase: ScheduleNotificationUseCase
 ) : ViewModel() {
 
     private val _screenState =
@@ -31,7 +33,7 @@ class NotificationViewModel @Inject constructor(
 
                     is Resource.Success -> {
                         _screenState.value = NotificationScreenState.Content(
-                            selectedTime = resource.data ?: "19:00",
+                            selectedTime = resource.data,
                             hasPermission = hasPermission
                         )
                     }
@@ -57,20 +59,30 @@ class NotificationViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            saveNotificationTimeUseCase.invoke(timeString).collect { }
+            saveNotificationTimeUseCase.invoke(timeString).collect { resource->
+                when(resource){
+                    is Resource.Error<*> -> _screenState.value = NotificationScreenState.Error("")
+                    Resource.Loading -> {}
+                    is Resource.Success<*> -> {
+                        scheduleNotificationUseCase(timeString)
+                    }
+                }
+            }
         }
     }
 
     class Factory @Inject constructor(
         private val getNotificationTimeUseCase: GetNotificationTimeUseCase,
-        private val saveNotificationTimeUseCase: SaveNotificationTimeUseCase
+        private val saveNotificationTimeUseCase: SaveNotificationTimeUseCase,
+        private val scheduleNotificationUseCase: ScheduleNotificationUseCase
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return NotificationViewModel(
                 getNotificationTimeUseCase,
-                saveNotificationTimeUseCase
+                saveNotificationTimeUseCase,
+                scheduleNotificationUseCase
             ) as T
         }
     }
