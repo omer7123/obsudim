@@ -9,3 +9,7 @@ sealed class MainScreenState {
     data class Error(val msgId: Int): MainScreenState()
     data object Initial: MainScreenState()
 }
+
+sealed class MainEvent {
+    data object RequestNotificationPermission : MainEvent()
+}

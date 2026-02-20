@@ -1,24 +1,30 @@
 package com.obsudim.mypsychologist.ui.main
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.databinding.FragmentMainBinding
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyExerciseEntity
 import com.obsudim.mypsychologist.extensions.getAppComponent
+import com.obsudim.mypsychologist.presentation.main.mainFragment.MainEvent
 import com.obsudim.mypsychologist.presentation.main.mainFragment.MainScreenState
 import com.obsudim.mypsychologist.presentation.main.mainFragment.MainViewModel
 import com.obsudim.mypsychologist.ui.diagnostics.passingTestFragment.PassingTestFragment
@@ -26,6 +32,7 @@ import com.obsudim.mypsychologist.ui.education.educationFragment.EducationFragme
 import com.obsudim.mypsychologist.ui.exercises.newCbtDiaryFragment.FragmentNewCBTDiary
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -39,11 +46,6 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels { vmFactory }
 
     private val adapter = DailyCardAdapter(this::clickListener)
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireContext().getAppComponent().profileComponent().create().inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,18 +84,6 @@ class MainFragment : Fragment() {
         }
 
         binding.toolbar.toolbar.title = getString(R.string.tasks)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
-            requireActivity().finish()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getInitialData()
     }
 
     private fun render(state: MainScreenState) {
@@ -163,6 +153,50 @@ class MainFragment : Fragment() {
                 findNavController().navigate(R.id.action_main_fragment_to_profile_graph)
             }
         }
+    }
+
+    private val notificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireContext().getAppComponent().profileComponent().create().inject(this)
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                launch {
+                    viewModel.event.collect { event ->
+                        when (event) {
+                            is MainEvent.RequestNotificationPermission -> {
+                                notificationPermissionLauncher.launch(
+                                    Manifest.permission.POST_NOTIFICATIONS
+                                )
+                            }
+                        }
+                    }
+                }
+
+                val isGranted = ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+
+                viewModel.checkNotificationPermission(isGranted)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getInitialData()
     }
 
 }
