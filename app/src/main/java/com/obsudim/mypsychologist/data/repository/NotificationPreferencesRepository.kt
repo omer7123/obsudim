@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.obsudim.mypsychologist.core.Resource
+import com.obsudim.mypsychologist.data.repository.notification.DefaultTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -20,14 +21,13 @@ class NotificationPreferencesRepository @Inject constructor(
 ) {
     companion object {
         private val NOTIFICATION_TIME = stringPreferencesKey("notification_time")
-        private const val DEFAULT_TIME = "19:00"
     }
 
     fun getNotificationTime(): Flow<Resource<String>> = flow {
         emit(Resource.Loading)
         context.dataStore.data
             .map { preferences ->
-                preferences[NOTIFICATION_TIME] ?: DEFAULT_TIME
+                preferences[NOTIFICATION_TIME] ?: DefaultTime.DEFAULT_TIME
             }
             .collect { time ->
                 emit(Resource.Success(time))

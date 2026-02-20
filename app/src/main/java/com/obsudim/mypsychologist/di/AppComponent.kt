@@ -1,6 +1,7 @@
 package com.obsudim.mypsychologist.di
 
 import android.content.Context
+import com.obsudim.mypsychologist.App
 import com.obsudim.mypsychologist.MainActivity
 import dagger.BindsInstance
 import dagger.Component
@@ -8,9 +9,10 @@ import javax.inject.Scope
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [DataModule::class, DomainModule::class, DataSourceModule::class, ProfileModule::class])
+@Component(modules = [WorkerModule::class, DataModule::class, DomainModule::class, DataSourceModule::class, ProfileModule::class])
 interface AppComponent {
     fun inject(activity: MainActivity)
+    fun inject(app: App)
 
     fun apiUrlProvider(): ApiUrlProvider
 
