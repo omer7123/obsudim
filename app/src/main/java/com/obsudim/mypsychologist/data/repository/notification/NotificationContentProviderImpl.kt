@@ -5,7 +5,7 @@ import com.obsudim.mypsychologist.domain.repository.NotificationContentProvider
 import javax.inject.Inject
 
 class NotificationContentProviderImpl @Inject constructor() : NotificationContentProvider {
-    val contents = listOf(
+    private val contents = listOf(
         NotificationContent(
             title = "Привет! Загляните на 10 минут?",
             text = "Ваше ежедневное пространство для заботы о себе уже готово."
@@ -33,6 +33,6 @@ class NotificationContentProviderImpl @Inject constructor() : NotificationConten
     )
 
     override fun getNotification(): NotificationContent {
-        return contents.random()
+        return contents.shuffled().first()
     }
 }
