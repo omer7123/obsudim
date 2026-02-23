@@ -15,7 +15,6 @@ import android.widget.TimePicker
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -223,22 +223,14 @@ class NotificationFragment : Fragment() {
                     )
                 }
             } else {
-                Row(
+                Text(
+                    style = AppTheme.typography.bodyXL,
+                    text = "Буду работать с приложением в $selectedTime",
+                    color = AppTheme.colors.primaryText,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 30.dp)
-                ) {
-                    Text(
-                        style = AppTheme.typography.bodyXL,
-                        text = "Буду работать с приложением в ",
-                        color = AppTheme.colors.primaryText,
-                    )
-                    Text(
-                        style = AppTheme.typography.bodyXLBold,
-                        text = selectedTime,
-                        color = AppTheme.colors.primaryText,
-                    )
-                }
+                )
 
                 Button(
                     onClick = { showTimePickerDialog( context = context, currentTime = selectedTime, onTimeSelected = onTimeSelected ) },
@@ -276,5 +268,39 @@ class NotificationFragment : Fragment() {
             calendar.get(Calendar.MINUTE),
             true
         ).show()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NotificationScreenPreview() {
+    AppTheme {
+        Column {
+            NotificationFragment().NotificationRenderContent(
+                selectedTime = "19:00",
+                hasPermission = true,
+                onTimeSelected = { hour, minute ->
+                },
+                onRequestPermission = {
+                }
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NotificationScreenNoPermissionPreview() {
+    AppTheme {
+        Column {
+            NotificationFragment().NotificationRenderContent(
+                selectedTime = "19:00",
+                hasPermission = false,
+                onTimeSelected = { hour, minute ->
+                },
+                onRequestPermission = {
+                }
+            )
+        }
     }
 }

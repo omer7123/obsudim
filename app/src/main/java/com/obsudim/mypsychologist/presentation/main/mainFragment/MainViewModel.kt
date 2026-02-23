@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.domain.useCase.exerciseUseCases.GetAllDailyExercisesUseCase
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -40,6 +42,23 @@ class MainViewModel @Inject constructor(
                     Resource.Loading -> _screenState.value = MainScreenState.Loading
                     is Resource.Success -> _screenState.value = MainScreenState.Content(tasksResult.data, formattedDate)
                 }
+            }
+        }
+    }
+
+    private val _event = MutableSharedFlow<MainEvent>(extraBufferCapacity = 1)
+    private var notificationPermissionChecked = false
+    val event = _event.asSharedFlow()
+
+    fun checkNotificationPermission(isGranted: Boolean) {
+
+        if (notificationPermissionChecked) return
+
+        notificationPermissionChecked = true
+
+        if (!isGranted) {
+            viewModelScope.launch {
+                _event.emit(MainEvent.RequestNotificationPermission)
             }
         }
     }
