@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.obsudim.mypsychologist.databinding.FragmentNotificationBinding
 import com.obsudim.mypsychologist.extensions.getAppComponent
 import com.obsudim.mypsychologist.presentation.notification.NotificationScreenState
@@ -87,6 +88,13 @@ class NotificationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.includeToolbar.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+    
     override fun onResume() {
         super.onResume()
 
