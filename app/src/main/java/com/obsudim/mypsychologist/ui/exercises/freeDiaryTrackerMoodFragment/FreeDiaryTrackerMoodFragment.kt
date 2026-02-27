@@ -422,6 +422,14 @@
                             }
                         }
 
+                        if (state.countSelectedEmojiError) {
+                            Text(
+                                text = stringResource(R.string.emoji_error),
+                                style = AppTheme.typography.bodyM,
+                                color = AppTheme.colors.errorText
+                            )
+                        }
+
                         PrimaryTextButton(
                             textString = stringResource(id = R.string.save),
                             onClick = { onClickSaveMood() },
@@ -580,7 +588,9 @@
                                     text = emoji,
                                     style = AppTheme.typography.titleCygreFont,
                                     textAlign = TextAlign.Center,
-                                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 8.dp)
                                 )
                             }
                         }

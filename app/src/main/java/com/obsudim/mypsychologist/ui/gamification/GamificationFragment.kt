@@ -2,7 +2,6 @@ package com.obsudim.mypsychologist.ui.gamification
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,11 +84,9 @@ class GamificationFragment : Fragment() {
                     weeklyScores = result.weeklyScores,
                     userInfo = result.userInfo
                 )
-                Log.d("aaaa", "yes")
             }
 
             is GamificationScreenState.Error -> {
-                Log.e("GamificationScreenState.Error", result.msg)
                 PlaceholderError()
             }
 
@@ -153,16 +150,6 @@ class GamificationFragment : Fragment() {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-//                IconTextButton(
-//                    modifier = Modifier.padding(top = 20.dp),
-//                    height = 56.dp,
-//                    width = 182.dp,
-//                    icon = painterResource(id = R.drawable.ic_achievements),
-//                    horizontalPadding = 24.dp,
-//                    verticalPadding = 16.dp,
-//                    text = "Достижения",
-//                    onClick = {  }
-//                )
                 IconTextButton(
                     modifier = Modifier.padding(top = 20.dp),
                     height = 56.dp,
