@@ -382,28 +382,18 @@ class HostTestFragment : Fragment() {
                     color = AppTheme.colors.tertiaryBackground,
                     shape = RoundedCornerShape(28.dp)
                 )
-                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 24.dp)
                 .clickable {
                     onItemClick(item.testResultId)
                 }
         ) {
 
             Text(
-                text = "",
-                style = AppTheme.typography.bodyLBold,
-                fontSize = 16.sp,
-                color = AppTheme.colors.primaryText,
-            )
-
-            Spacer(modifier = Modifier.padding(top = 6.dp))
-
-            Text(
                 text = item.datetime,
-                style = AppTheme.typography.bodyM,
+                style = AppTheme.typography.bodyLBold,
                 fontSize = 14.sp,
                 color = AppTheme.colors.primaryText,
             )
         }
     }
-
 }
