@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,8 +35,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,6 +48,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
 import com.obsudim.mypsychologist.R
 import com.obsudim.mypsychologist.domain.entity.exerciseEntity.ExerciseEntity
 import com.obsudim.mypsychologist.extensions.getAppComponent
@@ -222,12 +227,15 @@ class ExercisesFragment : Fragment() {
                     onClickExercise(item.id)
                 },
         ) {
-            Image(
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current).data(item.linkToPicture).build(),
                 modifier = Modifier
-                    .fillMaxWidth(),
-                painter = painterResource(id = R.drawable.ic_kpt_card),
+                    .fillMaxWidth()
+                    .aspectRatio(209/259f),
+                placeholder = ColorPainter(color = AppTheme.colors.loading),
+                error = painterResource(id = R.drawable.ic_diary_practice),
                 contentDescription = "",
-                contentScale = ContentScale.FillWidth
+                contentScale = ContentScale.Crop
             )
 
             Text(
