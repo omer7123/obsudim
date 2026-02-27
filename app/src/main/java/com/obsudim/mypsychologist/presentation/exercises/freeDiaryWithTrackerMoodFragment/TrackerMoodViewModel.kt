@@ -92,7 +92,7 @@ class TrackerMoodViewModel @Inject constructor(
                     add(id)
                 }
             }
-            contState.copy(selectedSmiles = newSelectedSet)
+            contState.copy(selectedSmiles = newSelectedSet, countSelectedEmojiError = false)
         }
     }
 
@@ -103,11 +103,12 @@ class TrackerMoodViewModel @Inject constructor(
         }!!.date
 
         val isSameDay = date isSameDay selectedDate
-        Log.e("day:", isSameDay.toString())
         val currentNewMoodViewState = (_newMoodViewState.value as NewMoodStatusViewState.Content)
-//        _newMoodViewState.value = currentNewMoodViewState.copy(
-//            loading = true
-//        )
+
+        if (currentNewMoodViewState.selectedSmiles.isEmpty()) {
+            _newMoodViewState.value = currentNewMoodViewState.copy(countSelectedEmojiError = true)
+            return
+        }
 
         if (!isSameDay) {
             viewModelScope.launch {
@@ -374,7 +375,12 @@ class TrackerMoodViewModel @Inject constructor(
     fun changeStatusAddNewMood(newStatus: Boolean) {
         when (newStatus) {
             true -> {
-                _newMoodViewState.value = NewMoodStatusViewState.Content(moodTitleIdSource = R.string.normal_mood, smiles = emojies, selectedSmiles = setOf())
+                _newMoodViewState.value = NewMoodStatusViewState.Content(
+                    moodTitleIdSource = R.string.normal_mood,
+                    smiles = emojies,
+                    selectedSmiles = setOf(),
+                    countSelectedEmojiError = false
+                )
             }
             false -> {
                 _newMoodViewState.value = NewMoodStatusViewState.Hide

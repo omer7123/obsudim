@@ -22,6 +22,7 @@ data class AppThemeColor(
 
     //error
     val errorContainer: Color, //Красный 20
+    val errorText: Color, //Красный 100
 
     //Extension Basic
     val loading: Color
@@ -43,6 +44,7 @@ val lightShema = AppThemeColor(
 
     //error
     errorContainer = Color(0XFFFEECEC), //Красный 20
+    errorText = Color(0xFFFF0000), //Красный 100
 
     loading = Color(0xFFCFCFCF), // синий 100
 )
@@ -61,6 +63,7 @@ val darkShema = AppThemeColor(
     navBackground = Color(0xFFF3F5FF), // синий 100
 
     errorContainer = Color(0XFFFEECEC),//Красный 20
+    errorText = Color(0xFFFF0000), //Красный 100
 
     loading =  Color(0xFF787777), // синий 100
     tertiaryText = Color(0xFF3555D4), //синий 40

@@ -36,6 +36,7 @@ sealed interface NewMoodStatusViewState {
         val loading: Boolean = false,
         val smiles: List<EmojiEntity>,
         val selectedSmiles: Set<Int>,
+        val countSelectedEmojiError: Boolean,
     ) : NewMoodStatusViewState
     data object Hide : NewMoodStatusViewState
 }
