@@ -15,7 +15,7 @@ fun ThemeModel.toEntity(url: String) =
     TopicEntity(
         id,
         theme,
-        "${url.dropLast(1) + link}",
+        link = url.dropLast(1) + linkToPicture,
         recommendations = recommendations.map { it.toEntity() },
         educationMaterials = educationMaterials.map { it.toEntity() }
     )

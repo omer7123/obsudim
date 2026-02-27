@@ -7,7 +7,8 @@ import kotlinx.serialization.Serializable
 data class ThemeModel(
     val id: String,
     val theme: String,
-    val link: String,
+    @SerialName("link_to_picture")
+    val linkToPicture: String,
     val recommendations: List<RecommendationModel> = emptyList(),
     @SerialName("education_materials")
     val educationMaterials: List<EducationsModel>
