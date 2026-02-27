@@ -8,9 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.obsudim.mypsychologist.core.Resource
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.QuestionOfTestEntity
-import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.ResultAfterSaveEntity
 import com.obsudim.mypsychologist.domain.entity.diagnosticEntity.SaveTestResultEntity
-import com.obsudim.mypsychologist.domain.entity.exerciseEntity.DailyTaskMarkIdEntity
 import com.obsudim.mypsychologist.domain.useCase.diagnosticsUseCases.GetQuestionsOfTestByIdUseCase
 import com.obsudim.mypsychologist.domain.useCase.diagnosticsUseCases.GetTestInfoUseCase
 import com.obsudim.mypsychologist.domain.useCase.diagnosticsUseCases.SaveResultTestUseCase
@@ -40,6 +38,8 @@ class PassingTestViewModel @Inject constructor(
     private val scoresForTest: IntArray by lazy {
         IntArray(questions.size)
     }
+
+    private var lockClick = false
 
     fun getQuestions(testId: String) {
         viewModelScope.launch {
@@ -78,9 +78,12 @@ class PassingTestViewModel @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun saveAnswerAndGoToNext(score: Int, testId: String?, taskId: String) {
+    fun saveAnswerAndGoToNext(score: Int, testId: String) {
+        if(lockClick) return
+        lockClick = true
+
         scoresForTest[questionNumber] = score
-        nextQuestion(testId!!, taskId)
+        nextQuestion(testId)
     }
 
     fun previousQuestion() {
@@ -93,23 +96,23 @@ class PassingTestViewModel @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun nextQuestion(testId: String, taskId: String) {
+    private fun nextQuestion(testId: String) {
         questionNumber += 1
 
+        if (questionNumber < questions.size) {
+            _screenState.value = PassingTestScreenState.Question(
+                questionNumber
+            )
+            lockClick = false
+            return
+        }
         viewModelScope.launch {
-
-            if (questionNumber < questions.size) {
-                _screenState.value = PassingTestScreenState.Question(
-                    questionNumber
-                )
-            } else {
-                saveTestResult(testId, taskId)
-            }
+            saveTestResult(testId)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private suspend fun saveTestResult(testId: String, taskId: String) {
+    private suspend fun saveTestResult(testId: String) {
         val res = saveResultTestUseCase(
             SaveTestResultEntity(
                 testId,
@@ -123,18 +126,6 @@ class PassingTestViewModel @Inject constructor(
             Resource.Loading -> PassingTestScreenState.Loading
             is Resource.Success -> {
                 _screenState.value = PassingTestScreenState.Result(res.data)
-            }
-        }
-    }
-
-    private suspend fun markAsComplete(taskId: String, data: ResultAfterSaveEntity) {
-        marsAsCompleteExerciseUseCase(DailyTaskMarkIdEntity(taskId)).collect { resource ->
-            when (resource) {
-                is Resource.Error -> _screenState.value =
-                    PassingTestScreenState.Error(resource.msg.toString())
-
-                Resource.Loading -> _screenState.value = PassingTestScreenState.Loading
-                is Resource.Success -> _screenState.value = PassingTestScreenState.Result(data)
             }
         }
     }

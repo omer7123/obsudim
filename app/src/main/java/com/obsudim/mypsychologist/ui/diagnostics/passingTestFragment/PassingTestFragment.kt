@@ -102,12 +102,10 @@ class PassingTestFragment : Fragment() {
                 onAnswerClick = { score ->
                     viewModel.saveAnswerAndGoToNext(
                         score = score,
-                        testId = requireArguments().getString(TEST_ID),
-                        taskId = requireArguments().getString(TASK_ID) ?: ""
+                        testId = requireArguments().getString(TEST_ID) ?: "",
                     )
                 }, onBackClick = {
                     findNavController().popBackStack()
-//                    viewModel.previousQuestion()
                 })
 
         binding.testQuestionVp.isUserInputEnabled = false
@@ -130,27 +128,6 @@ class PassingTestFragment : Fragment() {
 
     private fun initView() {
         viewModel.getQuestions(requireArguments().getString(TEST_ID).toString())
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun setFragmentResultListener() {
-        childFragmentManager.setFragmentResultListener(
-            FragmentTestQuestion.ANSWER,
-            viewLifecycleOwner
-        ) { _, bundle ->
-            viewModel.saveAnswerAndGoToNext(
-                score = bundle.getInt(FragmentTestQuestion.SCORE),
-                testId = requireArguments().getString(TEST_ID),
-                taskId = requireArguments().getString(TASK_ID) ?: ""
-            )
-        }
-
-        childFragmentManager.setFragmentResultListener(
-            FragmentTestQuestion.GO_BACK,
-            viewLifecycleOwner
-        ) { _, _ ->
-            //    viewModel.previousQuestion()
-        }
     }
 
     companion object {
